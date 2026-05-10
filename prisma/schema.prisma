@@ -1,0 +1,391 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// WILAYAH
+// ============================================================
+
+model Kabupaten {
+  id         String      @id @default(cuid())
+  nama       String      @default("Lampung Timur")
+  kode       String      @unique
+  kecamatans Kecamatan[]
+}
+
+model Kecamatan {
+  id          String   @id @default(cuid())
+  nama        String
+  kode        String   @unique
+  kabupatenId String
+  kabupaten   Kabupaten @relation(fields: [kabupatenId], references: [id])
+  desas       Desa[]
+}
+
+model Desa {
+  id            String      @id @default(cuid())
+  nama          String
+  kode          String      @unique
+  kecamatanId   String
+  kecamatan     Kecamatan   @relation(fields: [kecamatanId], references: [id])
+  posyandus     Posyandu[]
+  users         User[]
+}
+
+// ============================================================
+// POSYANDU (Profil Statis)
+// ============================================================
+
+model Posyandu {
+  id                String   @id @default(cuid())
+  desaId            String
+  desa              Desa     @relation(fields: [desaId], references: [id])
+  nama              String
+  hariBuka          String
+  strata            StrataEnum
+  jumlahRumah       Int      @default(0)
+  jumlahKK          Int      @default(0)
+  jumlahPenduduk    Int      @default(0)
+  jumlahAnak05      Int      @default(0)
+  jumlahRemaja      Int      @default(0)
+  jumlahProduktif   Int      @default(0)
+  jumlahLansia      Int      @default(0)
+  jumlahDisabilitas Int      @default(0)
+  statusBangunan    StatusBangunanEnum
+  danaSehatter      Boolean  @default(false)
+  jumlahKader       Int      @default(0)
+  kegiatanIntegrasi String?
+  
+  // Relasi
+  sip6s             Sip6Bulanan[]
+  sip7s             Sip7Bulanan[]
+  laporanPengaduans LaporanPengaduan[]
+  laporanPRs        LaporanPR[]
+  dataDukungs       DataDukung[]
+  users             User[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// ============================================================
+// SIP 6 — DATA PENGUNJUNG BULANAN
+// ============================================================
+
+model Sip6Bulanan {
+  id          String   @id @default(cuid())
+  posyanduId  String
+  posyandu    Posyandu @relation(fields: [posyanduId], references: [id])
+  tahun       Int
+  bulan       Int      // 1–12
+  // Bayi 0-12 bln
+  bayiBaruL   Int @default(0)
+  bayiBaruP   Int @default(0)
+  bayiLamaL   Int @default(0)
+  bayiLamaP   Int @default(0)
+  // Balita 1-5 thn
+  balitaBaruL Int @default(0)
+  balitaBaruP Int @default(0)
+  balitaLamaL Int @default(0)
+  balitaLamaP Int @default(0)
+  // Anak 6-18 thn
+  anakBaruL   Int @default(0)
+  anakBaruP   Int @default(0)
+  anakLamaL   Int @default(0)
+  anakLamaP   Int @default(0)
+  // Usia Produktif
+  prodBaruL   Int @default(0)
+  prodBaruP   Int @default(0)
+  prodLamaL   Int @default(0)
+  prodLamaP   Int @default(0)
+  // Lansia
+  lansiaBaruL Int @default(0)
+  lansiaBaruP Int @default(0)
+  lansiaLamaL Int @default(0)
+  lansiaLamaP Int @default(0)
+  // WUS/Bumil/Busui
+  pus         Int @default(0)
+  ibuHamil    Int @default(0)
+  ibuMenyusui Int @default(0)
+  // Petugas
+  kaderL      Int @default(0)
+  kaderP      Int @default(0)
+  plkbL       Int @default(0)
+  plkbP       Int @default(0)
+  medisL      Int @default(0)
+  medisP      Int @default(0)
+  // Lahir & Meninggal
+  lahirL      Int @default(0)
+  lahirP      Int @default(0)
+  meninggalL  Int @default(0)
+  meninggalP  Int @default(0)
+  keterangan  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([posyanduId, tahun, bulan])
+}
+
+// Sasaran Individu SIP 6
+model SasaranIndividu {
+  id           String              @id @default(cuid())
+  posyanduId   String
+  kategori     KategoriSasaranEnum // IBU_HAMIL | BAYI_BALITA | REMAJA | LANSIA
+  nama         String
+  jenisKelamin JKEnum?
+  tanggalLahir DateTime?
+  namaIbu      String?
+  namaAyah     String?
+  namaSuami    String?
+  namaBayi     String?
+  tahun        Int
+  // Kehadiran Jan-Des (boolean per bulan)
+  jan Boolean @default(false)
+  feb Boolean @default(false)
+  mar Boolean @default(false)
+  apr Boolean @default(false)
+  mei Boolean @default(false)
+  jun Boolean @default(false)
+  jul Boolean @default(false)
+  agu Boolean @default(false)
+  sep Boolean @default(false)
+  okt Boolean @default(false)
+  nov Boolean @default(false)
+  des Boolean @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ============================================================
+// SIP 7 — DATA HASIL KEGIATAN BULANAN
+// ============================================================
+
+model Sip7Bulanan {
+  id           String   @id @default(cuid())
+  posyanduId   String
+  posyandu     Posyandu @relation(fields: [posyanduId], references: [id])
+  tahun        Int
+  bulan        Int
+  // Ibu Hamil
+  jmlBumil     Int @default(0)
+  bumilDiperiksa Int @default(0)
+  bumilFeTab   Int @default(0)
+  // Ibu Menyusui
+  jmlBusui     Int @default(0)
+  // KB
+  kbKondom     Int @default(0)
+  kbPil        Int @default(0)
+  kbImplant    Int @default(0)
+  kbMOP        Int @default(0)
+  kbMOW        Int @default(0)
+  kbIUD        Int @default(0)
+  kbSuntik     Int @default(0)
+  kbLainnya    Int @default(0)
+  // Penimbangan (L/P)
+  balitaS_L    Int @default(0)
+  balitaS_P    Int @default(0)
+  balitaK_L    Int @default(0)
+  balitaK_P    Int @default(0)
+  balitaD_L    Int @default(0)
+  balitaD_P    Int @default(0)
+  balitaN_L    Int @default(0)
+  balitaN_P    Int @default(0)
+  vitA_L       Int @default(0)
+  vitA_P       Int @default(0)
+  pmt_L        Int @default(0)
+  pmt_P        Int @default(0)
+  // Imunisasi bumil
+  imTT         Int @default(0)
+  // Imunisasi bayi (L/P untuk masing-masing)
+  imBCG_L      Int @default(0)
+  imBCG_P      Int @default(0)
+  imDPT1_L     Int @default(0)
+  imDPT1_P     Int @default(0)
+  imDPT2_L     Int @default(0)
+  imDPT2_P     Int @default(0)
+  imDPT3_L     Int @default(0)
+  imDPT3_P     Int @default(0)
+  imPolio1_L   Int @default(0)
+  imPolio1_P   Int @default(0)
+  imPolio2_L   Int @default(0)
+  imPolio2_P   Int @default(0)
+  imPolio3_L   Int @default(0)
+  imPolio3_P   Int @default(0)
+  imPolio4_L   Int @default(0)
+  imPolio4_P   Int @default(0)
+  imCampak_L   Int @default(0)
+  imCampak_P   Int @default(0)
+  imHepB1_L    Int @default(0)
+  imHepB1_P    Int @default(0)
+  imHepB2_L    Int @default(0)
+  imHepB2_P    Int @default(0)
+  imHepB3_L    Int @default(0)
+  imHepB3_P    Int @default(0)
+  // Diare balita
+  diareJml_L   Int @default(0)
+  diareJml_P   Int @default(0)
+  diareOralit_L Int @default(0)
+  diareOralit_P Int @default(0)
+  // Data rekapitulasi detail
+  rekapBumil   Json?
+  rekapBalita  Json?
+  rekapRemaja  Json?
+  rekapLansia  Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([posyanduId, tahun, bulan])
+}
+
+// ============================================================
+// LAPORAN PENGADUAN WARGA (Pendidikan, PU, Trantib, Sosial)
+// ============================================================
+
+model LaporanPengaduan {
+  id           String        @id @default(cuid())
+  posyanduId   String
+  posyandu     Posyandu      @relation(fields: [posyanduId], references: [id])
+  bidang       BidangEnum
+  tanggal      DateTime
+  nik          String?
+  nama         String
+  alamat       String?
+  halPengaduan String
+  keteranganTL String?
+  keteranganBTL String?
+  status       StatusLapEnum @default(BTL)
+  dataDukungs  DataDukung[]
+  createdBy    String
+  updatedBy    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// ============================================================
+// LAPORAN PERUMAHAN RAKYAT (PR) — Punya field persyaratan khusus
+// ============================================================
+
+model LaporanPR {
+  id                  String        @id @default(cuid())
+  posyanduId          String
+  posyandu            Posyandu      @relation(fields: [posyanduId], references: [id])
+  tanggal             DateTime
+  nama                String
+  nik                 String?
+  alamat              String?
+  keteranganPermohonan String?
+  fcKK                Boolean       @default(false)
+  fcKTP               Boolean       @default(false)
+  suratPermohonan     Boolean       @default(false)
+  suketPenghasilan    Boolean       @default(false)
+  fotoKondisiRumah    Boolean       @default(false)
+  keteranganTL        String?
+  keteranganBTL       String?
+  status              StatusLapEnum @default(BTL)
+  dataDukungs         DataDukung[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+// ============================================================
+// DATA DUKUNG (Upload Foto/Dokumen)
+// ============================================================
+
+model DataDukung {
+  id              String    @id @default(cuid())
+  posyanduId      String?
+  posyandu        Posyandu? @relation(fields: [posyanduId], references: [id])
+  laporanId       String?
+  laporan         LaporanPengaduan? @relation(fields: [laporanId], references: [id])
+  laporanPRId     String?
+  laporanPR       LaporanPR?        @relation(fields: [laporanPRId], references: [id])
+  bidang          BidangEnum
+  kategori        String
+  fileName        String
+  filePath        String
+  fileSize        Int
+  mimeType        String
+  thumbnail       String?
+  keterangan      String?
+  periode         String?
+  uploadedBy      String
+  uploadedAt      DateTime  @default(now())
+}
+
+// ============================================================
+// USER
+// ============================================================
+
+model User {
+  id          String   @id @default(cuid())
+  nama        String
+  email       String   @unique
+  password    String
+  role        RoleEnum
+  desaId      String?
+  desa        Desa?    @relation(fields: [desaId], references: [id])
+  kecamatanId String?
+  posyanduId  String?
+  posyandu    Posyandu? @relation(fields: [posyanduId], references: [id])
+  isActive    Boolean  @default(true)
+  lastLogin   DateTime?
+  createdAt   DateTime @default(now())
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum StrataEnum {
+  PRATAMA
+  MADYA
+  PURNAMA
+  MANDIRI
+}
+
+enum StatusBangunanEnum {
+  MILIK_SENDIRI
+  MENUMPANG
+}
+
+enum JKEnum {
+  L
+  P
+}
+
+enum RoleEnum {
+  SUPERADMIN
+  ADMIN_KECAMATAN
+  OPERATOR_DESA
+  OPERATOR_POSYANDU
+  VIEWER
+}
+
+enum StatusLapEnum {
+  TL
+  BTL
+  PROSES
+}
+
+enum BidangEnum {
+  POSYANDU
+  KES_SIP6
+  KES_SIP7
+  PENDIDIKAN
+  PU
+  PR
+  TRANTIB
+  SOSIAL
+}
+
+enum KategoriSasaranEnum {
+  IBU_HAMIL
+  BAYI_BALITA
+  REMAJA
+  LANSIA
+}

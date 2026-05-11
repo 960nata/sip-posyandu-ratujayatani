@@ -51,8 +51,8 @@ export default function DashboardLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
-  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
   
   const notificationRef = useRef<HTMLDivElement>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
@@ -60,6 +60,21 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
+
+  const [notifications, setNotifications] = useState<any[]>([])
+  
+  useEffect(() => {
+    if (session?.user) {
+      fetch('/api/notifications')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setNotifications(data)
+          }
+        })
+        .catch(err => console.error(err))
+    }
+  }, [session])
 
   const isPosyandu = role === 'OPERATOR_POSYANDU'
   const theme = {
@@ -284,14 +299,19 @@ export default function DashboardLayout({
                       <p className="text-sm font-semibold text-slate-800 dark:text-white">Notifikasi</p>
                     </div>
                     <div className="p-2 space-y-1">
-                      <div className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer">
-                        <p className="text-xs font-medium text-slate-800 dark:text-white">Data SIP 7 baru ditambahkan</p>
-                        <p className="text-xs text-slate-500 dark:text-zinc-400">10 menit yang lalu</p>
-                      </div>
-                      <div className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer">
-                        <p className="text-xs font-medium text-slate-800 dark:text-white">Laporan Pendidikan diverifikasi</p>
-                        <p className="text-xs text-slate-500 dark:text-zinc-400">1 jam yang lalu</p>
-                      </div>
+                      {notifications.length > 0 ? (
+                        notifications.map((notif: any) => (
+                          <div key={notif.id} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer border-b border-slate-50 dark:border-slate-800 last:border-0">
+                            <p className="text-xs font-semibold text-slate-800 dark:text-white">{notif.title}</p>
+                            <p className="text-xs text-slate-600 dark:text-zinc-300 line-clamp-2">{notif.message}</p>
+                            <p className="text-xs text-slate-400 mt-0.5">{new Date(notif.createdAt).toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="p-4 text-center text-xs text-slate-500 dark:text-zinc-400">
+                          Tidak ada notifikasi baru
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 )}

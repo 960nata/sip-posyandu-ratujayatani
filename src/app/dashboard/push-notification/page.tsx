@@ -32,10 +32,23 @@ export default function PushNotificationPage() {
     e.preventDefault()
     setIsSending(true)
     
-    // Simulate sending
-    setTimeout(() => {
+    // Actual sending to API
+    fetch('/api/notifications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: formData.title,
+        message: formData.message,
+        target: formData.target,
+        targetId: formData.target === 'KECAMATAN' ? formData.kecamatan :
+                  formData.target === 'DESA' ? formData.desa :
+                  formData.target === 'POSYANDU' ? formData.posyandu : null
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
       const newNotif = {
-        id: Date.now().toString(),
+        id: data.id || Date.now().toString(),
         title: formData.title,
         message: formData.message,
         target: formData.target === 'SEMUA' ? 'Semua Pengguna' : 
@@ -51,7 +64,12 @@ export default function PushNotificationPage() {
       setFormData(initialForm)
       
       setTimeout(() => setSendSuccess(false), 3000)
-    }, 1500)
+    })
+    .catch(err => {
+      console.error(err)
+      alert('Gagal mengirim notifikasi!')
+      setIsSending(false)
+    })
   }
 
   const handleDelete = (id: string) => {

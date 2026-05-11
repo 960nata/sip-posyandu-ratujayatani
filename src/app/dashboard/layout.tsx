@@ -330,13 +330,9 @@ export default function DashboardLayout({
                       <p className="text-xs text-slate-500 dark:text-zinc-400 truncate">{session?.user?.email || ''}</p>
                     </div>
                     <div className="p-1.5">
-                      <Link href="/dashboard/profile" className="flex items-center space-x-2 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                      <Link href="/dashboard/setting" className="flex items-center space-x-2 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
                         <User className="w-4 h-4 text-slate-500" />
                         <span>Profil Saya</span>
-                      </Link>
-                      <Link href="/dashboard/setting" className="flex items-center space-x-2 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
-                        <Settings className="w-4 h-4 text-slate-500" />
-                        <span>Pengaturan</span>
                       </Link>
                       <div className="my-1 border-t border-slate-50 dark:border-slate-800"></div>
                       <button 

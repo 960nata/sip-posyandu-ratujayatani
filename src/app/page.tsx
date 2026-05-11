@@ -154,26 +154,18 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Content */}
-            <div className="col-span-1 lg:col-span-5 space-y-6">
-
-              
+            {/* Title - Order 1 on mobile */}
+            <div className="col-span-1 lg:col-span-5 order-1">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
                 Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
               </h2>
-              
-              <p className="text-base text-slate-500 font-light leading-relaxed">
-                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat dan tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
-              </p>
-              
-
             </div>
 
-            {/* Right Content - Cards (Like Reference Image) */}
-            <div className="col-span-1 lg:col-span-7 flex flex-row gap-6 items-start overflow-x-auto lg:overflow-visible pb-6 lg:pb-0">
+            {/* Right Content - Cards - Order 2 on mobile, spans 2 rows on desktop */}
+            <div className="col-span-1 lg:col-span-7 grid grid-cols-2 gap-4 lg:flex lg:flex-row lg:gap-6 lg:items-start lg:overflow-visible pb-6 lg:pb-0 order-2 lg:order-2 lg:row-span-2">
               
               {/* Card 1: Integrasi Data (Full Size) */}
-              <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+              <div className="col-span-2 lg:flex-shrink-0 lg:w-64 lg:h-80 w-full h-48 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
                   src="/images/tujuan/integrasi.avif"
                   alt="Integrasi Data"
@@ -189,7 +181,7 @@ export default function Home() {
               </div>
 
               {/* Card 2: Efisiensi Pelayanan (70% Size) */}
-              <div className="flex-shrink-0 w-44 h-56 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-16 group">
+              <div className="col-span-1 lg:flex-shrink-0 lg:w-44 lg:h-56 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-16 group">
                 <Image
                   src="/images/tujuan/efisiensi.avif"
                   alt="Efisiensi Pelayanan"
@@ -205,7 +197,7 @@ export default function Home() {
               </div>
 
               {/* Card 3: Transparansi (60% Size) */}
-              <div className="flex-shrink-0 w-40 h-48 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+              <div className="col-span-1 lg:flex-shrink-0 lg:w-40 lg:h-48 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
                   src="/images/tujuan/transparansi.avif"
                   alt="Transparansi"
@@ -220,6 +212,13 @@ export default function Home() {
                 </div>
               </div>
 
+            </div>
+
+            {/* Text - Order 3 on mobile */}
+            <div className="col-span-1 lg:col-span-5 order-3">
+              <p className="text-base text-slate-500 font-light leading-relaxed">
+                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat dan tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
+              </p>
             </div>
 
           </div>

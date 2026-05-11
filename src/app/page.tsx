@@ -160,9 +160,8 @@ export default function Home() {
                 <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">01 Tujuan Sistem</span>
               </div>
               
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
-                Mengapa SIP <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+                Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
               </h2>
               
               <p className="text-base text-slate-500 font-light leading-relaxed">
@@ -175,48 +174,51 @@ export default function Home() {
             {/* Right Content - Cards (Like Reference Image) */}
             <div className="col-span-1 lg:col-span-7 flex flex-row gap-6 items-start overflow-x-auto lg:overflow-visible pb-6 lg:pb-0">
               
-              {/* Card 1: Integrasi Data */}
+              {/* Card 1: Integrasi Data (Full Size) */}
               <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
-                  src="/images/tujuan/integrasi.png"
+                  src="/images/tujuan/integrasi.avif"
                   alt="Integrasi Data"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
                 <div className="absolute bottom-6 left-6 right-6">
                   <h3 className="text-lg font-bold text-white mb-1">Integrasi Data</h3>
                   <p className="text-xs text-white/80 font-light">Menghubungkan berbagai sektor</p>
                 </div>
               </div>
 
-              {/* Card 2: Efisiensi Pelayanan */}
-              <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-12 group">
+              {/* Card 2: Efisiensi Pelayanan (70% Size) */}
+              <div className="flex-shrink-0 w-44 h-56 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-16 group">
                 <Image
-                  src="/images/tujuan/efisiensi.png"
+                  src="/images/tujuan/efisiensi.avif"
                   alt="Efisiensi Pelayanan"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="text-lg font-bold text-white mb-1">Efisiensi</h3>
-                  <p className="text-xs text-white/80 font-light">Mempercepat proses pelaporan</p>
+                <div className="absolute top-3 left-3 w-6 h-6 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-xs">2</div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-base font-bold text-white mb-0.5">Efisiensi</h3>
+                  <p className="text-[10px] text-white/80 font-light">Mempercepat proses pelaporan</p>
                 </div>
               </div>
 
-              {/* Card 3: Transparansi */}
-              <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-24 group">
+              {/* Card 3: Transparansi (60% Size) */}
+              <div className="flex-shrink-0 w-40 h-48 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
-                  src="/images/tujuan/transparansi.png"
+                  src="/images/tujuan/transparansi.avif"
                   alt="Transparansi"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="text-lg font-bold text-white mb-1">Transparansi</h3>
-                  <p className="text-xs text-white/80 font-light">Data akurat & terpercaya</p>
+                <div className="absolute top-3 left-3 w-6 h-6 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-xs">3</div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-sm font-bold text-white mb-0.5">Transparansi</h3>
+                  <p className="text-[10px] text-white/80 font-light">Data akurat & terpercaya</p>
                 </div>
               </div>
 
@@ -232,7 +234,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Cakupan Data</h2>
             <p className="text-3xl font-bold text-slate-900 mt-2">Data Yang Dikumpulkan</p>
-            <p className="text-slate-500 mt-4 max-w-2xl mx-auto">SIP mengumpulkan data dari berbagai sektor krusial di tingkat desa.</p>
+            <p className="text-slate-500 mt-4 max-w-2xl mx-auto">Sistem Informasi Posyandu mengumpulkan data dari berbagai sektor krusial di tingkat desa.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

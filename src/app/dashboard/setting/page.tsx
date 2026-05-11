@@ -72,13 +72,29 @@ export default function ProfilePage() {
             // Create a preview URL
             setAvatarUrl(URL.createObjectURL(blob))
             
-            // In a real app, you would upload this blob to the server
-            // e.g. const uploadFile = new File([blob], 'avatar.avif', { type: 'image/avif' })
+            // Actual upload to server
+            const formData = new FormData()
+            formData.append('file', blob, 'avatar.avif')
             
-            setTimeout(() => {
-              alert('Foto profil berhasil dikompres ke format AVIF!')
+            fetch('/api/users/avatar', {
+              method: 'POST',
+              body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                setAvatarUrl(data.avatarUrl)
+                alert('Foto profil berhasil diunggah!')
+              } else {
+                alert('Gagal mengunggah: ' + data.error)
+              }
               setIsUploading(false)
-            }, 1000)
+            })
+            .catch(err => {
+              console.error(err)
+              alert('Terjadi kesalahan saat mengunggah!')
+              setIsUploading(false)
+            })
           } else {
             setIsUploading(false)
           }

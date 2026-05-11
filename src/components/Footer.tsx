@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Heart } from "lucide-react";
 
 export default function Footer() {
@@ -20,10 +21,11 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Navigasi</h3>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-sm hover:text-emerald-500 transition-colors">Beranda</Link></li>
+              <li><Link href="/" className="text-sm hover:text-emerald-500 transition-colors">Home</Link></li>
               <li><Link href="/tujuan" className="text-sm hover:text-emerald-500 transition-colors">Tujuan</Link></li>
-              <li><Link href="/#data" className="text-sm hover:text-emerald-500 transition-colors">Data</Link></li>
-              <li><Link href="/about" className="text-sm hover:text-emerald-500 transition-colors">Tentang</Link></li>
+              <li><Link href="/layanan" className="text-sm hover:text-emerald-500 transition-colors">Layanan</Link></li>
+              <li><Link href="/kelembagaan" className="text-sm hover:text-emerald-500 transition-colors">Tentang</Link></li>
+              <li><Link href="/panduan" className="text-sm hover:text-emerald-500 transition-colors">Panduan</Link></li>
             </ul>
           </div>
 
@@ -39,11 +41,14 @@ export default function Footer() {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
            <p className="text-xs text-slate-600">© 2026 Pemkab Lampung Timur. All rights reserved.</p>
-           <div className="flex space-x-6">
-              <span className="text-xs text-slate-600">Membangun Negeri dari Desa</span>
+           <div className="flex space-x-6 items-center">
+              <Link href="/credits" className="text-xs text-slate-600 hover:text-emerald-500 transition-colors">
+                Powered by Hadinata.dev
+              </Link>
            </div>
         </div>
-      </div>
+
+        </div>
     </footer>
   );
 }

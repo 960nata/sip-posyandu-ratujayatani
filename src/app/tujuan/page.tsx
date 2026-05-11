@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Footer from "../../components/Footer";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { Heart, ArrowRight, Shield, Activity, Users } from "lucide-react";
@@ -130,9 +131,7 @@ export default function TujuanPage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-8 bg-slate-900 text-white text-center text-sm">
-        <p>&copy; 2026 SIP Lampung Timur. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

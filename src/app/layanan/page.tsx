@@ -2,6 +2,7 @@
  
  import Link from "next/link";
  import { motion } from "framer-motion";
+ import Footer from "../../components/Footer";
  import { 
    Heart, ArrowLeft, Baby, Syringe, 
    ClipboardList, Activity, Star, ChevronRight
@@ -145,12 +146,7 @@
          </div>
        </main>
  
-       {/* Footer */}
-       <footer className="bg-slate-50 text-slate-500 py-8 border-t border-slate-100 mt-auto">
-         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-           <p>© 2026 Pemkab Lampung Timur. Semua hak cipta dilindungi.</p>
-         </div>
-       </footer>
+       <Footer />
      </div>
    );
  }

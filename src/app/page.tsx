@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Footer from "../components/Footer";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
@@ -155,10 +156,7 @@ export default function Home() {
             
             {/* Left Content */}
             <div className="col-span-1 lg:col-span-5 space-y-6">
-              <div className="inline-flex items-center space-x-2 bg-slate-50 border border-slate-100 rounded-full px-4 py-1.5">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-                <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">01 Tujuan Sistem</span>
-              </div>
+
               
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
                 Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
@@ -232,7 +230,7 @@ export default function Home() {
       <section id="data" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Cakupan Data</h2>
+
             <p className="text-3xl font-bold text-slate-900 mt-2">Data Yang Dikumpulkan</p>
             <p className="text-slate-500 mt-4 max-w-2xl mx-auto">Sistem Informasi Posyandu mengumpulkan data dari berbagai sektor krusial di tingkat desa.</p>
           </div>
@@ -261,7 +259,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Tata Kelola</h2>
+
               <p className="text-3xl font-bold text-slate-900 mt-2">Kelembagaan yang Kuat & Transparan</p>
               <p className="text-slate-500 mt-4 mb-6">
                 Sistem ini didukung oleh tata kelola kelembagaan yang solid di tingkat Kabupaten Lampung Timur, memastikan setiap data tervalidasi dan pelayanan berjalan efisien.
@@ -320,48 +318,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-16 mt-auto relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <Heart className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />
-                <span className="font-bold text-lg text-white">SIP</span>
-              </div>
-              <p className="text-sm text-slate-500 max-w-sm">
-                Sistem Informasi Posyandu Kabupaten Lampung Timur. Mewujudkan tata kelola data yang baik untuk pelayanan publik yang prima.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Navigasi</h3>
-              <ul className="space-y-3">
-                <li><Link href="#" className="text-sm hover:text-emerald-500 transition-colors">Beranda</Link></li>
-                <li><Link href="/tujuan" className="text-sm hover:text-emerald-500 transition-colors">Tujuan</Link></li>
-                <li><Link href="/#data" className="text-sm hover:text-emerald-500 transition-colors">Data</Link></li>
-                <li><Link href="/about" className="text-sm hover:text-emerald-500 transition-colors">Tentang</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Tautan Terkait</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-sm hover:text-emerald-500 transition-colors">Pemkab Lampung Timur</a></li>
-                <li><a href="#" className="text-sm hover:text-emerald-500 transition-colors">Dinas Kesehatan</a></li>
-                <li><a href="#" className="text-sm hover:text-emerald-500 transition-colors">Kominfo Lamtim</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-             <p className="text-xs text-slate-600">© 2026 Pemkab Lampung Timur. All rights reserved.</p>
-             <div className="flex space-x-6">
-               <span className="text-xs text-slate-600">Membangun Negeri dari Desa</span>
-             </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

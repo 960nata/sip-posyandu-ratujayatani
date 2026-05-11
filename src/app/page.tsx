@@ -85,10 +85,10 @@ export default function Home() {
           <AnimatePresence initial={false}>
             <motion.div
               key={currentImageIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0"
               style={{ y }}
             >
@@ -154,18 +154,76 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Title - Order 1 on mobile */}
-            <div className="col-span-1 lg:col-span-5 order-1">
+            {/* Left Content (Title + Mobile Cards + Text) */}
+            <div className="col-span-1 lg:col-span-5 space-y-6">
+              
+              {/* Title */}
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
                 Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
               </h2>
+
+              {/* Cards - Only visible on Mobile */}
+              <div className="grid grid-cols-2 gap-4 lg:hidden">
+                {/* Card 1: Integrasi Data (Full Size) */}
+                <div className="col-span-2 w-full h-48 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+                  <Image
+                    src="/images/tujuan/integrasi.avif"
+                    alt="Integrasi Data"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute top-4 left-4 w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <h3 className="text-lg font-bold text-white mb-1">Integrasi Data</h3>
+                    <p className="text-xs text-white/80 font-light">Menghubungkan berbagai sektor</p>
+                  </div>
+                </div>
+
+                {/* Card 2: Efisiensi Pelayanan (70% Size) */}
+                <div className="col-span-1 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+                  <Image
+                    src="/images/tujuan/efisiensi.avif"
+                    alt="Efisiensi Pelayanan"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute top-3 left-3 w-6 h-6 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-xs">2</div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-base font-bold text-white mb-0.5">Efisiensi</h3>
+                    <p className="text-[10px] text-white/80 font-light">Mempercepat proses pelaporan</p>
+                  </div>
+                </div>
+
+                {/* Card 3: Transparansi (60% Size) */}
+                <div className="col-span-1 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+                  <Image
+                    src="/images/tujuan/transparansi.avif"
+                    alt="Transparansi"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  <div className="absolute top-3 left-3 w-6 h-6 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white font-bold text-xs">3</div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-sm font-bold text-white mb-0.5">Transparansi</h3>
+                    <p className="text-[10px] text-white/80 font-light">Data akurat & terpercaya</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text */}
+              <p className="text-base text-slate-500 font-light leading-relaxed">
+                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat dan tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
+              </p>
             </div>
 
-            {/* Right Content - Cards - Order 2 on mobile, spans 2 rows on desktop */}
-            <div className="col-span-1 lg:col-span-7 grid grid-cols-2 gap-4 lg:flex lg:flex-row lg:gap-6 lg:items-start lg:overflow-visible pb-6 lg:pb-0 order-2 lg:order-2 lg:row-span-2">
+            {/* Right Content - Cards - Only visible on Desktop */}
+            <div className="hidden lg:col-span-7 lg:flex lg:flex-row lg:gap-6 lg:items-start lg:overflow-visible pb-6 lg:pb-0">
               
               {/* Card 1: Integrasi Data (Full Size) */}
-              <div className="col-span-2 lg:flex-shrink-0 lg:w-64 lg:h-80 w-full h-48 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+              <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
                   src="/images/tujuan/integrasi.avif"
                   alt="Integrasi Data"
@@ -181,7 +239,7 @@ export default function Home() {
               </div>
 
               {/* Card 2: Efisiensi Pelayanan (70% Size) */}
-              <div className="col-span-1 lg:flex-shrink-0 lg:w-44 lg:h-56 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 lg:mt-16 group">
+              <div className="flex-shrink-0 w-44 h-56 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 mt-16 group">
                 <Image
                   src="/images/tujuan/efisiensi.avif"
                   alt="Efisiensi Pelayanan"
@@ -197,7 +255,7 @@ export default function Home() {
               </div>
 
               {/* Card 3: Transparansi (60% Size) */}
-              <div className="col-span-1 lg:flex-shrink-0 lg:w-40 lg:h-48 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
+              <div className="flex-shrink-0 w-40 h-48 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
                   src="/images/tujuan/transparansi.avif"
                   alt="Transparansi"
@@ -212,13 +270,6 @@ export default function Home() {
                 </div>
               </div>
 
-            </div>
-
-            {/* Text - Order 3 on mobile */}
-            <div className="col-span-1 lg:col-span-5 order-3">
-              <p className="text-base text-slate-500 font-light leading-relaxed">
-                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat dan tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
-              </p>
             </div>
 
           </div>

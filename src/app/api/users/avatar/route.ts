@@ -15,6 +15,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Email not found in session" }, { status: 400 })
   }
 
+  // Check if running on Vercel (Read-Only Filesystem)
+  if (process.env.VERCEL) {
+    return NextResponse.json({ 
+      error: "Upload foto profil belum didukung di Vercel karena sistem file bersifat Read-Only. Silakan gunakan lingkungan lokal (localhost) untuk mengetes fitur ini!" 
+    }, { status: 500 })
+  }
+
   try {
     const formData = await request.formData()
     const file = formData.get('file') as Blob | null
@@ -48,6 +55,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, avatarUrl })
   } catch (error: any) {
     console.error("Failed to upload avatar:", error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: error.message, stack: error.stack }, { status: 500 })
   }
 }

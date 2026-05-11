@@ -209,7 +209,7 @@ export default function DashboardPage() {
           </div>
           <div className="h-10 w-32 bg-slate-100 dark:bg-zinc-800 rounded-xl animate-pulse"></div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
               <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800 rounded-xl animate-pulse"></div>
@@ -463,7 +463,7 @@ export default function DashboardPage() {
       return (
         <div className="space-y-6">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
               <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">05</p>
@@ -764,7 +764,7 @@ export default function DashboardPage() {
       return (
         <div className="space-y-6">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Desa</p>
               <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">12</p>
@@ -927,16 +927,16 @@ export default function DashboardPage() {
     return (
       <div className="space-y-6">
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[
             { label: 'Total Posyandu', value: '240', desc: 'Di 24 Kecamatan', color: 'text-emerald-600' },
             { label: 'Total Pengunjung', value: '12.400', desc: 'Bulan ini', color: 'text-blue-600' },
             { label: 'Laporan Selesai', value: '1.450', desc: 'Bulan ini', color: 'text-teal-600' },
             { label: 'Total User', value: '350', desc: 'Semua level', color: 'text-violet-600' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div key={stat.label} className="bg-white dark:bg-[#111827] p-4 md:p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">{stat.label}</p>
-              <p className={`text-4xl font-bold tracking-tight ${stat.color} mt-2`}>{stat.value}</p>
+              <p className={`text-2xl md:text-4xl font-bold tracking-tight ${stat.color} mt-2`}>{stat.value}</p>
               <p className="text-xs text-slate-400 mt-1">{stat.desc}</p>
             </div>
           ))}

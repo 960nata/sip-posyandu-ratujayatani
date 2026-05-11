@@ -10,6 +10,18 @@ export default function ProfilePage() {
   const [name, setName] = useState(session?.user?.name || '')
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   return (
     <div className="space-y-6 p-6 bg-slate-50/50 dark:bg-[#0B0F19] min-h-screen font-sans">
@@ -34,9 +46,23 @@ export default function ProfilePage() {
             <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
             
             <div className="relative flex flex-col items-center mt-8">
-              <div className="relative w-28 h-28 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center text-emerald-500 text-4xl font-bold mb-4 shadow-xl border-4 border-white dark:border-zinc-900">
-                {name?.[0] || 'U'}
-                <button className="absolute bottom-1 right-1 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors shadow-lg">
+              <div className="relative w-28 h-28 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center text-emerald-500 text-4xl font-bold mb-4 shadow-xl border-4 border-white dark:border-zinc-900 overflow-hidden">
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  name?.[0] || 'U'
+                )}
+                <input
+                  type="file"
+                  id="avatar-input"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+                <button 
+                  onClick={() => document.getElementById('avatar-input')?.click()}
+                  className="absolute bottom-1 right-1 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors shadow-lg"
+                >
                   <Camera className="w-4 h-4" />
                 </button>
               </div>

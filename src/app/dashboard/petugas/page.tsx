@@ -3,8 +3,10 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Save, Plus, Trash2, Edit2, ArrowLeft, Check, X } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 export default function PetugasPage() {
+  const { data: session } = useSession()
   const [petugas, setPetugas] = useState([
     { id: '1', nama: 'Siti', role: 'KADER', unit: 'Posyandu Mawar 1' },
     { id: '2', nama: 'Ani', role: 'KADER', unit: 'Posyandu Mawar 1' },
@@ -25,7 +27,7 @@ export default function PetugasPage() {
 
   const handleOpenAdd = () => {
     setModalMode('add')
-    setFormData({ nama: '', role: 'KADER', unit: '' })
+    setFormData({ nama: '', role: 'KADER', unit: (session?.user as any)?.kecamatanNama || 'Posyandu Anda' })
     setIsModalOpen(true)
   }
 
@@ -261,9 +263,8 @@ export default function PetugasPage() {
                   <input
                     type="text"
                     value={formData.unit}
-                    onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                    placeholder="Contoh: Posyandu Mawar 1"
+                    readOnly
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800/50 text-slate-500 dark:text-zinc-400 cursor-not-allowed"
                   />
                 </div>
               </div>

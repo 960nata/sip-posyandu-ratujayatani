@@ -327,12 +327,14 @@ model User {
   nama        String
   email       String   @unique
   password    String
+  image       String?
   role        RoleEnum
   desaId      String?
   desa        Desa?    @relation(fields: [desaId], references: [id])
   kecamatanId String?
   posyanduId  String?
   posyandu    Posyandu? @relation(fields: [posyanduId], references: [id])
+  absensi     AbsensiPetugas[]
   isActive    Boolean  @default(true)
   lastLogin   DateTime?
   createdAt   DateTime @default(now())
@@ -389,4 +391,23 @@ enum KategoriSasaranEnum {
   BAYI_BALITA
   REMAJA
   LANSIA
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  target    String   // SEMUA, KECAMATAN, DESA, POSYANDU
+  targetId  String?  // ID wilayah tujuan jika spesifik
+  createdAt DateTime @default(now())
+}
+
+model AbsensiPetugas {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  tanggal    DateTime @default(now())
+  status     String   // HADIR, IZIN, SAKIT, ALFA
+  keterangan String?
+  createdAt  DateTime @default(now())
 }

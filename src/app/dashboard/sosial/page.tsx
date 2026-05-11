@@ -182,6 +182,22 @@ export default function SosialPage() {
   const isOperator = role === 'OPERATOR_POSYANDU'
   const isKecamatan = role === 'ADMIN_KECAMATAN' || role === 'SUPERADMIN'
 
+  const theme = {
+    bgGradient: isOperator ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isOperator ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isOperator ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isOperator ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isOperator ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isOperator ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isOperator ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isOperator ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isOperator ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    fileBg: isOperator ? 'file:bg-purple-50' : 'file:bg-emerald-50',
+    fileText: isOperator ? 'file:text-purple-700' : 'file:text-emerald-700',
+    fileHover: isOperator ? 'hover:file:bg-purple-100' : 'hover:file:bg-emerald-100',
+    fileTextDark: isOperator ? 'dark:file:text-purple-400' : 'dark:file:text-emerald-400',
+  }
+
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
   const [reports, setReports] = useState<Report[]>(SEED)
@@ -431,7 +447,7 @@ export default function SosialPage() {
             <button onClick={() => exportCSV(filtered, selectedDesa || 'Adirejo')} className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"><Download className="w-5 h-5" /> Export CSV</button>
           )}
           {(isOperator || role === 'SUPERADMIN') && (
-            <button onClick={() => { setSelectedReport(null); setForm({ tanggal:'', posyandu:'', nik:'', nama:'', alamat:'', hal:'', keterangan:'', status:'BELUM' }); setImagePreview(null); setPdfPreview(null); setIsModalOpen(true); }} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"><Plus className="w-5 h-5" /> Tambah Data</button>
+            <button onClick={() => { setSelectedReport(null); setForm({ tanggal:'', posyandu:'', nik:'', nama:'', alamat:'', hal:'', keterangan:'', status:'BELUM' }); setImagePreview(null); setPdfPreview(null); setIsModalOpen(true); }} className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}><Plus className="w-5 h-5" /> Tambah Data</button>
           )}
         </div>
       </div>
@@ -563,7 +579,7 @@ export default function SosialPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
@@ -583,7 +599,7 @@ export default function SosialPage() {
               <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="p-6 space-y-5 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
                 <div className="md:col-span-1">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal *</label>
-                  <input type="date" value={form.tanggal} onChange={e=>setForm(f=>({...f,tanggal:e.target.value}))} className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" required />
+                  <input type="date" value={form.tanggal} onChange={e=>setForm(f=>({...f,tanggal:e.target.value}))} className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
                 </div>
                 
                 <div className="md:col-span-1">
@@ -594,33 +610,33 @@ export default function SosialPage() {
                     onChange={e=>setForm(f=>({...f,posyandu:e.target.value}))} 
                     disabled={isOperator}
                     placeholder="Nama Posyandu" 
-                    className={`block w-full ${isOperator ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all`} 
+                    className={`block w-full ${isOperator ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} 
                   />
                 </div>
 
                 <div className="md:col-span-1">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK</label>
-                  <input type="text" value={form.nik} onChange={e=>setForm(f=>({...f,nik:e.target.value}))} placeholder="16 digit NIK" className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" />
+                  <input type="text" value={form.nik} onChange={e=>setForm(f=>({...f,nik:e.target.value}))} placeholder="16 digit NIK" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
                 </div>
 
                 <div className="md:col-span-1">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama *</label>
-                  <input type="text" value={form.nama} onChange={e=>setForm(f=>({...f,nama:e.target.value}))} placeholder="Nama Lengkap" className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" required />
+                  <input type="text" value={form.nama} onChange={e=>setForm(f=>({...f,nama:e.target.value}))} placeholder="Nama Lengkap" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
                 </div>
 
                 <div className="md:col-span-2">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Alamat</label>
-                  <input type="text" value={form.alamat} onChange={e=>setForm(f=>({...f,alamat:e.target.value}))} placeholder="RT/RW, Lingkungan" className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" />
+                  <input type="text" value={form.alamat} onChange={e=>setForm(f=>({...f,alamat:e.target.value}))} placeholder="RT/RW, Lingkungan" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
                 </div>
 
                 <div className="md:col-span-2">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Hal Pengaduan *</label>
-                  <textarea value={form.hal} onChange={e=>setForm(f=>({...f,hal:e.target.value}))} rows={3} placeholder="Isi laporan atau pengaduan..." className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" required />
+                  <textarea value={form.hal} onChange={e=>setForm(f=>({...f,hal:e.target.value}))} rows={3} placeholder="Isi laporan atau pengaduan..." className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
                 </div>
 
                 <div className="md:col-span-2">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan</label>
-                  <input type="text" value={form.keterangan} onChange={e=>setForm(f=>({...f,keterangan:e.target.value}))} placeholder="Tindak lanjut / keterangan" className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" />
+                  <input type="text" value={form.keterangan} onChange={e=>setForm(f=>({...f,keterangan:e.target.value}))} placeholder="Tindak lanjut / keterangan" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
                 </div>
                 
                 <div className="md:col-span-1">
@@ -629,10 +645,10 @@ export default function SosialPage() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                   />
                   {isCompressing && (
-                    <p className="text-xs text-emerald-600 mt-1">Memproses foto...</p>
+                    <p className={`text-xs ${theme.text} mt-1`}>Memproses foto...</p>
                   )}
                   {imagePreview && (
                     <div className="mt-3 relative w-32 h-32">
@@ -654,7 +670,7 @@ export default function SosialPage() {
                     type="file"
                     accept=".pdf"
                     onChange={handlePdfChange}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                   />
                   {pdfPreview && (
                     <div className="mt-3 relative w-32 h-32">
@@ -675,7 +691,7 @@ export default function SosialPage() {
 
                 <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">
                   <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all">Batal</button>
-                  <button type="submit" className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20">Simpan Data</button>
+                  <button type="submit" className={`px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r ${theme.bgGradient} rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}>Simpan Data</button>
                 </div>
               </form>
             </motion.div>
@@ -699,7 +715,7 @@ export default function SosialPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
@@ -724,7 +740,7 @@ export default function SosialPage() {
                 
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Status Laporan</label>
-                  <select value={feedbackForm.status} onChange={e=>setFeedbackForm(f=>({...f,status:e.target.value as any}))} className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all">
+                  <select value={feedbackForm.status} onChange={e=>setFeedbackForm(f=>({...f,status:e.target.value as any}))} className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}>
                     <option value="BELUM">Belum</option>
                     <option value="PROSES">Proses</option>
                     <option value="SUDAH">Sudah</option>
@@ -733,12 +749,12 @@ export default function SosialPage() {
                 
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Feedback / Solusi</label>
-                  <textarea value={feedbackForm.feedback} onChange={e=>setFeedbackForm(f=>({...f,feedback:e.target.value}))} rows={4} placeholder="Tuliskan solusi atau informasi tindak lanjut untuk Posyandu..." className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all" />
+                  <textarea value={feedbackForm.feedback} onChange={e=>setFeedbackForm(f=>({...f,feedback:e.target.value}))} rows={4} placeholder="Tuliskan solusi atau informasi tindak lanjut untuk Posyandu..." className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-6 border-t border-slate-100 dark:border-zinc-800 pt-5">
                   <button onClick={() => setIsFeedbackModalOpen(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all">Batal</button>
-                  <button onClick={handleFeedbackSubmit} className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20">Kirim Tanggapan</button>
+                  <button onClick={handleFeedbackSubmit} className={`px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r ${theme.bgGradient} rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}>Kirim Tanggapan</button>
                 </div>
               </div>
             </motion.div>
@@ -762,7 +778,7 @@ export default function SosialPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">

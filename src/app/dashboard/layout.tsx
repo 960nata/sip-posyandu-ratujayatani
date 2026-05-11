@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -59,6 +60,19 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
+
+  const isPosyandu = role === 'OPERATOR_POSYANDU'
+  const theme = {
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    bgDark: isPosyandu ? 'dark:bg-purple-900/20' : 'dark:bg-emerald-900/20',
+    focusRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    gradient: isPosyandu ? 'from-purple-400 to-indigo-500' : 'from-emerald-400 to-teal-500',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-emerald-100',
+    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-emerald-900/50',
+  }
 
   // Effect to handle dark mode persistence
   useEffect(() => {
@@ -124,9 +138,7 @@ export default function DashboardLayout({
             {/* Sidebar Header */}
             <div className="h-16 flex items-center justify-between px-6 border-b border-slate-50 dark:border-slate-800">
               <Link href="/dashboard" className="flex items-center space-x-3">
-                <div className="w-9 h-9 bg-emerald-500 dark:bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                  <Heart className="w-5 h-5 text-white" />
-                </div>
+                <Image src="/images/logo/logo.png" alt="Logo" width={36} height={36} className="object-contain" />
                 <div className="flex flex-col">
                   <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIP</span>
                   <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">Sistem Informasi Posyandu</span>
@@ -167,15 +179,15 @@ export default function DashboardLayout({
                             onClick={() => setSidebarOpen(false)}
                             className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                               isActive 
-                                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400'
+                                ? `${theme.bgLight} ${theme.bgDark} ${theme.text} ${theme.textDark}`
                                 : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                             }`}
                           >
                             <div className="flex items-center space-x-3">
-                              <item.icon className={`w-5 h-5 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-500'}`} />
+                              <item.icon className={`w-5 h-5 ${isActive ? `${theme.text} ${theme.textDark}` : 'text-slate-500 dark:text-slate-500'}`} />
                               <span>{item.name}</span>
                             </div>
-                            {isActive && <ChevronRight className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
+                            {isActive && <ChevronRight className={`w-4 h-4 ${theme.text} ${theme.textDark}`} />}
                           </Link>
                         )
                       })}
@@ -188,8 +200,8 @@ export default function DashboardLayout({
             {/* Sidebar Footer */}
             <div className="p-4 border-t border-slate-50 dark:border-slate-800">
               <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl">
-                <div className="w-9 h-9 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center">
-                  <User className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <div className={`w-9 h-9 ${theme.iconBg} ${theme.iconBgDark} rounded-lg flex items-center justify-center`}>
+                  <User className={`w-5 h-5 ${theme.text} ${theme.textDark}`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">{session?.user?.name || 'User'}</p>
@@ -232,7 +244,7 @@ export default function DashboardLayout({
               <input
                 type="text"
                 placeholder="Cari sesuatu..."
-                className="w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent dark:text-white transition-all"
+                className={`w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 ${theme.focusRing} focus:border-transparent dark:text-white transition-all`}
               />
             </div>
           </div>
@@ -294,7 +306,7 @@ export default function DashboardLayout({
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 className="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none"
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md shadow-emerald-500/20">
+                <div className={`w-8 h-8 bg-gradient-to-br ${theme.gradient} rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md ${theme.shadow}`}>
                   {session?.user?.name?.[0] || 'U'}
                 </div>
                 <span className="hidden md:inline text-sm font-semibold text-slate-800 dark:text-white">{session?.user?.name || 'User'}</span>

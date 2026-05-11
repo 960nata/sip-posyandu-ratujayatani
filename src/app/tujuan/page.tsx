@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -168,33 +169,44 @@ export default function TujuanPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
-              { icon: Globe, title: "1. Integrasi Data", desc: "Menghubungkan data dari berbagai sektor — Kesehatan, Pendidikan, dan Infrastruktur — untuk memberikan visualisasi yang menyeluruh bagi pemerintah daerah. Tidak ada lagi fragmentasi data antar dinas.", tags: ["Data dari 264 desa terhubung", "Laporan real-time ke kabupaten", "Dashboard terpadu lintas sektor"] },
-              { icon: Zap, title: "2. Efisiensi Pelayanan", desc: "Mempercepat proses pelaporan dari tingkat desa ke kabupaten, memungkinkan tindak lanjut yang lebih cepat terhadap masalah di lapangan dengan batas waktu pelayanan 5 hari kerja.", tags: ["Batas 5 hari kerja per SOP", "Alur permohonan digital", "Notifikasi otomatis ke OPD"] },
-              { icon: ShieldCheck, title: "3. Transparansi", desc: "Menyediakan data yang akurat, valid, dan dapat dipertanggungjawabkan untuk memastikan bantuan dan program tepat sasaran kepada masyarakat yang membutuhkan.", tags: ["Audit trail setiap data", "Validasi berjenjang", "Laporan publik tahunan"] },
+              { icon: Globe, title: "1. Integrasi Data", desc: "Menghubungkan data dari berbagai sektor — Kesehatan, Pendidikan, dan Infrastruktur — untuk memberikan visualisasi yang menyeluruh bagi pemerintah daerah. Tidak ada lagi fragmentasi data antar dinas.", tags: ["Data dari 264 desa terhubung", "Laporan real-time ke kabupaten", "Dashboard terpadu lintas sektor"], image: "/images/tujuan/integrasi.png" },
+              { icon: Zap, title: "2. Efisiensi Pelayanan", desc: "Mempercepat proses pelaporan dari tingkat desa ke kabupaten, memungkinkan tindak lanjut yang lebih cepat terhadap masalah di lapangan dengan batas waktu pelayanan 5 hari kerja.", tags: ["Batas 5 hari kerja per SOP", "Alur permohonan digital", "Notifikasi otomatis ke OPD"], image: "/images/tujuan/efisiensi.png" },
+              { icon: ShieldCheck, title: "3. Transparansi", desc: "Menyediakan data yang akurat, valid, dan dapat dipertanggungjawabkan untuk memastikan bantuan dan program tepat sasaran kepada masyarakat yang membutuhkan.", tags: ["Audit trail setiap data", "Validasi berjenjang", "Laporan publik tahunan"], image: "/images/tujuan/transparansi.png" },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
-                className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-between"
+                className="bg-white rounded-xl border border-slate-100 shadow-sm flex flex-col justify-between overflow-hidden"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05)" }}
               >
-                <div>
-                  <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4 text-xl">
-                    <item.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-500 font-light leading-relaxed mb-4">{item.desc}</p>
+                <div className="relative w-full h-48 bg-slate-100">
+                  <Image 
+                    src={item.image} 
+                    alt={item.title} 
+                    fill 
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-                <div className="space-y-2">
-                  {item.tags.map((tag, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-slate-600">
-                      <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                      {tag}
+                <div className="p-6 flex flex-col flex-grow justify-between">
+                  <div>
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4 text-xl">
+                      <item.icon className="w-6 h-6" />
                     </div>
-                  ))}
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-sm text-slate-500 font-light leading-relaxed mb-4">{item.desc}</p>
+                  </div>
+                  <div className="space-y-2">
+                    {item.tags.map((tag, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs text-slate-600">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                        {tag}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ))}

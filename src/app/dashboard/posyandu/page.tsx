@@ -10,6 +10,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
 } from 'recharts'
 import ExcelJS from 'exceljs'
+import { useSession } from 'next-auth/react'
 
 // Dummy stats
 const stats = [
@@ -33,6 +34,30 @@ const chartData = [
 ]
 
 export default function AnalisaDataPage() {
+  const { data: session } = useSession()
+  const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
+
+  const theme = {
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-emerald-500',
+    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-emerald-600',
+    borderLight: isPosyandu ? 'border-purple-200' : 'border-emerald-200',
+    hoverLight: isPosyandu ? 'hover:bg-purple-50' : 'hover:bg-emerald-50',
+    shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
+    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-emerald-900/30',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    chartColor: isPosyandu ? '#8b5cf6' : '#10b981', // Purple vs Emerald
+  }
+
   const [isExporting, setIsExporting] = useState(false)
 
   const handleExportExcel = async () => {
@@ -316,7 +341,7 @@ export default function AnalisaDataPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-            <BarChart3 className="w-6 h-6 text-emerald-500" />
+            <BarChart3 className={`w-6 h-6 ${theme.text}`} />
             Analisa Data Terpadu
           </h1>
           <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">
@@ -326,7 +351,7 @@ export default function AnalisaDataPage() {
         <button 
           onClick={handleExportExcel}
           disabled={isExporting}
-          className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-5 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
+          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
         >
           <Download className="w-5 h-5" />
           {isExporting ? 'Memproses...' : 'Export Excel (Semua Bidang)'}
@@ -350,7 +375,7 @@ export default function AnalisaDataPage() {
               <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">{stat.name}</p>
               <div className="flex items-end justify-center gap-2">
                 <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{stat.total}</h3>
-                <span className="text-xs font-medium text-emerald-500 mb-1">
+                <span className={`text-xs font-medium ${theme.text} mb-1`}>
                   {Math.round((stat.completed / stat.total) * 100)}% TL
                 </span>
               </div>
@@ -377,7 +402,7 @@ export default function AnalisaDataPage() {
               />
               <Legend wrapperStyle={{ paddingTop: '20px' }} />
               <Bar dataKey="Total" fill="#94a3b8" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Selesai" fill="#10b981" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Selesai" fill={theme.chartColor} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

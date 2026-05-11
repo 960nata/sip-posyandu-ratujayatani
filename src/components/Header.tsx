@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -56,7 +57,7 @@ export default function Header() {
         }`}
       >
         <div className="flex items-center space-x-2">
-          <Heart className="w-8 h-8 text-emerald-500 fill-emerald-500/10" />
+          <Image src="/images/logo/logo.png" alt="Logo" width={32} height={32} className="object-contain" />
           <span className={`font-bold text-xl transition-colors ${isScrolled ? "text-slate-900" : "text-white"}`}>
             SIP
           </span>

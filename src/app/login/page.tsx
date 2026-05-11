@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Heart, Lock, Mail, Loader2 } from 'lucide-react'
 
 export default function LoginPage() {
@@ -52,7 +53,7 @@ export default function LoginPage() {
         <div className="backdrop-blur-md bg-white/10 p-8 rounded-3xl border border-white/20 shadow-2xl text-white">
           <div className="flex flex-col items-center mb-8">
             <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm border border-white/30">
-              <Heart className="w-10 h-10 text-emerald-300 fill-emerald-300/30" />
+              <Image src="/images/logo/logo.png" alt="Logo" width={40} height={40} className="object-contain" />
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-white mb-1">SIP</h1>
             <p className="text-emerald-100/80 text-sm text-center">

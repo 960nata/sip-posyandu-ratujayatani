@@ -296,7 +296,7 @@ export default function DashboardPage() {
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Laporan Baru</p>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">5</p>
                 </div>
-                <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center text-emerald-500">
+                <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-xl flex items-center justify-center text-purple-500">
                   <CheckCircle className="w-6 h-6" />
                 </div>
               </div>
@@ -317,7 +317,7 @@ export default function DashboardPage() {
                       <module.icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
+                      <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
                         {module.title}
                       </h3>
                       <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
@@ -326,7 +326,7 @@ export default function DashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard/${module.slug}`}
-                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-xl transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50"
+                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-xl transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Input Data
@@ -343,14 +343,14 @@ export default function DashboardPage() {
                   <p className="text-sm font-medium text-slate-900 dark:text-white">Input Data KES-6</p>
                   <p className="text-xs text-slate-400 mt-0.5">Hari ini, 10:30</p>
                 </div>
-                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
+                <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
               </div>
               <div className="flex justify-between items-center py-3">
                 <div>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">Input Data Sosial</p>
                   <p className="text-xs text-slate-400 mt-0.5">Kemarin, 14:20</p>
                 </div>
-                <span className="text-xs font-medium text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
+                <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
               </div>
             </div>
           </div>

@@ -12,6 +12,27 @@ export default function Sip6Page() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
+
+  const theme = {
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-emerald-500',
+    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-emerald-600',
+    borderLight: isPosyandu ? 'border-purple-200' : 'border-emerald-200',
+    hoverLight: isPosyandu ? 'hover:bg-purple-50' : 'hover:bg-emerald-50',
+    shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
+    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-emerald-900/30',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+  }
+
   const [showForm, setShowForm] = useState(false)
   const [showFormSasaran, setShowFormSasaran] = useState(false)
   const [activeTab, setActiveTab] = useState('pengunjung')
@@ -307,7 +328,7 @@ export default function Sip6Page() {
                  activeTab === 'sasaran_remaja' ? 'Tambah Sasaran Remaja' :
                  activeTab === 'sasaran_lansia' ? 'Tambah Sasaran Lansia' : 'Tambah Sasaran'}
               </h2>
-              <button type="button" onClick={() => setShowFormSasaran(false)} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 flex items-center gap-1 transition-colors">
+              <button type="button" onClick={() => setShowFormSasaran(false)} className={`text-sm font-medium ${theme.text} hover:${theme.textLight} flex items-center gap-1 transition-colors`}>
                 <ArrowLeft className="w-4 h-4" /> Kembali
               </button>
             </div>
@@ -366,7 +387,7 @@ export default function Sip6Page() {
           </motion.div>
           <div className="flex items-center justify-end gap-3">
             <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-xl transition-all">Batal</button>
-            <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+            <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
               <Save className="w-5 h-5" /> Simpan Sasaran
             </button>
           </div>
@@ -379,7 +400,7 @@ export default function Sip6Page() {
                   {!isPosyandu && (
                     <button 
                       onClick={() => setSelectedPosyanduId('')}
-                      className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
                       title="Kembali ke Daftar Posyandu"
                     >
                       <ArrowLeft className="w-5 h-5" />
@@ -391,7 +412,7 @@ export default function Sip6Page() {
                   onClick={() => setActiveTab('pengunjung')}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
                     activeTab === 'pengunjung' 
-                      ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' 
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
                 >
@@ -401,7 +422,7 @@ export default function Sip6Page() {
                   onClick={() => setActiveTab('sasaran_bumil')}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
                     activeTab === 'sasaran_bumil' || activeTab === 'sasaran'
-                      ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' 
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
                 >
@@ -411,7 +432,7 @@ export default function Sip6Page() {
                   onClick={() => setActiveTab('sasaran_bayi')}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
                     activeTab === 'sasaran_bayi' 
-                      ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' 
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
                 >
@@ -421,7 +442,7 @@ export default function Sip6Page() {
                   onClick={() => setActiveTab('sasaran_remaja')}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
                     activeTab === 'sasaran_remaja' 
-                      ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' 
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
                 >
@@ -431,7 +452,7 @@ export default function Sip6Page() {
                   onClick={() => setActiveTab('sasaran_lansia')}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
                     activeTab === 'sasaran_lansia' 
-                      ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' 
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
                 >
@@ -448,7 +469,7 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportToCSV} className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all text-sm">
+                      <button onClick={exportToCSV} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
                         Export CSV
                       </button>
 
@@ -546,7 +567,7 @@ export default function Sip6Page() {
                             <td className="px-4 py-3">{report.lahirP || 0}</td>
                             <td className="px-4 py-3">{report.meninggalL || 0}</td>
                             <td className="px-4 py-3">{report.meninggalP || 0}</td>
-                            <td className="px-4 py-3"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">{report.status}</span></td>
+                            <td className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{report.status}</span></td>
 
                           </tr>
                         </Fragment>
@@ -570,7 +591,7 @@ export default function Sip6Page() {
                     </div>
                     <button 
                       onClick={() => setShowFormSasaran(true)}
-                      className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 text-sm w-full md:w-auto"
+                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
                     >
                       <Plus className="w-4 h-4" /> Tambah Sasaran
                     </button>
@@ -640,7 +661,7 @@ export default function Sip6Page() {
                                   onClick={() => toggleAttendance(s.id, m)}
                                   className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${
                                     s.kunjungan.includes(m) 
-                                      ? 'bg-emerald-500 text-white' 
+                                      ? `${theme.bgSolid} text-white` 
                                       : 'bg-slate-100 dark:bg-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
                                   }`}
                                 >
@@ -688,7 +709,7 @@ export default function Sip6Page() {
                   {role !== 'OPERATOR_DESA' && (
                     <button 
                       onClick={() => setSelectedDesaId('')}
-                      className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                       title="Kembali ke Daftar Desa"
                     >
                       <ArrowLeft className="w-5 h-5" />
@@ -713,9 +734,9 @@ export default function Sip6Page() {
                     {posyandus.map((p) => (
                       <tr key={p.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p.nama}</td>
-                        <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">Selesai</span></td>
+                        <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Selesai</span></td>
                         <td className="px-6 py-4 text-right">
-                          <button onClick={() => setSelectedPosyanduId(p.id)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Data</button>
+                          <button onClick={() => setSelectedPosyanduId(p.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Buka Data</button>
                         </td>
                       </tr>
                     ))}
@@ -731,7 +752,7 @@ export default function Sip6Page() {
                   {role !== 'ADMIN_KECAMATAN' && (
                     <button 
                       onClick={() => setSelectedKecamatanId('')}
-                      className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                       title="Kembali ke Daftar Kecamatan"
                     >
                       <ArrowLeft className="w-5 h-5" />
@@ -754,7 +775,7 @@ export default function Sip6Page() {
                       <tr key={desa.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa.nama}</td>
                         <td className="px-6 py-4 text-right">
-                          <button onClick={() => setSelectedDesaId(desa.id)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                          <button onClick={() => setSelectedDesaId(desa.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
                         </td>
                       </tr>
                     ))}
@@ -779,7 +800,7 @@ export default function Sip6Page() {
                       <tr key={kec.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
                         <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.nama}</td>
                         <td className="px-6 py-4 text-right">
-                          <button onClick={() => setSelectedKecamatanId(kec.id)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                          <button onClick={() => setSelectedKecamatanId(kec.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
                         </td>
                       </tr>
                     ))}
@@ -810,13 +831,13 @@ export default function Sip6Page() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                      <Users className="w-5 h-5 text-emerald-500" />
+                      <Users className={`w-5 h-5 ${theme.text}`} />
                       Daftar Individu Hadir
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
@@ -864,7 +885,7 @@ export default function Sip6Page() {
                                 <td className="px-4 py-2.5 font-medium text-slate-800 dark:text-white">{(s as any).nama || (s as any).namaIbu}</td>
                                 <td className="px-4 py-2.5">{(s as any).isOfficer ? (s as any).role : ((s as any).namaSuami ? 'Bumil' : 'Sasaran')}</td>
                                 <td className="px-4 py-2.5">
-                                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">Hadir ✓</span>
+                                  <span className={`${theme.text} dark:${theme.textDark} font-medium`}>Hadir ✓</span>
                                 </td>
                               </tr>
                             ))}

@@ -7,6 +7,28 @@ import { useSession } from 'next-auth/react'
 
 export default function PetugasPage() {
   const { data: session } = useSession()
+  const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
+
+  const theme = {
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-emerald-500',
+    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-emerald-600',
+    borderLight: isPosyandu ? 'border-purple-200' : 'border-emerald-200',
+    hoverLight: isPosyandu ? 'hover:bg-purple-50' : 'hover:bg-emerald-50',
+    shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
+    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-emerald-900/30',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+  }
+
   const [petugas, setPetugas] = useState([
     { id: '1', nama: 'Siti', role: 'KADER', unit: 'Posyandu Mawar 1' },
     { id: '2', nama: 'Ani', role: 'KADER', unit: 'Posyandu Mawar 1' },
@@ -101,7 +123,7 @@ export default function PetugasPage() {
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">Daftar Petugas</h2>
           <button 
             onClick={handleOpenAdd}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 px-4 rounded-xl transition-all shadow-sm flex items-center gap-2 text-sm"
+            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-xl transition-all shadow-sm flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah Petugas
@@ -130,7 +152,7 @@ export default function PetugasPage() {
                     <div className="flex items-center justify-end gap-2">
                       <button 
                         onClick={() => handleOpenEdit(p)}
-                        className="text-slate-400 hover:text-emerald-600 transition-colors"
+                        className={`text-slate-400 hover:${theme.text} transition-colors`}
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
@@ -180,11 +202,11 @@ export default function PetugasPage() {
                       <td key={monthIndex} className="px-3 py-3 text-center min-w-[60px]">
                         <button
                           onClick={() => toggleAttendance(p.id, monthIndex)}
-                          className={`w-6 h-6 rounded-md flex items-center justify-center transition-all border mx-auto ${
-                            isPresent
-                              ? 'bg-emerald-50 border-emerald-200 text-emerald-600 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400'
-                              : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-600 hover:border-emerald-300 dark:hover:border-emerald-700'
-                          }`}
+                              className={`w-6 h-6 rounded-md flex items-center justify-center transition-all border mx-auto ${
+                                isPresent
+                                  ? `${theme.bgLight} border-emerald-200 ${theme.text} dark:${theme.textDark} dark:border-emerald-800`
+                                  : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-600 hover:border-emerald-300 dark:hover:border-emerald-700'
+                              }`}
                         >
                           {isPresent && <Check className="w-4 h-4" />}
                         </button>
@@ -217,7 +239,7 @@ export default function PetugasPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
@@ -250,7 +272,7 @@ export default function PetugasPage() {
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                    className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} focus:border-emerald-500 transition-colors`}
                   >
                     <option value="KADER">KADER</option>
                     <option value="PLKB">PLKB</option>
@@ -278,7 +300,7 @@ export default function PetugasPage() {
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-emerald-500 hover:bg-emerald-600 transition-colors flex items-center gap-2"
+                  className={`px-4 py-2 rounded-lg text-sm font-medium text-white ${theme.bgSolid} ${theme.hoverSolid} transition-colors flex items-center gap-2`}
                 >
                   <Save className="w-4 h-4" />
                   Simpan

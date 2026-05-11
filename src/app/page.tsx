@@ -62,7 +62,11 @@ export default function Home() {
   const images = [
     "/images/hero/hero1.png",
     "/images/hero/hero2.png",
-    "/images/hero/hero3.png"
+    "/images/hero/hero3.png",
+    "/images/hero/PHOTO-2026-05-11-21-46-02.jpg",
+    "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg",
+    "/images/hero/PHOTO-2026-05-11-21-46-04.jpg",
+    "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg"
   ];
 
   useEffect(() => {
@@ -189,7 +193,7 @@ export default function Home() {
                 {/* Card 1: Integrasi Data (Full Size) */}
                 <div className="col-span-2 w-full h-48 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                   <Image
-                    src="/images/tujuan/integrasi.avif"
+                    src="/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg"
                     alt="Integrasi Data"
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -205,7 +209,7 @@ export default function Home() {
                 {/* Card 2: Efisiensi Pelayanan (70% Size) */}
                 <div className="col-span-1 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                   <Image
-                    src="/images/tujuan/efisiensi.avif"
+                    src="/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg"
                     alt="Efisiensi Pelayanan"
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -221,7 +225,7 @@ export default function Home() {
                 {/* Card 3: Transparansi (60% Size) */}
                 <div className="col-span-1 w-full h-40 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                   <Image
-                    src="/images/tujuan/transparansi.avif"
+                    src="/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg"
                     alt="Transparansi"
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -237,7 +241,7 @@ export default function Home() {
 
               {/* Text */}
               <p className="text-base text-slate-500 font-light leading-relaxed">
-                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat dan tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
+                Mewujudkan tata kelola data yang terintegrasi untuk mendukung pengambilan keputusan yang cepat and tepat. Kami menghubungkan sektor krusial untuk masa depan yang lebih baik.
               </p>
             </div>
 
@@ -247,7 +251,7 @@ export default function Home() {
               {/* Card 1: Integrasi Data (Full Size) */}
               <div className="flex-shrink-0 w-64 h-80 relative rounded-3xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
-                  src="/images/tujuan/integrasi.avif"
+                  src="/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg"
                   alt="Integrasi Data"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -263,7 +267,7 @@ export default function Home() {
               {/* Card 2: Efisiensi Pelayanan (70% Size) */}
               <div className="flex-shrink-0 w-44 h-56 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 mt-16 group">
                 <Image
-                  src="/images/tujuan/efisiensi.avif"
+                  src="/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg"
                   alt="Efisiensi Pelayanan"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -279,7 +283,7 @@ export default function Home() {
               {/* Card 3: Transparansi (60% Size) */}
               <div className="flex-shrink-0 w-40 h-48 relative rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group">
                 <Image
-                  src="/images/tujuan/transparansi.avif"
+                  src="/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg"
                   alt="Transparansi"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"

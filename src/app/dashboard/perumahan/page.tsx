@@ -152,6 +152,22 @@ export default function PerumahanPage() {
   const isOperator = role === 'OPERATOR_POSYANDU'
   const isKecamatan = role === 'ADMIN_KECAMATAN' || role === 'SUPERADMIN'
 
+  const theme = {
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    fileBg: isPosyandu ? 'file:bg-purple-50' : 'file:bg-emerald-50',
+    fileText: isPosyandu ? 'file:text-purple-700' : 'file:text-emerald-700',
+    fileHover: isPosyandu ? 'hover:file:bg-purple-100' : 'hover:file:bg-emerald-100',
+    fileTextDark: isPosyandu ? 'dark:file:text-purple-400' : 'dark:file:text-emerald-400',
+  }
+
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
   const [posyandus, setPosyandus] = useState<any[]>([])
@@ -285,10 +301,12 @@ export default function PerumahanPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Perumahan</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Perumahan)</p>
-        </div>
+        {!isPosyandu && (
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Perumahan</h1>
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Perumahan)</p>
+          </div>
+        )}
       </div>
       {(isPosyandu || (selectedDesa && selectedPosyandu)) ? (
         // Level 3: Detail Posyandu (Laporan)
@@ -321,7 +339,7 @@ export default function PerumahanPage() {
               {(isPosyandu || role === 'SUPERADMIN') && (
                 <button
                   onClick={handleAdd}
-                  className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+                  className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
                 >
                   <Plus className="w-5 h-5" />
                   Tambah Laporan
@@ -566,7 +584,7 @@ export default function PerumahanPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
@@ -594,7 +612,7 @@ export default function PerumahanPage() {
                     type="date"
                     value={formData.tanggal}
                     onChange={(e) => setFormData({...formData, tanggal: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     required
                   />
                 </div>
@@ -606,7 +624,7 @@ export default function PerumahanPage() {
                     value={isPosyandu ? "Posyandu Adirejo I" : formData.posyandu}
                     onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
                     disabled={isPosyandu}
-                    className={`block w-full ${isPosyandu ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all`}
+                    className={`block w-full ${isPosyandu ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     placeholder="Nama Posyandu"
                   />
                 </div>
@@ -617,7 +635,7 @@ export default function PerumahanPage() {
                     type="text"
                     value={formData.nama}
                     onChange={(e) => setFormData({...formData, nama: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     placeholder="Nama Lengkap"
                     required
                   />
@@ -629,7 +647,7 @@ export default function PerumahanPage() {
                     type="text"
                     value={formData.nik}
                     onChange={(e) => setFormData({...formData, nik: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     placeholder="NIK Pemohon"
                   />
                 </div>
@@ -640,7 +658,7 @@ export default function PerumahanPage() {
                     type="text"
                     value={formData.alamat}
                     onChange={(e) => setFormData({...formData, alamat: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     placeholder="Alamat Pemohon"
                   />
                 </div>
@@ -650,7 +668,7 @@ export default function PerumahanPage() {
                   <textarea
                     value={formData.hal}
                     onChange={(e) => setFormData({...formData, hal: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     rows={3}
                     placeholder="Keterangan permohonan..."
                     required
@@ -662,7 +680,7 @@ export default function PerumahanPage() {
                   <select 
                     value={formData.status}
                     onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                   >
                     <option value="BELUM">Belum</option>
                     <option value="PROSES">Proses</option>
@@ -694,10 +712,10 @@ export default function PerumahanPage() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                   />
                   {isCompressing && (
-                    <p className="text-xs text-emerald-600 mt-1">Memproses foto...</p>
+                    <p className={`text-xs ${theme.text} mt-1`}>Memproses foto...</p>
                   )}
                   {imagePreview && (
                     <div className="mt-3 relative w-32 h-32">
@@ -719,7 +737,7 @@ export default function PerumahanPage() {
                     type="file"
                     accept=".pdf"
                     onChange={handlePdfChange}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                   />
                   {pdfPreview && (
                     <div className="mt-3 relative w-32 h-32">
@@ -748,7 +766,7 @@ export default function PerumahanPage() {
                   </button>
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20"
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-6 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}
                   >
                     {editId ? 'Simpan Perubahan' : 'Simpan'}
                   </button>
@@ -775,7 +793,7 @@ export default function PerumahanPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">

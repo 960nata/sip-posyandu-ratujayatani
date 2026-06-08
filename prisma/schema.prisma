@@ -69,6 +69,7 @@ model Posyandu {
   laporanPRs        LaporanPR[]
   dataDukungs       DataDukung[]
   users             User[]
+  skKepengurusans   SkKepengurusan[]
   
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -410,4 +411,45 @@ model AbsensiPetugas {
   status     String   // HADIR, IZIN, SAKIT, ALFA
   keterangan String?
   createdAt  DateTime @default(now())
+}
+
+// ============================================================
+// SK KEPENGURUSAN POSYANDU
+// ============================================================
+
+model SkKepengurusan {
+  id                String       @id @default(cuid())
+  posyanduId        String
+  posyandu          Posyandu     @relation(fields: [posyanduId], references: [id])
+  nomorSK           String
+  tanggalPenetapan  DateTime
+  pejabatPenetap    String
+  periodeAwal       DateTime
+  periodeAkhir      DateTime
+  keterangan        String?
+  isActive          Boolean      @default(true)
+  anggota           AnggotaSK[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
+
+model AnggotaSK {
+  id              String          @id @default(cuid())
+  skId            String
+  sk              SkKepengurusan  @relation(fields: [skId], references: [id], onDelete: Cascade)
+  nama            String
+  jabatan         JabatanSKEnum
+  bidang          String?
+  nikNip          String?
+  alamat          String?
+  noHP            String?
+  createdAt       DateTime        @default(now())
+}
+
+enum JabatanSKEnum {
+  KETUA
+  SEKRETARIS
+  BENDAHARA
+  KETUA_BIDANG
+  KADER
 }

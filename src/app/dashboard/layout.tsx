@@ -10,7 +10,8 @@ import {
   Heart, BarChart3, Folder, Menu, X, Bell, User, 
   Settings, LogOut, ChevronRight, BookOpen, Building, 
   Home, Shield, Users, Sun, Moon, Search, ChevronDown,
-  Sparkles, UserCheck, Handshake, Newspaper, Briefcase, Activity
+  Sparkles, UserCheck, Handshake, Newspaper, Briefcase, Activity,
+  FileText
 } from 'lucide-react'
 
 const menuGroups = [
@@ -19,6 +20,7 @@ const menuGroups = [
     items: [
       { name: 'Beranda', icon: Home, href: '/dashboard' },
       { name: 'Pengaturan Petugas', icon: UserCheck, href: '/dashboard/petugas', roles: ['OPERATOR_POSYANDU'] },
+      { name: 'SK Kepengurusan', icon: FileText, href: '/dashboard/sk-kepengurusan', roles: ['OPERATOR_POSYANDU'] },
       { name: 'Analisa Data', icon: Activity, href: '/dashboard/posyandu' },
       { name: 'Manajemen Posyandu', icon: Building, href: '/dashboard/manage-posyandu', roles: ['OPERATOR_DESA'] },
       { name: 'Manajemen User', icon: Users, href: '/dashboard/users', roles: ['SUPERADMIN'] },

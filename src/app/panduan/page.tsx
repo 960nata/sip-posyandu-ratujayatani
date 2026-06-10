@@ -53,11 +53,11 @@ export default function PanduanPage() {
       </section>
 
       {/* Content Sections */}
-      <main className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Section: Administrasi Umum */}
-          <section className="mb-20">
+      <main className="bg-white">
+        
+        {/* Section: Administrasi Umum */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
               <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
                 Administrasi Umum
@@ -75,7 +75,7 @@ export default function PanduanPage() {
                 { type: "PENGANTAR", title: "Surat Pengantar", desc: "Digunakan sebagai pengantar untuk pengiriman dokumen, barang, atau surat tertentu kepada Posyandu atau pihak lain." },
                 { type: "EDARAN", title: "Surat Edaran", desc: "Ditujukan kepada beberapa orang sebagai petunjuk atau penjelasan dari suatu Surat Keputusan yang perlu disebarluaskan." },
                 { type: "KUASA", title: "Surat Kuasa", desc: "Berisi pemberian kuasa dengan batasan kewenangan yang jelas dan batas waktu berlaku yang ditetapkan secara eksplisit." },
-                { type: "TUGAS", title: "Surat Tugas", desc: "Pemberian tugas kepada satu atau lebih personil Posyandu untuk melaksanakan tugas-tugas tertentu dalam jangka waktu yang ditetapkan." }
+                { type: "TUGAS", title: "Surat Tugas", desc: "Pemberian tugas kepada satu or lebih personil Posyandu untuk melaksanakan tugas-tugas tertentu dalam jangka waktu yang ditetapkan." }
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
@@ -96,62 +96,64 @@ export default function PanduanPage() {
                 </motion.div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Section: Sumber Pendanaan */}
-          <section className="mb-20 bg-slate-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-left mb-8">
-                <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
-                  Pasal 26–27 Permendagri 13/2024
-                </span>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Sumber Pendanaan Posyandu</h2>
-                <p className="text-slate-500 font-light max-w-3xl leading-relaxed">
-                  Pemerintah daerah dan Pemerintah Desa wajib menganggarkan dana untuk mendukung penyelenggaraan Posyandu.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {[
-                  { icon: Landmark, title: "APBN", desc: "Anggaran Pendapatan Belanja Negara — tingkat pusat" },
-                  { icon: Building, title: "APBD Provinsi", desc: "Anggaran Provinsi untuk fasilitasi kebijakan" },
-                  { icon: Building, title: "APBD Kab/Kota", desc: "Wajib dianggarkan oleh Bupati/Wali Kota" },
-                  { icon: Home, title: "APBDesa", desc: "Wajib dianggarkan Pemerintah Desa untuk insentif kader" },
-                  { icon: Briefcase, title: "Sumber Lain Sah", desc: "Sumber yang sah sesuai peraturan perundang-undangan" }
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900 mb-0.5">{item.title}</h3>
-                      <p className="text-xs text-slate-500 font-light">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100 flex gap-3 items-start">
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Lightbulb className="w-5 h-5" />
-                </div>
-                <p className="text-sm text-emerald-700 font-light leading-relaxed">
-                  Penganggaran dimaksudkan untuk mendanai program/kegiatan/subkegiatan Posyandu dan insentif kader. Pengurus dan Kader berhak atas insentif sesuai ketentuan perundang-undangan.
-                </p>
-              </div>
+        {/* Section: Sumber Pendanaan */}
+        <section className="py-20 bg-slate-50 border-y border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-left mb-8">
+              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+                Pasal 26–27 Permendagri 13/2024
+              </span>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Sumber Pendanaan Posyandu</h2>
+              <p className="text-slate-500 font-light max-w-3xl leading-relaxed">
+                Pemerintah daerah dan Pemerintah Desa wajib menganggarkan dana untuk mendukung penyelenggaraan Posyandu.
+              </p>
             </div>
-          </section>
 
-          {/* Section: Pelaporan */}
-          <section className="mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {[
+                { icon: Landmark, title: "APBN", desc: "Anggaran Pendapatan Belanja Negara — tingkat pusat" },
+                { icon: Building, title: "APBD Provinsi", desc: "Anggaran Provinsi untuk fasilitasi kebijakan" },
+                { icon: Building, title: "APBD Kab/Kota", desc: "Wajib dianggarkan oleh Bupati/Wali Kota" },
+                { icon: Home, title: "APBDesa", desc: "Wajib dianggarkan Pemerintah Desa untuk insentif kader" },
+                { icon: Briefcase, title: "Sumber Lain Sah", desc: "Sumber yang sah sesuai peraturan perundang-undangan" }
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-slate-900 mb-0.5">{item.title}</h3>
+                    <p className="text-xs text-slate-500 font-light">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100 flex gap-3 items-start">
+              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Lightbulb className="w-5 h-5" />
+              </div>
+              <p className="text-sm text-emerald-700 font-light leading-relaxed">
+                Penganggaran dimaksudkan untuk mendanai program/kegiatan/subkegiatan Posyandu dan insentif kader. Pengurus dan Kader berhak atas insentif sesuai ketentuan perundang-undangan.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Pelaporan */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
               <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
                 Bab VIII Pelaporan
@@ -190,55 +192,57 @@ export default function PanduanPage() {
                 Laporan disampaikan paling sedikit 1 kali dalam 1 tahun atau sewaktu-waktu jika diperlukan. Hasil pemantauan dan evaluasi digunakan sebagai bahan masukan kebijakan Posyandu.
               </p>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Section: Atribut Kelembagaan */}
-          <section className="mb-20 bg-slate-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-left mb-8">
-                <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
-                  Bab IV Juknis & Pasal 9 Permendagri 13/2024
-                </span>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Atribut Kelembagaan Posyandu</h2>
-                <p className="text-slate-500 font-light max-w-3xl leading-relaxed">
-                  Posyandu memiliki identitas dan legalitas kelembagaan yang ditetapkan oleh Keputusan Ketua Umum Pembina Posyandu.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {[
-                  { icon: Image, title: "Logo / Lambang", desc: "Identitas visual utama" },
-                  { icon: Flag, title: "Duaja", desc: "Bendera kelembagaan" },
-                  { icon: Medal, title: "Vandel", desc: "Cenderamata resmi" },
-                  { icon: Pin, title: "Lencana", desc: "Pin identitas kader" },
-                  { icon: FileText, title: "Kop Surat", desc: "Logo di tengah/kiri" },
-                  { icon: Circle, title: "Stempel", desc: "Bulat, ukuran bertingkat" },
-                  { icon: Clipboard, title: "Papan Nama", desc: "Putih-hitam, ukuran standar" },
-                  { icon: Shirt, title: "Seragam", desc: "Dapat pakai seragam PKK" },
-                  { icon: Medal, title: "Plakat", desc: "Kenang-kenangan resmi" }
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center flex flex-col items-center"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2">
-                      <item.icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-sm font-bold text-slate-900 mb-1">{item.title}</h3>
-                    <p className="text-xs text-slate-500 font-light">{item.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
+        {/* Section: Atribut Kelembagaan */}
+        <section className="py-20 bg-slate-50 border-y border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-left mb-8">
+              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+                Bab IV Juknis & Pasal 9 Permendagri 13/2024
+              </span>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Atribut Kelembagaan Posyandu</h2>
+              <p className="text-slate-500 font-light max-w-3xl leading-relaxed">
+                Posyandu memiliki identitas dan legalitas kelembagaan yang ditetapkan oleh Keputusan Ketua Umum Pembina Posyandu.
+              </p>
             </div>
-          </section>
 
-          {/* Section: Tata Cara Pengarsipan */}
-          <section>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {[
+                { icon: Image, title: "Logo / Lambang", desc: "Identitas visual utama" },
+                { icon: Flag, title: "Duaja", desc: "Bendera kelembagaan" },
+                { icon: Medal, title: "Vandel", desc: "Cenderamata resmi" },
+                { icon: Pin, title: "Lencana", desc: "Pin identitas kader" },
+                { icon: FileText, title: "Kop Surat", desc: "Logo di tengah/kiri" },
+                { icon: Circle, title: "Stempel", desc: "Bulat, ukuran bertingkat" },
+                { icon: Clipboard, title: "Papan Nama", desc: "Putih-hitam, ukuran standar" },
+                { icon: Shirt, title: "Seragam", desc: "Dapat pakai seragam PKK" },
+                { icon: Medal, title: "Plakat", desc: "Kenang-kenangan resmi" }
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center flex flex-col items-center"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2">
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 mb-1">{item.title}</h3>
+                  <p className="text-xs text-slate-500 font-light">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Tata Cara Pengarsipan */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
               <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
                 Bab VII C Juknis
@@ -301,9 +305,9 @@ export default function PanduanPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-        </div>
       </main>
 
       <Footer />

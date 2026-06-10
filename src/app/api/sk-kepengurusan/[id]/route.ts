@@ -28,7 +28,9 @@ export async function GET(
   }
 
   // Check read permission
-  if (role === "OPERATOR_DESA") {
+  if (role === "SUPERADMIN" || role === "ADMIN_KECAMATAN") {
+    // Allowed
+  } else if (role === "OPERATOR_DESA") {
     if (sk.posyandu.desaId !== user.desaId) {
       return NextResponse.json({ error: "Access denied" }, { status: 403 })
     }
@@ -68,13 +70,15 @@ export async function PUT(
   }
 
   // Validate write permission:
-  if (role === "OPERATOR_DESA") {
-    if (sk.tipe !== "SK_DESA" || sk.posyandu.desaId !== user.desaId) {
-      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK Desa di wilayah Anda" }, { status: 403 })
+  if (role === "SUPERADMIN") {
+    // Allowed
+  } else if (role === "OPERATOR_DESA") {
+    if (sk.posyandu.desaId !== user.desaId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK di wilayah Anda" }, { status: 403 })
     }
   } else if (role === "OPERATOR_POSYANDU") {
-    if (sk.tipe !== "SK_PENGELOLA" || sk.posyanduId !== user.posyanduId) {
-      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK Pengelola untuk posyandu Anda" }, { status: 403 })
+    if (sk.posyanduId !== user.posyanduId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK untuk posyandu Anda" }, { status: 403 })
     }
   } else {
     return NextResponse.json({ error: "Akses ditolak" }, { status: 403 })
@@ -173,13 +177,15 @@ export async function DELETE(
   }
 
   // Validate write permission:
-  if (role === "OPERATOR_DESA") {
-    if (sk.tipe !== "SK_DESA" || sk.posyandu.desaId !== user.desaId) {
-      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK Desa di wilayah Anda" }, { status: 403 })
+  if (role === "SUPERADMIN") {
+    // Allowed
+  } else if (role === "OPERATOR_DESA") {
+    if (sk.posyandu.desaId !== user.desaId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK di wilayah Anda" }, { status: 403 })
     }
   } else if (role === "OPERATOR_POSYANDU") {
-    if (sk.tipe !== "SK_PENGELOLA" || sk.posyanduId !== user.posyanduId) {
-      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK Pengelola untuk posyandu Anda" }, { status: 403 })
+    if (sk.posyanduId !== user.posyanduId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK untuk posyandu Anda" }, { status: 403 })
     }
   } else {
     return NextResponse.json({ error: "Akses ditolak" }, { status: 403 })

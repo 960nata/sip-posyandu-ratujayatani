@@ -166,8 +166,9 @@ export default function SKKepengurusanPage() {
   }, [session])
 
   const canModifySK = (sk: SKData) => {
+    if (userRole === 'SUPERADMIN') return true
     if (userRole === 'OPERATOR_DESA') {
-      return sk.tipe === 'SK_DESA'
+      return true // Operator Desa can modify any SK in their village
     }
     if (userRole === 'OPERATOR_POSYANDU') {
       return sk.tipe === 'SK_PENGELOLA'

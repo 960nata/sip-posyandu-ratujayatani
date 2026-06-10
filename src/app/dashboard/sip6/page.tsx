@@ -13,6 +13,7 @@ export default function Sip6Page() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
+  const canEdit = isPosyandu || role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -816,7 +817,7 @@ export default function Sip6Page() {
                       <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
                         Ekspor Excel (SIP 6 & 7)
                       </button>
-                      {isPosyandu && (
+                      {canEdit && (
                         <label className={`cursor-pointer bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm flex items-center justify-center`}>
                           <span>Impor CSV</span>
                           <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />

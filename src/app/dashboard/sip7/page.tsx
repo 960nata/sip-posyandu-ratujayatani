@@ -137,6 +137,7 @@ export default function Sip7Page() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
+  const canEdit = isPosyandu || role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -1631,13 +1632,13 @@ export default function Sip7Page() {
                     >
                       <Download className="w-4 h-4" /> Ekspor Excel (SIP 6 & 7)
                     </button>
-                    {isPosyandu && (
+                    {canEdit && (
                       <label className="cursor-pointer bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-700 transition-all text-sm flex items-center justify-center gap-2">
                         <span>Impor CSV</span>
                         <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
                       </label>
                     )}
-                    {isPosyandu && (
+                    {canEdit && (
                       <button
                         onClick={handleAdd}
                         className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
@@ -1658,7 +1659,7 @@ export default function Sip7Page() {
                         <th className="px-4 py-3">Akseptor KB (Total)</th>
                         <th className="px-4 py-3">Balita (S/D)</th>
                         <th className="px-4 py-3">Status</th>
-                        {isPosyandu && <th className="px-4 py-3 text-right">Aksi</th>}
+                        {canEdit && <th className="px-4 py-3 text-right">Aksi</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -1681,7 +1682,7 @@ export default function Sip7Page() {
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{totalKB}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{totalS}/{totalD}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{row.status || 'Tersimpan'}</span></td>
-                              {isPosyandu && (
+                              {canEdit && (
                                 <td className="px-4 py-3 text-right">
                                   <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                                     <button 
@@ -1707,7 +1708,7 @@ export default function Sip7Page() {
                       })}
                       {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).length === 0 && (
                         <tr>
-                          <td colSpan={isPosyandu ? 8 : 7} className="text-center py-6 text-sm text-slate-500 dark:text-zinc-400">
+                          <td colSpan={canEdit ? 8 : 7} className="text-center py-6 text-sm text-slate-500 dark:text-zinc-400">
                             Belum ada data hasil kegiatan untuk tahun {tahunAktif}.
                           </td>
                         </tr>

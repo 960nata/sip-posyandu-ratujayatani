@@ -11,6 +11,40 @@ export async function GET() {
   const user = session.user as any
   const role = user.role
 
+  // SUPERADMIN: fetch all SK
+  if (role === "SUPERADMIN") {
+    const skList = await prisma.skKepengurusan.findMany({
+      include: {
+        anggota: { orderBy: { createdAt: "asc" } },
+        posyandu: { select: { nama: true, id: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    })
+    return NextResponse.json(skList)
+  }
+
+  // ADMIN_KECAMATAN: fetch all SK from posyandus in their kecamatan
+  if (role === "ADMIN_KECAMATAN") {
+    const kecamatanId = user.kecamatanId
+    if (!kecamatanId) {
+      return NextResponse.json({ error: "Kecamatan not found for this user" }, { status: 404 })
+    }
+
+    const skList = await prisma.skKepengurusan.findMany({
+      where: {
+        posyandu: {
+          desa: { kecamatanId }
+        }
+      },
+      include: {
+        anggota: { orderBy: { createdAt: "asc" } },
+        posyandu: { select: { nama: true, id: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    })
+    return NextResponse.json(skList)
+  }
+
   // OPERATOR_DESA: fetch all SK from all posyandus in their desa
   if (role === "OPERATOR_DESA") {
     const desaId = user.desaId
@@ -83,7 +117,13 @@ export async function POST(request: Request) {
     let targetPosyanduId = ""
     let targetTipe = "SK_PENGELOLA"
 
-    if (role === "OPERATOR_DESA") {
+    if (role === "SUPERADMIN") {
+      if (!posyanduId) {
+        return NextResponse.json({ error: "Posyandu harus dipilih" }, { status: 400 })
+      }
+      targetPosyanduId = posyanduId
+      targetTipe = "SK_DESA"
+    } else if (role === "OPERATOR_DESA") {
       if (!posyanduId) {
         return NextResponse.json({ error: "Posyandu harus dipilih" }, { status: 400 })
       }

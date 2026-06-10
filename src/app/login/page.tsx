@@ -50,17 +50,15 @@ export default function LoginPage() {
         className="w-full max-w-md md:max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[550px] md:min-h-[600px] border border-emerald-900/5"
       >
         {/* Left Panel: 3D Illustration (Desktop Only) */}
-        <div className="hidden md:flex md:w-1/2 bg-[#e6f4ed] relative items-center justify-center p-8 overflow-hidden select-none">
+        <div className="hidden md:flex md:w-1/2 bg-[#e6f4ed] relative overflow-hidden select-none">
           <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100/30 to-transparent pointer-events-none z-10" />
-          <div className="relative w-full aspect-square max-w-[420px] transition-transform duration-700 hover:scale-105">
-            <Image
-              src="/images/posyandu_login.png"
-              alt="Posyandu Officer Illustration"
-              fill
-              priority
-              className="object-contain"
-            />
-          </div>
+          <Image
+            src="/images/posyandu_login.png"
+            alt="Posyandu Officer Illustration"
+            fill
+            priority
+            className="object-cover transition-transform duration-700 hover:scale-105"
+          />
         </div>
 
         {/* Right Panel: Login Form */}

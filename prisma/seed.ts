@@ -129,7 +129,10 @@ const regionData = [
 async function main() {
   console.log('Seeding database...')
 
-  const hashedPassword = await bcrypt.hash('password123', 10)
+  const hashedSuperadmin = await bcrypt.hash('superadmin123', 10)
+  const hashedKecamatan = await bcrypt.hash('kecamatan123', 10)
+  const hashedDesa = await bcrypt.hash('desa123', 10)
+  const hashedPosyandu = await bcrypt.hash('posyandu123', 10)
 
   // 1. Create Kabupaten
   const kab = await prisma.kabupaten.upsert({
@@ -144,11 +147,11 @@ async function main() {
   // Create Default Superadmin
   await prisma.user.upsert({
     where: { email: 'admin@siplamtim.id' },
-    update: {},
+    update: { password: hashedSuperadmin },
     create: {
       nama: 'Super Admin',
       email: 'admin@siplamtim.id',
-      password: hashedPassword,
+      password: hashedSuperadmin,
       role: RoleEnum.SUPERADMIN,
     },
   })
@@ -170,11 +173,11 @@ async function main() {
     const kecEmail = `${kec.name.toLowerCase().replace(/\s+/g, '')}@siplamtim.id`
     await prisma.user.upsert({
       where: { email: kecEmail },
-      update: {},
+      update: { password: hashedKecamatan },
       create: {
         nama: `Admin Kec ${kec.name}`,
         email: kecEmail,
-        password: hashedPassword,
+        password: hashedKecamatan,
         role: RoleEnum.ADMIN_KECAMATAN,
         kecamatanId: kecamatan.id,
       },
@@ -197,11 +200,11 @@ async function main() {
       const desaEmail = `desa.${desaName.toLowerCase().replace(/\s+/g, '')}@siplamtim.id`
       await prisma.user.upsert({
         where: { email: desaEmail },
-        update: {},
+        update: { password: hashedDesa },
         create: {
           nama: `Admin Desa ${desaName}`,
           email: desaEmail,
-          password: hashedPassword,
+          password: hashedDesa,
           role: RoleEnum.OPERATOR_DESA,
           desaId: desa.id,
         } as any,
@@ -229,11 +232,11 @@ async function main() {
         const posyanduEmail = `posyandu.${desaName.toLowerCase().replace(/\s+/g, '')}.${p}@siplamtim.id`
         await prisma.user.upsert({
           where: { email: posyanduEmail },
-          update: {},
+          update: { password: hashedPosyandu },
           create: {
             nama: `Admin ${posyanduName}`,
             email: posyanduEmail,
-            password: hashedPassword,
+            password: hashedPosyandu,
             role: "OPERATOR_POSYANDU",
             posyanduId: posyanduId,
           } as any,

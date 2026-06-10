@@ -428,6 +428,7 @@ model SkKepengurusan {
   periodeAkhir      DateTime
   keterangan        String?
   isActive          Boolean      @default(true)
+  tipe              String       @default("SK_PENGELOLA")
   anggota           AnggotaSK[]
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt

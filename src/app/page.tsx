@@ -449,6 +449,90 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section: Galeri Kegiatan Posyandu */}
+      <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+          <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
+            Dokumentasi Lapangan
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+            Galeri Kegiatan{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
+              Posyandu
+            </span>
+          </h2>
+          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-light">
+            Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
+          </p>
+        </div>
+
+        <div className="marquee-container space-y-6 overflow-hidden py-2">
+          {/* First Row: Left Scrolling */}
+          <div className="flex overflow-hidden">
+            <div className="animate-marquee-left flex gap-6">
+              {[
+                { src: "/images/hero/hero1.png", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.png", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.png", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
+                { src: "/images/hero/hero1.png", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.png", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.png", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
+              ].map((item, idx) => (
+                <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="320px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Second Row: Right Scrolling */}
+          <div className="flex overflow-hidden">
+            <div className="animate-marquee-right flex gap-6">
+              {[
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-04.jpg", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-04.jpg", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
+              ].map((item, idx) => (
+                <div key={`r2-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="320px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section: Lampung Timur dalam Angka */}
       <section className="py-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

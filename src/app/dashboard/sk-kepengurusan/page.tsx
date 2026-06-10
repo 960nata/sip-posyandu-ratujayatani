@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import {
   FileText, Plus, Trash2, Edit2, X, Save, ChevronDown, ChevronUp,
   Users, Calendar, Hash, User, Shield, Award, Phone, MapPin, Eye,
-  CheckCircle, XCircle, Briefcase, AlertCircle
+  CheckCircle, XCircle, Briefcase, AlertCircle, Search
 } from 'lucide-react'
 
 type AnggotaForm = {
@@ -20,6 +20,7 @@ type AnggotaForm = {
 
 type SKData = {
   id: string
+  posyanduId: string
   nomorSK: string
   tanggalPenetapan: string
   pejabatPenetap: string
@@ -27,7 +28,8 @@ type SKData = {
   periodeAkhir: string
   keterangan: string | null
   isActive: boolean
-  posyandu: { nama: string }
+  tipe: string
+  posyandu: { nama: string, id: string }
   anggota: {
     id: string
     nama: string
@@ -77,6 +79,7 @@ const emptyAnggota: AnggotaForm = {
 export default function SKKepengurusanPage() {
   const { data: session } = useSession()
   const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
+  const userRole = (session?.user as any)?.role
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -94,9 +97,11 @@ export default function SKKepengurusanPage() {
     iconBg: isPosyandu ? 'bg-purple-100' : 'bg-emerald-100',
     iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-emerald-900/50',
     activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    borderT: isPosyandu ? 'border-t-purple-500' : 'border-t-emerald-500',
   }
 
   const [skList, setSkList] = useState<SKData[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -104,6 +109,10 @@ export default function SKKepengurusanPage() {
   const [editingSK, setEditingSK] = useState<SKData | null>(null)
   const [saving, setSaving] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+
+  // Filter state for SK types
+  const [typeFilter, setTypeFilter] = useState<'ALL' | 'SK_DESA' | 'SK_PENGELOLA'>('ALL')
+  const [posyandus, setPosyandus] = useState<{ id: string; nama: string }[]>([])
 
   // Form state
   const [formSK, setFormSK] = useState({
@@ -114,6 +123,7 @@ export default function SKKepengurusanPage() {
     periodeAkhir: '',
     keterangan: '',
     isActive: true,
+    posyanduId: '',
   })
   const [formAnggota, setFormAnggota] = useState<AnggotaForm[]>([{ ...emptyAnggota }])
 
@@ -133,9 +143,49 @@ export default function SKKepengurusanPage() {
     }
   }
 
+  const fetchPosyandus = async () => {
+    try {
+      const res = await fetch('/api/posyandu')
+      if (res.ok) {
+        const data = await res.json()
+        setPosyandus(data)
+      }
+    } catch (error) {
+      console.error('Failed to fetch posyandus:', error)
+    }
+  }
+
   useEffect(() => {
     fetchSKList()
   }, [])
+
+  useEffect(() => {
+    if (session?.user && (session.user as any).role === 'OPERATOR_DESA') {
+      fetchPosyandus()
+    }
+  }, [session])
+
+  const canModifySK = (sk: SKData) => {
+    if (userRole === 'OPERATOR_DESA') {
+      return sk.tipe === 'SK_DESA'
+    }
+    if (userRole === 'OPERATOR_POSYANDU') {
+      return sk.tipe === 'SK_PENGELOLA'
+    }
+    return false
+  }
+
+  const filteredSkList = skList.filter(sk => {
+    const searchLower = searchTerm.toLowerCase()
+    const matchesSearch = (
+      sk.nomorSK.toLowerCase().includes(searchLower) ||
+      sk.pejabatPenetap.toLowerCase().includes(searchLower) ||
+      (sk.posyandu?.nama || '').toLowerCase().includes(searchLower) ||
+      sk.anggota.some(a => a.nama.toLowerCase().includes(searchLower))
+    )
+    const matchesType = typeFilter === 'ALL' || sk.tipe === typeFilter
+    return matchesSearch && matchesType
+  })
 
   const handleOpenAdd = () => {
     setModalMode('add')
@@ -148,6 +198,7 @@ export default function SKKepengurusanPage() {
       periodeAkhir: '',
       keterangan: '',
       isActive: true,
+      posyanduId: '',
     })
     setFormAnggota([
       { nama: '', jabatan: 'KETUA', bidang: '', nikNip: '', alamat: '', noHP: '' },
@@ -168,6 +219,7 @@ export default function SKKepengurusanPage() {
       periodeAkhir: sk.periodeAkhir.split('T')[0],
       keterangan: sk.keterangan || '',
       isActive: sk.isActive,
+      posyanduId: sk.posyanduId || '',
     })
     setFormAnggota(
       sk.anggota.map(a => ({
@@ -197,6 +249,11 @@ export default function SKKepengurusanPage() {
   const handleSave = async () => {
     if (!formSK.nomorSK || !formSK.tanggalPenetapan || !formSK.pejabatPenetap || !formSK.periodeAwal || !formSK.periodeAkhir) {
       alert('Lengkapi semua field SK yang wajib diisi!')
+      return
+    }
+
+    if (!isPosyandu && !formSK.posyanduId) {
+      alert('Pilih posyandu terlebih dahulu!')
       return
     }
 
@@ -274,24 +331,28 @@ export default function SKKepengurusanPage() {
                 SK Kepengurusan
               </h1>
               <p className="text-sm text-slate-500 dark:text-zinc-400 font-light">
-                Kelola Surat Keputusan Kepengurusan Posyandu
+                {isPosyandu
+                  ? 'Kelola Surat Keputusan Kepengurusan Posyandu Anda'
+                  : 'Daftar Surat Keputusan Kepengurusan Posyandu di Wilayah Desa'}
               </p>
             </div>
           </div>
         </div>
-        <button
-          onClick={handleOpenAdd}
-          className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2 text-sm`}
-        >
-          <Plus className="w-4 h-4" />
-          Tambah SK Baru
-        </button>
+        {((session?.user as any)?.role === 'OPERATOR_POSYANDU' || (session?.user as any)?.role === 'OPERATOR_DESA') && (
+          <button
+            onClick={handleOpenAdd}
+            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2 text-sm`}
+          >
+            <Plus className="w-4 h-4" />
+            Tambah SK Baru
+          </button>
+        )}
       </div>
 
       {/* Loading State */}
       {loading && (
         <div className="flex flex-col items-center justify-center py-20 space-y-4">
-          <div className={`w-10 h-10 border-4 border-slate-200 dark:border-slate-700 border-t-purple-500 rounded-full animate-spin`}></div>
+          <div className={`w-10 h-10 border-4 border-slate-200 dark:border-slate-700 ${theme.borderT} rounded-full animate-spin`}></div>
           <p className="text-sm text-slate-500 dark:text-zinc-400">Memuat data SK...</p>
         </div>
       )}
@@ -310,22 +371,74 @@ export default function SKKepengurusanPage() {
             Belum Ada SK Kepengurusan
           </h3>
           <p className="text-sm text-slate-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
-            Buat Surat Keputusan untuk menetapkan susunan pengurus posyandu Anda.
+            {isPosyandu
+              ? 'Buat Surat Keputusan untuk menetapkan susunan pengurus posyandu Anda.'
+              : 'Belum ada Surat Keputusan kepengurusan posyandu yang terdaftar di wilayah Anda.'}
           </p>
-          <button
-            onClick={handleOpenAdd}
-            className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-xl transition-all shadow-lg ${theme.shadow} inline-flex items-center gap-2 text-sm`}
-          >
-            <Plus className="w-4 h-4" />
-            Buat SK Pertama
-          </button>
+          {(isPosyandu || userRole === 'OPERATOR_DESA') && (
+            <button
+              onClick={handleOpenAdd}
+              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-xl transition-all shadow-lg ${theme.shadow} inline-flex items-center gap-2 text-sm`}
+            >
+              <Plus className="w-4 h-4" />
+              Buat SK Pertama
+            </button>
+          )}
+        </motion.div>
+      )}
+
+      {/* Search and Filters */}
+      {!loading && skList.length > 0 && (
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="relative w-full md:max-w-md">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <Search className="w-4 h-4 text-slate-400" />
+            </span>
+            <input
+              type="text"
+              placeholder="Cari berdasarkan nomor SK, nama posyandu, pengurus..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className={`w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 ${theme.focusRing} focus:border-transparent dark:text-white transition-all`}
+            />
+          </div>
+          <div className="flex gap-3 w-full md:w-auto flex-shrink-0">
+            <select
+              value={typeFilter}
+              onChange={e => setTypeFilter(e.target.value as any)}
+              className={`h-10 px-3 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
+            >
+              <option value="ALL">Semua Jenis SK</option>
+              <option value="SK_DESA">SK Desa</option>
+              <option value="SK_PENGELOLA">SK Pengelola</option>
+            </select>
+          </div>
+        </div>
+      )}
+
+      {/* Empty Search Results */}
+      {!loading && skList.length > 0 && filteredSkList.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 p-12 text-center"
+        >
+          <div className={`w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+            <Search className={`w-8 h-8 text-slate-400 dark:text-slate-500`} />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+            Pencarian Tidak Ditemukan
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-zinc-400 max-w-md mx-auto">
+            Tidak ada SK Kepengurusan yang cocok dengan kata kunci &ldquo;{searchTerm}&rdquo;. Coba gunakan kata kunci lain.
+          </p>
         </motion.div>
       )}
 
       {/* SK List */}
-      {!loading && skList.length > 0 && (
+      {!loading && filteredSkList.length > 0 && (
         <div className="space-y-4">
-          {skList.map((sk, index) => (
+          {filteredSkList.map((sk, index) => (
             <motion.div
               key={sk.id}
               initial={{ opacity: 0, y: 20 }}
@@ -353,6 +466,18 @@ export default function SKKepengurusanPage() {
                         <h3 className="text-base font-bold text-slate-900 dark:text-white">
                           {sk.nomorSK}
                         </h3>
+                        {sk.posyandu?.nama && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
+                            {sk.posyandu.nama}
+                          </span>
+                        )}
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                          sk.tipe === 'SK_DESA'
+                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
+                            : 'bg-purple-50 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400 border-purple-100 dark:border-purple-900/30'
+                        }`}>
+                          {sk.tipe === 'SK_DESA' ? 'SK Desa' : 'SK Pengelola'}
+                        </span>
                         <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                           sk.isActive
                             ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
@@ -398,18 +523,22 @@ export default function SKKepengurusanPage() {
                       {expandedId === sk.id ? 'Tutup' : 'Lihat'}
                       {expandedId === sk.id ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </button>
-                    <button
-                      onClick={() => handleOpenEdit(sk)}
-                      className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirm(sk.id)}
-                      className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {canModifySK(sk) && (
+                      <>
+                        <button
+                          onClick={() => handleOpenEdit(sk)}
+                          className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirm(sk.id)}
+                          className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -580,6 +709,23 @@ export default function SKKepengurusanPage() {
                     Informasi SK
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {!isPosyandu && (
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-semibold text-slate-600 dark:text-zinc-300 mb-1.5">
+                          Pilih Posyandu <span className="text-rose-500">*</span>
+                        </label>
+                        <select
+                          value={formSK.posyanduId}
+                          onChange={e => setFormSK({ ...formSK, posyanduId: e.target.value })}
+                          className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        >
+                          <option value="">— Pilih Posyandu —</option>
+                          {posyandus.map(p => (
+                            <option key={p.id} value={p.id}>{p.nama}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                     <div>
                       <label className="block text-xs font-semibold text-slate-600 dark:text-zinc-300 mb-1.5">
                         Nomor SK <span className="text-rose-500">*</span>

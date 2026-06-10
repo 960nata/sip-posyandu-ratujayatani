@@ -12,17 +12,32 @@ export async function GET(
   }
 
   const { id } = await params
+  const user = session.user as any
+  const role = user.role
 
   const sk = await prisma.skKepengurusan.findUnique({
     where: { id },
     include: {
       anggota: { orderBy: { createdAt: "asc" } },
-      posyandu: { select: { nama: true } }
+      posyandu: { select: { nama: true, desaId: true, id: true } }
     }
   })
 
   if (!sk) {
     return NextResponse.json({ error: "SK tidak ditemukan" }, { status: 404 })
+  }
+
+  // Check read permission
+  if (role === "OPERATOR_DESA") {
+    if (sk.posyandu.desaId !== user.desaId) {
+      return NextResponse.json({ error: "Access denied" }, { status: 403 })
+    }
+  } else if (role === "OPERATOR_POSYANDU") {
+    if (sk.posyanduId !== user.posyanduId) {
+      return NextResponse.json({ error: "Access denied" }, { status: 403 })
+    }
+  } else {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 })
   }
 
   return NextResponse.json(sk)
@@ -38,6 +53,32 @@ export async function PUT(
   }
 
   const { id } = await params
+  const user = session.user as any
+  const role = user.role
+
+  const sk = await prisma.skKepengurusan.findUnique({
+    where: { id },
+    include: {
+      posyandu: { select: { desaId: true, id: true } }
+    }
+  })
+
+  if (!sk) {
+    return NextResponse.json({ error: "SK tidak ditemukan" }, { status: 404 })
+  }
+
+  // Validate write permission:
+  if (role === "OPERATOR_DESA") {
+    if (sk.tipe !== "SK_DESA" || sk.posyandu.desaId !== user.desaId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK Desa di wilayah Anda" }, { status: 403 })
+    }
+  } else if (role === "OPERATOR_POSYANDU") {
+    if (sk.tipe !== "SK_PENGELOLA" || sk.posyanduId !== user.posyanduId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan mengedit SK Pengelola untuk posyandu Anda" }, { status: 403 })
+    }
+  } else {
+    return NextResponse.json({ error: "Akses ditolak" }, { status: 403 })
+  }
 
   try {
     const body = await request.json()
@@ -49,8 +90,32 @@ export async function PUT(
       periodeAkhir,
       keterangan,
       isActive,
-      anggota
+      anggota,
+      posyanduId
     } = body
+
+    let updateData: any = {
+      nomorSK,
+      tanggalPenetapan: new Date(tanggalPenetapan),
+      pejabatPenetap,
+      periodeAwal: new Date(periodeAwal),
+      periodeAkhir: new Date(periodeAkhir),
+      keterangan: keterangan || null,
+      isActive: isActive ?? true,
+    }
+
+    if (role === "OPERATOR_DESA") {
+      if (posyanduId) {
+        const posyanduObj = await prisma.posyandu.findUnique({
+          where: { id: posyanduId },
+          select: { desaId: true }
+        })
+        if (!posyanduObj || posyanduObj.desaId !== user.desaId) {
+          return NextResponse.json({ error: "Posyandu tidak valid atau berada di luar wilayah desa Anda" }, { status: 403 })
+        }
+        updateData.posyanduId = posyanduId
+      }
+    }
 
     // Delete existing anggota and re-create
     await prisma.anggotaSK.deleteMany({ where: { skId: id } })
@@ -58,13 +123,7 @@ export async function PUT(
     const updatedSK = await prisma.skKepengurusan.update({
       where: { id },
       data: {
-        nomorSK,
-        tanggalPenetapan: new Date(tanggalPenetapan),
-        pejabatPenetap,
-        periodeAwal: new Date(periodeAwal),
-        periodeAkhir: new Date(periodeAkhir),
-        keterangan: keterangan || null,
-        isActive: isActive ?? true,
+        ...updateData,
         anggota: {
           create: anggota.map((a: any) => ({
             nama: a.nama,
@@ -99,6 +158,32 @@ export async function DELETE(
   }
 
   const { id } = await params
+  const user = session.user as any
+  const role = user.role
+
+  const sk = await prisma.skKepengurusan.findUnique({
+    where: { id },
+    include: {
+      posyandu: { select: { desaId: true, id: true } }
+    }
+  })
+
+  if (!sk) {
+    return NextResponse.json({ error: "SK tidak ditemukan" }, { status: 404 })
+  }
+
+  // Validate write permission:
+  if (role === "OPERATOR_DESA") {
+    if (sk.tipe !== "SK_DESA" || sk.posyandu.desaId !== user.desaId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK Desa di wilayah Anda" }, { status: 403 })
+    }
+  } else if (role === "OPERATOR_POSYANDU") {
+    if (sk.tipe !== "SK_PENGELOLA" || sk.posyanduId !== user.posyanduId) {
+      return NextResponse.json({ error: "Anda hanya diperbolehkan menghapus SK Pengelola untuk posyandu Anda" }, { status: 403 })
+    }
+  } else {
+    return NextResponse.json({ error: "Akses ditolak" }, { status: 403 })
+  }
 
   try {
     await prisma.skKepengurusan.delete({ where: { id } })
@@ -108,3 +193,4 @@ export async function DELETE(
     return NextResponse.json({ error: "Gagal menghapus SK" }, { status: 500 })
   }
 }
+

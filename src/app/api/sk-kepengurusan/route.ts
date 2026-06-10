@@ -9,8 +9,31 @@ export async function GET() {
   }
 
   const user = session.user as any
-  const posyanduId = user.posyanduId
+  const role = user.role
 
+  // OPERATOR_DESA: fetch all SK from all posyandus in their desa
+  if (role === "OPERATOR_DESA") {
+    const desaId = user.desaId
+    if (!desaId) {
+      return NextResponse.json({ error: "Desa not found for this user" }, { status: 404 })
+    }
+
+    const skList = await prisma.skKepengurusan.findMany({
+      where: {
+        posyandu: { desaId }
+      },
+      include: {
+        anggota: { orderBy: { createdAt: "asc" } },
+        posyandu: { select: { nama: true, id: true } }
+      },
+      orderBy: { createdAt: "desc" }
+    })
+
+    return NextResponse.json(skList)
+  }
+
+  // OPERATOR_POSYANDU: fetch only their posyandu's SK
+  const posyanduId = user.posyanduId
   if (!posyanduId) {
     return NextResponse.json({ error: "Posyandu not found for this user" }, { status: 404 })
   }
@@ -18,12 +41,8 @@ export async function GET() {
   const skList = await prisma.skKepengurusan.findMany({
     where: { posyanduId },
     include: {
-      anggota: {
-        orderBy: { createdAt: "asc" }
-      },
-      posyandu: {
-        select: { nama: true }
-      }
+      anggota: { orderBy: { createdAt: "asc" } },
+      posyandu: { select: { nama: true, id: true } }
     },
     orderBy: { createdAt: "desc" }
   })
@@ -38,11 +57,7 @@ export async function POST(request: Request) {
   }
 
   const user = session.user as any
-  const posyanduId = user.posyanduId
-
-  if (!posyanduId) {
-    return NextResponse.json({ error: "Posyandu not found for this user" }, { status: 404 })
-  }
+  const role = user.role
 
   try {
     const body = await request.json()
@@ -53,7 +68,8 @@ export async function POST(request: Request) {
       periodeAwal,
       periodeAkhir,
       keterangan,
-      anggota
+      anggota,
+      posyanduId
     } = body
 
     if (!nomorSK || !tanggalPenetapan || !pejabatPenetap || !periodeAwal || !periodeAkhir) {
@@ -64,15 +80,42 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Minimal harus ada 1 anggota pengurus" }, { status: 400 })
     }
 
+    let targetPosyanduId = ""
+    let targetTipe = "SK_PENGELOLA"
+
+    if (role === "OPERATOR_DESA") {
+      if (!posyanduId) {
+        return NextResponse.json({ error: "Posyandu harus dipilih" }, { status: 400 })
+      }
+      const posyanduObj = await prisma.posyandu.findUnique({
+        where: { id: posyanduId },
+        select: { desaId: true }
+      })
+      if (!posyanduObj || posyanduObj.desaId !== user.desaId) {
+        return NextResponse.json({ error: "Posyandu tidak valid atau berada di luar wilayah desa Anda" }, { status: 403 })
+      }
+      targetPosyanduId = posyanduId
+      targetTipe = "SK_DESA"
+    } else if (role === "OPERATOR_POSYANDU") {
+      if (!user.posyanduId) {
+        return NextResponse.json({ error: "Posyandu tidak ditemukan untuk user ini" }, { status: 404 })
+      }
+      targetPosyanduId = user.posyanduId
+      targetTipe = "SK_PENGELOLA"
+    } else {
+      return NextResponse.json({ error: "Role Anda tidak diizinkan untuk membuat SK" }, { status: 403 })
+    }
+
     const newSK = await prisma.skKepengurusan.create({
       data: {
-        posyanduId,
+        posyanduId: targetPosyanduId,
         nomorSK,
         tanggalPenetapan: new Date(tanggalPenetapan),
         pejabatPenetap,
         periodeAwal: new Date(periodeAwal),
         periodeAkhir: new Date(periodeAkhir),
         keterangan: keterangan || null,
+        tipe: targetTipe,
         anggota: {
           create: anggota.map((a: any) => ({
             nama: a.nama,
@@ -96,3 +139,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Gagal membuat SK" }, { status: 500 })
   }
 }
+

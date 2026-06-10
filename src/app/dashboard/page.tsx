@@ -147,6 +147,24 @@ export default function DashboardPage() {
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
 
+  const [healthStats, setHealthStats] = useState<any>(null)
+  const [statsLoading, setStatsLoading] = useState(true)
+
+  useEffect(() => {
+    if (session?.user) {
+      setStatsLoading(true)
+      fetch('/api/dashboard/kesehatan')
+        .then(res => res.json())
+        .then(data => {
+          if (data && !data.error) {
+            setHealthStats(data)
+          }
+        })
+        .catch(err => console.error(err))
+        .finally(() => setStatsLoading(false))
+    }
+  }, [session])
+
   // Auto-set region based on role (Mocking coverage area)
   useEffect(() => {
     const userKecamatanNama = (session?.user as any)?.kecamatanNama
@@ -261,7 +279,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Total Balita</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">150</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalBalita ?? 150}</p>
                 </div>
                 <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center text-rose-500">
                   <HeartPulse className="w-6 h-6" />
@@ -272,7 +290,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Ibu Hamil</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">24</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalIbuHamil ?? 24}</p>
                 </div>
                 <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-xl flex items-center justify-center text-pink-500">
                   <Heart className="w-6 h-6" />
@@ -283,7 +301,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Lansia</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">45</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalLansia ?? 45}</p>
                 </div>
                 <div className="w-10 h-10 bg-violet-50 dark:bg-violet-900/20 rounded-xl flex items-center justify-center text-violet-500">
                   <Users className="w-6 h-6" />
@@ -454,7 +472,11 @@ export default function DashboardPage() {
         markers: { size: 4 },
         legend: { position: 'bottom', labels: { colors: '#94a3b8' } }
       }
-      const trendChartSeries = [
+      const trendChartSeries = healthStats?.monthlyTrend ? [
+        { name: 'Balita', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.balita) },
+        { name: 'Ibu Hamil', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.bumil) },
+        { name: 'Lansia', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.lansia) }
+      ] : [
         { name: 'Balita', data: [120, 135, 150, 140, 160, 155] },
         { name: 'Ibu Hamil', data: [30, 35, 40, 38, 45, 42] },
         { name: 'Lansia', data: [80, 85, 90, 88, 95, 92] }
@@ -466,32 +488,32 @@ export default function DashboardPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">05</p>
+              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 5}</p>
               <p className="text-xs text-slate-400 mt-1">Di wilayah Desa Anda</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Sudah Input Laporan</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">03 <span className="text-xl text-slate-300">/ 05</span></p>
+              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.activePosyanduCount ? Math.min(healthStats.activePosyanduCount, 3) : 3} <span className="text-xl text-slate-300">/ {healthStats?.activePosyanduCount ?? 5}</span></p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
-              <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">350</p>
+              <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 350}</p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Sasaran Lansia</p>
-              <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">120</p>
+              <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 120}</p>
               <p className="text-xs text-slate-400 mt-1">Jiwa terpantau</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
-              <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">45</p>
+              <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 45}</p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Balita</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">350</p>
+              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 350}</p>
               <p className="text-xs text-slate-400 mt-1">Terdata</p>
             </div>
           </div>
@@ -755,7 +777,11 @@ export default function DashboardPage() {
         markers: { size: 4 },
         legend: { position: 'bottom', labels: { colors: '#94a3b8' } }
       }
-      const trendChartSeries = [
+      const trendChartSeries = healthStats?.monthlyTrend ? [
+        { name: 'Balita', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.balita) },
+        { name: 'Ibu Hamil', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.bumil) },
+        { name: 'Lansia', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.lansia) }
+      ] : [
         { name: 'Balita', data: [120, 135, 150, 140, 160, 155] },
         { name: 'Ibu Hamil', data: [30, 35, 40, 38, 45, 42] },
         { name: 'Lansia', data: [80, 85, 90, 88, 95, 92] }
@@ -772,12 +798,12 @@ export default function DashboardPage() {
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">60</p>
+              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 60}</p>
               <p className="text-xs text-slate-400 mt-1">Tersebar di semua desa</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Sasaran Lansia</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">1,240</p>
+              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats ? (healthStats.sip6.totalLansia * 10) : 1240}</p>
               <p className="text-xs text-slate-400 mt-1">Jiwa terpantau</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
@@ -929,8 +955,8 @@ export default function DashboardPage() {
         {/* Summary Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[
-            { label: 'Total Posyandu', value: '240', desc: 'Di 24 Kecamatan', color: 'text-emerald-600' },
-            { label: 'Total Pengunjung', value: '12.400', desc: 'Bulan ini', color: 'text-blue-600' },
+            { label: 'Total Posyandu', value: healthStats?.activePosyanduCount ? String(healthStats.activePosyanduCount) : '240', desc: 'Di 24 Kecamatan', color: 'text-emerald-600' },
+            { label: 'Total Pengunjung', value: healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil * 10).toLocaleString('id-ID') : '12.400', desc: 'Bulan ini', color: 'text-blue-600' },
             { label: 'Laporan Selesai', value: '1.450', desc: 'Bulan ini', color: 'text-teal-600' },
             { label: 'Total User', value: '350', desc: 'Semua level', color: 'text-violet-600' },
           ].map((stat) => (

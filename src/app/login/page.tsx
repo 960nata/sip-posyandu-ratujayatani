@@ -5,11 +5,13 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Heart, Lock, Mail, Loader2 } from 'lucide-react'
+import Link from 'next/link'
+import { Loader2, Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -39,91 +41,132 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-600 via-teal-700 to-cyan-800 flex items-center justify-center p-4">
-      {/* Background circles for glassmorphism effect */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-emerald-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-400 rounded-full filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
-
+    <div className="min-h-screen bg-[#dff0e6] flex items-center justify-center p-4 md:p-8 font-sans selection:bg-[#9ada55]/30">
+      {/* Container Card */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="w-full max-w-md"
+        className="w-full max-w-md md:max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[550px] md:min-h-[600px] border border-emerald-900/5"
       >
-        <div className="backdrop-blur-md bg-white/10 p-8 rounded-3xl border border-white/20 shadow-2xl text-white">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4 backdrop-blur-sm border border-white/30">
-              <Image src="/images/logo/logo.png" alt="Logo" width={40} height={40} className="object-contain" />
+        {/* Left Panel: 3D Illustration (Desktop Only) */}
+        <div className="hidden md:flex md:w-1/2 bg-[#e6f4ed] relative items-center justify-center p-8 overflow-hidden select-none">
+          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100/30 to-transparent pointer-events-none z-10" />
+          <div className="relative w-full aspect-square max-w-[420px] transition-transform duration-700 hover:scale-105">
+            <Image
+              src="/images/posyandu_login.png"
+              alt="Posyandu Officer Illustration"
+              fill
+              priority
+              className="object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Right Panel: Login Form */}
+        <div className="w-full md:w-1/2 bg-white px-6 py-10 md:px-16 md:py-14 flex flex-col justify-between">
+          {/* Logo / Header */}
+          <div className="flex items-center gap-3 mb-8 md:mb-0">
+            <div className="w-9 h-9 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 p-1.5">
+              <Image src="/images/logo/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-white mb-1">SIP</h1>
-            <p className="text-emerald-100/80 text-sm text-center">
-              Sistem Informasi Posyandu<br />Kabupaten Lampung Timur
-            </p>
+            <div className="flex flex-col">
+              <span className="text-base font-extrabold tracking-tight text-slate-800 leading-none">SIP Posyandu</span>
+              <span className="text-[10px] text-slate-400 font-light mt-0.5">Kab. Lampung Timur</span>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="text-sm font-medium text-emerald-100 block mb-2">Email</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-emerald-200/60" />
-                </div>
+          {/* Form Content */}
+          <div className="my-auto py-6 md:py-10">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight mb-2">
+              Masuk Akun
+            </h2>
+            <p className="text-sm text-slate-400 font-light mb-8">
+              Masukkan kredensial Anda untuk mengakses sistem informasi.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Email Input */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full bg-white/10 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-emerald-200/40 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent backdrop-blur-sm transition-all"
-                  placeholder="admin@siplamtim.id"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9ada55] focus:border-transparent transition-all text-sm font-light"
+                  placeholder="Masukkan email Anda"
                   required
                 />
               </div>
-            </div>
 
-            <div>
-              <label className="text-sm font-medium text-emerald-100 block mb-2">Password</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-emerald-200/60" />
+              {/* Password Input */}
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Password</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 pr-10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9ada55] focus:border-transparent transition-all text-sm font-light"
+                    placeholder="Masukkan password Anda"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 stroke-[1.8]" />
+                    ) : (
+                      <Eye className="h-5 w-5 stroke-[1.8]" />
+                    )}
+                  </button>
                 </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full bg-white/10 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-emerald-200/40 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent backdrop-blur-sm transition-all"
-                  placeholder="••••••••"
-                  required
-                />
               </div>
-            </div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-red-500/20 border border-red-500/50 text-red-100 text-sm p-3 rounded-lg text-center"
-              >
-                {error}
-              </motion.div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-semibold py-3 px-4 rounded-xl hover:from-emerald-500 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-teal-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
-            >
-              {loading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                'Masuk'
+              {/* Error Notice */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-red-50 border border-red-100 text-red-600 text-sm p-3.5 rounded-2xl text-center font-light"
+                >
+                  {error}
+                </motion.div>
               )}
-            </button>
 
-            <div className="text-center mt-6">
-              <span className="text-sm text-emerald-200/60">SIP Lampung Timur v2.0</span>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#9ada55] hover:bg-[#86c540] text-slate-900 font-semibold py-3.5 px-4 rounded-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-lime-500/10 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none text-sm mt-2"
+              >
+                {loading ? (
+                  <Loader2 className="w-5 h-5 animate-spin text-slate-900" />
+                ) : (
+                  'Masuk ke Akun'
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Footer Rights & Agreement */}
+          <div className="text-center space-y-4">
+            <p className="text-[11px] text-slate-400 font-light leading-relaxed max-w-xs mx-auto">
+              Dengan masuk, Anda menyetujui{' '}
+              <span className="text-slate-600 font-medium hover:underline cursor-pointer">Ketentuan Layanan</span> dan{' '}
+              <span className="text-slate-600 font-medium hover:underline cursor-pointer">Kebijakan Privasi</span> SIP Posyandu.
+            </p>
+            <div className="pt-1">
+              <Link href="/" className="text-xs text-[#86c540] hover:text-[#73ab33] font-semibold transition-colors hover:underline">
+                Kembali ke Beranda
+              </Link>
             </div>
-          </form>
+          </div>
         </div>
       </motion.div>
     </div>
   )
 }
+

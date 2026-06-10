@@ -10,11 +10,22 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url)
   const posyanduId = searchParams.get("posyanduId")
+  const desaId = searchParams.get("desaId")
+  const kecamatanId = searchParams.get("kecamatanId")
   const tahun = searchParams.get("tahun")
 
   const where: any = {}
-  if (posyanduId) where.posyanduId = posyanduId
-  if (tahun) where.tahun = parseInt(tahun)
+  if (posyanduId) {
+    where.posyanduId = posyanduId
+  } else if (desaId) {
+    where.posyandu = { desaId: desaId }
+  } else if (kecamatanId) {
+    where.posyandu = { desa: { kecamatanId: kecamatanId } }
+  }
+  
+  if (tahun) {
+    where.tahun = parseInt(tahun)
+  }
 
   try {
     const reports = await prisma.sip7Bulanan.findMany({
@@ -66,3 +77,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
+
+export async function DELETE(request: Request) {
+  const session = await auth()
+  if (!session || !session.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get("id")
+
+  if (!id) {
+    return NextResponse.json({ error: "id is required" }, { status: 400 })
+  }
+
+  try {
+    await prisma.sip7Bulanan.delete({
+      where: { id }
+    })
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error("Error deleting sip7 report:", error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+  }
+}
+

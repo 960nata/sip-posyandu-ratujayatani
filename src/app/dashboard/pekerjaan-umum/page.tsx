@@ -144,13 +144,6 @@ const defaultPUSeeds = [
 export default function PekerjaanUmumPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
-  const userKecamatanNama = (session?.user as any)?.kecamatanNama
-  const [selectedKecamatan, setSelectedKecamatan] = useState('')
-  
-  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Pekalongan')
-  const myKec = regionData.find(k => k.name === currentKecName)
-  const desas = myKec ? myKec.desas : []
-  
   const isPosyandu = role === 'OPERATOR_POSYANDU'
 
   const theme = {
@@ -165,49 +158,193 @@ export default function PekerjaanUmumPage() {
     activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
   }
 
+  const [kecamatans, setKecamatans] = useState<any[]>([])
+  const [desas, setDesas] = useState<any[]>([])
+  const [posyandus, setPosyandus] = useState<any[]>([])
+
+  const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
+  const [selectedDesaId, setSelectedDesaId] = useState('')
+  const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
+
+  const [selectedKecamatan, setSelectedKecamatan] = useState('')
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
-  const [posyandus, setPosyandus] = useState<any[]>([])
+
+  const [selectedTahun, setSelectedTahun] = useState(2026)
+  const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [reports, setReports] = useState<any[]>([])
   const [namaDesa, setNamaDesa] = useState('Tulusrejo')
+  const [uploadedFile, setUploadedFile] = useState<{ id: string; fileName: string; filePath: string } | null>(null)
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const savedDesa = localStorage.getItem('sip_nama_desa')
-    if (savedDesa) {
-      setNamaDesa(savedDesa)
-    }
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    setSelectedTahun(parseInt(savedTahun))
 
-    if (isPosyandu) {
-      setSelectedDesa(savedDesa || 'Tulusrejo')
-      const userPosyanduName = (session?.user as any)?.posyanduNama || 'Segar'
-      setSelectedPosyandu(userPosyanduName)
+    const fetchKecamatans = async () => {
+      try {
+        const res = await fetch('/api/kecamatan')
+        if (res.ok) {
+          const data = await res.json()
+          setKecamatans(data)
+        }
+      } catch (err) {
+        console.error(err)
+      }
     }
-    
-    if (role === 'OPERATOR_DESA') {
-      const userName = session?.user?.name || ''
-      const desaName = userName.replace('Admin Desa ', '')
-      if (desaName) setSelectedDesa(desaName)
+    fetchKecamatans()
+  }, [])
 
-      fetch('/api/posyandu')
-        .then(res => res.json())
-        .then(data => {
-          if (Array.isArray(data)) setPosyandus(data)
-        })
+  useEffect(() => {
+    if (!mounted || !session?.user) return
+
+    const userKecamatanId = (session.user as any).kecamatanId
+    const userKecamatanNama = (session.user as any).kecamatanNama
+    const userDesaId = (session.user as any).desaId
+    const userDesaNama = (session.user as any).desaNama || (session.user?.name || '').replace('Admin Desa ', '')
+    const userPosyanduId = (session.user as any).posyanduId
+    const userPosyanduNama = (session.user as any).posyanduNama
+
+    if (role === 'SUPERADMIN') {
+      // Level 0
+    } else if (role === 'ADMIN_KECAMATAN') {
+      if (userKecamatanId) {
+        setSelectedKecamatanId(userKecamatanId)
+        setSelectedKecamatan(userKecamatanNama || '')
+      }
+    } else if (role === 'OPERATOR_DESA') {
+      if (userKecamatanId) {
+        setSelectedKecamatanId(userKecamatanId)
+        setSelectedKecamatan(userKecamatanNama || '')
+      }
+      if (userDesaId) {
+        setSelectedDesaId(userDesaId)
+        setSelectedDesa(userDesaNama || '')
+        setNamaDesa(userDesaNama || '')
+      }
+    } else if (role === 'OPERATOR_POSYANDU') {
+      if (userKecamatanId) {
+        setSelectedKecamatanId(userKecamatanId)
+        setSelectedKecamatan(userKecamatanNama || '')
+      }
+      if (userDesaId) {
+        setSelectedDesaId(userDesaId)
+        setSelectedDesa(userDesaNama || '')
+        setNamaDesa(userDesaNama || '')
+      }
+      if (userPosyanduId) {
+        setSelectedPosyanduId(userPosyanduId)
+        setSelectedPosyandu(userPosyanduNama || '')
+      }
     }
+  }, [mounted, session, role])
 
-    // Load from LocalStorage
-    const savedReports = localStorage.getItem('sip_pu_reports')
-    if (savedReports) {
-      setReports(JSON.parse(savedReports))
+  useEffect(() => {
+    if (!selectedKecamatanId) {
+      setDesas([])
+      return
+    }
+    const fetchDesas = async () => {
+      try {
+        const res = await fetch(`/api/desa?kecamatanId=${selectedKecamatanId}`)
+        if (res.ok) {
+          const data = await res.json()
+          setDesas(data)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchDesas()
+  }, [selectedKecamatanId])
+
+  useEffect(() => {
+    if (!selectedDesaId) {
+      setPosyandus([])
+      return
+    }
+    const fetchPosyandus = async () => {
+      try {
+        const res = await fetch(`/api/posyandu?desaId=${selectedDesaId}`)
+        if (res.ok) {
+          const data = await res.json()
+          setPosyandus(data)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchPosyandus()
+  }, [selectedDesaId])
+
+  useEffect(() => {
+    if (selectedPosyanduId) {
+      fetchReports(selectedPosyanduId, selectedTahun)
     } else {
-      setReports(defaultPUSeeds)
-      localStorage.setItem('sip_pu_reports', JSON.stringify(defaultPUSeeds))
+      setReports([])
     }
-  }, [isPosyandu, role, session])
+  }, [selectedPosyanduId, selectedTahun])
+
+  const fetchReports = async (pId: string, yr: number) => {
+    if (!pId) return
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/dashboard/pekerjaan-umum?posyanduId=${pId}&tahun=${yr}`)
+      if (res.ok) {
+        const data = await res.json()
+        setReports(data.map((r: any) => {
+          let keluhan = ''
+          let lokasi = ''
+          let noSuratRT = ''
+          const hal = r.halPengaduan || ''
+          if (hal) {
+            const parts = hal.split(' | ')
+            parts.forEach((part: string) => {
+              if (part.startsWith('Keluhan: ')) {
+                keluhan = part.replace('Keluhan: ', '')
+              } else if (part.startsWith('Lokasi: ')) {
+                lokasi = part.replace('Lokasi: ', '')
+              } else if (part.startsWith('No Surat RT: ')) {
+                noSuratRT = part.replace('No Surat RT: ', '')
+              }
+            })
+          }
+          if (!keluhan && hal) {
+            keluhan = hal
+          }
+          const keterangan = r.status === 'TL' ? (r.keteranganTL || '') : (r.keteranganBTL || '')
+
+          return {
+            id: r.id,
+            tanggal: r.tanggal ? new Date(r.tanggal).toISOString().split('T')[0] : '',
+            posyandu: selectedPosyandu,
+            nik: r.nik || '',
+            nama: r.nama || '',
+            alamat: r.alamat || '',
+            keluhan,
+            lokasi,
+            noSuratRT,
+            status: r.status || 'BTL',
+            keterangan,
+            dataDukungs: r.dataDukungs || []
+          }
+        }))
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleTahunChange = (year: number) => {
+    setSelectedTahun(year)
+    localStorage.setItem('sip_tahun_aktif', year.toString())
+  }
 
   const initialForm = { tanggal: '', nama: '', nik: '', alamat: '', keluhan: '', lokasi: '', status: 'TL', noSuratRT: '', keterangan: '', posyandu: 'Segar' }
   const [formData, setFormData] = useState(initialForm)
@@ -226,42 +363,119 @@ export default function PekerjaanUmumPage() {
       keterangan: report.keterangan || '',
       posyandu: report.posyandu || 'Segar'
     })
+    if (report.dataDukungs && report.dataDukungs.length > 0) {
+      setUploadedFile(report.dataDukungs[0])
+    } else {
+      setUploadedFile(null)
+    }
     setEditId(report.id)
     setIsModalOpen(true)
   }
 
-  const handleDelete = (id: string) => {
-    if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      const updated = reports.filter(r => r.id !== id)
-      setReports(updated)
-      localStorage.setItem('sip_pu_reports', JSON.stringify(updated))
+  const handleDelete = async (id: string) => {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+      try {
+        const res = await fetch(`/api/dashboard/pekerjaan-umum?id=${id}`, {
+          method: 'DELETE'
+        })
+        if (res.ok) {
+          const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId
+          fetchReports(currentPosyanduId, selectedTahun)
+        } else {
+          alert('Gagal menghapus data')
+        }
+      } catch (err) {
+        console.error(err)
+        alert('Gagal menghubungi server')
+      }
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    const file = files[0]
+
+    setUploading(true)
+    const fData = new FormData()
+    fData.append('file', file)
+    fData.append('bidang', 'PU')
+    if (selectedPosyanduId) {
+      fData.append('posyanduId', selectedPosyanduId)
+    }
+
+    try {
+      const res = await fetch('/api/data-dukung', {
+        method: 'POST',
+        body: fData,
+      })
+
+      if (res.ok) {
+        const result = await res.json()
+        setUploadedFile(result.dataDukung)
+      } else {
+        const err = await res.json()
+        alert('Gagal mengunggah berkas: ' + (err.error || 'Terjadi kesalahan'))
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Gagal mengunggah berkas ke server')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Validasi NIK 16 digit
     if (formData.nik && (!/^\d{16}$/.test(formData.nik))) {
       alert('NIK harus berupa 16 digit angka cuy!')
       return
     }
 
-    let updated
-    if (editId) {
-      updated = reports.map(r => r.id === editId ? { ...formData, id: editId } : r)
-    } else {
-      updated = [{ ...formData, id: Date.now().toString() }, ...reports]
+    const targetPos = posyandus.find(p => p.nama === formData.posyandu) || posyandus[0]
+    const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : (targetPos?.id || selectedPosyanduId)
+
+    try {
+      const res = await fetch('/api/dashboard/pekerjaan-umum', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: editId,
+          posyanduId: currentPosyanduId,
+          tanggal: formData.tanggal,
+          nik: formData.nik,
+          nama: formData.nama,
+          alamat: formData.alamat,
+          keluhan: formData.keluhan,
+          lokasi: formData.lokasi,
+          noSuratRT: formData.noSuratRT,
+          keterangan: formData.keterangan,
+          status: formData.status,
+          dataDukungId: uploadedFile?.id || null
+        })
+      })
+
+      if (res.ok) {
+        setIsModalOpen(false)
+        setFormData(initialForm)
+        setUploadedFile(null)
+        setEditId(null)
+        fetchReports(currentPosyanduId, selectedTahun)
+      } else {
+        const errData = await res.json()
+        alert('Gagal menyimpan data: ' + (errData.error || 'Terjadi kesalahan'))
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Gagal menghubungi server')
     }
-    setReports(updated)
-    localStorage.setItem('sip_pu_reports', JSON.stringify(updated))
-    setIsModalOpen(false)
-    setFormData(initialForm)
-    setEditId(null)
   }
 
   const handleAdd = () => {
-    setFormData({ ...initialForm, posyandu: isPosyandu ? (selectedPosyandu || 'Segar') : 'Segar' })
+    const defaultPName = isPosyandu ? (selectedPosyandu || 'Segar') : (posyandus[0]?.nama || 'Segar')
+    setFormData({ ...initialForm, posyandu: defaultPName })
+    setUploadedFile(null)
     setEditId(null)
     setIsModalOpen(true)
   }
@@ -486,7 +700,10 @@ export default function PekerjaanUmumPage() {
             <div>
               {!isPosyandu && (
                 <button 
-                  onClick={() => setSelectedPosyandu('')}
+                  onClick={() => {
+                    setSelectedPosyandu('')
+                    setSelectedPosyanduId('')
+                  }}
                   className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
@@ -498,30 +715,57 @@ export default function PekerjaanUmumPage() {
                 {isPosyandu ? 'Permohonan & Aspirasi Bidang Pekerjaan Umum' : `Permohonan & Aspirasi Bidang Pekerjaan Umum - ${selectedPosyandu}`}
               </p>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={handleExportCSV}
-                className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
-              >
-                <FileText className="w-5 h-5" />
-                Export CSV
-              </button>
-              <button
-                onClick={handleExportExcel}
-                className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
-              >
-                <Download className="w-5 h-5" />
-                Export Excel
-              </button>
-              {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+            
+            <div className="flex items-center gap-4">
+              {/* Year tabs */}
+              <div className="flex bg-slate-100 dark:bg-zinc-800 p-1 rounded-xl border border-slate-200 dark:border-zinc-700">
                 <button
-                  onClick={handleAdd}
-                  className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
+                  onClick={() => handleTahunChange(2025)}
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                    selectedTahun === 2025
+                      ? 'bg-white dark:bg-zinc-700 text-slate-800 dark:text-white shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
+                  }`}
                 >
-                  <Plus className="w-5 h-5" />
-                  Tambah Laporan
+                  2025
                 </button>
-              )}
+                <button
+                  onClick={() => handleTahunChange(2026)}
+                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                    selectedTahun === 2026
+                      ? 'bg-white dark:bg-zinc-700 text-slate-800 dark:text-white shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
+                  }`}
+                >
+                  2026
+                </button>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={handleExportCSV}
+                  className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+                >
+                  <FileText className="w-5 h-5" />
+                  Export CSV
+                </button>
+                <button
+                  onClick={handleExportExcel}
+                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+                >
+                  <Download className="w-5 h-5" />
+                  Export Excel
+                </button>
+                {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                  <button
+                    onClick={handleAdd}
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
+                  >
+                    <Plus className="w-5 h-5" />
+                    Tambah Laporan
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -556,6 +800,7 @@ export default function PekerjaanUmumPage() {
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Alamat</th>
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Keluhan</th>
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Lokasi Sarana</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Data Dukung</th>
                     <th colSpan={2} className="px-4 py-2 text-center bg-slate-100 dark:bg-zinc-700 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-zinc-700">Tindak Lanjut</th>
                     {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th rowSpan={2} className="px-4 py-3 text-right">Aksi</th>}
                   </tr>
@@ -565,9 +810,15 @@ export default function PekerjaanUmumPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredReports.length === 0 ? (
+                  {loading ? (
                     <tr>
-                      <td colSpan={12} className="px-6 py-8 text-center text-slate-500">
+                      <td colSpan={13} className="px-6 py-8 text-center text-slate-500">
+                        Memuat data...
+                      </td>
+                    </tr>
+                  ) : filteredReports.length === 0 ? (
+                    <tr>
+                      <td colSpan={13} className="px-6 py-8 text-center text-slate-500">
                         Tidak ada data laporan.
                       </td>
                     </tr>
@@ -582,6 +833,21 @@ export default function PekerjaanUmumPage() {
                       <td className="px-4 py-3">{report.alamat}</td>
                       <td className="px-4 py-3 max-w-xs truncate" title={report.keluhan}>{report.keluhan}</td>
                       <td className="px-4 py-3">{report.lokasi}</td>
+                      <td className="px-4 py-3 text-center">
+                        {report.dataDukungs && report.dataDukungs.length > 0 ? (
+                          <a
+                            href={report.dataDukungs[0].filePath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 hover:bg-indigo-100 transition-colors"
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            PDF/Berkas
+                          </a>
+                        ) : (
+                          <span className="text-slate-400 dark:text-zinc-650">-</span>
+                        )}
+                      </td>
                       <td className="px-3 py-3 text-center">
                         {report.status === 'TL' ? (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-955 dark:text-emerald-300">
@@ -617,7 +883,7 @@ export default function PekerjaanUmumPage() {
             </div>
           </div>
         </div>
-      ) : (role === 'SUPERADMIN' && !selectedKecamatan) ? (
+      ) : (role === 'SUPERADMIN' && !selectedKecamatanId) ? (
         // Level 0: List Kecamatan
         <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
           <div className="flex items-center justify-between mb-6">
@@ -634,11 +900,14 @@ export default function PekerjaanUmumPage() {
                 </tr>
               </thead>
               <tbody>
-                {regionData.map((kec) => (
-                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
+                {kecamatans.map((kec) => (
+                  <tr key={kec.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.nama}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedKecamatan(kec.name)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                      <button onClick={() => {
+                        setSelectedKecamatanId(kec.id)
+                        setSelectedKecamatan(kec.nama)
+                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
                     </td>
                   </tr>
                 ))}
@@ -646,15 +915,18 @@ export default function PekerjaanUmumPage() {
             </table>
           </div>
         </div>
-      ) : selectedDesa ? (
+      ) : selectedDesaId && !selectedPosyanduId ? (
         // Level 2: List Posyandu
         <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <div>
               {role !== 'OPERATOR_DESA' && (
                 <button 
-                  onClick={() => setSelectedDesa('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  onClick={() => {
+                    setSelectedDesa('')
+                    setSelectedDesaId('')
+                  }}
+                  className="p-2 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-955/50 transition-colors"
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -673,11 +945,14 @@ export default function PekerjaanUmumPage() {
                 </tr>
               </thead>
               <tbody>
-                {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
-                  <tr key={pName} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu {pName}</td>
+                {posyandus.map(p => (
+                  <tr key={p.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p.nama}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedPosyandu(pName)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
+                      <button onClick={() => {
+                        setSelectedPosyanduId(p.id)
+                        setSelectedPosyandu(p.nama)
+                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
                     </td>
                   </tr>
                 ))}
@@ -692,14 +967,17 @@ export default function PekerjaanUmumPage() {
             <div>
               {role === 'SUPERADMIN' && (
                 <button 
-                  onClick={() => setSelectedKecamatan('')}
+                  onClick={() => {
+                    setSelectedKecamatan('')
+                    setSelectedKecamatanId('')
+                  }}
                   className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
                   title="Kembali ke Daftar Kecamatan"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${selectedKecamatan}` : ''}</h2>
             </div>
           </div>
           <div className="overflow-x-auto">
@@ -712,10 +990,14 @@ export default function PekerjaanUmumPage() {
               </thead>
               <tbody>
                 {desas.map((desa) => (
-                  <tr key={desa} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa}</td>
+                  <tr key={desa.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa.nama}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedDesa(desa)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                      <button onClick={() => {
+                        setSelectedDesaId(desa.id)
+                        setSelectedDesa(desa.nama)
+                        setNamaDesa(desa.nama)
+                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
                     </td>
                   </tr>
                 ))}
@@ -791,8 +1073,8 @@ export default function PekerjaanUmumPage() {
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
                       className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     >
-                      {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
-                        <option key={pName} value={pName}>Posyandu {pName}</option>
+                      {posyandus.map(p => (
+                        <option key={p.id} value={p.nama}>{p.nama}</option>
                       ))}
                     </select>
                   )}
@@ -909,6 +1191,64 @@ export default function PekerjaanUmumPage() {
                       required
                     />
                   </div>
+                </div>
+
+                <div className="md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-4">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Data Dukung (PDF / Gambar)</label>
+                  
+                  {uploadedFile ? (
+                    <div className="flex items-center justify-between bg-slate-50 dark:bg-zinc-800/50 border border-slate-100 dark:border-zinc-800 rounded-xl px-4 py-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <FileText className="w-8 h-8 text-emerald-600 dark:text-emerald-500 shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium text-slate-800 dark:text-white truncate">{uploadedFile.fileName}</p>
+                          <a 
+                            href={uploadedFile.filePath} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mt-0.5"
+                          >
+                            Lihat Berkas
+                          </a>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setUploadedFile(null)}
+                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="relative border-2 border-dashed border-slate-200 dark:border-zinc-800 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl p-4 transition-colors">
+                      <input
+                        type="file"
+                        accept=".pdf,image/*"
+                        onChange={handleFileUpload}
+                        disabled={uploading}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                      <div className="flex flex-col items-center justify-center text-center">
+                        {uploading ? (
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">Mengunggah...</p>
+                          </div>
+                        ) : (
+                          <>
+                            <FileText className="w-8 h-8 text-slate-400 dark:text-zinc-500 mb-2" />
+                            <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">
+                              Klik atau seret berkas ke sini untuk upload PDF/Gambar
+                            </p>
+                            <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">
+                              Maksimal ukuran berkas 5MB
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">

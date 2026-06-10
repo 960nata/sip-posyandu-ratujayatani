@@ -2,8 +2,8 @@
 
 import { useState, useEffect, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Users, Save, ArrowLeft, Heart, 
+import {
+  Users, Save, ArrowLeft, Heart,
   Baby, UserCircle, UserPlus, Shield, Activity, Edit2, Trash2, Plus, HardHat, X, Search
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
@@ -46,7 +46,7 @@ export default function Sip6Page() {
   const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
   const [selectedDesaId, setSelectedDesaId] = useState('')
   const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
-  
+
   const [kecamatans, setKecamatans] = useState<any[]>([])
   const [desas, setDesas] = useState<any[]>([])
   const [posyandus, setPosyandus] = useState<any[]>([])
@@ -197,7 +197,7 @@ export default function Sip6Page() {
         const hasVisited = s.kunjungan.includes(month)
         return {
           ...s,
-          kunjungan: hasVisited 
+          kunjungan: hasVisited
             ? s.kunjungan.filter(m => m !== month)
             : [...s.kunjungan, month]
         }
@@ -227,8 +227,8 @@ export default function Sip6Page() {
     ]
 
     const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-    const filteredSip6 = reports.filter((r: any) => 
-      r.tahun === tahunAktif && 
+    const filteredSip6 = reports.filter((r: any) =>
+      r.tahun === tahunAktif &&
       (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
     );
 
@@ -281,8 +281,8 @@ export default function Sip6Page() {
       ['NO', 'BULAN', 'TAHUN', 'IBU HAMIL JML', 'IBU HAMIL DIPERIKSA', 'IBU HAMIL FE TAB', 'IBU MENYUSUI JML', 'KB KONDOM', 'KB PIL', 'KB IMPLANT', 'KB MOP', 'KB MOW', 'KB IUD', 'KB SUNTIK', 'KB LAIN-LAIN', 'TIMBANG S L', 'TIMBANG S P', 'TIMBANG K L', 'TIMBANG K P', 'TIMBANG D L', 'TIMBANG D P', 'TIMBANG N L', 'TIMBANG N P', 'VIT A L', 'VIT A P', 'PMT L', 'PMT P', 'IMUNISASI TT', 'BCG L', 'BCG P', 'DPT1 L', 'DPT1 P', 'DPT2 L', 'DPT2 P', 'DPT3 L', 'DPT3 P', 'POLIO1 L', 'POLIO1 P', 'POLIO2 L', 'POLIO2 P', 'POLIO3 L', 'POLIO3 P', 'POLIO4 L', 'POLIO4 P', 'CAMPAK L', 'CAMPAK P', 'HEPB1 L', 'HEPB1 P', 'HEPB2 L', 'HEPB2 P', 'HEPB3 L', 'HEPB3 P', 'DIARE JML L', 'DIARE JML P', 'DIARE ORALIT L', 'DIARE ORALIT P'],
     ]
 
-    const filteredSip7 = localSip7.filter((r: any) => 
-      r.tahun === tahunAktif && 
+    const filteredSip7 = localSip7.filter((r: any) =>
+      r.tahun === tahunAktif &&
       (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
     );
 
@@ -392,7 +392,7 @@ export default function Sip6Page() {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
   const [selectedReportForDetail, setSelectedReportForDetail] = useState<any>(null)
   const [reports, setReports] = useState([
-    { 
+    {
       id: '1', bulan: 5, tahun: 2026, posyanduId: '1', namaKader: 'Siti', tanggalInput: '10/05/2026',
       bayiBaruL: 5, bayiLamaL: 5, bayiBaruP: 5, bayiLamaP: 5,
       balitaBaruL: 0, balitaLamaL: 0, balitaBaruP: 0, balitaLamaP: 0,
@@ -402,9 +402,9 @@ export default function Sip6Page() {
       lansiaL: 0, lansiaP: 0, wus: 0, ibu: 0,
       kader: 3, plkb: 1, medis: 1,
       lahirL: 0, lahirP: 0, meninggalL: 0, meninggalP: 0,
-      status: 'Tersimpan' 
+      status: 'Tersimpan'
     },
-    { 
+    {
       id: '2', bulan: 5, tahun: 2026, posyanduId: '1', namaKader: 'Ani', tanggalInput: '10/05/2026',
       bayiBaruL: 2, bayiLamaL: 3, bayiBaruP: 2, bayiLamaP: 2,
       balitaBaruL: 0, balitaLamaL: 0, balitaBaruP: 0, balitaLamaP: 0,
@@ -414,7 +414,7 @@ export default function Sip6Page() {
       lansiaL: 0, lansiaP: 0, wus: 0, ibu: 0,
       kader: 2, plkb: 0, medis: 1,
       lahirL: 0, lahirP: 0, meninggalL: 0, meninggalP: 0,
-      status: 'Tersimpan' 
+      status: 'Tersimpan'
     },
   ])
 
@@ -434,7 +434,7 @@ export default function Sip6Page() {
   }
 
   const handleDelete = (id: string) => {
-    if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
       const updated = reports.filter(r => r.id !== id);
       setReports(updated);
       localStorage.setItem('sip6_reports', JSON.stringify(updated));
@@ -449,12 +449,12 @@ export default function Sip6Page() {
 
   const getTotals = (months: number[]) => {
     const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-    const filtered = reports.filter(r => 
-      r.tahun === tahunAktif && 
+    const filtered = reports.filter(r =>
+      r.tahun === tahunAktif &&
       r.posyanduId === activePosyanduId &&
       months.includes(r.bulan)
     );
-    
+
     return {
       bayi: filtered.reduce((sum, r) => sum + (r.bayiBaruL || 0) + (r.bayiBaruP || 0) + (r.bayiLamaL || 0) + (r.bayiLamaP || 0), 0),
       balita: filtered.reduce((sum, r) => sum + (r.balitaBaruL || 0) + (r.balitaBaruP || 0) + (r.balitaLamaL || 0) + (r.balitaLamaP || 0), 0),
@@ -485,7 +485,7 @@ export default function Sip6Page() {
         for (let i = 1; i < lines.length; i++) {
           const line = lines[i].trim();
           if (!line) continue;
-          
+
           const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
           if (values.length < headers.length) continue;
 
@@ -584,11 +584,11 @@ export default function Sip6Page() {
     }
 
     const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-    
+
     // Validasi bulan ganda dalam setahun
-    const isDuplicate = reports.some(r => 
-      r.bulan === formData.bulan && 
-      r.tahun === formData.tahun && 
+    const isDuplicate = reports.some(r =>
+      r.bulan === formData.bulan &&
+      r.tahun === formData.tahun &&
       r.posyanduId === currentPosyanduId &&
       r.id !== editId
     );
@@ -596,7 +596,7 @@ export default function Sip6Page() {
       alert('Laporan untuk bulan dan tahun ini sudah ada di posyandu terpilih!');
       return;
     }
-    
+
     const oldReport = reports.find(r => r.id === editId)
     const newReport = {
       ...formData,
@@ -606,7 +606,7 @@ export default function Sip6Page() {
       tanggalInput: (oldReport as any)?.tanggalInput || new Date().toLocaleDateString('id-ID')
     }
 
-    const updated = editId 
+    const updated = editId
       ? reports.map(r => r.id === editId ? newReport : r)
       : [newReport, ...reports];
 
@@ -630,7 +630,7 @@ export default function Sip6Page() {
           <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (SIP 6)</p>
         </div>
         <div className="flex items-center gap-2">
-          <select 
+          <select
             value={formData.bulan}
             onChange={(e) => handleChange('bulan', parseInt(e.target.value))}
             className="bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -639,7 +639,7 @@ export default function Sip6Page() {
               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
             ))}
           </select>
-          <select 
+          <select
             value={formData.tahun}
             onChange={(e) => handleChange('tahun', parseInt(e.target.value))}
             className="bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -652,15 +652,15 @@ export default function Sip6Page() {
 
 
       {showFormSasaran ? (
-        <form onSubmit={(e) => { 
-          e.preventDefault(); 
+        <form onSubmit={(e) => {
+          e.preventDefault();
           if (editingId) {
             setDummySasaran(dummySasaran.map(item => item.id === editingId ? ({ ...item, ...sasaranForm } as any) : item));
             setEditingId(null);
           } else {
             setDummySasaran([...dummySasaran, { id: Date.now().toString(), type: activeTab, ...sasaranForm } as any]);
           }
-          setShowFormSasaran(false); 
+          setShowFormSasaran(false);
           setSasaranForm({ namaIbu: '', namaSuami: '', namaBayi: '', tahun: 2026, kunjungan: [] });
         }} className="space-y-6">
           <motion.div
@@ -671,11 +671,11 @@ export default function Sip6Page() {
           >
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-slate-800 dark:text-white">
-                {editingId ? 'Edit Sasaran' : 
-                 activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Tambah Sasaran Ibu Hamil' :
-                 activeTab === 'sasaran_bayi' ? 'Tambah Sasaran Bayi/Balita' :
-                 activeTab === 'sasaran_remaja' ? 'Tambah Sasaran Remaja' :
-                 activeTab === 'sasaran_lansia' ? 'Tambah Sasaran Lansia' : 'Tambah Sasaran'}
+                {editingId ? 'Edit Sasaran' :
+                  activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Tambah Sasaran Ibu Hamil' :
+                    activeTab === 'sasaran_bayi' ? 'Tambah Sasaran Bayi/Balita' :
+                      activeTab === 'sasaran_remaja' ? 'Tambah Sasaran Remaja' :
+                        activeTab === 'sasaran_lansia' ? 'Tambah Sasaran Lansia' : 'Tambah Sasaran'}
               </h2>
               <button type="button" onClick={() => setShowFormSasaran(false)} className={`text-sm font-medium ${theme.text} hover:${theme.textLight} flex items-center gap-1 transition-colors`}>
                 <ArrowLeft className="w-4 h-4" /> Kembali
@@ -686,16 +686,16 @@ export default function Sip6Page() {
                 <>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({...sasaranForm, namaIbu: e.target.value})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
+                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Suami</label>
-                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({...sasaranForm, namaSuami: e.target.value})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({ ...sasaranForm, namaSuami: e.target.value })} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                   </div>
                   {activeTab !== 'sasaran_bumil' && (
                     <div>
                       <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Bayi</label>
-                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({...sasaranForm, namaBayi: e.target.value})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({ ...sasaranForm, namaBayi: e.target.value })} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                     </div>
                   )}
                 </>
@@ -703,11 +703,11 @@ export default function Sip6Page() {
                 <>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama</label>
-                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({...sasaranForm, nama: e.target.value} as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
+                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({ ...sasaranForm, nama: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Jenis Kelamin</label>
-                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({...sasaranForm, jenisKelamin: e.target.value} as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({ ...sasaranForm, jenisKelamin: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
                       <option value="">-- Pilih --</option>
                       <option value="L">Laki-laki</option>
                       <option value="P">Perempuan</option>
@@ -715,21 +715,21 @@ export default function Sip6Page() {
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal Lahir</label>
-                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({...sasaranForm, tanggalLahir: e.target.value} as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({ ...sasaranForm, tanggalLahir: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({...sasaranForm, namaIbuOrtu: e.target.value} as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ayah</label>
-                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({...sasaranForm, namaAyah: e.target.value} as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaAyah: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                   </div>
                 </>
               )}
               <div>
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tahun</label>
-                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({...sasaranForm, tahun: parseInt(e.target.value)})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
+                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({ ...sasaranForm, tahun: parseInt(e.target.value) })} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
               </div>
             </div>
 
@@ -746,64 +746,59 @@ export default function Sip6Page() {
           {(isPosyandu || (selectedDesaId && selectedPosyanduId)) ? (
             // Level 3: Detail Posyandu
             <div className="space-y-6">
-                  {!isPosyandu && (
-                    <button 
-                      onClick={() => setSelectedPosyanduId('')}
-                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
-                      title="Kembali ke Daftar Posyandu"
-                    >
-                      <ArrowLeft className="w-5 h-5" />
-                    </button>
-                  )}
+              {!isPosyandu && (
+                <button
+                  onClick={() => setSelectedPosyanduId('')}
+                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
+                  title="Kembali ke Daftar Posyandu"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              )}
               {/* Tabs */}
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-                <button 
+                <button
                   onClick={() => setActiveTab('pengunjung')}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
-                    activeTab === 'pengunjung' 
-                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'pengunjung'
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
-                  }`}
+                    }`}
                 >
                   Data Pengunjung
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveTab('sasaran_bumil')}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
-                    activeTab === 'sasaran_bumil' || activeTab === 'sasaran'
-                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'sasaran_bumil' || activeTab === 'sasaran'
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
-                  }`}
+                    }`}
                 >
                   Sasaran Bumil
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveTab('sasaran_bayi')}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
-                    activeTab === 'sasaran_bayi' 
-                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'sasaran_bayi'
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
-                  }`}
+                    }`}
                 >
                   Sasaran Bayi/Balita
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveTab('sasaran_remaja')}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
-                    activeTab === 'sasaran_remaja' 
-                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'sasaran_remaja'
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
-                  }`}
+                    }`}
                 >
                   Sasaran Remaja
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveTab('sasaran_lansia')}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${
-                    activeTab === 'sasaran_lansia' 
-                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}` 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'sasaran_lansia'
+                      ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
-                  }`}
+                    }`}
                 >
                   Sasaran Lansia
                 </button>
@@ -829,7 +824,7 @@ export default function Sip6Page() {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                       <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
@@ -873,60 +868,60 @@ export default function Sip6Page() {
                       </thead>
                       <tbody>
                         {reports.map((report, index) => {
-                          const monthStr = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][report.bulan - 1];
+                          const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1];
                           const attendees = [
                             ...dummySasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
                             { id: 'p1', nama: 'Siti', role: 'Kader', isOfficer: true },
                             { id: 'p2', nama: 'Ani', role: 'Kader', isOfficer: true },
                             { id: 'p3', nama: 'Budi', role: 'PLKB', isOfficer: true },
                           ];
-                          
+
                           return (
                             <Fragment key={report.id}>
-                              <tr 
+                              <tr
                                 onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
                                 className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer"
                               >
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{report.bulan}/{report.tahun}</td>
+                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
+                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{report.bulan}/{report.tahun}</td>
 
-                            <td className="px-4 py-3">{Math.floor(dummySasaran.filter(s => s.kunjungan.includes(['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][report.bulan - 1])).length / 2)}</td>
-                            <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
-                            <td className="px-4 py-3">{report.bayiLamaL || 0}</td>
-                            <td className="px-4 py-3">{report.bayiLamaP || 0}</td>
-                            <td className="px-4 py-3">{report.balitaBaruL || 0}</td>
-                            <td className="px-4 py-3">{report.balitaBaruP || 0}</td>
-                            <td className="px-4 py-3">{report.balitaLamaL || 0}</td>
-                            <td className="px-4 py-3">{report.balitaLamaP || 0}</td>
-                            <td className="px-4 py-3">{report.anakBaruL || 0}</td>
-                            <td className="px-4 py-3">{report.anakBaruP || 0}</td>
-                            <td className="px-4 py-3">{report.anakLamaL || 0}</td>
-                            <td className="px-4 py-3">{report.anakLamaP || 0}</td>
-                            <td className="px-4 py-3">{report.prodBaruL || 0}</td>
-                            <td className="px-4 py-3">{report.prodBaruP || 0}</td>
-                            <td className="px-4 py-3">{report.prodLamaL || 0}</td>
-                            <td className="px-4 py-3">{report.prodLamaP || 0}</td>
-                            <td className="px-4 py-3">{dummySasaran.filter(s => s.kunjungan.includes(['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][report.bulan - 1])).length}</td>
-                            <td className="px-4 py-3">{report.hamilLama || 0}</td>
-                            <td className="px-4 py-3">{report.busuiBaru || 0}</td>
-                            <td className="px-4 py-3">{report.busuiLama || 0}</td>
-                            <td className="px-4 py-3">{report.lansiaL || 0}</td>
-                            <td className="px-4 py-3">{report.lansiaP || 0}</td>
-                            <td className="px-4 py-3">{report.wus || 0}</td>
-                            <td className="px-4 py-3">{report.ibu || 0}</td>
-                            <td className="px-4 py-3">{report.kader || 0}</td>
-                            <td className="px-4 py-3">{report.plkb || 0}</td>
-                            <td className="px-4 py-3">{report.medis || 0}</td>
-                            <td className="px-4 py-3">{report.lahirL || 0}</td>
-                            <td className="px-4 py-3">{report.lahirP || 0}</td>
-                            <td className="px-4 py-3">{report.meninggalL || 0}</td>
-                            <td className="px-4 py-3">{report.meninggalP || 0}</td>
-                            <td className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{report.status}</span></td>
+                                <td className="px-4 py-3">{Math.floor(dummySasaran.filter(s => s.kunjungan.includes(['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1])).length / 2)}</td>
+                                <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
+                                <td className="px-4 py-3">{report.bayiLamaL || 0}</td>
+                                <td className="px-4 py-3">{report.bayiLamaP || 0}</td>
+                                <td className="px-4 py-3">{report.balitaBaruL || 0}</td>
+                                <td className="px-4 py-3">{report.balitaBaruP || 0}</td>
+                                <td className="px-4 py-3">{report.balitaLamaL || 0}</td>
+                                <td className="px-4 py-3">{report.balitaLamaP || 0}</td>
+                                <td className="px-4 py-3">{report.anakBaruL || 0}</td>
+                                <td className="px-4 py-3">{report.anakBaruP || 0}</td>
+                                <td className="px-4 py-3">{report.anakLamaL || 0}</td>
+                                <td className="px-4 py-3">{report.anakLamaP || 0}</td>
+                                <td className="px-4 py-3">{report.prodBaruL || 0}</td>
+                                <td className="px-4 py-3">{report.prodBaruP || 0}</td>
+                                <td className="px-4 py-3">{report.prodLamaL || 0}</td>
+                                <td className="px-4 py-3">{report.prodLamaP || 0}</td>
+                                <td className="px-4 py-3">{dummySasaran.filter(s => s.kunjungan.includes(['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1])).length}</td>
+                                <td className="px-4 py-3">{report.hamilLama || 0}</td>
+                                <td className="px-4 py-3">{report.busuiBaru || 0}</td>
+                                <td className="px-4 py-3">{report.busuiLama || 0}</td>
+                                <td className="px-4 py-3">{report.lansiaL || 0}</td>
+                                <td className="px-4 py-3">{report.lansiaP || 0}</td>
+                                <td className="px-4 py-3">{report.wus || 0}</td>
+                                <td className="px-4 py-3">{report.ibu || 0}</td>
+                                <td className="px-4 py-3">{report.kader || 0}</td>
+                                <td className="px-4 py-3">{report.plkb || 0}</td>
+                                <td className="px-4 py-3">{report.medis || 0}</td>
+                                <td className="px-4 py-3">{report.lahirL || 0}</td>
+                                <td className="px-4 py-3">{report.lahirP || 0}</td>
+                                <td className="px-4 py-3">{report.meninggalL || 0}</td>
+                                <td className="px-4 py-3">{report.meninggalP || 0}</td>
+                                <td className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{report.status}</span></td>
 
-                          </tr>
-                        </Fragment>
-                      );
-                    })}
+                              </tr>
+                            </Fragment>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -939,27 +934,27 @@ export default function Sip6Page() {
                       <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
                         <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 1 (Jan - Jun)</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6]).bayi + getTotals([1,2,3,4,5,6]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6]).bumil + getTotals([1,2,3,4,5,6]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([1,2,3,4,5,6]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6]).bayi + getTotals([1, 2, 3, 4, 5, 6]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6]).bumil + getTotals([1, 2, 3, 4, 5, 6]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([1, 2, 3, 4, 5, 6]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                       {/* Semester 2 */}
                       <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
                         <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 2 (Jul - Des)</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7,8,9,10,11,12]).bayi + getTotals([7,8,9,10,11,12]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7,8,9,10,11,12]).bumil + getTotals([7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([7,8,9,10,11,12]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7, 8, 9, 10, 11, 12]).bayi + getTotals([7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7, 8, 9, 10, 11, 12]).bumil + getTotals([7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                       {/* Tahunan */}
                       <div className={`p-4 rounded-xl border ${theme.borderLight} bg-emerald-50/20 dark:bg-emerald-950/10`}>
                         <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).bayi + getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-bold text-slate-800 dark:text-white">{getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bayi + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bumil + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-bold text-slate-800 dark:text-white">{getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                     </div>
@@ -971,20 +966,20 @@ export default function Sip6Page() {
                     <div>
                       <h2 className="text-lg font-bold text-slate-800 dark:text-white">
                         {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Sasaran Ibu Hamil' :
-                         activeTab === 'sasaran_bayi' ? 'Sasaran Bayi/Balita' :
-                         activeTab === 'sasaran_remaja' ? 'Sasaran Remaja' :
-                         activeTab === 'sasaran_lansia' ? 'Sasaran Lansia' : 'Sasaran'}
+                          activeTab === 'sasaran_bayi' ? 'Sasaran Bayi/Balita' :
+                            activeTab === 'sasaran_remaja' ? 'Sasaran Remaja' :
+                              activeTab === 'sasaran_lansia' ? 'Sasaran Lansia' : 'Sasaran'}
                       </h2>
                       <p className="text-sm text-slate-500">Kunjungan Bulanan</p>
                     </div>
-                    <button 
+                    <button
                       onClick={() => setShowFormSasaran(true)}
                       className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
                     >
                       <Plus className="w-4 h-4" /> Tambah Sasaran
                     </button>
                   </div>
-                  
+
                   {/* Search Bar */}
                   <div className="relative w-full md:w-96 mb-4">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -1029,60 +1024,59 @@ export default function Sip6Page() {
                             return name.toLowerCase().includes(search.toLowerCase());
                           })
                           .map(s => (
-                          <tr key={s.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">
-                              {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaIbu : (s as any).nama || s.namaIbu}
-                            </td>
-                            {activeTab !== 'sasaran_bumil' && activeTab !== 'sasaran' && (
-                              <>
-                                <td className="px-4 py-3">{(s as any).jenisKelamin || '-'}</td>
-                                <td className="px-4 py-3">{(s as any).tanggalLahir || '-'}</td>
-                              </>
-                            )}
-                            <td className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaSuami : (s as any).namaIbuOrtu || '-'}</td>
-                            {activeTab !== 'sasaran_bumil' && (
-                              <td className="px-4 py-3">{activeTab === 'sasaran' ? s.namaBayi : (s as any).namaAyah || '-'}</td>
-                            )}
-                            {['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'].map(m => (
-                              <td key={m} className="px-2 py-3 text-center">
-                                <button 
-                                  onClick={() => toggleAttendance(s.id, m)}
-                                  className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${
-                                    s.kunjungan.includes(m) 
-                                      ? `${theme.bgSolid} text-white` 
-                                      : 'bg-slate-100 dark:bg-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
-                                  }`}
-                                >
-                                  {s.kunjungan.includes(m) ? '✓' : ''}
-                                </button>
+                            <tr key={s.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">
+                                {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaIbu : (s as any).nama || s.namaIbu}
                               </td>
-                            ))}
-                            <td className="px-4 py-3 text-right">
-                              <div className="flex items-center justify-end gap-2">
-                                <button 
-                                  onClick={() => {
-                                    setEditingId(s.id);
-                                    setSasaranForm(s as any);
-                                    setShowFormSasaran(true);
-                                  }}
-                                  className="text-blue-500 hover:text-blue-600 transition-colors"
-                                >
-                                  <Edit2 className="w-4 h-4" />
-                                </button>
-                                <button 
-                                  onClick={() => {
-                                    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                                      setDummySasaran(dummySasaran.filter(item => item.id !== s.id));
-                                    }
-                                  }}
-                                  className="text-rose-500 hover:text-rose-600 transition-colors"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
+                              {activeTab !== 'sasaran_bumil' && activeTab !== 'sasaran' && (
+                                <>
+                                  <td className="px-4 py-3">{(s as any).jenisKelamin || '-'}</td>
+                                  <td className="px-4 py-3">{(s as any).tanggalLahir || '-'}</td>
+                                </>
+                              )}
+                              <td className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaSuami : (s as any).namaIbuOrtu || '-'}</td>
+                              {activeTab !== 'sasaran_bumil' && (
+                                <td className="px-4 py-3">{activeTab === 'sasaran' ? s.namaBayi : (s as any).namaAyah || '-'}</td>
+                              )}
+                              {['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'].map(m => (
+                                <td key={m} className="px-2 py-3 text-center">
+                                  <button
+                                    onClick={() => toggleAttendance(s.id, m)}
+                                    className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
+                                        ? `${theme.bgSolid} text-white`
+                                        : 'bg-slate-100 dark:bg-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
+                                      }`}
+                                  >
+                                    {s.kunjungan.includes(m) ? '✓' : ''}
+                                  </button>
+                                </td>
+                              ))}
+                              <td className="px-4 py-3 text-right">
+                                <div className="flex items-center justify-end gap-2">
+                                  <button
+                                    onClick={() => {
+                                      setEditingId(s.id);
+                                      setSasaranForm(s as any);
+                                      setShowFormSasaran(true);
+                                    }}
+                                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                                  >
+                                    <Edit2 className="w-4 h-4" />
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                                        setDummySasaran(dummySasaran.filter(item => item.id !== s.id));
+                                      }
+                                    }}
+                                    className="text-rose-500 hover:text-rose-600 transition-colors"
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -1095,7 +1089,7 @@ export default function Sip6Page() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   {role !== 'OPERATOR_DESA' && (
-                    <button 
+                    <button
                       onClick={() => setSelectedDesaId('')}
                       className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                       title="Kembali ke Daftar Desa"
@@ -1108,7 +1102,7 @@ export default function Sip6Page() {
                   </h2>
                 </div>
               </div>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                   <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
@@ -1138,7 +1132,7 @@ export default function Sip6Page() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   {role !== 'ADMIN_KECAMATAN' && (
-                    <button 
+                    <button
                       onClick={() => setSelectedKecamatanId('')}
                       className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                       title="Kembali ke Daftar Kecamatan"
@@ -1220,7 +1214,7 @@ export default function Sip6Page() {
               className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
-              
+
               <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1243,7 +1237,7 @@ export default function Sip6Page() {
 
               <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
                 {(() => {
-                  const monthStr = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][selectedReportForDetail.bulan - 1];
+                  const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][selectedReportForDetail.bulan - 1];
                   const attendees = [
                     ...dummySasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
                     { id: 'p1', nama: 'Siti', role: 'Kader', isOfficer: true },

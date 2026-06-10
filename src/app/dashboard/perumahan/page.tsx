@@ -5,15 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Home, Plus, Search, Edit2, Trash2, Filter, 
   ChevronDown, X, Check, Clock, AlertTriangle,
-  ArrowLeft, Download, FileText, Eye
+  ArrowLeft, Download, FileText, CheckCircle
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-
-// Dummy data for Perumahan Reports
-const dummyReports = [
-  { id: '1', tanggal: '2026-05-01', nama: 'Pak Joko', nik: '1807011002930001', alamat: 'RT 02 / RW 01', hal: 'Permohonan Bantuan RTLH', status: 'BTL', fcKK: true, fcKTP: true, suratPermohonan: true, posyandu: 'Posyandu Adirejo I' },
-  { id: '2', tanggal: '2026-05-03', nama: 'Bu Sumi', nik: '1807011002930002', alamat: 'RT 03 / RW 01', hal: 'Permohonan Bedah Rumah', status: 'PROSES', fcKK: true, fcKTP: true, suratPermohonan: false, posyandu: 'Posyandu Adirejo I' },
-]
+import ExcelJS from 'exceljs'
 
 const regionData = [
   {
@@ -138,19 +133,27 @@ const regionData = [
   }
 ]
 
+const defaultPRSeeds = [
+  { id: 'pr-1', tanggal: '2026-01-09', posyandu: 'Segar', nama: 'Fajar Yanuri', nik: '1807040101800007', alamat: 'RT 014/005', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'TL' },
+  { id: 'pr-2', tanggal: '2026-01-13', posyandu: 'Mulia', nama: 'Agus Yulianto', nik: '1807040907760005', alamat: 'RT 002/001', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'TL' },
+  { id: 'pr-3', tanggal: '2026-03-17', posyandu: 'Lestari', nama: 'Amirul Mukminin', nik: '1807042102720004', alamat: 'RT 018/007', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'TL' },
+  { id: 'pr-4', tanggal: '2025-03-09', posyandu: 'Segar', nama: 'Ari Widodo', nik: '1807041409780004', alamat: 'RT 012/005', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'TL' },
+  { id: 'pr-5', tanggal: '2025-03-11', posyandu: 'Utama', nama: 'Slamet Riadi', nik: '1807042107540004', alamat: 'RT 009/005', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'BTL' },
+  { id: 'pr-6', tanggal: '2025-03-13', posyandu: 'Mulia', nama: 'Sukartinah', nik: '1807045606660009', alamat: 'RT 004/001', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'BTL' },
+  { id: 'pr-7', tanggal: '2025-03-15', posyandu: 'Giat', nama: 'Suratno', nik: '1807040112600002', alamat: 'RT 017/006', fcKK: true, fcKTP: true, sp: false, suketPenghasilan: false, fotoRumah: true, status: 'BTL' }
+]
+
 export default function PerumahanPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const userKecamatanNama = (session?.user as any)?.kecamatanNama
-  const isPosyandu = role === 'OPERATOR_POSYANDU'
   const [selectedKecamatan, setSelectedKecamatan] = useState('')
   
-  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Batanghari')
+  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Pekalongan')
   const myKec = regionData.find(k => k.name === currentKecName)
   const desas = myKec ? myKec.desas : []
   
-  const isOperator = role === 'OPERATOR_POSYANDU'
-  const isKecamatan = role === 'ADMIN_KECAMATAN' || role === 'SUPERADMIN'
+  const isPosyandu = role === 'OPERATOR_POSYANDU'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -162,24 +165,30 @@ export default function PerumahanPage() {
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
     activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    fileBg: isPosyandu ? 'file:bg-purple-50' : 'file:bg-emerald-50',
-    fileText: isPosyandu ? 'file:text-purple-700' : 'file:text-emerald-700',
-    fileHover: isPosyandu ? 'hover:file:bg-purple-100' : 'hover:file:bg-emerald-100',
-    fileTextDark: isPosyandu ? 'dark:file:text-purple-400' : 'dark:file:text-emerald-400',
   }
 
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
   const [posyandus, setPosyandus] = useState<any[]>([])
   const [search, setSearch] = useState('')
-  const [reports, setReports] = useState(dummyReports)
+  const [reports, setReports] = useState<any[]>([])
   const [mounted, setMounted] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
-  const [selectedReportForView, setSelectedReportForView] = useState<any>(null)
+  const [namaDesa, setNamaDesa] = useState('Tulusrejo')
 
   useEffect(() => {
     setMounted(true)
+    const savedDesa = localStorage.getItem('sip_nama_desa')
+    if (savedDesa) {
+      setNamaDesa(savedDesa)
+    }
+
+    if (isPosyandu) {
+      setSelectedDesa(savedDesa || 'Tulusrejo')
+      const userPosyanduName = (session?.user as any)?.posyanduNama || 'Segar'
+      setSelectedPosyandu(userPosyanduName)
+    }
+    
     if (role === 'OPERATOR_DESA') {
       const userName = session?.user?.name || ''
       const desaName = userName.replace('Admin Desa ', '')
@@ -191,67 +200,20 @@ export default function PerumahanPage() {
           if (Array.isArray(data)) setPosyandus(data)
         })
     }
-  }, [role, session])
+
+    // Load from LocalStorage
+    const savedReports = localStorage.getItem('sip_perumahan_reports')
+    if (savedReports) {
+      setReports(JSON.parse(savedReports))
+    } else {
+      setReports(defaultPRSeeds)
+      localStorage.setItem('sip_perumahan_reports', JSON.stringify(defaultPRSeeds))
+    }
+  }, [isPosyandu, role, session])
   
-  const initialForm = { tanggal: '', nama: '', nik: '', alamat: '', hal: '', status: 'BTL', fcKK: false, fcKTP: false, suratPermohonan: false, posyandu: '' }
+  const initialForm = { tanggal: '', nama: '', nik: '', alamat: '', status: 'TL', fcKK: false, fcKTP: false, sp: false, suketPenghasilan: false, fotoRumah: false, posyandu: 'Segar' }
   const [formData, setFormData] = useState(initialForm)
   const [editId, setEditId] = useState<string | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [pdfPreview, setPdfPreview] = useState<string | null>(null)
-  const [isCompressing, setIsCompressing] = useState(false)
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran foto maksimal 5MB cuy!');
-      return;
-    }
-
-    setIsCompressing(true);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          const avifData = canvas.toDataURL('image/avif', 0.8);
-          if (avifData.startsWith('data:image/avif')) {
-            setImagePreview(avifData);
-          } else {
-            const webpData = canvas.toDataURL('image/webp', 0.8);
-            setImagePreview(webpData);
-          }
-        }
-        setIsCompressing(false);
-      };
-      img.src = event.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran file PDF maksimal 5MB cuy!');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPdfPreview(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  useEffect(() => setMounted(true), [])
 
   const handleEdit = (report: any) => {
     setFormData({
@@ -259,12 +221,13 @@ export default function PerumahanPage() {
       nama: report.nama,
       nik: report.nik || '',
       alamat: report.alamat || '',
-      hal: report.hal,
-      status: report.status,
+      status: report.status || 'TL',
       fcKK: report.fcKK || false,
       fcKTP: report.fcKTP || false,
-      suratPermohonan: report.suratPermohonan || false,
-      posyandu: report.posyandu || ''
+      sp: report.sp || false,
+      suketPenghasilan: report.suketPenghasilan || false,
+      fotoRumah: report.fotoRumah || false,
+      posyandu: report.posyandu || 'Segar'
     })
     setEditId(report.id)
     setIsModalOpen(true)
@@ -272,29 +235,245 @@ export default function PerumahanPage() {
 
   const handleDelete = (id: string) => {
     if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      setReports(reports.filter(r => r.id !== id))
+      const updated = reports.filter(r => r.id !== id)
+      setReports(updated)
+      localStorage.setItem('sip_perumahan_reports', JSON.stringify(updated))
     }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (editId) {
-      setReports(reports.map(r => r.id === editId ? ({ ...formData, id: editId, fcKK: true, fcKTP: true, suratPermohonan: true, image: imagePreview, pdf: pdfPreview } as any) : r))
-    } else {
-      setReports([{ ...formData, id: Date.now().toString(), fcKK: true, fcKTP: true, suratPermohonan: true, image: imagePreview, pdf: pdfPreview } as any, ...reports])
+
+    // Validasi NIK 16 digit
+    if (formData.nik && (!/^\d{16}$/.test(formData.nik))) {
+      alert('NIK harus berupa 16 digit angka cuy!')
+      return
     }
+
+    let updated
+    if (editId) {
+      updated = reports.map(r => r.id === editId ? { ...formData, id: editId } : r)
+    } else {
+      updated = [{ ...formData, id: Date.now().toString() }, ...reports]
+    }
+    setReports(updated)
+    localStorage.setItem('sip_perumahan_reports', JSON.stringify(updated))
     setIsModalOpen(false)
     setFormData(initialForm)
     setEditId(null)
-    setImagePreview(null)
-    setPdfPreview(null)
   }
 
   const handleAdd = () => {
-    setFormData(initialForm)
+    setFormData({ ...initialForm, posyandu: isPosyandu ? (selectedPosyandu || 'Segar') : 'Segar' })
     setEditId(null)
     setIsModalOpen(true)
   }
+
+  // Export Excel bertingkat
+  const handleExportExcel = async () => {
+    const workbook = new ExcelJS.Workbook()
+    const worksheet = workbook.addWorksheet('PR')
+
+    worksheet.columns = [
+      { key: 'no', width: 6 },
+      { key: 'tanggal', width: 14 },
+      { key: 'posyandu', width: 14 },
+      { key: 'nama', width: 22 },
+      { key: 'nik', width: 25 },
+      { key: 'alamat', width: 20 },
+      { key: 'fcKK', width: 8 },
+      { key: 'fcKTP', width: 8 },
+      { key: 'sp', width: 8 },
+      { key: 'suketPenghasilan', width: 15 },
+      { key: 'fotoRumah', width: 15 },
+      { key: 'tl', width: 10 },
+      { key: 'btl', width: 10 }
+    ]
+
+    // Row 1: Title
+    worksheet.mergeCells('A1:M1')
+    const r1 = worksheet.getCell('A1')
+    r1.value = 'BIDANG PERUMAHAN RAKYAT'
+    r1.font = { name: 'Arial', size: 14, bold: true, color: { argb: 'FFFFFFFF' } }
+    r1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } } as any
+    r1.alignment = { vertical: 'middle', horizontal: 'center' }
+    worksheet.getRow(1).height = 35
+
+    // Row 2: Subtitle
+    worksheet.mergeCells('A2:M2')
+    const r2 = worksheet.getCell('A2')
+    r2.value = `DESA : ${namaDesa.toUpperCase()}`
+    r2.font = { name: 'Arial', size: 11, bold: true }
+    r2.alignment = { vertical: 'middle', horizontal: 'left' }
+    worksheet.getRow(2).height = 25
+
+    // Row 3: Empty
+    worksheet.getRow(3).height = 15
+
+    // Row 4-5: Header
+    worksheet.getRow(4).values = ['No', 'Tanggal', 'Posyandu', 'Nama', 'NIK', 'Alamat', 'Persyaratan', '', '', '', '', 'Tindaklanjut', '']
+    worksheet.getRow(5).values = ['', '', '', '', '', '', 'FC KK', 'FC KTP', 'SP*', 'Suket Penghasilan', 'Foto Kondisi Rumah', 'TL', 'BTL']
+
+    worksheet.mergeCells('A4:A5')
+    worksheet.mergeCells('B4:B5')
+    worksheet.mergeCells('C4:C5')
+    worksheet.mergeCells('D4:D5')
+    worksheet.mergeCells('E4:E5')
+    worksheet.mergeCells('F4:F5')
+    worksheet.mergeCells('G4:K4') // Persyaratan spans 5 columns
+    worksheet.mergeCells('L4:M4') // Tindaklanjut spans 2 columns
+
+    const yellowFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFC4' } }
+    const borderAll: any = {
+      top: { style: 'thin', color: { argb: 'FF000000' } },
+      left: { style: 'thin', color: { argb: 'FF000000' } },
+      bottom: { style: 'thin', color: { argb: 'FF000000' } },
+      right: { style: 'thin', color: { argb: 'FF000000' } }
+    }
+
+    const headerRows = [4, 5]
+    headerRows.forEach(rowNum => {
+      const r = worksheet.getRow(rowNum)
+      r.height = 20
+      r.eachCell(c => {
+        c.font = { name: 'Arial', size: 10, bold: true }
+        c.fill = yellowFill
+        c.border = borderAll
+        c.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
+      })
+    })
+
+    // Row 6: Column numbers (1-13)
+    worksheet.getRow(6).values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    worksheet.getRow(6).height = 18
+    const greyFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } }
+    worksheet.getRow(6).eachCell(c => {
+      c.font = { name: 'Arial', size: 9, bold: true }
+      c.fill = greyFill
+      c.border = borderAll
+      c.alignment = { vertical: 'middle', horizontal: 'center' }
+    })
+
+    // Filter
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    // Row 7+: Data rows
+    filtered.forEach((r, idx) => {
+      const rowIdx = 7 + idx
+      const row = worksheet.getRow(rowIdx)
+      row.values = [
+        idx + 1,
+        r.tanggal,
+        r.posyandu,
+        r.nama,
+        r.nik,
+        r.alamat,
+        r.fcKK ? 'v' : '',
+        r.fcKTP ? 'v' : '',
+        r.sp ? 'v' : '',
+        r.suketPenghasilan ? 'v' : '',
+        r.fotoRumah ? 'v' : '',
+        r.status === 'TL' ? 'TL' : '',
+        r.status === 'BTL' ? 'BTL' : ''
+      ]
+      row.height = 20
+      row.eachCell((c, colNum) => {
+        c.font = { name: 'Arial', size: 10 }
+        c.border = borderAll
+        if (colNum === 5) { // NIK rata kiri, paksa format teks
+          c.numFmt = '@'
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        } else if (colNum >= 7 && colNum <= 13) {
+          c.alignment = { vertical: 'middle', horizontal: 'center' }
+        } else if (typeof c.value === 'number') {
+          c.alignment = { vertical: 'middle', horizontal: 'right' }
+        } else {
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        }
+      })
+    })
+
+    // Baris TOTAL di paling bawah
+    const totalRowIdx = 7 + filtered.length
+    worksheet.mergeCells(`A${totalRowIdx}:L${totalRowIdx}`)
+    const totalRow = worksheet.getRow(totalRowIdx)
+    totalRow.height = 22
+    totalRow.getCell(1).value = 'TOTAL LAPORAN'
+    totalRow.getCell(1).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    totalRow.getCell(13).value = filtered.length
+    totalRow.getCell(13).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(13).alignment = { vertical: 'middle', horizontal: 'center' }
+    for (let col = 1; col <= 13; col++) {
+      totalRow.getCell(col).border = borderAll
+      totalRow.getCell(col).fill = greyFill
+    }
+
+    // Auto fit
+    worksheet.columns.forEach(col => {
+      let maxLen = 0
+      col.eachCell?.({ includeEmpty: true }, c => {
+        const valStr = c.value ? c.value.toString() : ''
+        if (valStr.length > maxLen) maxLen = valStr.length
+      })
+      col.width = Math.max(maxLen + 4, 10)
+    })
+
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `PR_${namaDesa.toUpperCase()}.xlsx`
+    link.click()
+  }
+
+  // Export CSV flat
+  const handleExportCSV = () => {
+    const csvHeaders = ['NO', 'TANGGAL', 'POSYANDU', 'NAMA', 'NIK', 'ALAMAT', 'FC_KK', 'FC_KTP', 'SP', 'SUKET_PENGHASILAN', 'FOTO_KONDISI_RUMAH', 'KET_TL', 'KET_BTL']
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    const rows = filtered.map((r, idx) => {
+      return [
+        idx + 1,
+        `"${r.tanggal}"`,
+        `"${r.posyandu}"`,
+        `"${r.nama.replace(/"/g, '""')}"`,
+        `"${r.nik}"`,
+        `"${(r.alamat || '').replace(/"/g, '""')}"`,
+        `"${r.fcKK ? 'v' : ''}"`,
+        `"${r.fcKTP ? 'v' : ''}"`,
+        `"${r.sp ? 'v' : ''}"`,
+        `"${r.suketPenghasilan ? 'v' : ''}"`,
+        `"${r.fotoRumah ? 'v' : ''}"`,
+        `"${r.status === 'TL' ? 'TL' : ''}"`,
+        `"${r.status === 'BTL' ? 'BTL' : ''}"`
+      ].join(',')
+    })
+
+    const csvContent = [csvHeaders.join(','), ...rows].join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `PR_${namaDesa.toUpperCase()}.csv`
+    link.click()
+  }
+
+  const filteredReports = reports.filter(r => {
+    const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase())
+    if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    return matchSearch
+  })
 
   if (!mounted) return null
 
@@ -303,11 +482,12 @@ export default function PerumahanPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         {!isPosyandu && (
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Perumahan</h1>
-            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Perumahan)</p>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Perumahan Rakyat</h1>
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Perumahan Rakyat) - Desa {namaDesa}</p>
           </div>
         )}
       </div>
+
       {(isPosyandu || (selectedDesa && selectedPosyandu)) ? (
         // Level 3: Detail Posyandu (Laporan)
         <div className="space-y-6">
@@ -322,21 +502,27 @@ export default function PerumahanPage() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Laporan Perumahan</h1>
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Laporan Perumahan Rakyat</h1>
               <p className="text-slate-500 dark:text-zinc-400 text-sm">
-                {isPosyandu ? 'Pengaduan & Aspirasi Bidang Perumahan' : `Pengaduan & Aspirasi Bidang Perumahan - ${selectedPosyandu}`}
+                {isPosyandu ? 'Permohonan & Aspirasi Bidang Perumahan Rakyat' : `Permohonan & Aspirasi Bidang Perumahan Rakyat - ${selectedPosyandu}`}
               </p>
             </div>
             <div className="flex gap-2">
-              {!isPosyandu && (
-                <button
-                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
-                >
-                  <Download className="w-5 h-5" />
-                  Export CSV
-                </button>
-              )}
-              {(isPosyandu || role === 'SUPERADMIN') && (
+              <button
+                onClick={handleExportCSV}
+                className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <FileText className="w-5 h-5" />
+                Export CSV
+              </button>
+              <button
+                onClick={handleExportExcel}
+                className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-5 h-5" />
+                Export Excel
+              </button>
+              {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
                 <button
                   onClick={handleAdd}
                   className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
@@ -359,7 +545,7 @@ export default function PerumahanPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-                placeholder="Cari nama pelapor atau isi laporan..."
+                placeholder="Cari nama pemohon..."
               />
             </div>
           </div>
@@ -369,80 +555,75 @@ export default function PerumahanPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                 <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
-                  <tr>
-                    <th className="px-6 py-4">Tanggal</th>
-                    <th className="px-6 py-4">Posyandu</th>
-                    <th className="px-6 py-4">Nama</th>
-                    <th className="px-6 py-4">NIK</th>
-                    <th className="px-6 py-4">Alamat</th>
-                    <th className="px-6 py-4">Persyaratan</th>
-                    <th className="px-6 py-4">Tindaklanjut</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4 text-right">Aksi</th>
+                  <tr className="border-b border-slate-200 dark:border-zinc-700">
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">No</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Tanggal</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Posyandu</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Nama</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">NIK</th>
+                    <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Alamat</th>
+                    <th colSpan={5} className="px-4 py-2 border-r border-slate-200 dark:border-zinc-700 text-center bg-yellow-50 dark:bg-yellow-950/20 text-yellow-800 dark:text-yellow-200">Persyaratan</th>
+                    <th colSpan={2} className="px-4 py-2 text-center bg-slate-100 dark:bg-zinc-700 text-slate-800 dark:text-slate-200">Tindak Lanjut</th>
+                    {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th rowSpan={2} className="px-4 py-3 text-right">Aksi</th>}
+                  </tr>
+                  <tr className="border-b border-slate-200 dark:border-zinc-700">
+                    <th className="px-2 py-2 border-r border-slate-200 dark:border-zinc-700 text-center text-[10px]">FC KK</th>
+                    <th className="px-2 py-2 border-r border-slate-200 dark:border-zinc-700 text-center text-[10px]">FC KTP</th>
+                    <th className="px-2 py-2 border-r border-slate-200 dark:border-zinc-700 text-center text-[10px]">SP*</th>
+                    <th className="px-2 py-2 border-r border-slate-200 dark:border-zinc-700 text-center text-[10px]">Suket Penghasilan</th>
+                    <th className="px-2 py-2 border-r border-slate-200 dark:border-zinc-700 text-center text-[10px]">Foto Kondisi Rumah</th>
+                    <th className="px-3 py-2 border-r border-slate-200 dark:border-zinc-700 text-center">TL</th>
+                    <th className="px-3 py-2 text-center">BTL</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.filter(r => r.nama.toLowerCase().includes(search.toLowerCase()) || (r.hal && r.hal.toLowerCase().includes(search.toLowerCase()))).map((report) => (
+                  {filteredReports.length === 0 ? (
+                    <tr>
+                      <td colSpan={14} className="px-6 py-8 text-center text-slate-500">
+                        Tidak ada data laporan.
+                      </td>
+                    </tr>
+                  ) : filteredReports.map((report, idx) => (
                     <tr key={report.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{report.tanggal}</td>
-                      <td className="px-6 py-4">{report.posyandu || '-'}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          {(report as any).image && (
-                            <img src={(report as any).image} alt="Foto" className="w-10 h-10 object-cover rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0" />
-                          )}
-                          {(report as any).pdf && (
-                            <div className="w-10 h-10 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-900 rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0">
-                              <FileText className="w-5 h-5 text-rose-500" />
-                            </div>
-                          )}
-                          <span>{report.nama}</span>
-                        </div>
+                      <td className="px-4 py-3 text-center font-medium text-slate-800 dark:text-white">{idx + 1}</td>
+                      <td className="px-4 py-3 text-center">{report.tanggal}</td>
+                      <td className="px-4 py-3 text-center">{report.posyandu}</td>
+                      <td className="px-4 py-3 text-slate-900 dark:text-white font-medium">{report.nama}</td>
+                      <td className="px-4 py-3 font-mono">{report.nik}</td>
+                      <td className="px-4 py-3">{report.alamat}</td>
+                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fcKK ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fcKTP ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.sp ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.suketPenghasilan ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fotoRumah ? '✓' : '-'}</td>
+                      <td className="px-3 py-3 text-center">
+                        {report.status === 'TL' ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                            TL
+                          </span>
+                        ) : '-'}
                       </td>
-                      <td className="px-6 py-4">{report.nik || '-'}</td>
-                      <td className="px-6 py-4">{report.alamat || '-'}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-1 text-xs">
-                          {report.fcKK && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded">FC KK</span>}
-                          {report.fcKTP && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded">FC KTP</span>}
-                          {report.suratPermohonan && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded">Surat</span>}
-                          {!report.fcKK && !report.fcKTP && !report.suratPermohonan && <span className="text-slate-400">-</span>}
-                        </div>
+                      <td className="px-3 py-3 text-center">
+                        {report.status === 'BTL' ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-zinc-700 dark:text-zinc-300">
+                            BTL
+                          </span>
+                        ) : '-'}
                       </td>
-                      <td className="px-6 py-4">{report.hal}</td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        report.status === 'SUDAH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                        report.status === 'PROSES' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
-                        'bg-slate-100 text-slate-800 dark:bg-zinc-700/50 dark:text-zinc-300'
-                      }`}>
-                        {report.status === 'SUDAH' ? 'Sudah' :
-                         report.status === 'PROSES' ? 'Proses' : 'Belum'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button 
-                          onClick={() => { setSelectedReportForView(report); setIsViewModalOpen(true); }} 
-                          className="text-emerald-500 hover:text-emerald-600 transition-colors"
-                          title="Lihat Detail"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        {(isPosyandu || role === 'SUPERADMIN') && (
-                          <>
+                      {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                        <td className="px-4 py-3 text-right">
+                          <div className="flex items-center justify-end gap-2">
                             <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
                               <Edit2 className="w-4 h-4" />
                             </button>
                             <button onClick={() => handleDelete(report.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
                               <Trash2 className="w-4 h-4" />
                             </button>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -466,7 +647,7 @@ export default function PerumahanPage() {
               </thead>
               <tbody>
                 {regionData.map((kec) => (
-                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => setSelectedKecamatan(kec.name)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
@@ -500,28 +681,18 @@ export default function PerumahanPage() {
               <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
-                  <th className="px-6 py-4">Status Laporan</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {posyandus.length > 0 ? posyandus.map(p => (
-                  <tr key={p.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p.nama}</td>
-                    <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">0 Laporan</span></td>
+                {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                  <tr key={pName} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu {pName}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedPosyandu(p.nama)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
+                      <button onClick={() => setSelectedPosyandu(pName)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
                     </td>
                   </tr>
-                )) : (
-                  <tr className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu Mawar 1</td>
-                    <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">1 Laporan</span></td>
-                    <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedPosyandu('Posyandu Mawar 1')} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
-                    </td>
-                  </tr>
-                )}
+                ))}
               </tbody>
             </table>
           </div>
@@ -593,7 +764,7 @@ export default function PerumahanPage() {
                       {editId ? 'Edit Laporan' : 'Tambah Laporan'}
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
-                      Lengkapi data laporan di bawah ini
+                      Lengkapi data permohonan di bawah ini
                     </p>
                   </div>
                   <button
@@ -619,14 +790,24 @@ export default function PerumahanPage() {
 
                 <div className="md:col-span-1">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Posyandu</label>
-                  <input
-                    type="text"
-                    value={isPosyandu ? "Posyandu Adirejo I" : formData.posyandu}
-                    onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                    disabled={isPosyandu}
-                    className={`block w-full ${isPosyandu ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="Nama Posyandu"
-                  />
+                  {isPosyandu ? (
+                    <input
+                      type="text"
+                      value={formData.posyandu}
+                      disabled
+                      className="block w-full bg-slate-100 dark:bg-zinc-800 border border-transparent rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none"
+                    />
+                  ) : (
+                    <select
+                      value={formData.posyandu}
+                      onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
+                      className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    >
+                      {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                        <option key={pName} value={pName}>Posyandu {pName}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
 
                 <div className="md:col-span-1">
@@ -642,13 +823,15 @@ export default function PerumahanPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK (16 digit)</label>
                   <input
                     type="text"
+                    maxLength={16}
                     value={formData.nik}
                     onChange={(e) => setFormData({...formData, nik: e.target.value})}
                     className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     placeholder="NIK Pemohon"
+                    required
                   />
                 </div>
 
@@ -659,101 +842,63 @@ export default function PerumahanPage() {
                     value={formData.alamat}
                     onChange={(e) => setFormData({...formData, alamat: e.target.value})}
                     className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="Alamat Pemohon"
-                  />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tindaklanjut / Hal</label>
-                  <textarea
-                    value={formData.hal}
-                    onChange={(e) => setFormData({...formData, hal: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    rows={3}
-                    placeholder="Keterangan permohonan..."
+                    placeholder="Alamat Lengkap (RT/RW/Dusun)"
                     required
                   />
                 </div>
 
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Status</label>
-                  <select 
-                    value={formData.status}
-                    onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  >
-                    <option value="BELUM">Belum</option>
-                    <option value="PROSES">Proses</option>
-                    <option value="SUDAH">Sudah</option>
-                  </select>
-                </div>
-
                 <div className="md:col-span-2">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Persyaratan (Checklist)</label>
-                  <div className="flex flex-wrap gap-4 bg-slate-50 dark:bg-zinc-800 p-4 rounded-xl">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 bg-slate-50 dark:bg-zinc-800 p-4 rounded-xl">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.fcKK} onChange={e => setFormData({...formData, fcKK: e.target.checked})} className="rounded text-emerald-500 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.fcKK} onChange={e => setFormData({...formData, fcKK: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">FC KK</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.fcKTP} onChange={e => setFormData({...formData, fcKTP: e.target.checked})} className="rounded text-emerald-500 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.fcKTP} onChange={e => setFormData({...formData, fcKTP: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">FC KTP</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.suratPermohonan} onChange={e => setFormData({...formData, suratPermohonan: e.target.checked})} className="rounded text-emerald-500 focus:ring-emerald-500 w-4 h-4" />
-                      <span className="text-sm text-slate-700 dark:text-slate-200">Surat Permohonan</span>
+                      <input type="checkbox" checked={formData.sp} onChange={e => setFormData({...formData, sp: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <span className="text-sm text-slate-700 dark:text-slate-200">SP* (Surat Permohonan)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" checked={formData.suketPenghasilan} onChange={e => setFormData({...formData, suketPenghasilan: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <span className="text-sm text-slate-700 dark:text-slate-200">Suket Penghasilan</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer col-span-2">
+                      <input type="checkbox" checked={formData.fotoRumah} onChange={e => setFormData({...formData, fotoRumah: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <span className="text-sm text-slate-700 dark:text-slate-200">Foto Kondisi Rumah</span>
                     </label>
                   </div>
                 </div>
 
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload Foto (Maks 5MB)</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  />
-                  {isCompressing && (
-                    <p className={`text-xs ${theme.text} mt-1`}>Memproses foto...</p>
-                  )}
-                  {imagePreview && (
-                    <div className="mt-3 relative w-32 h-32">
-                      <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-xl border border-slate-200 dark:border-zinc-700" />
-                      <button 
-                        type="button"
-                        onClick={() => setImagePreview(null)} 
-                        className="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full p-1 hover:bg-rose-600 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload Dokumen PDF (Maks 5MB)</label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={handlePdfChange}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  />
-                  {pdfPreview && (
-                    <div className="mt-3 relative w-32 h-32">
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700">
-                        <FileText className="w-8 h-8 text-rose-500" />
-                        <span className="text-xs text-slate-600 dark:text-zinc-400 mt-1">File PDF</span>
-                      </div>
-                      <button 
-                        type="button"
-                        onClick={() => setPdfPreview(null)} 
-                        className="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full p-1 hover:bg-rose-600 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
+                <div className="md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-4">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tindak Lanjut</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="TL" 
+                        checked={formData.status === 'TL'} 
+                        onChange={() => setFormData({...formData, status: 'TL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Tindak Lanjut (TL)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="BTL" 
+                        checked={formData.status === 'BTL'} 
+                        onChange={() => setFormData({...formData, status: 'BTL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Belum Tindak Lanjut (BTL)</span>
+                    </label>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">
@@ -772,142 +917,6 @@ export default function PerumahanPage() {
                   </button>
                 </div>
               </form>
-            </motion.div>
-          </div>
-        )}
-
-        {isViewModalOpen && selectedReportForView && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsViewModalOpen(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
-            >
-              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
-              
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                      Detail Laporan Perumahan
-                    </h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
-                      Informasi lengkap pengaduan perumahan
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setIsViewModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Tanggal</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.tanggal}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Posyandu</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.posyandu || '-'}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Nama</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.nama}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{selectedReportForView.nik}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Alamat</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.alamat}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Tindaklanjut</p>
-                    <p className="text-sm text-slate-800 dark:text-white mt-0.5 bg-slate-50 dark:bg-zinc-800 p-3 rounded-lg border border-slate-100 dark:border-zinc-700">{selectedReportForView.hal}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Persyaratan</p>
-                    <div className="flex flex-wrap gap-1 mt-0.5">
-                      {selectedReportForView.fcKK && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded text-xs">FC KK</span>}
-                      {selectedReportForView.fcKTP && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded text-xs">FC KTP</span>}
-                      {selectedReportForView.suratPermohonan && <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-1.5 py-0.5 rounded text-xs">Surat</span>}
-                      {!selectedReportForView.fcKK && !selectedReportForView.fcKTP && !selectedReportForView.suratPermohonan && <span className="text-slate-400 text-xs">-</span>}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Status</p>
-                    <div>
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-0.5 ${
-                        selectedReportForView.status === 'TL' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                        selectedReportForView.status === 'PROSES' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
-                        'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400'
-                      }`}>
-                        {selectedReportForView.status}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-100 dark:border-zinc-800 pt-5">
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium mb-2">Foto Lampiran</p>
-                    {selectedReportForView.image ? (
-                      <div className="relative group rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700">
-                        <img src={selectedReportForView.image} alt="Lampiran" className="w-full h-40 object-cover" />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <a href={selectedReportForView.image} target="_blank" rel="noopener noreferrer" className="text-white text-sm font-medium hover:underline">Lihat Penuh</a>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-dashed border-slate-200 dark:border-zinc-700">
-                        <p className="text-sm text-slate-400">Tidak ada foto</p>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium mb-2">Dokumen PDF</p>
-                    {selectedReportForView.pdf ? (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 p-4">
-                        <FileText className="w-10 h-10 text-rose-500 mb-2" />
-                        <p className="text-xs text-slate-600 dark:text-zinc-400 mb-3 truncate max-w-full">Dokumen Lampiran.pdf</p>
-                        <div className="flex gap-2 w-full">
-                          <a 
-                            href={selectedReportForView.pdf} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex-1 text-center bg-white dark:bg-zinc-700 text-slate-700 dark:text-white border border-slate-200 dark:border-zinc-600 rounded-lg py-1.5 text-xs font-medium hover:bg-slate-50 dark:hover:bg-zinc-600 transition-colors"
-                          >
-                            Buka
-                          </a>
-                          <a 
-                            href={selectedReportForView.pdf} 
-                            download
-                            className="flex-1 text-center bg-emerald-500 text-white rounded-lg py-1.5 text-xs font-medium hover:bg-emerald-600 transition-colors"
-                          >
-                            Download
-                          </a>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-dashed border-slate-200 dark:border-zinc-700">
-                        <p className="text-sm text-slate-400">Tidak ada PDF</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         )}

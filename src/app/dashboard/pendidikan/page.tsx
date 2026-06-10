@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   BookOpen, Plus, Search, Edit2, Trash2, Filter, 
   ChevronDown, X, Check, Clock, AlertTriangle,
-  ArrowLeft, Download, FileText
+  ArrowLeft, Download, FileText, CheckCircle
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import ExcelJS from 'exceljs'
 
 const regionData = [
   {
@@ -132,10 +133,44 @@ const regionData = [
   }
 ]
 
-// Dummy data for Pendidikan Reports
-const dummyReports = [
-  { id: '1', tanggal: '2025-06-16', nik: '3217064006750012', nama: 'Yanti Nurhayati', alamat: 'RT 10/25', hal: 'Tidak ada biaya untuk Kuliah jadi mengajukan pembuatan KIP', keterangan: 'Sudah diproses', status: 'TL', image: null, pdf: null },
-  { id: '2', tanggal: '2025-06-18', nik: '3217064006750013', nama: 'Budi Santoso', alamat: 'RT 11/25', hal: 'Kekurangan buku paket di SDN 1 Adirejo', keterangan: 'Menunggu proses', status: 'BTL', image: null, pdf: null },
+// Data dari file TULUS REJO - PENDIDIKAN.csv sebagai seed awal
+const defaultPendidikanSeeds = [
+  {
+    id: 'p-1',
+    tanggal: '2026-04-09',
+    posyandu: 'Segar',
+    nik: '1807046410070005',
+    nama: 'NATASYA PUTRI OKTARINA',
+    alamat: 'Dusun 1',
+    hal: 'Tidak ada biaya kuliah,mengajukan KIP Kuliah',
+    keteranganTL: 'Sudah diproses',
+    keteranganBTL: '',
+    status: 'TL'
+  },
+  {
+    id: 'p-2',
+    tanggal: '2026-04-11',
+    posyandu: 'Utama',
+    nik: '1807045610070007',
+    nama: 'ZALFA RAYSA FITRIA',
+    alamat: 'Dusun 1',
+    hal: 'Pengajuan KIP Kuliah',
+    keteranganTL: '',
+    keteranganBTL: '',
+    status: 'BTL'
+  },
+  {
+    id: 'p-3',
+    tanggal: '2026-04-16',
+    posyandu: 'Utama',
+    nik: '1807046805070005',
+    nama: 'MEISYA ASYIFA KHOIRUNA',
+    alamat: 'Dusun 4',
+    hal: 'Pengajuan KIP Kuliah',
+    keteranganTL: '',
+    keteranganBTL: '',
+    status: 'BTL'
+  }
 ]
 
 export default function PendidikanPage() {
@@ -144,12 +179,11 @@ export default function PendidikanPage() {
   const userKecamatanNama = (session?.user as any)?.kecamatanNama
   const [selectedKecamatan, setSelectedKecamatan] = useState('')
   
-  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Batanghari')
+  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Pekalongan')
   const myKec = regionData.find(k => k.name === currentKecName)
   const desas = myKec ? myKec.desas : []
   
   const isPosyandu = role === 'OPERATOR_POSYANDU'
-  const isKecamatan = role === 'ADMIN_KECAMATAN' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -161,10 +195,6 @@ export default function PendidikanPage() {
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
     activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    fileBg: isPosyandu ? 'file:bg-purple-50' : 'file:bg-emerald-50',
-    fileText: isPosyandu ? 'file:text-purple-700' : 'file:text-emerald-700',
-    fileHover: isPosyandu ? 'hover:file:bg-purple-100' : 'hover:file:bg-emerald-100',
-    fileTextDark: isPosyandu ? 'dark:file:text-purple-400' : 'dark:file:text-emerald-400',
   }
 
   const [selectedDesa, setSelectedDesa] = useState('')
@@ -172,12 +202,23 @@ export default function PendidikanPage() {
   const [posyandus, setPosyandus] = useState<any[]>([])
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [reports, setReports] = useState<any[]>(dummyReports)
+  const [reports, setReports] = useState<any[]>([])
   const [mounted, setMounted] = useState(false)
+  const [namaDesa, setNamaDesa] = useState('Tulusrejo')
 
   useEffect(() => {
     setMounted(true)
-    if (isPosyandu) { setSelectedDesa('Adirejo'); setSelectedPosyandu('Posyandu Adirejo I') }
+    const savedDesa = localStorage.getItem('sip_nama_desa')
+    if (savedDesa) {
+      setNamaDesa(savedDesa)
+    }
+
+    if (isPosyandu) {
+      setSelectedDesa(savedDesa || 'Tulusrejo')
+      const userPosyanduName = (session?.user as any)?.posyanduNama || 'Segar'
+      setSelectedPosyandu(userPosyanduName)
+    }
+    
     if (role === 'OPERATOR_DESA') {
       const userName = session?.user?.name || ''
       const desaName = userName.replace('Admin Desa ', '')
@@ -189,115 +230,269 @@ export default function PendidikanPage() {
           if (Array.isArray(data)) setPosyandus(data)
         })
     }
+
+    // Load reports from LocalStorage
+    const savedReports = localStorage.getItem('sip_pendidikan_reports')
+    if (savedReports) {
+      setReports(JSON.parse(savedReports))
+    } else {
+      // Seed default data
+      setReports(defaultPendidikanSeeds)
+      localStorage.setItem('sip_pendidikan_reports', JSON.stringify(defaultPendidikanSeeds))
+    }
   }, [isPosyandu, role, session])
 
-  const initialForm = { tanggal: '', posyandu: '', nik: '', nama: '', alamat: '', hal: '', keterangan: '', status: 'BTL' }
+  const initialForm = { tanggal: '', posyandu: 'Segar', nik: '', nama: '', alamat: '', hal: '', keteranganTL: '', keteranganBTL: '', status: 'TL' }
   const [formData, setFormData] = useState(initialForm)
   const [editId, setEditId] = useState<string | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [pdfPreview, setPdfPreview] = useState<string | null>(null)
-  const [isCompressing, setIsCompressing] = useState(false)
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran foto maksimal 5MB cuy!');
-      return;
-    }
-
-    setIsCompressing(true);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          const avifData = canvas.toDataURL('image/avif', 0.8);
-          if (avifData.startsWith('data:image/avif')) {
-            setImagePreview(avifData);
-          } else {
-            const webpData = canvas.toDataURL('image/webp', 0.8);
-            setImagePreview(webpData);
-          }
-        }
-        setIsCompressing(false);
-      };
-      img.src = event.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran file PDF maksimal 5MB cuy!');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPdfPreview(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const handleEdit = (report: any) => {
     setFormData({
       tanggal: report.tanggal,
-      posyandu: report.posyandu || '',
+      posyandu: report.posyandu || 'Segar',
       nik: report.nik,
       nama: report.nama,
       alamat: report.alamat,
       hal: report.hal,
-      keterangan: report.keterangan,
-      status: report.status
+      keteranganTL: report.keteranganTL || '',
+      keteranganBTL: report.keteranganBTL || '',
+      status: report.status || 'TL'
     })
     setEditId(report.id)
-    setImagePreview(report.image || null)
-    setPdfPreview(report.pdf || null)
     setIsModalOpen(true)
   }
 
   const handleDelete = (id: string) => {
     if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      setReports(reports.filter(r => r.id !== id))
+      const updated = reports.filter(r => r.id !== id)
+      setReports(updated)
+      localStorage.setItem('sip_pendidikan_reports', JSON.stringify(updated))
     }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (editId) {
-      setReports(reports.map(r => r.id === editId ? { ...formData, id: editId, image: imagePreview, pdf: pdfPreview } : r))
-    } else {
-      setReports([{ ...formData, id: Date.now().toString(), image: imagePreview, pdf: pdfPreview }, ...reports])
+
+    // Validasi NIK 16 digit angka
+    if (formData.nik && (!/^\d{16}$/.test(formData.nik))) {
+      alert('NIK harus berupa 16 digit angka cuy!')
+      return
     }
+
+    let updated
+    if (editId) {
+      updated = reports.map(r => r.id === editId ? { ...formData, id: editId } : r)
+    } else {
+      updated = [{ ...formData, id: Date.now().toString() }, ...reports]
+    }
+    setReports(updated)
+    localStorage.setItem('sip_pendidikan_reports', JSON.stringify(updated))
     setIsModalOpen(false)
     setFormData(initialForm)
     setEditId(null)
-    setImagePreview(null)
-    setPdfPreview(null)
   }
 
   const handleAdd = () => {
-    setFormData({ ...initialForm, posyandu: isPosyandu ? (selectedPosyandu || 'Posyandu Adirejo I') : '' })
+    setFormData({ ...initialForm, posyandu: isPosyandu ? (selectedPosyandu || 'Segar') : 'Segar' })
     setEditId(null)
-    setImagePreview(null)
-    setPdfPreview(null)
     setIsModalOpen(true)
   }
 
-  const filteredReports = reports.filter(r => 
-    r.nama.toLowerCase().includes(search.toLowerCase()) ||
-    r.hal.toLowerCase().includes(search.toLowerCase())
-  )
+  // Handle Export Excel kustom dengan ExcelJS
+  const handleExportExcel = async () => {
+    const workbook = new ExcelJS.Workbook()
+    const worksheet = workbook.addWorksheet('PENDIDIKAN')
+
+    // Kolom data
+    worksheet.columns = [
+      { key: 'no', width: 6 },
+      { key: 'tanggal', width: 15 },
+      { key: 'posyandu', width: 15 },
+      { key: 'nik', width: 25 },
+      { key: 'nama', width: 25 },
+      { key: 'alamat', width: 20 },
+      { key: 'hal', width: 35 },
+      { key: 'tl', width: 20 },
+      { key: 'btl', width: 20 }
+    ]
+
+    // Row 1: Nama Bidang (bold, font besar, merge semua kolom, bg biru tua teks putih)
+    worksheet.mergeCells('A1:I1')
+    const r1 = worksheet.getCell('A1')
+    r1.value = 'BIDANG PENDIDIKAN'
+    r1.font = { name: 'Arial', size: 14, bold: true, color: { argb: 'FFFFFFFF' } }
+    r1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } } as any
+    r1.alignment = { vertical: 'middle', horizontal: 'center' }
+    worksheet.getRow(1).height = 35
+
+    // Row 2: DESA : TULUSREJO (bold, merge semua kolom)
+    worksheet.mergeCells('A2:I2')
+    const r2 = worksheet.getCell('A2')
+    r2.value = `DESA : ${namaDesa.toUpperCase()}`
+    r2.font = { name: 'Arial', size: 11, bold: true, color: { argb: 'FF000000' } }
+    r2.alignment = { vertical: 'middle', horizontal: 'left' }
+    worksheet.getRow(2).height = 25
+
+    // Row 3: Kosong
+    worksheet.getRow(3).height = 15
+
+    // Row 4-5: Header bertingkat (bold, bg kuning muda #FFF9C4, border, center, wrap text)
+    worksheet.getRow(4).values = ['No', 'Tanggal', 'Posyandu', 'NIK', 'Nama', 'Alamat', 'Hal Pengaduan', 'Keterangan', '']
+    worksheet.getRow(5).values = ['', '', '', '', '', '', '', 'TL', 'BTL']
+
+    worksheet.mergeCells('A4:A5')
+    worksheet.mergeCells('B4:B5')
+    worksheet.mergeCells('C4:C5')
+    worksheet.mergeCells('D4:D5')
+    worksheet.mergeCells('E4:E5')
+    worksheet.mergeCells('F4:F5')
+    worksheet.mergeCells('G4:G5')
+    worksheet.mergeCells('H4:I4')
+
+    const yellowFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFC4' } }
+    const borderAll: any = {
+      top: { style: 'thin', color: { argb: 'FF000000' } },
+      left: { style: 'thin', color: { argb: 'FF000000' } },
+      bottom: { style: 'thin', color: { argb: 'FF000000' } },
+      right: { style: 'thin', color: { argb: 'FF000000' } }
+    }
+
+    const headerRows = [4, 5]
+    headerRows.forEach(rowNum => {
+      const r = worksheet.getRow(rowNum)
+      r.height = 20
+      r.eachCell(c => {
+        c.font = { name: 'Arial', size: 10, bold: true }
+        c.fill = yellowFill
+        c.border = borderAll
+        c.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
+      })
+    })
+
+    // Row 6: Nomor Kolom (1-9) (bold, bg abu muda)
+    worksheet.getRow(6).values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    worksheet.getRow(6).height = 18
+    const greyFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } }
+    worksheet.getRow(6).eachCell(c => {
+      c.font = { name: 'Arial', size: 9, bold: true }
+      c.fill = greyFill
+      c.border = borderAll
+      c.alignment = { vertical: 'middle', horizontal: 'center' }
+    })
+
+    // Filter data desa/posyandu
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    // Row 7+: Data
+    filtered.forEach((r, idx) => {
+      const rowIdx = 7 + idx
+      const row = worksheet.getRow(rowIdx)
+      row.values = [
+        idx + 1,
+        r.tanggal,
+        r.posyandu,
+        r.nik,
+        r.nama,
+        r.alamat,
+        r.hal,
+        r.status === 'TL' ? (r.keteranganTL || 'Sudah diproses') : '',
+        r.status === 'BTL' ? (r.keteranganBTL || 'Menunggu proses') : ''
+      ]
+      row.height = 20
+      row.eachCell((c, colNum) => {
+        c.font = { name: 'Arial', size: 10 }
+        c.border = borderAll
+        if (colNum === 4) { // NIK rata kiri, paksa format teks
+          c.numFmt = '@'
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        } else if (typeof c.value === 'number') {
+          c.alignment = { vertical: 'middle', horizontal: 'right' }
+        } else {
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        }
+      })
+    })
+
+    // Baris TOTAL di paling bawah
+    const totalRowIdx = 7 + filtered.length
+    worksheet.mergeCells(`A${totalRowIdx}:H${totalRowIdx}`)
+    const totalRow = worksheet.getRow(totalRowIdx)
+    totalRow.height = 22
+    totalRow.getCell(1).value = 'TOTAL LAPORAN'
+    totalRow.getCell(1).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    totalRow.getCell(9).value = filtered.length
+    totalRow.getCell(9).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(9).alignment = { vertical: 'middle', horizontal: 'right' }
+    for (let col = 1; col <= 9; col++) {
+      totalRow.getCell(col).border = borderAll
+      totalRow.getCell(col).fill = greyFill
+    }
+
+    // Auto fit columns
+    worksheet.columns.forEach(col => {
+      let maxLen = 0
+      col.eachCell?.({ includeEmpty: true }, c => {
+        const valStr = c.value ? c.value.toString() : ''
+        if (valStr.length > maxLen) maxLen = valStr.length
+      })
+      col.width = Math.max(maxLen + 4, 10)
+    })
+
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `PENDIDIKAN_${namaDesa.toUpperCase()}.xlsx`;
+    link.click();
+  }
+
+  // Handle Export CSV flat
+  const handleExportCSV = () => {
+    // Header flat
+    const csvHeaders = ['NO', 'TANGGAL', 'POSYANDU', 'NIK', 'NAMA', 'ALAMAT', 'HAL_PENGADUAN', 'KET_TL', 'KET_BTL']
+    
+    // Filter data
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    const rows = filtered.map((r, idx) => {
+      return [
+        idx + 1,
+        `"${r.tanggal}"`,
+        `"${r.posyandu}"`,
+        `"${r.nik}"`,
+        `"${r.nama.replace(/"/g, '""')}"`,
+        `"${(r.alamat || '').replace(/"/g, '""')}"`,
+        `"${r.hal.replace(/"/g, '""')}"`,
+        `"${(r.status === 'TL' ? (r.keteranganTL || 'Sudah diproses') : '').replace(/"/g, '""')}"`,
+        `"${(r.status === 'BTL' ? (r.keteranganBTL || 'Menunggu proses') : '').replace(/"/g, '""')}"`
+      ].join(',')
+    })
+
+    const csvContent = [csvHeaders.join(','), ...rows].join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `PENDIDIKAN_${namaDesa.toUpperCase()}.csv`
+    link.click()
+  }
+
+  const filteredReports = reports.filter(r => {
+    const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+    if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    return matchSearch
+  })
 
   if (!mounted) return null
 
@@ -307,10 +502,11 @@ export default function PendidikanPage() {
         {!isPosyandu && (
           <div>
             <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Pendidikan</h1>
-            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Pendidikan)</p>
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Pendidikan) - Desa {namaDesa}</p>
           </div>
         )}
       </div>
+
       {(isPosyandu || (selectedDesa && selectedPosyandu)) ? (
         // Level 3: Detail Posyandu (Laporan)
         <div className="space-y-6">
@@ -331,15 +527,21 @@ export default function PendidikanPage() {
               </p>
             </div>
             <div className="flex gap-2">
-              {!isPosyandu && (
-                <button
-                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
-                >
-                  <Download className="w-5 h-5" />
-                  Export CSV
-                </button>
-              )}
-              {(isPosyandu || role === 'SUPERADMIN') && (
+              <button
+                onClick={handleExportCSV}
+                className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <FileText className="w-5 h-5" />
+                Export CSV
+              </button>
+              <button
+                onClick={handleExportExcel}
+                className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-5 h-5" />
+                Export Excel
+              </button>
+              {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
                 <button
                   onClick={handleAdd}
                   className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
@@ -365,17 +567,6 @@ export default function PendidikanPage() {
                 placeholder="Cari nama pelapor atau isi laporan..."
               />
             </div>
-            
-            <div className="flex items-center gap-2 w-full md:w-auto">
-              <button className="flex items-center gap-2 bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all w-full md:w-auto justify-center">
-                <Filter className="w-4 h-4" />
-                Filter
-              </button>
-              <button className="flex items-center gap-2 bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all w-full md:w-auto justify-center">
-                Status
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
           </div>
 
           {/* Table */}
@@ -384,54 +575,51 @@ export default function PendidikanPage() {
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                 <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
                   <tr>
+                    <th className="px-6 py-4">No</th>
                     <th className="px-6 py-4">Tanggal</th>
+                    <th className="px-6 py-4">Posyandu</th>
                     <th className="px-6 py-4">NIK</th>
                     <th className="px-6 py-4">Pelapor</th>
                     <th className="px-6 py-4">Alamat</th>
                     <th className="px-6 py-4">Hal Pengaduan</th>
-                    <th className="px-6 py-4">Keterangan</th>
-                    <th className="px-6 py-4">Status</th>
-                    {(isPosyandu || role === 'SUPERADMIN') && <th className="px-6 py-4 text-right">Aksi</th>}
+                    <th className="px-6 py-4">TL</th>
+                    <th className="px-6 py-4">BTL</th>
+                    {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th className="px-6 py-4 text-right">Aksi</th>}
                   </tr>
                 </thead>
                 <tbody>
                   {filteredReports.length === 0 ? (
                     <tr>
-                      <td colSpan={(isPosyandu || role === 'SUPERADMIN') ? 8 : 7} className="px-6 py-8 text-center text-slate-500">
+                      <td colSpan={10} className="px-6 py-8 text-center text-slate-500">
                         Tidak ada data laporan.
                       </td>
                     </tr>
-                  ) : filteredReports.map((report) => (
+                  ) : filteredReports.map((report, index) => (
                     <tr key={report.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                      <td className="px-6 py-4 text-slate-900 dark:text-white font-medium">{index + 1}</td>
                       <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{report.tanggal}</td>
+                      <td className="px-6 py-4">{report.posyandu}</td>
                       <td className="px-6 py-4">{report.nik}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          {(report as any).image && (
-                            <img src={(report as any).image} alt="Foto" className="w-10 h-10 object-cover rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0" />
-                          )}
-                          {(report as any).pdf && (
-                            <div className="w-10 h-10 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-900 rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0">
-                              <FileText className="w-5 h-5 text-rose-500" />
-                            </div>
-                          )}
-                          <span>{report.nama}</span>
-                        </div>
-                      </td>
+                      <td className="px-6 py-4 text-slate-900 dark:text-white font-medium">{report.nama}</td>
                       <td className="px-6 py-4">{report.alamat}</td>
                       <td className="px-6 py-4 max-w-xs truncate" title={report.hal}>{report.hal}</td>
-                      <td className="px-6 py-4 max-w-xs truncate" title={report.keterangan}>{report.keterangan}</td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          report.status === 'SUDAH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                          report.status === 'PROSES' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
-                          'bg-slate-100 text-slate-800 dark:bg-zinc-700/50 dark:text-zinc-300'
-                        }`}>
-                          {report.status === 'SUDAH' ? 'Sudah' :
-                           report.status === 'PROSES' ? 'Proses' : 'Belum'}
-                        </span>
+                        {report.status === 'TL' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            {report.keteranganTL || 'Sudah diproses'}
+                          </span>
+                        ) : '-'}
                       </td>
-                      {(isPosyandu || role === 'SUPERADMIN') && (
+                      <td className="px-6 py-4">
+                        {report.status === 'BTL' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-zinc-700 dark:text-zinc-300">
+                            <Clock className="w-3.5 h-3.5" />
+                            {report.keteranganBTL || 'Menunggu proses'}
+                          </span>
+                        ) : '-'}
+                      </td>
+                      {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors">
@@ -468,7 +656,7 @@ export default function PendidikanPage() {
               </thead>
               <tbody>
                 {regionData.map((kec) => (
-                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => setSelectedKecamatan(kec.name)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
@@ -502,37 +690,18 @@ export default function PendidikanPage() {
               <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
-                  <th className="px-6 py-4">Status Laporan</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {posyandus.length > 0 ? posyandus.map(p => (
-                  <tr key={p.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p.nama}</td>
-                    <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">0 Laporan</span></td>
+                {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                  <tr key={pName} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu {pName}</td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedPosyandu(p.nama)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
+                      <button onClick={() => setSelectedPosyandu(pName)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
                     </td>
                   </tr>
-                )) : (
-                  <>
-                    <tr className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu Mawar 1</td>
-                      <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">3 Laporan</span></td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => setSelectedPosyandu('Posyandu Mawar 1')} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu Melati</td>
-                      <td className="px-6 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">2 Laporan</span></td>
-                      <td className="px-6 py-4 text-right">
-                        <button onClick={() => setSelectedPosyandu('Posyandu Melati')} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
-                      </td>
-                    </tr>
-                  </>
-                )}
+                ))}
               </tbody>
             </table>
           </div>
@@ -631,24 +800,36 @@ export default function PendidikanPage() {
 
                 <div className="md:col-span-1">
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Posyandu</label>
-                  <input
-                    type="text"
-                    value={formData.posyandu}
-                    onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                    className={`block w-full ${isPosyandu ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="Nama Posyandu"
-                    disabled={isPosyandu}
-                  />
+                  {isPosyandu ? (
+                    <input
+                      type="text"
+                      value={formData.posyandu}
+                      disabled
+                      className="block w-full bg-slate-100 dark:bg-zinc-800 border border-transparent rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none"
+                    />
+                  ) : (
+                    <select
+                      value={formData.posyandu}
+                      onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
+                      className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    >
+                      {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                        <option key={pName} value={pName}>Posyandu {pName}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK</label>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK (16 digit)</label>
                   <input
                     type="text"
+                    maxLength={16}
                     value={formData.nik}
                     onChange={(e) => setFormData({...formData, nik: e.target.value})}
                     className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="NIK (16 digit)"
+                    placeholder="Contoh: 1807xxxxxxxxxxxx"
+                    required
                   />
                 </div>
 
@@ -671,7 +852,8 @@ export default function PendidikanPage() {
                     value={formData.alamat}
                     onChange={(e) => setFormData({...formData, alamat: e.target.value})}
                     className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="Alamat Lengkap"
+                    placeholder="Alamat Lengkap (Dusun / RT / RW)"
+                    required
                   />
                 </div>
 
@@ -682,65 +864,61 @@ export default function PendidikanPage() {
                     onChange={(e) => setFormData({...formData, hal: e.target.value})}
                     className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
                     rows={3}
-                    placeholder="Isi laporan atau pengaduan..."
+                    placeholder="Isi aduan pendidikan..."
                     required
                   />
                 </div>
 
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan</label>
-                  <input
-                    type="text"
-                    value={formData.keterangan}
-                    onChange={(e) => setFormData({...formData, keterangan: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                    placeholder="Keterangan tambahan"
-                  />
-                </div>
+                <div className="md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-4">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Status Tindak Lanjut</label>
+                  <div className="flex gap-4 mb-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="TL" 
+                        checked={formData.status === 'TL'} 
+                        onChange={() => setFormData({...formData, status: 'TL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Tindak Lanjut (TL)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="BTL" 
+                        checked={formData.status === 'BTL'} 
+                        onChange={() => setFormData({...formData, status: 'BTL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Belum Tindak Lanjut (BTL)</span>
+                    </label>
+                  </div>
 
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Status</label>
-                  <select 
-                    value={formData.status}
-                    onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  >
-                    <option value="BELUM">Belum</option>
-                    <option value="PROSES">Proses</option>
-                    <option value="SUDAH">Sudah</option>
-                  </select>
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload Foto</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className={`block w-full text-sm text-slate-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold ${theme.fileBg} ${theme.fileText} ${theme.fileHover} dark:file:bg-zinc-800 ${theme.fileTextDark}`}
-                  />
-                  {isCompressing && <p className="text-xs text-slate-500 mt-1">Mengompresi gambar...</p>}
-                  {imagePreview && (
-                    <div className="mt-2 relative w-20 h-20">
-                      <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-lg border border-slate-200 dark:border-zinc-700" />
-                      <button type="button" onClick={() => setImagePreview(null)} className="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full p-0.5"><X className="w-4 h-4" /></button>
+                  {formData.status === 'TL' ? (
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan TL</label>
+                      <input
+                        type="text"
+                        value={formData.keteranganTL}
+                        onChange={(e) => setFormData({...formData, keteranganTL: e.target.value, keteranganBTL: ''})}
+                        className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                        placeholder="Contoh: Sudah diproses"
+                        required
+                      />
                     </div>
-                  )}
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload PDF</label>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={handlePdfChange}
-                    className="block w-full text-sm text-slate-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 dark:file:bg-zinc-800 dark:file:text-emerald-400"
-                  />
-                  {pdfPreview && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <FileText className="w-5 h-5 text-rose-500" />
-                      <span className="text-xs text-slate-500 truncate max-w-[150px]">PDF Terpilih</span>
-                      <button type="button" onClick={() => setPdfPreview(null)} className="text-rose-500 hover:text-rose-700"><X className="w-4 h-4" /></button>
+                  ) : (
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan BTL</label>
+                      <input
+                        type="text"
+                        value={formData.keteranganBTL}
+                        onChange={(e) => setFormData({...formData, keteranganBTL: e.target.value, keteranganTL: ''})}
+                        className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                        placeholder="Contoh: Menunggu verifikasi berkas"
+                        required
+                      />
                     </div>
                   )}
                 </div>

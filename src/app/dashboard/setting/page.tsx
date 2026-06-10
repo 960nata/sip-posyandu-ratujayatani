@@ -12,6 +12,9 @@ export default function ProfilePage() {
   const [isUploading, setIsUploading] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   
+  const [namaDesa, setNamaDesa] = useState('')
+  const [tahunAktif, setTahunAktif] = useState(2026)
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +32,10 @@ export default function ProfilePage() {
         email: session.user?.email || ''
       }))
     }
+    const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    setNamaDesa(savedDesa)
+    setTahunAktif(parseInt(savedTahun))
   }, [session])
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +114,9 @@ export default function ProfilePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    alert('Perubahan profil berhasil disimpan!')
+    localStorage.setItem('sip_nama_desa', namaDesa)
+    localStorage.setItem('sip_tahun_aktif', tahunAktif.toString())
+    alert('Pengaturan profil dan sistem berhasil disimpan!')
   }
 
   if (status === 'loading' || !mounted) {
@@ -219,6 +228,38 @@ export default function ProfilePage() {
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                   className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 dark:border-zinc-700"></div>
+
+          {/* Pengaturan Wilayah & Sistem */}
+          <div>
+            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pengaturan Wilayah & Sistem</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Nama Desa</label>
+                <input
+                  type="text"
+                  value={namaDesa}
+                  onChange={(e) => setNamaDesa(e.target.value)}
+                  placeholder="Contoh: Adijaya"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Tahun Aktif</label>
+                <select
+                  value={tahunAktif}
+                  onChange={(e) => setTahunAktif(parseInt(e.target.value))}
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                >
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                </select>
               </div>
             </div>
           </div>

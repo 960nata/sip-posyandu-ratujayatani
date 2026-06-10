@@ -7,6 +7,7 @@ import {
   Baby, UserCircle, UserPlus, Shield, Activity, Edit2, Trash2, Plus, HardHat, X, Search
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import * as XLSX from 'xlsx'
 
 export default function Sip6Page() {
   const { data: session } = useSession()
@@ -39,6 +40,9 @@ export default function Sip6Page() {
   const [mounted, setMounted] = useState(false)
   const [search, setSearch] = useState('')
 
+  const [tahunAktif, setTahunAktif] = useState(2026)
+  const [namaDesa, setNamaDesa] = useState('Adijaya')
+
   const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
   const [selectedDesaId, setSelectedDesaId] = useState('')
   const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
@@ -50,6 +54,72 @@ export default function Sip6Page() {
   useEffect(() => {
     setMounted(true)
     fetchKecamatans()
+
+    const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    setNamaDesa(savedDesa)
+    setTahunAktif(parseInt(savedTahun))
+    setFormData(prev => ({ ...prev, tahun: parseInt(savedTahun) }))
+
+    const savedReports = localStorage.getItem('sip6_reports')
+    if (savedReports) {
+      setReports(JSON.parse(savedReports))
+    } else {
+      fetch('/api/sip6')
+        .then(res => res.json())
+        .then(data => {
+          if (data && Array.isArray(data) && data.length > 0) {
+            const mapped = data.map(r => ({
+              id: r.id,
+              posyanduId: r.posyanduId,
+              bulan: r.bulan,
+              tahun: r.tahun,
+              namaKader: r.keterangan || 'Petugas',
+              tanggalInput: new Date(r.createdAt).toLocaleDateString('id-ID'),
+              bayiBaruL: r.bayiBaruL || 0,
+              bayiBaruP: r.bayiBaruP || 0,
+              bayiLamaL: r.bayiLamaL || 0,
+              bayiLamaP: r.bayiLamaP || 0,
+              balitaBaruL: r.balitaBaruL || 0,
+              balitaBaruP: r.balitaBaruP || 0,
+              balitaLamaL: r.balitaLamaL || 0,
+              balitaLamaP: r.balitaLamaP || 0,
+              anakBaruL: r.anakBaruL || 0,
+              anakBaruP: r.anakBaruP || 0,
+              anakLamaL: r.anakLamaL || 0,
+              anakLamaP: r.anakLamaP || 0,
+              prodBaruL: r.prodBaruL || 0,
+              prodBaruP: r.prodBaruP || 0,
+              prodLamaL: r.prodLamaL || 0,
+              prodLamaP: r.prodLamaP || 0,
+              hamilBaru: r.ibuHamil || 0,
+              hamilLama: 0,
+              busuiBaru: r.ibuMenyusui || 0,
+              busuiLama: 0,
+              lansiaL: r.lansiaBaruL || 0,
+              lansiaP: r.lansiaBaruP || 0,
+              wus: r.pus || 0,
+              ibu: 0,
+              kader: r.kaderL || 0,
+              plkb: r.plkbL || 0,
+              medis: r.medisL || 0,
+              lahirL: r.lahirL || 0,
+              lahirP: r.lahirP || 0,
+              meninggalL: r.meninggalL || 0,
+              meninggalP: r.meninggalP || 0,
+              status: 'Tersimpan'
+            }))
+            setReports(mapped)
+            localStorage.setItem('sip6_reports', JSON.stringify(mapped))
+          } else {
+            localStorage.setItem('sip6_reports', JSON.stringify(reports))
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          localStorage.setItem('sip6_reports', JSON.stringify(reports))
+        })
+    }
   }, [])
 
   const fetchKecamatans = async () => {
@@ -136,32 +206,160 @@ export default function Sip6Page() {
     }))
   }
 
-  const exportToCSV = () => {
-    const headers = ["No", "Bulan", "Tanggal Input", "Bayi Baru (L)", "Bayi Baru (P)", "Hamil Baru", "Kader", "PLKB", "Medis", "Status"];
-    const rows = reports.map((r, index) => [
-      index + 1,
-      `${r.bulan}/${r.tahun}`,
-      (r as any).tanggalInput || '10/05/2026',
-      Math.floor(dummySasaran.filter(s => s.kunjungan.includes(['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][r.bulan - 1])).length / 2),
-      r.bayiBaruP || 0,
-      dummySasaran.filter(s => s.kunjungan.includes(['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'][r.bulan - 1])).length,
-      r.kader || 0,
-      r.plkb || 0,
-      r.medis || 0,
-      r.status
-    ]);
-    
-    let csvContent = "data:text/csv;charset=utf-8," 
-      + headers.join(",") + "\n"
-      + rows.map(e => e.join(",")).join("\n");
-      
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data_bulanan_sip6.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const exportUnifiedExcel = () => {
+    // 1. Load SIP 7 reports
+    const savedSip7 = localStorage.getItem('sip7_reports')
+    const localSip7 = savedSip7 ? JSON.parse(savedSip7) : []
+
+    // 2. Build Sheet 1: SIP 6
+    const headersSip6 = [
+      ['DATA PENGUNJUNG BULAN BULANAN (SIP 6)'],
+      [''],
+      [
+        'NO', 'BULAN', 'TAHUN', 'BAYI BARU L', 'BAYI BARU P', 'BAYI LAMA L', 'BAYI LAMA P',
+        'BALITA BARU L', 'BALITA BARU P', 'BALITA LAMA L', 'BALITA LAMA P',
+        'ANAK BARU L', 'ANAK BARU P', 'ANAK LAMA L', 'ANAK LAMA P',
+        'PROD BARU L', 'PROD BARU P', 'PROD LAMA L', 'PROD LAMA P',
+        'IBU HAMIL BARU', 'IBU HAMIL LAMA', 'IBU MENYUSUI BARU', 'IBU MENYUSUI LAMA',
+        'LANSIA L', 'LANSIA P', 'WUS', 'IBU', 'KADER', 'PLKB', 'MEDIS',
+        'LAHIR L', 'LAHIR P', 'MATI L', 'MATI P', 'KADER NAMA', 'TANGGAL INPUT', 'STATUS'
+      ]
+    ]
+
+    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+    const filteredSip6 = reports.filter((r: any) => 
+      r.tahun === tahunAktif && 
+      (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
+    );
+
+    const dataSip6 = filteredSip6.map((row: any, idx: number) => [
+      idx + 1,
+      row.bulan,
+      row.tahun,
+      row.bayiBaruL || 0,
+      row.bayiBaruP || 0,
+      row.bayiLamaL || 0,
+      row.bayiLamaP || 0,
+      row.balitaBaruL || 0,
+      row.balitaBaruP || 0,
+      row.balitaLamaL || 0,
+      row.balitaLamaP || 0,
+      row.anakBaruL || 0,
+      row.anakBaruP || 0,
+      row.anakLamaL || 0,
+      row.anakLamaP || 0,
+      row.prodBaruL || 0,
+      row.prodBaruP || 0,
+      row.prodLamaL || 0,
+      row.prodLamaP || 0,
+      row.hamilBaru || 0,
+      row.hamilLama || 0,
+      row.busuiBaru || 0,
+      row.busuiLama || 0,
+      row.lansiaL || 0,
+      row.lansiaP || 0,
+      row.wus || 0,
+      row.ibu || 0,
+      row.kader || 0,
+      row.plkb || 0,
+      row.medis || 0,
+      row.lahirL || 0,
+      row.lahirP || 0,
+      row.meninggalL || 0,
+      row.meninggalP || 0,
+      row.namaKader || '',
+      row.tanggalInput || '',
+      row.status || 'Tersimpan'
+    ])
+
+    const wsSip6 = XLSX.utils.aoa_to_sheet([...headersSip6, ...dataSip6])
+
+    // 3. Build Sheet 2: SIP 7
+    const headersSip7 = [
+      ['DATA HASIL KEGIATAN KESEHATAN (SIP 7)'],
+      [''],
+      ['NO', 'BULAN', 'TAHUN', 'IBU HAMIL JML', 'IBU HAMIL DIPERIKSA', 'IBU HAMIL FE TAB', 'IBU MENYUSUI JML', 'KB KONDOM', 'KB PIL', 'KB IMPLANT', 'KB MOP', 'KB MOW', 'KB IUD', 'KB SUNTIK', 'KB LAIN-LAIN', 'TIMBANG S L', 'TIMBANG S P', 'TIMBANG K L', 'TIMBANG K P', 'TIMBANG D L', 'TIMBANG D P', 'TIMBANG N L', 'TIMBANG N P', 'VIT A L', 'VIT A P', 'PMT L', 'PMT P', 'IMUNISASI TT', 'BCG L', 'BCG P', 'DPT1 L', 'DPT1 P', 'DPT2 L', 'DPT2 P', 'DPT3 L', 'DPT3 P', 'POLIO1 L', 'POLIO1 P', 'POLIO2 L', 'POLIO2 P', 'POLIO3 L', 'POLIO3 P', 'POLIO4 L', 'POLIO4 P', 'CAMPAK L', 'CAMPAK P', 'HEPB1 L', 'HEPB1 P', 'HEPB2 L', 'HEPB2 P', 'HEPB3 L', 'HEPB3 P', 'DIARE JML L', 'DIARE JML P', 'DIARE ORALIT L', 'DIARE ORALIT P'],
+    ]
+
+    const filteredSip7 = localSip7.filter((r: any) => 
+      r.tahun === tahunAktif && 
+      (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
+    );
+
+    const dataSip7 = filteredSip7.map((row: any, idx: number) => {
+      const bumil = row.bumil || {};
+      const kb = row.kb || {};
+      const timbang = row.timbang || {};
+      const imBayi = row.imBayi || {};
+      const diare = row.diare || {};
+
+      return [
+        idx + 1,
+        row.bulan,
+        row.tahun,
+        bumil.jml || 0,
+        bumil.diperiksa || 0,
+        bumil.fe || 0,
+        row.busui || 0,
+        kb.kondom || 0,
+        kb.pil || 0,
+        kb.implant || 0,
+        kb.mop || 0,
+        kb.mow || 0,
+        kb.iud || 0,
+        kb.suntik || 0,
+        kb.lainnya || 0,
+        timbang.s_l || 0,
+        timbang.s_p || 0,
+        timbang.k_l || 0,
+        timbang.k_p || 0,
+        timbang.d_l || 0,
+        timbang.d_p || 0,
+        timbang.n_l || 0,
+        timbang.n_p || 0,
+        timbang.vitA_l || 0,
+        timbang.vitA_p || 0,
+        timbang.pmt_l || 0,
+        timbang.pmt_p || 0,
+        row.imTT?.i || 0,
+        imBayi.bcg_l || 0,
+        imBayi.bcg_p || 0,
+        imBayi.dpt1_l || 0,
+        imBayi.dpt1_p || 0,
+        imBayi.dpt2_l || 0,
+        imBayi.dpt2_p || 0,
+        imBayi.dpt3_l || 0,
+        imBayi.dpt3_p || 0,
+        imBayi.polio1_l || 0,
+        imBayi.polio1_p || 0,
+        imBayi.polio2_l || 0,
+        imBayi.polio2_p || 0,
+        imBayi.polio3_l || 0,
+        imBayi.polio3_p || 0,
+        imBayi.polio4_l || 0,
+        imBayi.polio4_p || 0,
+        imBayi.campak_l || 0,
+        imBayi.campak_p || 0,
+        imBayi.hepb1_l || 0,
+        imBayi.hepb1_p || 0,
+        imBayi.hepb2_l || 0,
+        imBayi.hepb2_p || 0,
+        imBayi.hepb3_l || 0,
+        imBayi.hepb3_p || 0,
+        diare.jml_l || 0,
+        diare.jml_p || 0,
+        diare.oralit_l || 0,
+        diare.oralit_p || 0
+      ]
+    })
+
+    const wsSip7 = XLSX.utils.aoa_to_sheet([...headersSip7, ...dataSip7])
+
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, wsSip6, 'SIP 6 — Pengunjung')
+    XLSX.utils.book_append_sheet(wb, wsSip7, 'SIP 7 — Hasil Kegiatan')
+
+    XLSX.writeFile(wb, `Rekap_Posyandu_${namaDesa}_${tahunAktif}.xlsx`)
   }
 
   const initialForm = {
@@ -237,32 +435,183 @@ export default function Sip6Page() {
 
   const handleDelete = (id: string) => {
     if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      setReports(reports.filter(r => r.id !== id))
+      const updated = reports.filter(r => r.id !== id);
+      setReports(updated);
+      localStorage.setItem('sip6_reports', JSON.stringify(updated));
     }
   }
 
   const handleAdd = () => {
-    setFormData(initialForm)
+    setFormData({ ...initialForm, tahun: tahunAktif })
     setEditId(null)
     setShowForm(true)
   }
 
+  const getTotals = (months: number[]) => {
+    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+    const filtered = reports.filter(r => 
+      r.tahun === tahunAktif && 
+      r.posyanduId === activePosyanduId &&
+      months.includes(r.bulan)
+    );
+    
+    return {
+      bayi: filtered.reduce((sum, r) => sum + (r.bayiBaruL || 0) + (r.bayiBaruP || 0) + (r.bayiLamaL || 0) + (r.bayiLamaP || 0), 0),
+      balita: filtered.reduce((sum, r) => sum + (r.balitaBaruL || 0) + (r.balitaBaruP || 0) + (r.balitaLamaL || 0) + (r.balitaLamaP || 0), 0),
+      bumil: filtered.reduce((sum, r) => sum + (r.hamilBaru || 0) + (r.hamilLama || 0), 0),
+      busui: filtered.reduce((sum, r) => sum + (r.busuiBaru || 0) + (r.busuiLama || 0), 0),
+      petugas: filtered.reduce((sum, r) => sum + (r.kader || 0) + (r.plkb || 0) + (r.medis || 0), 0),
+    }
+  }
+
+  const handleImportCSV = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const text = event.target?.result as string;
+        const lines = text.split('\n');
+        if (lines.length < 2) {
+          alert('CSV kosong atau tidak valid!');
+          return;
+        }
+
+        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        const newReports: any[] = [];
+        const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          
+          const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
+          if (values.length < headers.length) continue;
+
+          const rowData: any = {};
+          headers.forEach((header, index) => {
+            rowData[header] = values[index];
+          });
+
+          const bulanTahun = rowData["Bulan"] || "";
+          let bulan = 5;
+          let tahun = 2026;
+          if (bulanTahun.includes('/')) {
+            const parts = bulanTahun.split('/');
+            bulan = parseInt(parts[0]) || 5;
+            tahun = parseInt(parts[1]) || 2026;
+          }
+
+          const report = {
+            id: 'import-' + Date.now() + '-' + i,
+            posyanduId: activePosyanduId,
+            bulan,
+            tahun,
+            namaKader: rowData["Kader / Petugas"] || "Imported",
+            tanggalInput: rowData["Tanggal Input"] || new Date().toLocaleDateString('id-ID'),
+            bayiBaruL: parseInt(rowData["Bayi Baru (L)"]) || 0,
+            bayiBaruP: parseInt(rowData["Bayi Baru (P)"]) || 0,
+            bayiLamaL: parseInt(rowData["Bayi Lama (L)"]) || 0,
+            bayiLamaP: parseInt(rowData["Bayi Lama (P)"]) || 0,
+            balitaBaruL: parseInt(rowData["Balita Baru (L)"]) || 0,
+            balitaBaruP: parseInt(rowData["Balita Baru (P)"]) || 0,
+            balitaLamaL: parseInt(rowData["Balita Lama (L)"]) || 0,
+            balitaLamaP: parseInt(rowData["Balita Lama (P)"]) || 0,
+            anakBaruL: parseInt(rowData["Anak Baru (L)"]) || 0,
+            anakBaruP: parseInt(rowData["Anak Baru (P)"]) || 0,
+            anakLamaL: parseInt(rowData["Anak Lama (L)"]) || 0,
+            anakLamaP: parseInt(rowData["Anak Lama (P)"]) || 0,
+            prodBaruL: parseInt(rowData["Prod Baru (L)"]) || 0,
+            prodBaruP: parseInt(rowData["Prod Baru (P)"]) || 0,
+            prodLamaL: parseInt(rowData["Prod Lama (L)"]) || 0,
+            prodLamaP: parseInt(rowData["Prod Lama (P)"]) || 0,
+            hamilBaru: parseInt(rowData["Hamil Baru"]) || 0,
+            hamilLama: parseInt(rowData["Hamil Lama"]) || 0,
+            busuiBaru: parseInt(rowData["Busui Baru"]) || 0,
+            busuiLama: parseInt(rowData["Busui Lama"]) || 0,
+            lansiaL: parseInt(rowData["Lansia (L)"]) || 0,
+            lansiaP: parseInt(rowData["Lansia (P)"]) || 0,
+            wus: parseInt(rowData["WUS"]) || 0,
+            ibu: parseInt(rowData["Ibu"]) || 0,
+            kader: parseInt(rowData["Kader"]) || 0,
+            plkb: parseInt(rowData["PLKB"]) || 0,
+            medis: parseInt(rowData["Medis"]) || 0,
+            lahirL: parseInt(rowData["Lahir (L)"]) || 0,
+            lahirP: parseInt(rowData["Lahir (P)"]) || 0,
+            meninggalL: parseInt(rowData["Mati (L)"]) || 0,
+            meninggalP: parseInt(rowData["Mati (P)"]) || 0,
+            status: 'Tersimpan'
+          };
+          newReports.push(report);
+        }
+
+        if (newReports.length > 0) {
+          const merged = [...reports];
+          newReports.forEach(nr => {
+            const dupIdx = merged.findIndex(r => r.bulan === nr.bulan && r.tahun === nr.tahun && r.posyanduId === nr.posyanduId);
+            if (dupIdx !== -1) {
+              merged[dupIdx] = nr;
+            } else {
+              merged.unshift(nr);
+            }
+          });
+
+          setReports(merged);
+          localStorage.setItem('sip6_reports', JSON.stringify(merged));
+          alert(`Sukses mengimpor ${newReports.length} data SIP 6!`);
+        } else {
+          alert('Tidak ada baris data valid yang ditemukan untuk diimpor.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Terjadi kesalahan saat mem-parsing berkas CSV.');
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validasi angka negatif
+    const numericKeys = Object.keys(formData).filter(key => typeof (formData as any)[key] === 'number' && key !== 'bulan' && key !== 'tahun');
+    for (const key of numericKeys) {
+      if ((formData as any)[key] < 0) {
+        alert('Nilai input tidak boleh negatif!');
+        return;
+      }
+    }
+
+    const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+    
+    // Validasi bulan ganda dalam setahun
+    const isDuplicate = reports.some(r => 
+      r.bulan === formData.bulan && 
+      r.tahun === formData.tahun && 
+      r.posyanduId === currentPosyanduId &&
+      r.id !== editId
+    );
+    if (isDuplicate) {
+      alert('Laporan untuk bulan dan tahun ini sudah ada di posyandu terpilih!');
+      return;
+    }
     
     const oldReport = reports.find(r => r.id === editId)
     const newReport = {
       ...formData,
+      posyanduId: currentPosyanduId,
       id: editId || Date.now().toString(),
       status: 'Tersimpan',
       tanggalInput: (oldReport as any)?.tanggalInput || new Date().toLocaleDateString('id-ID')
     }
 
-    if (editId) {
-      setReports(reports.map(r => r.id === editId ? newReport : r))
-    } else {
-      setReports([newReport, ...reports])
-    }
+    const updated = editId 
+      ? reports.map(r => r.id === editId ? newReport : r)
+      : [newReport, ...reports];
+
+    setReports(updated)
+    localStorage.setItem('sip6_reports', JSON.stringify(updated))
 
     alert('Data SIP 6 berhasil disimpan!')
     setShowForm(false)
@@ -469,10 +818,15 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportToCSV} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
-                        Export CSV
+                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
+                        Ekspor Excel (SIP 6 & 7)
                       </button>
-
+                      {isPosyandu && (
+                        <label className={`cursor-pointer bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm flex items-center justify-center`}>
+                          <span>Impor CSV</span>
+                          <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
+                        </label>
+                      )}
                     </div>
                   </div>
                   
@@ -575,6 +929,40 @@ export default function Sip6Page() {
                     })}
                       </tbody>
                     </table>
+                  </div>
+
+                  {/* Perhitungan Semester & Tahunan */}
+                  <div className="mt-8 border-t border-slate-100 dark:border-zinc-700 pt-6">
+                    <h3 className="text-base font-bold text-slate-800 dark:text-white mb-4">Ringkasan Total Pengunjung ({tahunAktif})</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {/* Semester 1 */}
+                      <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
+                        <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 1 (Jan - Jun)</h4>
+                        <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6]).bayi + getTotals([1,2,3,4,5,6]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6]).bumil + getTotals([1,2,3,4,5,6]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([1,2,3,4,5,6]).petugas.toLocaleString('id-ID')}</span></div>
+                        </div>
+                      </div>
+                      {/* Semester 2 */}
+                      <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
+                        <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 2 (Jul - Des)</h4>
+                        <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7,8,9,10,11,12]).bayi + getTotals([7,8,9,10,11,12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7,8,9,10,11,12]).bumil + getTotals([7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([7,8,9,10,11,12]).petugas.toLocaleString('id-ID')}</span></div>
+                        </div>
+                      </div>
+                      {/* Tahunan */}
+                      <div className={`p-4 rounded-xl border ${theme.borderLight} bg-emerald-50/20 dark:bg-emerald-950/10`}>
+                        <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
+                        <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).bayi + getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-bold text-slate-800 dark:text-white">{getTotals([1,2,3,4,5,6,7,8,9,10,11,12]).petugas.toLocaleString('id-ID')}</span></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (

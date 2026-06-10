@@ -2,8 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Users, Plus, Search, X, ArrowLeft, Download, Trash2, FileText, Eye } from 'lucide-react'
+import { 
+  Plus, Search, Edit2, Trash2, Filter, 
+  ChevronDown, X, Check, Clock, AlertTriangle,
+  ArrowLeft, Download, FileText, CheckCircle
+} from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import ExcelJS from 'exceljs'
 
 const regionData = [
   {
@@ -127,148 +132,63 @@ const regionData = [
     "desas": ["Braja Asri", "Braja Caka", "Braja Dewa", "Braja Emas", "Braja Fajar", "Braja Sakti", "Jepara", "Labuhan Ratu I", "Labuhan Ratu II", "Labuhan Ratu Baru", "Labuhan Ratu Danau", "Sri Rejosari", "Sri Wangi", "Sumberejo", "Sumber Marga", "Sumur Bandung"]
   }
 ]
-const POSYANDUS = (desa: string) => [`Posyandu ${desa} I`, `Posyandu ${desa} II`, `Posyandu ${desa} III`]
 
-interface Report {
-  id: string
-  no: number
-  tanggal: string
-  posyandu: string
-  nik: string
-  nama: string
-  alamat: string
-  hal: string
-  keterangan: string
-  status: 'BELUM' | 'PROSES' | 'SUDAH'
-  desa: string
-  feedback?: string
-  image?: string
-  pdf?: string
-}
-
-const SEED: Report[] = [
-  { id:'1', no:1, tanggal:'2025-07-20', posyandu:'Posyandu Adirejo I', nik:'3217060812490003', nama:'SAFEI', alamat:'RT 08/25', hal:'PENGAJUAN KIS', keterangan:'Tolong dibantu pendaftarannya', status:'BELUM', desa:'Adirejo' },
+const defaultSosialSeeds = [
+  { id: 'so-1', tanggal: '2026-05-09', posyandu: 'Segar', nik: '', nama: 'Sutarno', alamat: '', hal: 'Pengaktifan KIS', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' },
+  { id: 'so-2', tanggal: '2022-05-11', posyandu: 'Utama', nik: '', nama: 'Suwanto', alamat: '', hal: 'Pengaktifan KIS', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' },
+  { id: 'so-3', tanggal: '2026-05-13', posyandu: 'Mulia', nik: '', nama: 'Sumali', alamat: '', hal: 'Pengaktifan KIS', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' },
+  { id: 'so-4', tanggal: '2025-05-15', posyandu: 'Giat', nik: '', nama: 'Suratno', alamat: '', hal: 'Pengaktifan KIS', keteranganTL: 'Langsung diajukan', keteranganBTL: '--', status: 'BTL' },
+  { id: 'so-5', tanggal: '2025-05-17', posyandu: 'Lestari', nik: '', nama: 'Audri', alamat: '', hal: 'Pengaktifan KIS', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' },
+  { id: 'so-6', tanggal: '2026-05-13', posyandu: 'Lestari', nik: '2171022310890003', nama: 'Kholiq Mawardi', alamat: 'RT 018', hal: 'BPJS Mati', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' },
+  { id: 'so-7', tanggal: '2026-05-13', posyandu: 'Lestari', nik: '18070844202630008', nama: 'Suhartini', alamat: 'RT 018', hal: 'BPJS Mati', keteranganTL: 'Langsung diajukan', keteranganBTL: '', status: 'TL' }
 ]
-
-function exportCSV(data: Report[], desa: string) {
-  const header = ['No','Tanggal','Posyandu','NIK','Nama','Alamat','Hal Pengaduan','Keterangan','Status','Tanggapan']
-  const rows = data.map(r => [r.no, r.tanggal, r.posyandu, r.nik, r.nama, r.alamat, r.hal, r.keterangan, r.status, r.feedback || ''])
-  const csv = [
-    'LAPORAN POSYANDU',
-    'BIDANG SOSIAL',
-    `DESA: ${desa}`,
-    '',
-    header.join(','),
-    ...rows.map(r => r.map(v => `"${v}"`).join(','))
-  ].join('\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url; a.download = `Laporan_Sosial_${desa}.csv`; a.click()
-  URL.revokeObjectURL(url)
-}
 
 export default function SosialPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
-  
   const userKecamatanNama = (session?.user as any)?.kecamatanNama
   const [selectedKecamatan, setSelectedKecamatan] = useState('')
   
-  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Batanghari')
+  const currentKecName = role === 'SUPERADMIN' ? selectedKecamatan : (userKecamatanNama || 'Pekalongan')
   const myKec = regionData.find(k => k.name === currentKecName)
   const desas = myKec ? myKec.desas : []
   
-  const isOperator = role === 'OPERATOR_POSYANDU'
-  const isKecamatan = role === 'ADMIN_KECAMATAN' || role === 'SUPERADMIN'
+  const isPosyandu = role === 'OPERATOR_POSYANDU'
 
   const theme = {
-    bgGradient: isOperator ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
-    hoverGradient: isOperator ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
-    shadow: isOperator ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    focusBorder: isOperator ? 'focus:border-purple-500' : 'focus:border-emerald-500',
-    focusRing: isOperator ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
-    text: isOperator ? 'text-purple-600' : 'text-emerald-600',
-    bgLight: isOperator ? 'bg-purple-50' : 'bg-emerald-50',
-    textLight: isOperator ? 'text-purple-700' : 'text-emerald-700',
-    activeRing: isOperator ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    fileBg: isOperator ? 'file:bg-purple-50' : 'file:bg-emerald-50',
-    fileText: isOperator ? 'file:text-purple-700' : 'file:text-emerald-700',
-    fileHover: isOperator ? 'hover:file:bg-purple-100' : 'hover:file:bg-emerald-100',
-    fileTextDark: isOperator ? 'dark:file:text-purple-400' : 'dark:file:text-emerald-400',
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
   }
 
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
-  const [reports, setReports] = useState<Report[]>(SEED)
   const [posyandus, setPosyandus] = useState<any[]>([])
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false)
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
-  const [selectedReportForView, setSelectedReportForView] = useState<any>(null)
-  const [selectedReport, setSelectedReport] = useState<Report | null>(null)
-  const [form, setForm] = useState({ tanggal:'', posyandu:'', nik:'', nama:'', alamat:'', hal:'', keterangan:'', status:'BELUM' as 'BELUM'|'PROSES'|'SUDAH' })
-  const [feedbackForm, setFeedbackForm] = useState({ feedback: '', status: 'BELUM' as 'BELUM'|'PROSES'|'SUDAH' })
+  const [reports, setReports] = useState<any[]>([])
   const [mounted, setMounted] = useState(false)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [pdfPreview, setPdfPreview] = useState<string | null>(null)
-  const [isCompressing, setIsCompressing] = useState(false)
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran foto maksimal 5MB cuy!');
-      return;
-    }
-
-    setIsCompressing(true);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          const avifData = canvas.toDataURL('image/avif', 0.8);
-          if (avifData.startsWith('data:image/avif')) {
-            setImagePreview(avifData);
-          } else {
-            const webpData = canvas.toDataURL('image/webp', 0.8);
-            setImagePreview(webpData);
-          }
-        }
-        setIsCompressing(false);
-      };
-      img.src = event.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran file PDF maksimal 5MB cuy!');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPdfPreview(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
+  const [namaDesa, setNamaDesa] = useState('Tulusrejo')
 
   useEffect(() => {
     setMounted(true)
-    if (isOperator) { setSelectedDesa('Adirejo'); setSelectedPosyandu('Posyandu Adirejo I') }
+    const savedDesa = localStorage.getItem('sip_nama_desa')
+    if (savedDesa) {
+      setNamaDesa(savedDesa)
+    }
+
+    if (isPosyandu) {
+      setSelectedDesa(savedDesa || 'Tulusrejo')
+      const userPosyanduName = (session?.user as any)?.posyanduNama || 'Segar'
+      setSelectedPosyandu(userPosyanduName)
+    }
+    
     if (role === 'OPERATOR_DESA') {
       const userName = session?.user?.name || ''
       const desaName = userName.replace('Admin Desa ', '')
@@ -280,288 +200,525 @@ export default function SosialPage() {
           if (Array.isArray(data)) setPosyandus(data)
         })
     }
-  }, [isOperator, role, session])
+
+    // Load from LocalStorage
+    const savedReports = localStorage.getItem('sip_sosial_reports')
+    if (savedReports) {
+      setReports(JSON.parse(savedReports))
+    } else {
+      setReports(defaultSosialSeeds)
+      localStorage.setItem('sip_sosial_reports', JSON.stringify(defaultSosialSeeds))
+    }
+  }, [isPosyandu, role, session])
+  
+  const initialForm = { tanggal: '', nik: '', nama: '', alamat: '', hal: '', keteranganTL: '', keteranganBTL: '', status: 'TL', posyandu: 'Segar' }
+  const [formData, setFormData] = useState(initialForm)
+  const [editId, setEditId] = useState<string | null>(null)
+
+  const handleEdit = (report: any) => {
+    setFormData({
+      tanggal: report.tanggal,
+      nik: report.nik || '',
+      nama: report.nama,
+      alamat: report.alamat || '',
+      hal: report.hal,
+      keteranganTL: report.keteranganTL || '',
+      keteranganBTL: report.keteranganBTL || '',
+      status: report.status || 'TL',
+      posyandu: report.posyandu || 'Segar'
+    })
+    setEditId(report.id)
+    setIsModalOpen(true)
+  }
+
+  const handleDelete = (id: string) => {
+    if(confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+      const updated = reports.filter(r => r.id !== id)
+      setReports(updated)
+      localStorage.setItem('sip_sosial_reports', JSON.stringify(updated))
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Validasi NIK 16 digit jika diisi
+    if (formData.nik && (!/^\d{16}$/.test(formData.nik))) {
+      alert('NIK harus berupa 16 digit angka cuy!')
+      return
+    }
+
+    let updated
+    if (editId) {
+      updated = reports.map(r => r.id === editId ? { ...formData, id: editId } : r)
+    } else {
+      updated = [{ ...formData, id: Date.now().toString() }, ...reports]
+    }
+    setReports(updated)
+    localStorage.setItem('sip_sosial_reports', JSON.stringify(updated))
+    setIsModalOpen(false)
+    setFormData(initialForm)
+    setEditId(null)
+  }
+
+  const handleAdd = () => {
+    setFormData({ ...initialForm, posyandu: isPosyandu ? (selectedPosyandu || 'Segar') : 'Segar' })
+    setEditId(null)
+    setIsModalOpen(true)
+  }
+
+  // Export Excel bertingkat
+  const handleExportExcel = async () => {
+    const workbook = new ExcelJS.Workbook()
+    const worksheet = workbook.addWorksheet('SOSIAL')
+
+    worksheet.columns = [
+      { key: 'no', width: 6 },
+      { key: 'tanggal', width: 15 },
+      { key: 'posyandu', width: 15 },
+      { key: 'nik', width: 25 },
+      { key: 'nama', width: 25 },
+      { key: 'alamat', width: 20 },
+      { key: 'hal', width: 35 },
+      { key: 'tl', width: 20 },
+      { key: 'btl', width: 20 }
+    ]
+
+    // Row 1: Title
+    worksheet.mergeCells('A1:I1')
+    const r1 = worksheet.getCell('A1')
+    r1.value = 'BIDANG SOSIAL'
+    r1.font = { name: 'Arial', size: 14, bold: true, color: { argb: 'FFFFFFFF' } }
+    r1.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } } as any
+    r1.alignment = { vertical: 'middle', horizontal: 'center' }
+    worksheet.getRow(1).height = 35
+
+    // Row 2: Subtitle
+    worksheet.mergeCells('A2:I2')
+    const r2 = worksheet.getCell('A2')
+    r2.value = `DESA : ${namaDesa.toUpperCase()}`
+    r2.font = { name: 'Arial', size: 11, bold: true }
+    r2.alignment = { vertical: 'middle', horizontal: 'left' }
+    worksheet.getRow(2).height = 25
+
+    // Row 3: Empty
+    worksheet.getRow(3).height = 15
+
+    // Row 4-5: Header bertingkat
+    worksheet.getRow(4).values = ['No', 'Tanggal', 'Posyandu', 'NIK', 'Nama', 'Alamat', 'Hal Pengaduan', '', 'BTL']
+    worksheet.getRow(5).values = ['', '', '', '', '', '', '', 'TL', '']
+
+    worksheet.mergeCells('A4:A5')
+    worksheet.mergeCells('B4:B5')
+    worksheet.mergeCells('C4:C5')
+    worksheet.mergeCells('D4:D5')
+    worksheet.mergeCells('E4:E5')
+    worksheet.mergeCells('F4:F5')
+    worksheet.mergeCells('G4:G5')
+    
+    // Column 8 (TL) has no header on Row 4, but Row 5 has TL.
+    // Column 9 (BTL) has header BTL on Row 4, which is merged vertically.
+    worksheet.mergeCells('I4:I5')
+
+    const yellowFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFC4' } }
+    const borderAll: any = {
+      top: { style: 'thin', color: { argb: 'FF000000' } },
+      left: { style: 'thin', color: { argb: 'FF000000' } },
+      bottom: { style: 'thin', color: { argb: 'FF000000' } },
+      right: { style: 'thin', color: { argb: 'FF000000' } }
+    }
+
+    const headerRows = [4, 5]
+    headerRows.forEach(rowNum => {
+      const r = worksheet.getRow(rowNum)
+      r.height = 20
+      r.eachCell(c => {
+        c.font = { name: 'Arial', size: 10, bold: true }
+        c.fill = yellowFill
+        c.border = borderAll
+        c.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
+      })
+    })
+
+    // Row 6: Nomor Kolom (1-8, with skipped Posyandu/TL numbers matching CSV pattern)
+    // CSV has: 1, 2, , 3, 4, 5, 6, , 8
+    worksheet.getRow(6).values = [1, 2, '', 3, 4, 5, 6, '', 8]
+    worksheet.getRow(6).height = 18
+    const greyFill: any = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } }
+    worksheet.getRow(6).eachCell(c => {
+      c.font = { name: 'Arial', size: 9, bold: true }
+      c.fill = greyFill
+      c.border = borderAll
+      c.alignment = { vertical: 'middle', horizontal: 'center' }
+    })
+
+    // Filter
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    // Row 7+: Data rows
+    filtered.forEach((r, idx) => {
+      const rowIdx = 7 + idx
+      const row = worksheet.getRow(rowIdx)
+      row.values = [
+        idx + 1,
+        r.tanggal,
+        r.posyandu,
+        r.nik,
+        r.nama,
+        r.alamat,
+        r.hal,
+        r.status === 'TL' ? (r.keteranganTL || 'Langsung diajukan') : '',
+        r.status === 'BTL' ? (r.keteranganBTL || '') : ''
+      ]
+      row.height = 20
+      row.eachCell((c, colNum) => {
+        c.font = { name: 'Arial', size: 10 }
+        c.border = borderAll
+        if (colNum === 4) {
+          c.numFmt = '@'
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        } else if (typeof c.value === 'number') {
+          c.alignment = { vertical: 'middle', horizontal: 'right' }
+        } else {
+          c.alignment = { vertical: 'middle', horizontal: 'left' }
+        }
+      })
+    })
+
+    // Baris TOTAL di paling bawah
+    const totalRowIdx = 7 + filtered.length
+    worksheet.mergeCells(`A${totalRowIdx}:H${totalRowIdx}`)
+    const totalRow = worksheet.getRow(totalRowIdx)
+    totalRow.height = 22
+    totalRow.getCell(1).value = 'TOTAL LAPORAN'
+    totalRow.getCell(1).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' }
+    totalRow.getCell(9).value = filtered.length
+    totalRow.getCell(9).font = { name: 'Arial', size: 10, bold: true }
+    totalRow.getCell(9).alignment = { vertical: 'middle', horizontal: 'right' }
+    for (let col = 1; col <= 9; col++) {
+      totalRow.getCell(col).border = borderAll
+      totalRow.getCell(col).fill = greyFill
+    }
+
+    // Auto fit
+    worksheet.columns.forEach(col => {
+      let maxLen = 0
+      col.eachCell?.({ includeEmpty: true }, c => {
+        const valStr = c.value ? c.value.toString() : ''
+        if (valStr.length > maxLen) maxLen = valStr.length
+      })
+      col.width = Math.max(maxLen + 4, 10)
+    })
+
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `SOSIAL_${namaDesa.toUpperCase()}.xlsx`
+    link.click()
+  }
+
+  // Export CSV flat
+  const handleExportCSV = () => {
+    const csvHeaders = ['NO', 'TANGGAL', 'POSYANDU', 'NIK', 'NAMA', 'ALAMAT', 'HAL_PENGADUAN', 'KET_TL', 'KET_BTL']
+    const filtered = reports.filter(r => {
+      const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+      if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+      return matchSearch
+    })
+
+    const rows = filtered.map((r, idx) => {
+      return [
+        idx + 1,
+        `"${r.tanggal}"`,
+        `"${r.posyandu}"`,
+        `"${r.nik || ''}"`,
+        `"${r.nama.replace(/"/g, '""')}"`,
+        `"${(r.alamat || '').replace(/"/g, '""')}"`,
+        `"${r.hal.replace(/"/g, '""')}"`,
+        `"${(r.status === 'TL' ? (r.keteranganTL || 'Langsung diajukan') : '').replace(/"/g, '""')}"`,
+        `"${(r.status === 'BTL' ? (r.keteranganBTL || '') : '').replace(/"/g, '""')}"`
+      ].join(',')
+    })
+
+    const csvContent = [csvHeaders.join(','), ...rows].join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `SOSIAL_${namaDesa.toUpperCase()}.csv`
+    link.click()
+  }
+
+  const filteredReports = reports.filter(r => {
+    const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
+    if (isPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    if (selectedPosyandu) return r.posyandu === selectedPosyandu && matchSearch
+    return matchSearch
+  })
 
   if (!mounted) return null
 
-  const filtered = reports.filter(r => {
-    const matchDesa = !selectedDesa || r.desa === selectedDesa
-    const matchPosyandu = !selectedPosyandu || r.posyandu.toLowerCase().includes(selectedPosyandu.split(' ')[1]?.toLowerCase() || '')
-    const matchSearch = r.nama.toLowerCase().includes(search.toLowerCase()) || r.hal.toLowerCase().includes(search.toLowerCase())
-    return matchDesa && matchPosyandu && matchSearch
-  })
-
-  const handleSubmit = () => {
-    if (!form.tanggal || !form.nama || !form.hal) return
-    
-    if (selectedReport) {
-      setReports(prev => prev.map(r => r.id === selectedReport.id ? { ...r, ...form, image: imagePreview || r.image, pdf: pdfPreview || r.pdf } : r))
-    } else {
-      const newReport: Report = { ...form, id: Date.now().toString(), no: reports.length + 1, desa: selectedDesa || 'Adirejo', posyandu: form.posyandu || selectedPosyandu, image: imagePreview, pdf: pdfPreview } as any
-      setReports(prev => [newReport, ...prev])
-    }
-    
-    setForm({ tanggal:'', posyandu:'', nik:'', nama:'', alamat:'', hal:'', keterangan:'', status:'BELUM' })
-    setIsModalOpen(false)
-    setSelectedReport(null)
-    setImagePreview(null)
-    setPdfPreview(null)
-  }
-
-  const handleFeedbackSubmit = () => {
-    if (!selectedReport) return
-    setReports(prev => prev.map(r => r.id === selectedReport.id ? { ...r, status: feedbackForm.status, feedback: feedbackForm.feedback } : r))
-    setIsFeedbackModalOpen(false)
-    setSelectedReport(null)
-  }
-
-  const openFeedback = (r: Report) => {
-    setSelectedReport(r)
-    setFeedbackForm({ feedback: r.feedback || '', status: r.status })
-    setIsFeedbackModalOpen(true)
-  }
-
-  const handleDelete = (id: string) => setReports(prev => prev.filter(r => r.id !== id))
-
-  const showTable = isOperator || (isKecamatan && selectedDesa && selectedPosyandu) || (role === 'OPERATOR_DESA' && selectedPosyandu)
-
-  // Level 0: Daftar Kecamatan (Superadmin)
-  if (role === 'SUPERADMIN' && !selectedKecamatan) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Bidang Sosial</h1>
-            <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">Pilih kecamatan untuk melihat data laporan sosial.</p>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-600 dark:text-slate-300">
-                <tr><th className="px-6 py-4">Nama Kecamatan</th><th className="px-6 py-4 text-right">Aksi</th></tr>
-              </thead>
-              <tbody>
-                {regionData.map(kec => (
-                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
-                    <td className="px-6 py-4 text-right"><button onClick={() => setSelectedKecamatan(kec.name)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Level 1: Daftar Desa (Kecamatan/Superadmin)
-  if ((role === 'ADMIN_KECAMATAN' || (role === 'SUPERADMIN' && selectedKecamatan)) && !selectedDesa) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            {role === 'SUPERADMIN' && (
-              <button onClick={() => setSelectedKecamatan('')} className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2" title="Kembali ke Daftar Kecamatan"><ArrowLeft className="w-5 h-5" /></button>
-            )}
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Bidang Sosial - Kec. {currentKecName}</h1>
-            <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">Pilih desa untuk melihat data laporan sosial.</p>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-600 dark:text-slate-300">
-                <tr><th className="px-6 py-4">Nama Desa</th><th className="px-6 py-4">Total Data</th><th className="px-6 py-4 text-right">Aksi</th></tr>
-              </thead>
-              <tbody>
-                {desas.map(desa => (
-                  <tr key={desa} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa}</td>
-                    <td className="px-6 py-4"><span className="text-xs font-medium bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 px-2.5 py-1 rounded-full">{reports.filter(r=>r.desa===desa).length} data</span></td>
-                    <td className="px-6 py-4 text-right"><button onClick={() => setSelectedDesa(desa)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Level 2: Daftar Posyandu di Desa (Kecamatan)
-  if ((isKecamatan || role === 'OPERATOR_DESA') && selectedDesa && !selectedPosyandu) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            {role !== 'OPERATOR_DESA' && (
-              <button onClick={() => setSelectedDesa('')} className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors" title="Kembali ke Daftar Desa"><ArrowLeft className="w-5 h-5" /></button>
-            )}
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white mt-2">Daftar Posyandu - Desa {selectedDesa}</h1>
-          </div>
-          <button onClick={() => exportCSV(reports.filter(r=>r.desa===selectedDesa), selectedDesa)} className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"><Download className="w-5 h-5" /> Export CSV</button>
-        </div>
-        <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-600 dark:text-slate-300">
-                <tr><th className="px-6 py-4">Posyandu</th><th className="px-6 py-4">Jumlah Data</th><th className="px-6 py-4 text-right">Aksi</th></tr>
-              </thead>
-              <tbody>
-                {(posyandus.length > 0 ? posyandus.map(p => p.nama) : POSYANDUS(selectedDesa)).map(p => (
-                  <tr key={p} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p}</td>
-                    <td className="px-6 py-4"><span className="text-xs font-medium bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 px-2.5 py-1 rounded-full">{reports.filter(r=>r.desa===selectedDesa).length} data</span></td>
-                    <td className="px-6 py-4 text-right"><button onClick={() => setSelectedPosyandu(p)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Level 3 / Operator view: Data list
-  const headerTitle = isOperator ? 'Laporan Bidang Sosial' : `Laporan Sosial - ${selectedPosyandu}`
-  const headerSub = isOperator ? 'Desa Adirejo • Input dan kelola data laporan sosial.' : `Desa ${selectedDesa}`
-
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          {!isOperator && (
-            <button onClick={() => setSelectedPosyandu('')} className="text-sm font-medium text-emerald-600 hover:text-emerald-700 flex items-center gap-1 mb-2"><ArrowLeft className="w-4 h-4" /> Kembali</button>
-          )}
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Laporan Sosial</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">
-            {isOperator ? 'Pengaduan & Aspirasi Bidang Sosial' : `Pengaduan & Aspirasi Bidang Sosial - ${selectedPosyandu}`}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          {!isOperator && (
-            <button onClick={() => exportCSV(filtered, selectedDesa || 'Adirejo')} className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"><Download className="w-5 h-5" /> Export CSV</button>
-          )}
-          {(isOperator || role === 'SUPERADMIN') && (
-            <button onClick={() => { setSelectedReport(null); setForm({ tanggal:'', posyandu:'', nik:'', nama:'', alamat:'', hal:'', keterangan:'', status:'BELUM' }); setImagePreview(null); setPdfPreview(null); setIsModalOpen(true); }} className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}><Plus className="w-5 h-5" /> Tambah Data</button>
-          )}
-        </div>
-      </div>
-
-      {/* Toolbar */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
-        <div className="relative w-full md:w-96">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-slate-400" />
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+        {!isPosyandu && (
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Sosial</h1>
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (Sosial) - Desa {namaDesa}</p>
           </div>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-            placeholder="Cari nama pelapor atau isi laporan..."
-          />
-        </div>
+        )}
       </div>
 
-      <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-600 dark:text-slate-300">
-              <tr>
-                <th className="px-4 py-4">No</th>
-                <th className="px-4 py-4">Tanggal</th>
-                <th className="px-4 py-4">Posyandu</th>
-                <th className="px-4 py-4">NIK</th>
-                <th className="px-4 py-4">Nama</th>
-                <th className="px-4 py-4">Alamat</th>
-                <th className="px-4 py-4">Hal Pengaduan</th>
-                <th className="px-4 py-4">Keterangan</th>
-                <th className="px-4 py-4 text-center">Status</th>
-                <th className="px-4 py-4">Tanggapan</th>
-                <th className="px-4 py-4 text-right">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.length === 0 ? (
-                <tr><td colSpan={11} className="px-6 py-12 text-center text-slate-400">Belum ada data. Klik "Tambah Data" untuk mulai input.</td></tr>
-              ) : filtered.map((r, i) => (
-                <tr key={r.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                  <td className="px-4 py-3 text-slate-500">{i+1}</td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 whitespace-nowrap">{r.tanggal}</td>
-                  <td className="px-4 py-3 font-medium text-slate-800 dark:text-white whitespace-nowrap">{r.posyandu}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-slate-600 dark:text-slate-300">{r.nik}</td>
-                  <td className="px-4 py-3 font-medium text-slate-800 dark:text-white whitespace-nowrap">
-                    <div className="flex items-center gap-3">
-                      {(r as any).image && (
-                        <img src={(r as any).image} alt="Foto" className="w-10 h-10 object-cover rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0" />
+      {(isPosyandu || (selectedDesa && selectedPosyandu)) ? (
+        // Level 3: Detail Posyandu (Laporan)
+        <div className="space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              {!isPosyandu && (
+                <button 
+                  onClick={() => setSelectedPosyandu('')}
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  title="Kembali ke Daftar Posyandu"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              )}
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Laporan Sosial</h1>
+              <p className="text-slate-500 dark:text-zinc-400 text-sm">
+                {isPosyandu ? 'Pengaduan & Aspirasi Bidang Sosial' : `Pengaduan & Aspirasi Bidang Sosial - ${selectedPosyandu}`}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleExportCSV}
+                className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <FileText className="w-5 h-5" />
+                Export CSV
+              </button>
+              <button
+                onClick={handleExportExcel}
+                className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-5 h-5" />
+                Export Excel
+              </button>
+              {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                <button
+                  onClick={handleAdd}
+                  className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}
+                >
+                  <Plus className="w-5 h-5" />
+                  Tambah Laporan
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Toolbar */}
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+            <div className="relative w-full md:w-96">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-slate-400" />
+              </div>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                placeholder="Cari nama pelapor atau isi laporan..."
+              />
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                  <tr className="border-b border-slate-200 dark:border-zinc-700">
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">No</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">Tanggal</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">Posyandu</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">NIK</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">Pelapor</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">Alamat</th>
+                    <th rowSpan={2} className="px-6 py-4 border-r border-slate-200 dark:border-zinc-700 text-center">Hal Pengaduan</th>
+                    <th colSpan={2} className="px-6 py-2 text-center bg-slate-100 dark:bg-zinc-700 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-zinc-700">Keterangan</th>
+                    {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th rowSpan={2} className="px-6 py-4 text-right">Aksi</th>}
+                  </tr>
+                  <tr className="border-b border-slate-200 dark:border-zinc-700">
+                    <th className="px-4 py-2 border-r border-slate-200 dark:border-zinc-700 text-center">TL</th>
+                    <th className="px-4 py-2 text-center">BTL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredReports.length === 0 ? (
+                    <tr>
+                      <td colSpan={10} className="px-6 py-8 text-center text-slate-500">
+                        Tidak ada data laporan.
+                      </td>
+                    </tr>
+                  ) : filteredReports.map((report, idx) => (
+                    <tr key={report.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                      <td className="px-6 py-4 text-center font-medium text-slate-900 dark:text-white">{idx + 1}</td>
+                      <td className="px-6 py-4 text-center">{report.tanggal}</td>
+                      <td className="px-6 py-4 text-center">{report.posyandu}</td>
+                      <td className="px-6 py-4 font-mono">{report.nik || '-'}</td>
+                      <td className="px-6 py-4 text-slate-900 dark:text-white font-medium">{report.nama}</td>
+                      <td className="px-6 py-4">{report.alamat || '-'}</td>
+                      <td className="px-6 py-4 max-w-xs truncate" title={report.hal}>{report.hal}</td>
+                      <td className="px-6 py-4 text-center">
+                        {report.status === 'TL' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            {report.keteranganTL || 'Langsung diajukan'}
+                          </span>
+                        ) : '-'}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        {report.status === 'BTL' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-zinc-700 dark:text-zinc-300">
+                            <Clock className="w-3.5 h-3.5" />
+                            {report.keteranganBTL || 'BTL'}
+                          </span>
+                        ) : '-'}
+                      </td>
+                      {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => handleDelete(report.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
                       )}
-                      {(r as any).pdf && (
-                        <div className="w-10 h-10 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-900 rounded-lg border border-slate-200 dark:border-zinc-700 flex-shrink-0">
-                          <FileText className="w-5 h-5 text-rose-500" />
-                        </div>
-                      )}
-                      <span>{r.nama}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{r.alamat}</td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 max-w-[200px]">{r.hal}</td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 max-w-[150px]">{r.keterangan}</td>
-                  <td className="px-4 py-3 text-center">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      r.status === 'SUDAH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                      r.status === 'PROSES' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
-                      'bg-slate-100 text-slate-800 dark:bg-zinc-700/50 dark:text-zinc-300'
-                    }`}>
-                      {r.status === 'SUDAH' ? 'Sudah' :
-                       r.status === 'PROSES' ? 'Proses' : 'Belum'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 max-w-[150px] truncate" title={r.feedback}>
-                    {r.feedback || '-'}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
-                      <button 
-                        onClick={() => { setSelectedReportForView(r); setIsViewModalOpen(true); }} 
-                        className="text-emerald-500 hover:text-emerald-600 transition-colors bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-md flex items-center justify-center"
-                        title="Lihat Detail"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      {(isOperator || role === 'SUPERADMIN') && (
-                        <button 
-                          onClick={() => { setSelectedReport(r); setForm({ tanggal: r.tanggal, posyandu: r.posyandu, nik: r.nik, nama: r.nama, alamat: r.alamat, hal: r.hal, keterangan: r.keterangan, status: r.status }); setImagePreview(r.image || null); setPdfPreview(r.pdf || null); setIsModalOpen(true); }} 
-                          className="text-amber-500 hover:text-amber-600 transition-colors bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded-md flex items-center justify-center"
-                          title="Edit"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                        </button>
-                      )}
-                      {isKecamatan && (
-                        <button onClick={() => openFeedback(r)} className="text-blue-500 hover:text-blue-600 transition-colors font-medium text-xs bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-md">
-                          Tanggapi
-                        </button>
-                      )}
-                      {(isOperator || role === 'SUPERADMIN') && (
-                        <button onClick={() => handleDelete(r.id)} className="text-rose-400 hover:text-rose-600 transition-colors bg-rose-50 dark:bg-rose-900/30 px-2 py-1 rounded-md">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      )}
-                    </div>
-                  </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : (role === 'SUPERADMIN' && !selectedKecamatan) ? (
+        // Level 0: List Kecamatan
+        <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Kecamatan</h2>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                <tr>
+                  <th className="px-6 py-4">Nama Kecamatan</th>
+                  <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {regionData.map((kec) => (
+                  <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button onClick={() => setSelectedKecamatan(kec.name)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      ) : selectedDesa ? (
+        // Level 2: List Posyandu
+        <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              {role !== 'OPERATOR_DESA' && (
+                <button 
+                  onClick={() => setSelectedDesa('')}
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  title="Kembali ke Daftar Desa"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              )}
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Posyandu di Desa {selectedDesa}</h2>
+            </div>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                <tr>
+                  <th className="px-6 py-4">Nama Posyandu</th>
+                  <th className="px-6 py-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                  <tr key={pName} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">Posyandu {pName}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button onClick={() => setSelectedPosyandu(pName)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        // Level 1: List Desa
+        <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              {role === 'SUPERADMIN' && (
+                <button 
+                  onClick={() => setSelectedKecamatan('')}
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  title="Kembali ke Daftar Kecamatan"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              )}
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                <tr>
+                  <th className="px-6 py-4">Nama Desa</th>
+                  <th className="px-6 py-4 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {desas.map((desa) => (
+                  <tr key={desa} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa}</td>
+                    <td className="px-6 py-4 text-right">
+                      <button onClick={() => setSelectedDesa(desa)} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
-      {/* Modal */}
+      {/* Modal Tambah Laporan */}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -570,204 +727,6 @@ export default function SosialPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
-            >
-              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
-              
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">{selectedReport ? 'Edit Data Sosial' : 'Tambah Data Sosial'}</h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">Lengkapi data laporan di bawah ini</p>
-                  </div>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} className="p-6 space-y-5 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal *</label>
-                  <input type="date" value={form.tanggal} onChange={e=>setForm(f=>({...f,tanggal:e.target.value}))} className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
-                </div>
-                
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Posyandu</label>
-                  <input 
-                    type="text" 
-                    value={isOperator ? selectedPosyandu : form.posyandu} 
-                    onChange={e=>setForm(f=>({...f,posyandu:e.target.value}))} 
-                    disabled={isOperator}
-                    placeholder="Nama Posyandu" 
-                    className={`block w-full ${isOperator ? 'bg-slate-100 dark:bg-zinc-800' : 'bg-slate-50 dark:bg-zinc-800'} border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} 
-                  />
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK</label>
-                  <input type="text" value={form.nik} onChange={e=>setForm(f=>({...f,nik:e.target.value}))} placeholder="16 digit NIK" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama *</label>
-                  <input type="text" value={form.nama} onChange={e=>setForm(f=>({...f,nama:e.target.value}))} placeholder="Nama Lengkap" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Alamat</label>
-                  <input type="text" value={form.alamat} onChange={e=>setForm(f=>({...f,alamat:e.target.value}))} placeholder="RT/RW, Lingkungan" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Hal Pengaduan *</label>
-                  <textarea value={form.hal} onChange={e=>setForm(f=>({...f,hal:e.target.value}))} rows={3} placeholder="Isi laporan atau pengaduan..." className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} required />
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan</label>
-                  <input type="text" value={form.keterangan} onChange={e=>setForm(f=>({...f,keterangan:e.target.value}))} placeholder="Tindak lanjut / keterangan" className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
-                </div>
-                
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload Foto (Maks 5MB)</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  />
-                  {isCompressing && (
-                    <p className={`text-xs ${theme.text} mt-1`}>Memproses foto...</p>
-                  )}
-                  {imagePreview && (
-                    <div className="mt-3 relative w-32 h-32">
-                      <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-xl border border-slate-200 dark:border-zinc-700" />
-                      <button 
-                        type="button"
-                        onClick={() => setImagePreview(null)} 
-                        className="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full p-1 hover:bg-rose-600 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Upload Dokumen PDF (Maks 5MB)</label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={handlePdfChange}
-                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
-                  />
-                  {pdfPreview && (
-                    <div className="mt-3 relative w-32 h-32">
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700">
-                        <FileText className="w-8 h-8 text-rose-500" />
-                        <span className="text-xs text-slate-600 dark:text-zinc-400 mt-1">File PDF</span>
-                      </div>
-                      <button 
-                        type="button"
-                        onClick={() => setPdfPreview(null)} 
-                        className="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full p-1 hover:bg-rose-600 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all">Batal</button>
-                  <button type="submit" className={`px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r ${theme.bgGradient} rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}>Simpan Data</button>
-                </div>
-              </form>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {isFeedbackModalOpen && selectedReport && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsFeedbackModalOpen(false)}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 dark:border-zinc-800"
-            >
-              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
-              
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">Beri Tanggapan / Solusi</h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">Tindak lanjuti laporan ini</p>
-                  </div>
-                  <button
-                    onClick={() => setIsFeedbackModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-6 space-y-5">
-                <div className="p-4 bg-slate-50 dark:bg-zinc-800 rounded-xl border border-transparent">
-                  <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mb-1 uppercase tracking-wider">Isi Pengaduan</p>
-                  <p className="text-sm font-medium text-slate-800 dark:text-white">{selectedReport.hal}</p>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Status Laporan</label>
-                  <select value={feedbackForm.status} onChange={e=>setFeedbackForm(f=>({...f,status:e.target.value as any}))} className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}>
-                    <option value="BELUM">Belum</option>
-                    <option value="PROSES">Proses</option>
-                    <option value="SUDAH">Sudah</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Feedback / Solusi</label>
-                  <textarea value={feedbackForm.feedback} onChange={e=>setFeedbackForm(f=>({...f,feedback:e.target.value}))} rows={4} placeholder="Tuliskan solusi atau informasi tindak lanjut untuk Posyandu..." className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`} />
-                </div>
-
-                <div className="flex items-center justify-end gap-3 mt-6 border-t border-slate-100 dark:border-zinc-800 pt-5">
-                  <button onClick={() => setIsFeedbackModalOpen(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all">Batal</button>
-                  <button onClick={handleFeedbackSubmit} className={`px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r ${theme.bgGradient} rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}>Kirim Tanggapan</button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-
-        {isViewModalOpen && selectedReportForView && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsViewModalOpen(false)}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
 
@@ -784,14 +743,14 @@ export default function SosialPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                      Detail Laporan Sosial
+                      {editId ? 'Edit Laporan' : 'Tambah Laporan Baru'}
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
-                      Informasi lengkap pengaduan sosial
+                      Lengkapi data laporan sosial di bawah ini
                     </p>
                   </div>
                   <button
-                    onClick={() => setIsViewModalOpen(false)}
+                    onClick={() => setIsModalOpen(false)}
                     className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
@@ -799,100 +758,157 @@ export default function SosialPage() {
                 </div>
               </div>
 
-              <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Tanggal</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.tanggal}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Posyandu</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.posyandu || '-'}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Pemohon</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.nama}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{selectedReportForView.nik}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Alamat</p>
-                    <p className="text-sm text-slate-800 dark:text-white font-medium mt-0.5">{selectedReportForView.alamat}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Hal Pengaduan</p>
-                    <p className="text-sm text-slate-800 dark:text-white mt-0.5 bg-slate-50 dark:bg-zinc-800 p-3 rounded-lg border border-slate-100 dark:border-zinc-700">{selectedReportForView.hal}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Keterangan</p>
-                    <p className="text-sm text-slate-800 dark:text-white mt-0.5 bg-slate-50 dark:bg-zinc-800 p-3 rounded-lg border border-slate-100 dark:border-zinc-700">{selectedReportForView.keterangan || '-'}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Status</p>
-                    <div>
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-0.5 ${
-                        selectedReportForView.status === 'SUDAH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                        selectedReportForView.status === 'PROSES' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' :
-                        'bg-slate-100 text-slate-800 dark:bg-zinc-700/50 dark:text-zinc-300'
-                      }`}>
-                        {selectedReportForView.status === 'SUDAH' ? 'Sudah' :
-                         selectedReportForView.status === 'PROSES' ? 'Proses' : 'Belum'}
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium">Tanggapan</p>
-                    <p className="text-sm text-slate-800 dark:text-white mt-0.5 bg-slate-50 dark:bg-zinc-800 p-3 rounded-lg border border-slate-100 dark:border-zinc-700">{selectedReportForView.feedback || '-'}</p>
-                  </div>
+              <form onSubmit={handleSubmit} className="p-6 space-y-5 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
+                <div className="md:col-span-1">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal</label>
+                  <input
+                    type="date"
+                    value={formData.tanggal}
+                    onChange={(e) => setFormData({...formData, tanggal: e.target.value})}
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    required
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-100 dark:border-zinc-800 pt-5">
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium mb-2">Foto Lampiran</p>
-                    {selectedReportForView.image ? (
-                      <div className="relative group rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700">
-                        <img src={selectedReportForView.image} alt="Lampiran" className="w-full h-40 object-cover" />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <a href={selectedReportForView.image} target="_blank" rel="noopener noreferrer" className="text-white text-sm font-medium hover:underline">Lihat Penuh</a>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-dashed border-slate-200 dark:border-zinc-700">
-                        <p className="text-sm text-slate-400">Tidak ada foto</p>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 dark:text-zinc-400 uppercase font-medium mb-2">Dokumen PDF</p>
-                    {selectedReportForView.pdf ? (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 p-4">
-                        <FileText className="w-10 h-10 text-rose-500 mb-2" />
-                        <p className="text-xs text-slate-600 dark:text-zinc-400 mb-3 truncate max-w-full">Dokumen Lampiran.pdf</p>
-                        <div className="flex gap-2 w-full">
-                          <a 
-                            href={selectedReportForView.pdf} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex-1 text-center bg-white dark:bg-zinc-700 text-slate-700 dark:text-white border border-slate-200 dark:border-zinc-600 rounded-lg py-1.5 text-xs font-medium hover:bg-slate-50 dark:hover:bg-zinc-600 transition-colors"
-                          >
-                            Buka
-                          </a>
-                          <a 
-                            href={selectedReportForView.pdf} 
-                            download
-                            className="flex-1 text-center bg-emerald-500 text-white rounded-lg py-1.5 text-xs font-medium hover:bg-emerald-600 transition-colors"
-                          >
-                            Download
-                          </a>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-40 flex flex-col items-center justify-center bg-slate-50 dark:bg-zinc-800 rounded-xl border border-dashed border-slate-200 dark:border-zinc-700">
-                        <p className="text-sm text-slate-400">Tidak ada PDF</p>
-                      </div>
-                    )}
-                  </div>
+                <div className="md:col-span-1">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Posyandu</label>
+                  {isPosyandu ? (
+                    <input
+                      type="text"
+                      value={formData.posyandu}
+                      disabled
+                      className="block w-full bg-slate-100 dark:bg-zinc-800 border border-transparent rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none"
+                    />
+                  ) : (
+                    <select
+                      value={formData.posyandu}
+                      onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
+                      className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    >
+                      {['Segar', 'Utama', 'Mulia', 'Giat', 'Lestari'].map(pName => (
+                        <option key={pName} value={pName}>Posyandu {pName}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-              </div>
+
+                <div className="md:col-span-1">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">NIK (Opsional, 16 digit)</label>
+                  <input
+                    type="text"
+                    maxLength={16}
+                    value={formData.nik}
+                    onChange={(e) => setFormData({...formData, nik: e.target.value})}
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    placeholder="Boleh dikosongkan"
+                  />
+                </div>
+
+                <div className="md:col-span-1">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Pelapor</label>
+                  <input
+                    type="text"
+                    value={formData.nama}
+                    onChange={(e) => setFormData({...formData, nama: e.target.value})}
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    placeholder="Nama Lengkap"
+                    required
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Alamat</label>
+                  <input
+                    type="text"
+                    value={formData.alamat}
+                    onChange={(e) => setFormData({...formData, alamat: e.target.value})}
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    placeholder="Alamat Lengkap (Dusun / RT / RW)"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Hal Pengaduan</label>
+                  <textarea
+                    value={formData.hal}
+                    onChange={(e) => setFormData({...formData, hal: e.target.value})}
+                    className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    rows={3}
+                    placeholder="Isi pengaduan bidang sosial..."
+                    required
+                  />
+                </div>
+
+                <div className="md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-4">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tindak Lanjut</label>
+                  <div className="flex gap-4 mb-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="TL" 
+                        checked={formData.status === 'TL'} 
+                        onChange={() => setFormData({...formData, status: 'TL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Tindak Lanjut (TL)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="status" 
+                        value="BTL" 
+                        checked={formData.status === 'BTL'} 
+                        onChange={() => setFormData({...formData, status: 'BTL'})}
+                        className="text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-800 dark:text-white">Belum Tindak Lanjut (BTL)</span>
+                    </label>
+                  </div>
+
+                  {formData.status === 'TL' ? (
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan TL</label>
+                      <input
+                        type="text"
+                        value={formData.keteranganTL}
+                        onChange={(e) => setFormData({...formData, keteranganTL: e.target.value, keteranganBTL: ''})}
+                        className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                        placeholder="Contoh: Langsung diajukan"
+                        required
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Keterangan BTL</label>
+                      <input
+                        type="text"
+                        value={formData.keteranganBTL}
+                        onChange={(e) => setFormData({...formData, keteranganBTL: e.target.value, keteranganTL: ''})}
+                        className={`block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                        placeholder="Contoh: BTL"
+                        required
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-6 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}
+                  >
+                    {editId ? 'Simpan Perubahan' : 'Simpan'}
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </div>
         )}

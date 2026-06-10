@@ -41,7 +41,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#dff0e6] flex items-center justify-center p-4 md:p-8 font-sans selection:bg-[#9ada55]/30">
+    <div className="min-h-screen bg-[#eaf7f0] flex items-center justify-center p-4 md:p-8 font-sans selection:bg-emerald-500/30">
       {/* Container Card */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9ada55] focus:border-transparent transition-all text-sm font-light"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm font-light"
                   placeholder="Masukkan email Anda"
                   required
                 />
@@ -105,7 +105,7 @@ export default function LoginPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 pr-10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9ada55] focus:border-transparent transition-all text-sm font-light"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 pr-10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm font-light"
                     placeholder="Masukkan password Anda"
                     required
                   />
@@ -138,10 +138,10 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#9ada55] hover:bg-[#86c540] text-slate-900 font-semibold py-3.5 px-4 rounded-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-lime-500/10 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none text-sm mt-2"
+                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-3.5 px-4 rounded-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-emerald-500/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none text-sm mt-2"
               >
                 {loading ? (
-                  <Loader2 className="w-5 h-5 animate-spin text-slate-900" />
+                  <Loader2 className="w-5 h-5 animate-spin text-white" />
                 ) : (
                   'Masuk ke Akun'
                 )}
@@ -157,7 +157,7 @@ export default function LoginPage() {
               <span className="text-slate-600 font-medium hover:underline cursor-pointer">Kebijakan Privasi</span> SIP Posyandu.
             </p>
             <div className="pt-1">
-              <Link href="/" className="text-xs text-[#86c540] hover:text-[#73ab33] font-semibold transition-colors hover:underline">
+              <Link href="/" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold transition-colors hover:underline">
                 Kembali ke Beranda
               </Link>
             </div>

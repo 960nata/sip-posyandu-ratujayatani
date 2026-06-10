@@ -13,7 +13,7 @@ export default function Sip6Page() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
-  const canEdit = isPosyandu || role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
+  const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',

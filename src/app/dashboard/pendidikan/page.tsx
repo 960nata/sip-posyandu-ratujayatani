@@ -177,6 +177,7 @@ export default function PendidikanPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
+  const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -758,7 +759,7 @@ export default function PendidikanPage() {
                   <Download className="w-5 h-5" />
                   Export Excel
                 </button>
-                {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                {canEdit && (
                   <button
                     onClick={handleAdd}
                     className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
@@ -803,7 +804,7 @@ export default function PendidikanPage() {
                     <th className="px-6 py-4">Data Dukung</th>
                     <th className="px-6 py-4">TL</th>
                     <th className="px-6 py-4">BTL</th>
-                    {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th className="px-6 py-4 text-right">Aksi</th>}
+                    {canEdit && <th className="px-6 py-4 text-right">Aksi</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -859,7 +860,7 @@ export default function PendidikanPage() {
                           </span>
                         ) : '-'}
                       </td>
-                      {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                      {canEdit && (
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors">

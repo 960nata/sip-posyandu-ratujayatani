@@ -145,6 +145,7 @@ export default function PekerjaanUmumPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
   const isPosyandu = role === 'OPERATOR_POSYANDU'
+  const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
@@ -756,7 +757,7 @@ export default function PekerjaanUmumPage() {
                   <Download className="w-5 h-5" />
                   Export Excel
                 </button>
-                {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                {canEdit && (
                   <button
                     onClick={handleAdd}
                     className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
@@ -802,7 +803,7 @@ export default function PekerjaanUmumPage() {
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Lokasi Sarana</th>
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-zinc-700 text-center">Data Dukung</th>
                     <th colSpan={2} className="px-4 py-2 text-center bg-slate-100 dark:bg-zinc-700 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-zinc-700">Tindak Lanjut</th>
-                    {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && <th rowSpan={2} className="px-4 py-3 text-right">Aksi</th>}
+                    {canEdit && <th rowSpan={2} className="px-4 py-3 text-right">Aksi</th>}
                   </tr>
                   <tr className="border-b border-slate-200 dark:border-zinc-700">
                     <th className="px-3 py-2 border-r border-slate-200 dark:border-zinc-700 text-center">TL</th>
@@ -864,7 +865,7 @@ export default function PekerjaanUmumPage() {
                           </span>
                         ) : '-'}
                       </td>
-                      {(isPosyandu || role === 'SUPERADMIN' || role === 'OPERATOR_DESA') && (
+                      {canEdit && (
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">

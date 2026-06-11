@@ -757,19 +757,28 @@ export default function DashboardPage() {
         )
       }
 
-      // ApexCharts Options
       const categoryChartOptions = {
         chart: { type: 'bar', toolbar: { show: false }, background: 'transparent' },
         plotOptions: { bar: { borderRadius: 4, horizontal: false, columnWidth: '55%' } },
         dataLabels: { enabled: false },
         stroke: { show: true, width: 2, colors: ['transparent'] },
-        xaxis: { categories: ['Pendidikan', 'Pekerjaan Umum', 'Perumahan', 'Trantib', 'Sosial'], labels: { style: { colors: '#94a3b8' } } },
+        xaxis: { categories: ['Pendidikan', 'Pekerjaan Umum', 'Perumahan', 'Trantib', 'Sosial', 'Kesehatan'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { title: { text: 'Jumlah Laporan', style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' } } },
         fill: { opacity: 1, colors: ['#10b981'] },
         tooltip: { theme: 'dark', y: { formatter: (val: any) => `${val} Laporan` } },
         theme: { mode: 'light' }
       }
-      const categoryChartSeries = [{ name: 'Laporan', data: [44, 55, 41, 67, 22] }]
+      const categoryChartSeries = [{
+        name: 'Laporan',
+        data: healthStats?.reportCounts ? [
+          healthStats.reportCounts.pendidikan || 0,
+          healthStats.reportCounts.pekerjaanUmum || 0,
+          healthStats.reportCounts.perumahan || 0,
+          healthStats.reportCounts.trantib || 0,
+          healthStats.reportCounts.sosial || 0,
+          healthStats.reportCounts.kesehatan || 0
+        ] : [0, 0, 0, 0, 0, 0]
+      }]
 
       const donutChartOptions = {
         chart: { type: 'donut', background: 'transparent' },
@@ -780,7 +789,11 @@ export default function DashboardPage() {
         tooltip: { theme: 'dark' },
         dataLabels: { enabled: true, formatter: (val: any) => `${val.toFixed(1)}%` }
       }
-      const donutChartSeries = [60, 25, 15]
+      const donutChartSeries = healthStats?.statusCounts ? [
+        healthStats.statusCounts.selesai || 0,
+        healthStats.statusCounts.proses || 0,
+        healthStats.statusCounts.belum || 0
+      ] : [0, 0, 0]
 
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },

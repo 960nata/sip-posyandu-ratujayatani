@@ -196,6 +196,79 @@ export async function GET(request: Request) {
 
     const divider = bulan ? 1 : 12
 
+    // Compute report counts for all categories
+    const scopeReport: any = {}
+    if (scope6.posyanduId) scopeReport.posyanduId = scope6.posyanduId
+    if (scope6.posyandu) scopeReport.posyandu = scope6.posyandu
+
+    if (tahun) {
+      scopeReport.tanggal = {
+        gte: new Date(`${tahun}-01-01T00:00:00.000Z`),
+        lte: new Date(`${tahun}-12-31T23:59:59.999Z`),
+      }
+    }
+    if (bulan) {
+      const monthStart = new Date(tahun, bulan - 1, 1)
+      const monthEnd = new Date(tahun, bulan, 0, 23, 59, 59, 999)
+      scopeReport.tanggal = {
+        gte: monthStart,
+        lte: monthEnd,
+      }
+    }
+
+    const countPendidikan = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, bidang: "PENDIDIKAN" }
+    })
+
+    const countPU = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, bidang: "PU" }
+    })
+
+    const countTrantib = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, bidang: "TRANTIB" }
+    })
+
+    const countSosial = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, bidang: "SOSIAL" }
+    })
+
+    const countPR = await prisma.laporanPR.count({
+      where: scopeReport
+    })
+
+    const countSip6 = await prisma.sip6Bulanan.count({
+      where: scope6
+    })
+
+    const countSip7 = await prisma.sip7Bulanan.count({
+      where: scope7
+    })
+
+    // Compute status counts
+    const countTL_Pengaduan = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, status: "TL" }
+    })
+    const countProses_Pengaduan = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, status: "PROSES" }
+    })
+    const countBTL_Pengaduan = await prisma.laporanPengaduan.count({
+      where: { ...scopeReport, status: "BTL" }
+    })
+
+    const countTL_PR = await prisma.laporanPR.count({
+      where: { ...scopeReport, status: "TL" }
+    })
+    const countProses_PR = await prisma.laporanPR.count({
+      where: { ...scopeReport, status: "PROSES" }
+    })
+    const countBTL_PR = await prisma.laporanPR.count({
+      where: { ...scopeReport, status: "BTL" }
+    })
+
+    const totalTL = countTL_Pengaduan + countTL_PR + countSip6 + countSip7
+    const totalProses = countProses_Pengaduan + countProses_PR
+    const totalBTL = countBTL_Pengaduan + countBTL_PR
+
     return NextResponse.json({
       sip6: {
         totalBalita: Math.round(totalBalitaSIP6 / divider) || 0,
@@ -213,7 +286,20 @@ export async function GET(request: Request) {
         balitaN: Math.round(((sip7Agg._sum.balitaN_L || 0) + (sip7Agg._sum.balitaN_P || 0)) / divider) || 0,
       },
       activePosyanduCount: activePosyandus,
-      monthlyTrend: monthlyStats
+      monthlyTrend: monthlyStats,
+      reportCounts: {
+        pendidikan: countPendidikan,
+        pekerjaanUmum: countPU,
+        perumahan: countPR,
+        trantib: countTrantib,
+        sosial: countSosial,
+        kesehatan: countSip6 + countSip7
+      },
+      statusCounts: {
+        selesai: totalTL,
+        proses: totalProses,
+        belum: totalBTL
+      }
     })
   } catch (error) {
     console.error("Error fetching health stats:", error)

@@ -228,6 +228,456 @@ export default function Sip7Page() {
   const [formData7, setFormData7] = useState(initialForm)
   const [editId7, setEditId7] = useState<string | null>(null)
   const [sip6Reports, setSip6Reports] = useState<any[]>([])
+  const [sip6SasaranList, setSip6SasaranList] = useState<any[]>([])
+  const [selectedRekapForEdit, setSelectedRekapForEdit] = useState<{ type: 'bumil' | 'bayi' | 'remaja' | 'lansia', report: any } | null>(null)
+  const [rekapEditForm, setRekapEditForm] = useState<any>({})
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedSasaran = localStorage.getItem('sip6_sasaran_individus')
+      if (savedSasaran) {
+        setSip6SasaranList(JSON.parse(savedSasaran))
+      }
+    }
+  }, [activeTab])
+
+  useEffect(() => {
+    if (selectedRekapForEdit) {
+      const { type, report } = selectedRekapForEdit
+      if (type === 'bumil') {
+        const current = getRekapBumil(report)
+        setRekapEditForm({
+          bumilDatang: current.datang.bumil,
+          busuiDatang: current.datang.busui,
+          tidakDatangBumil: current.tidakDatang.bumil,
+          bbNormal: current.bb.hijau,
+          bbKurang: current.bb.merah,
+          lilaNormal: current.lila.hijau,
+          lilaKek: current.lila.merah
+        })
+      } else if (type === 'bayi') {
+        const current = getRekapBayi(report)
+        setRekapEditForm({
+          totalBayi: current.bayi,
+          totalBalita: current.balita,
+          bayiDatang: current.datang.bayi,
+          balitaDatang: current.datang.balita,
+          tidakDatangBayi: current.tidakDatang.bayi,
+          tidakDatangBalita: current.tidakDatang.balita,
+          bbNaik: current.bb.naik,
+          bbTidakNaik: current.bb.tidak,
+          asiEksklusif: current.asi
+        })
+      } else if (type === 'remaja') {
+        const current = getRekapRemaja(report)
+        setRekapEditForm({
+          remaja614Datang: current.remaja614Datang,
+          remaja1518Datang: current.remaja1518Datang,
+          imtNormal: current.imtNormal,
+          imtTidakNormal: current.imtTidakNormal
+        })
+      } else if (type === 'lansia') {
+        const current = getRekapLansia(report)
+        setRekapEditForm({
+          tensiTinggi: current.tensiTinggi,
+          gulaDarahTinggi: current.gulaDarahTinggi,
+          mandiri: current.mandiri,
+          tidakMandiri: current.tidakMandiri
+        })
+      }
+    }
+  }, [selectedRekapForEdit])
+
+  const getRekapBumil = (row: any) => {
+    if (row.rekapBumil) {
+      return {
+        id: row.id,
+        bulan: row.bulan,
+        tahun: row.tahun,
+        datang: {
+          bumil: row.rekapBumil.bumilDatang || 0,
+          busui: row.rekapBumil.busuiDatang || 0
+        },
+        tidakDatang: {
+          bumil: row.rekapBumil.tidakDatangBumil || 0,
+          busui: row.rekapBumil.tidakDatangBusui || 0
+        },
+        bb: {
+          hijau: row.rekapBumil.bbNormal || 0,
+          merah: row.rekapBumil.bbKurang || 0
+        },
+        lila: {
+          hijau: row.rekapBumil.lilaNormal || 0,
+          merah: row.rekapBumil.lilaKek || 0
+        },
+        vitA: row.rekapBumil.vitA || 0,
+        kb: row.rekapBumil.kb || 0,
+        edukasi: row.rekapBumil.edukasi || 0,
+        rujuk: {
+          bumil: row.rekapBumil.rujukBumil || 0,
+          busui: row.rekapBumil.rujukBusui || 0
+        },
+        isEdited: true
+      }
+    }
+
+    const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][row.bulan - 1]
+    const sasaransInMonth = sip6SasaranList.filter((s: any) => 
+      s.type === 'sasaran_bumil' && s.tahun === row.tahun
+    )
+    const attendedBumil = sasaransInMonth.filter((s: any) => s.kunjungan?.includes(monthStr))
+    
+    let bumilDatang = 0
+    let busuiDatang = 0
+    let bbKurang = 0
+    let lilaKek = 0
+    
+    attendedBumil.forEach((s: any) => {
+      const detail = s.detailKunjungan?.[monthStr] || {}
+      if (detail.bumilDatang) bumilDatang++
+      if (detail.busuiDatang) busuiDatang++
+      if (detail.bbKurang) bbKurang++
+      if (detail.lilaKek) lilaKek++
+    })
+
+    const totalBumil = sasaransInMonth.length
+    const bumilTidakDatang = Math.max(0, totalBumil - bumilDatang)
+
+    return {
+      id: row.id,
+      bulan: row.bulan,
+      tahun: row.tahun,
+      datang: {
+        bumil: bumilDatang,
+        busui: busuiDatang
+      },
+      tidakDatang: {
+        bumil: bumilTidakDatang,
+        busui: 0
+      },
+      bb: {
+        hijau: Math.max(0, bumilDatang - bbKurang),
+        merah: bbKurang
+      },
+      lila: {
+        hijau: Math.max(0, bumilDatang - lilaKek),
+        merah: lilaKek
+      },
+      vitA: 0,
+      kb: 0,
+      edukasi: 0,
+      rujuk: {
+        bumil: 0,
+        busui: 0
+      },
+      isEdited: false
+    }
+  }
+
+  const getRekapBayi = (row: any) => {
+    if (row.rekapBalita) {
+      return {
+        id: row.id,
+        bulan: row.bulan,
+        tahun: row.tahun,
+        bayi: row.rekapBalita.totalBayi || 0,
+        balita: row.rekapBalita.totalBalita || 0,
+        datang: {
+          bayi: row.rekapBalita.bayiDatang || 0,
+          balita: row.rekapBalita.balitaDatang || 0
+        },
+        tidakDatang: {
+          bayi: row.rekapBalita.tidakDatangBayi || 0,
+          balita: row.rekapBalita.tidakDatangBalita || 0
+        },
+        checklist: {
+          lengkap: row.rekapBalita.checklistLengkap || 0,
+          tidak: row.rekapBalita.checklistTidakLengkap || 0
+        },
+        bb: {
+          naik: row.rekapBalita.bbNaik || 0,
+          tidak: row.rekapBalita.bbTidakNaik || 0
+        },
+        tb: {
+          normal: row.rekapBalita.tbNormal || 0,
+          tidak: row.rekapBalita.tbTidakNormal || 0
+        },
+        lila: {
+          normal: row.rekapBalita.lilaNormal || 0,
+          tidak: row.rekapBalita.lilaTidakNormal || 0
+        },
+        tbc: row.rekapBalita.tbc || 0,
+        asi: row.rekapBalita.asiEksklusif || 0,
+        mpasi: row.rekapBalita.mpasi || 0,
+        imunisasi: row.rekapBalita.imunisasi || 0,
+        vitA: row.rekapBalita.vitA || 0,
+        cacing: row.rekapBalita.cacing || 0,
+        pmt: row.rekapBalita.pmt || 0,
+        edukasi: row.rekapBalita.edukasi || 0,
+        rujuk: {
+          bayi: row.rekapBalita.rujukBayi || 0,
+          balita: row.rekapBalita.rujukBalita || 0
+        },
+        isEdited: true
+      }
+    }
+
+    const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][row.bulan - 1]
+    const sasaransInMonth = sip6SasaranList.filter((s: any) => 
+      s.type === 'sasaran_bayi' && s.tahun === row.tahun
+    )
+    
+    let totalBayi = 0
+    let totalBalita = 0
+    let datangBayi = 0
+    let datangBalita = 0
+    let bbNaik = 0
+    let asiEksklusif = 0
+
+    sasaransInMonth.forEach((s: any) => {
+      let isBayi = true
+      if (s.tanggalLahir) {
+        const birthDate = new Date(s.tanggalLahir)
+        const reportDate = new Date(row.tahun, row.bulan - 1, 15)
+        const diffMonths = (reportDate.getFullYear() - birthDate.getFullYear()) * 12 + (reportDate.getMonth() - birthDate.getMonth())
+        if (diffMonths >= 12) {
+          isBayi = false
+        }
+      }
+
+      if (isBayi) totalBayi++
+      else totalBalita++
+
+      if (s.kunjungan?.includes(monthStr)) {
+        const detail = s.detailKunjungan?.[monthStr] || {}
+        if (detail.balitaDatang) {
+          if (isBayi) datangBayi++
+          else datangBalita++
+        }
+        if (detail.bbNaik) bbNaik++
+        if (detail.asiEksklusif) asiEksklusif++
+      }
+    })
+
+    const totalDatang = datangBayi + datangBalita
+
+    return {
+      id: row.id,
+      bulan: row.bulan,
+      tahun: row.tahun,
+      bayi: totalBayi,
+      balita: totalBalita,
+      datang: {
+        bayi: datangBayi,
+        balita: datangBalita
+      },
+      tidakDatang: {
+        bayi: Math.max(0, totalBayi - datangBayi),
+        balita: Math.max(0, totalBalita - datangBalita)
+      },
+      checklist: {
+        lengkap: totalDatang,
+        tidak: 0
+      },
+      bb: {
+        naik: bbNaik,
+        tidak: Math.max(0, totalDatang - bbNaik)
+      },
+      tb: {
+        normal: totalDatang,
+        tidak: 0
+      },
+      lila: {
+        normal: totalDatang,
+        tidak: 0
+      },
+      tbc: 0,
+      asi: asiEksklusif,
+      mpasi: 0,
+      imunisasi: 0,
+      vitA: 0,
+      cacing: 0,
+      pmt: 0,
+      edukasi: 0,
+      rujuk: {
+        bayi: 0,
+        balita: 0
+      },
+      isEdited: false
+    }
+  }
+
+  const getRekapRemaja = (row: any) => {
+    if (row.rekapRemaja) {
+      return {
+        id: row.id,
+        bulan: row.bulan,
+        tahun: row.tahun,
+        remaja614Datang: row.rekapRemaja.remaja614Datang || 0,
+        remaja1518Datang: row.rekapRemaja.remaja1518Datang || 0,
+        imtNormal: row.rekapRemaja.imtNormal || 0,
+        imtTidakNormal: row.rekapRemaja.imtTidakNormal || 0,
+        isEdited: true
+      }
+    }
+
+    const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][row.bulan - 1]
+    const sasaransInMonth = sip6SasaranList.filter((s: any) => 
+      s.type === 'sasaran_remaja' && s.tahun === row.tahun
+    )
+
+    let remajadatang614 = 0
+    let remajadatang1518 = 0
+    let imtNormal = 0
+
+    sasaransInMonth.forEach((s: any) => {
+      if (s.kunjungan?.includes(monthStr)) {
+        const detail = s.detailKunjungan?.[monthStr] || {}
+        if (detail.remaja614Datang) remajadatang614++
+        if (detail.remaja1518Datang) remajadatang1518++
+        if (detail.imtNormal) imtNormal++
+      }
+    })
+
+    const totalDatang = remajadatang614 + remajadatang1518
+
+    return {
+      id: row.id,
+      bulan: row.bulan,
+      tahun: row.tahun,
+      remaja614Datang: remajadatang614,
+      remaja1518Datang: remajadatang1518,
+      imtNormal: imtNormal,
+      imtTidakNormal: Math.max(0, totalDatang - imtNormal),
+      isEdited: false
+    }
+  }
+
+  const getRekapLansia = (row: any) => {
+    if (row.rekapLansia) {
+      return {
+        id: row.id,
+        bulan: row.bulan,
+        tahun: row.tahun,
+        tensiTinggi: row.rekapLansia.tensiTinggi || 0,
+        gulaDarahTinggi: row.rekapLansia.gulaDarahTinggi || 0,
+        mandiri: row.rekapLansia.mandiri || 0,
+        tidakMandiri: row.rekapLansia.tidakMandiri || 0,
+        isEdited: true
+      }
+    }
+
+    const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][row.bulan - 1]
+    const sasaransInMonth = sip6SasaranList.filter((s: any) => 
+      s.type === 'sasaran_lansia' && s.tahun === row.tahun
+    )
+
+    let tensiTinggi = 0
+    let gulaDarahTinggi = 0
+    let mandiri = 0
+
+    sasaransInMonth.forEach((s: any) => {
+      if (s.kunjungan?.includes(monthStr)) {
+        const detail = s.detailKunjungan?.[monthStr] || {}
+        if (detail.tensiTinggi) tensiTinggi++
+        if (detail.gulaDarahTinggi) gulaDarahTinggi++
+        if (detail.mandiri) mandiri++
+      }
+    })
+
+    const totalDatang = sasaransInMonth.filter((s: any) => s.kunjungan?.includes(monthStr)).length
+
+    return {
+      id: row.id,
+      bulan: row.bulan,
+      tahun: row.tahun,
+      tensiTinggi: tensiTinggi,
+      gulaDarahTinggi: gulaDarahTinggi,
+      mandiri: mandiri,
+      tidakMandiri: Math.max(0, totalDatang - mandiri),
+      isEdited: false
+    }
+  }
+
+  const handleSaveRekap = async () => {
+    if (!selectedRekapForEdit) return
+    const { type, report } = selectedRekapForEdit
+
+    let updatedField = {}
+    if (type === 'bumil') {
+      updatedField = {
+        rekapBumil: {
+          bumilDatang: parseInt(rekapEditForm.bumilDatang) || 0,
+          busuiDatang: parseInt(rekapEditForm.busuiDatang) || 0,
+          tidakDatangBumil: parseInt(rekapEditForm.tidakDatangBumil) || 0,
+          bbNormal: parseInt(rekapEditForm.bbNormal) || 0,
+          bbKurang: parseInt(rekapEditForm.bbKurang) || 0,
+          lilaNormal: parseInt(rekapEditForm.lilaNormal) || 0,
+          lilaKek: parseInt(rekapEditForm.lilaKek) || 0
+        }
+      }
+    } else if (type === 'bayi') {
+      updatedField = {
+        rekapBalita: {
+          totalBayi: parseInt(rekapEditForm.totalBayi) || 0,
+          totalBalita: parseInt(rekapEditForm.totalBalita) || 0,
+          bayiDatang: parseInt(rekapEditForm.bayiDatang) || 0,
+          balitaDatang: parseInt(rekapEditForm.balitaDatang) || 0,
+          tidakDatangBayi: parseInt(rekapEditForm.tidakDatangBayi) || 0,
+          tidakDatangBalita: parseInt(rekapEditForm.tidakDatangBalita) || 0,
+          bbNaik: parseInt(rekapEditForm.bbNaik) || 0,
+          bbTidakNaik: parseInt(rekapEditForm.bbTidakNaik) || 0,
+          asiEksklusif: parseInt(rekapEditForm.asiEksklusif) || 0
+        }
+      }
+    } else if (type === 'remaja') {
+      updatedField = {
+        rekapRemaja: {
+          remaja614Datang: parseInt(rekapEditForm.remaja614Datang) || 0,
+          remaja1518Datang: parseInt(rekapEditForm.remaja1518Datang) || 0,
+          imtNormal: parseInt(rekapEditForm.imtNormal) || 0,
+          imtTidakNormal: parseInt(rekapEditForm.imtTidakNormal) || 0
+        }
+      }
+    } else if (type === 'lansia') {
+      updatedField = {
+        rekapLansia: {
+          tensiTinggi: parseInt(rekapEditForm.tensiTinggi) || 0,
+          gulaDarahTinggi: parseInt(rekapEditForm.gulaDarahTinggi) || 0,
+          mandiri: parseInt(rekapEditForm.mandiri) || 0,
+          tidakMandiri: parseInt(rekapEditForm.tidakMandiri) || 0
+        }
+      }
+    }
+
+    const payload = {
+      posyanduId: report.posyanduId,
+      tahun: report.tahun,
+      bulan: report.bulan,
+      ...updatedField
+    }
+
+    try {
+      const res = await fetch('/api/sip7', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (res.ok) {
+        alert('Rekapitulasi berhasil diperbarui!')
+        const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
+        await fetchReports7(activePosyanduId)
+        setSelectedRekapForEdit(null)
+      } else {
+        alert('Gagal memperbarui rekapitulasi.')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat menyimpan.')
+    }
+  }
+
+
 
   const mapFlatToNested = (r: any) => {
     return {
@@ -443,68 +893,7 @@ export default function Sip7Page() {
   }
 
   // Dummy Data for SIP 7 (Hasil Kegiatan)
-  const [dummyHasilKegiatan, setDummyHasilKegiatan] = useState<any[]>([
-    {
-      id: '1', bulan: 1, tahun: 2026, posyanduId: '1',
-      bumil: { jml: 15, diperiksa: 15, fe: 15 },
-      busui: 89,
-      kb: { kondom: 5, pil: 40, implant: 30, mop: 0, mow: 1, iud: 2, suntik: 98, lainnya: 0 },
-      timbang: { s_l: 108, s_p: 108, k_l: 108, k_p: 108, d_l: 80, d_p: 92, n_l: 76, n_p: 60, vitA_l: 0, vitA_p: 0, pmt_l: 108, pmt_p: 108 },
-      imTT: { i: 1, ii: 1 },
-      imBayi: {
-        bcg_l: 0, bcg_p: 2, dpt1_l: 2, dpt1_p: 3, dpt2_l: 3, dpt2_p: 1, dpt3_l: 2, dpt3_p: 1,
-        polio1_l: 0, polio1_p: 2, polio2_l: 2, polio2_p: 3, polio3_l: 3, polio3_p: 1, polio4_l: 2, polio4_p: 2,
-        campak_l: 3, campak_p: 0, hepb1_l: 0, hepb1_p: 0, hepb2_l: 0, hepb2_p: 0, hepb3_l: 0, hepb3_p: 0
-      },
-      diare: { jml_l: 0, jml_p: 0, oralit_l: 0, oralit_p: 0 },
-      status: 'Tersimpan'
-    },
-    {
-      id: '2', bulan: 2, tahun: 2026, posyanduId: '1',
-      bumil: { jml: 18, diperiksa: 18, fe: 18 },
-      busui: 86,
-      kb: { kondom: 20, pil: 29, implant: 10, mop: 0, mow: 1, iud: 2, suntik: 91, lainnya: 0 },
-      timbang: { s_l: 98, s_p: 117, k_l: 98, k_p: 117, d_l: 88, d_p: 80, n_l: 69, n_p: 69, vitA_l: 95, vitA_p: 95, pmt_l: 105, pmt_p: 105 },
-      imTT: { i: 3, ii: 0 },
-      imBayi: {
-        bcg_l: 0, bcg_p: 1, dpt1_l: 1, dpt1_p: 2, dpt2_l: 2, dpt2_p: 1, dpt3_l: 2, dpt3_p: 0,
-        polio1_l: 0, polio1_p: 1, polio2_l: 1, polio2_p: 2, polio3_l: 2, polio3_p: 1, polio4_l: 2, polio4_p: 1,
-        campak_l: 2, campak_p: 0, hepb1_l: 0, hepb1_p: 0, hepb2_l: 0, hepb2_p: 0, hepb3_l: 0, hepb3_p: 0
-      },
-      diare: { jml_l: 0, jml_p: 0, oralit_l: 0, oralit_p: 0 },
-      status: 'Tersimpan'
-    },
-    {
-      id: '3', bulan: 3, tahun: 2026, posyanduId: '1',
-      bumil: { jml: 20, diperiksa: 20, fe: 20 },
-      busui: 90,
-      kb: { kondom: 28, pil: 30, implant: 30, mop: 0, mow: 1, iud: 1, suntik: 68, lainnya: 0 },
-      timbang: { s_l: 105, s_p: 115, k_l: 105, k_p: 115, d_l: 81, d_p: 97, n_l: 78, n_p: 60, vitA_l: 0, vitA_p: 0, pmt_l: 103, pmt_p: 104 },
-      imTT: { i: 4, ii: 0 },
-      imBayi: {
-        bcg_l: 1, bcg_p: 1, dpt1_l: 0, dpt1_p: 1, dpt2_l: 0, dpt2_p: 0, dpt3_l: 1, dpt3_p: 1,
-        polio1_l: 0, polio1_p: 0, polio2_l: 1, polio2_p: 1, polio3_l: 0, polio3_p: 0, polio4_l: 1, polio4_p: 2,
-        campak_l: 2, campak_p: 0, hepb1_l: 0, hepb1_p: 0, hepb2_l: 0, hepb2_p: 0, hepb3_l: 0, hepb3_p: 0
-      },
-      diare: { jml_l: 0, jml_p: 0, oralit_l: 0, oralit_p: 0 },
-      status: 'Tersimpan'
-    },
-    {
-      id: '4', bulan: 4, tahun: 2026, posyanduId: '1',
-      bumil: { jml: 25, diperiksa: 25, fe: 25 },
-      busui: 88,
-      kb: { kondom: 18, py: 20, pil: 20, implant: 49, mop: 0, mow: 0, iud: 1, suntik: 83, lainnya: 0 },
-      timbang: { s_l: 97, s_p: 115, k_l: 97, k_p: 115, d_l: 75, d_p: 87, n_l: 70, n_p: 60, vitA_l: 0, vitA_p: 0, pmt_l: 105, pmt_p: 106 },
-      imTT: { i: 5, ii: 0 },
-      imBayi: {
-        bcg_l: 2, bcg_p: 0, dpt1_l: 1, dpt1_p: 0, dpt2_l: 1, dpt2_p: 1, dpt3_l: 0, dpt3_p: 2,
-        polio1_l: 0, polio1_p: 0, polio2_l: 1, polio2_p: 0, polio3_l: 1, polio3_p: 1, polio4_l: 0, polio4_p: 2,
-        campak_l: 1, campak_p: 0, hepb1_l: 0, hepb1_p: 0, hepb2_l: 0, hepb2_p: 0, hepb3_l: 0, hepb3_p: 0
-      },
-      diare: { jml_l: 0, jml_p: 0, oralit_l: 0, oralit_p: 0 },
-      status: 'Tersimpan'
-    }
-  ])
+  const [dummyHasilKegiatan, setDummyHasilKegiatan] = useState<any[]>([])
 
   // Dummy Data for Rekapitulasi Bumil
   const [dummyRekapBumil, setDummyRekapBumil] = useState([
@@ -515,6 +904,86 @@ export default function Sip7Page() {
   const [dummyRekapBayi, setDummyRekapBayi] = useState([
     { id: '1', bulan: 1, tahun: 2026, bayi: 20, balita: 88, datang: { bayi: 18, balita: 80 }, tidakDatang: { bayi: 2, balita: 8 }, checklist: { lengkap: 15, tidak: 5 }, bb: { naik: 12, tidak: 8 }, tb: { normal: 18, tidak: 2 }, lila: { normal: 19, tidak: 1 }, tbc: 0, asi: 10, mpasi: 8, imunisasi: 18, vitA: 20, cacing: 20, pmt: 10, edukasi: 20, rujuk: { bayi: 0, balita: 1 } }
   ])
+
+  const fetchReports7 = async (posyanduId: string) => {
+    if (!posyanduId) return
+    try {
+      const res = await fetch(`/api/sip7?posyanduId=${posyanduId}`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        const mapped = data.map(r => mapFlatToNested(r))
+        setDummyHasilKegiatan(mapped)
+        localStorage.setItem('sip7_reports', JSON.stringify(mapped))
+      }
+    } catch (err) {
+      console.error("Error fetching reports:", err)
+    }
+  }
+
+  const fetchSasaran7 = async (posyanduId: string) => {
+    if (!posyanduId) return
+    try {
+      const res = await fetch(`/api/sasaran?posyanduId=${posyanduId}`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        const mapped = data.map((s: any) => {
+          const type = s.kategori === 'IBU_HAMIL' ? 'sasaran_bumil' :
+                       s.kategori === 'BAYI_BALITA' ? 'sasaran_bayi' :
+                       s.kategori === 'REMAJA' ? 'sasaran_remaja' :
+                       s.kategori === 'LANSIA' ? 'sasaran_lansia' : 'sasaran_bumil';
+          
+          const kunjungan: string[] = [];
+          if (s.jan) kunjungan.push('JAN');
+          if (s.feb) kunjungan.push('FEB');
+          if (s.mar) kunjungan.push('MAR');
+          if (s.apr) kunjungan.push('APR');
+          if (s.mei) kunjungan.push('MEI');
+          if (s.jun) kunjungan.push('JUN');
+          if (s.jul) kunjungan.push('JUL');
+          if (s.agu) kunjungan.push('AGU');
+          if (s.sep) kunjungan.push('SEP');
+          if (s.okt) kunjungan.push('OKT');
+          if (s.nov) kunjungan.push('NOV');
+          if (s.des) kunjungan.push('DES');
+
+          return {
+            ...s,
+            type,
+            kunjungan,
+            detailKunjungan: s.detailKunjungan || {}
+          }
+        })
+        setSip6SasaranList(mapped)
+        localStorage.setItem('sip6_sasaran_individus', JSON.stringify(mapped))
+      }
+    } catch (err) {
+      console.error("Error fetching sasaran:", err)
+    }
+  }
+
+  const fetchSip6Reports7 = async (posyanduId: string) => {
+    if (!posyanduId) return
+    try {
+      const res = await fetch(`/api/sip6?posyanduId=${posyanduId}`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        const mapped = data.map(r => ({
+          id: r.id,
+          posyanduId: r.posyanduId,
+          bulan: r.bulan,
+          tahun: r.tahun,
+          hamilBaru: r.ibuHamil || 0,
+          hamilLama: 0,
+          busuiBaru: r.ibuMenyusui || 0,
+          busuiLama: 0,
+        }))
+        setSip6Reports(mapped)
+        localStorage.setItem('sip6_reports', JSON.stringify(mapped))
+      }
+    } catch (err) {
+      console.error("Error fetching SIP 6 reports:", err)
+    }
+  }
 
   useEffect(() => {
     setMounted(true)
@@ -535,35 +1004,20 @@ export default function Sip7Page() {
       const desaName = userName.replace('Admin Desa ', '')
       if (desaName) setSelectedDesa(desaName)
     }
-
-    // Load SIP 6 reports for reference/sync
-    const savedSip6 = localStorage.getItem('sip6_reports')
-    if (savedSip6) {
-      setSip6Reports(JSON.parse(savedSip6))
-    }
-
-    // Load SIP 7 reports
-    const savedSip7 = localStorage.getItem('sip7_reports')
-    if (savedSip7) {
-      setDummyHasilKegiatan(JSON.parse(savedSip7))
-    } else {
-      fetch('/api/sip7')
-        .then(res => res.json())
-        .then(data => {
-          if (data && Array.isArray(data) && data.length > 0) {
-            const mapped = data.map(r => mapFlatToNested(r))
-            setDummyHasilKegiatan(mapped)
-            localStorage.setItem('sip7_reports', JSON.stringify(mapped))
-          } else {
-            localStorage.setItem('sip7_reports', JSON.stringify(dummyHasilKegiatan))
-          }
-        })
-        .catch(err => {
-          console.error(err)
-          localStorage.setItem('sip7_reports', JSON.stringify(dummyHasilKegiatan))
-        })
-    }
   }, [isPosyandu, role, session])
+
+  useEffect(() => {
+    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
+    if (activePosyanduId) {
+      fetchReports7(activePosyanduId)
+      fetchSasaran7(activePosyanduId)
+      fetchSip6Reports7(activePosyanduId)
+    } else {
+      setDummyHasilKegiatan([])
+      setSip6SasaranList([])
+      setSip6Reports([])
+    }
+  }, [selectedPosyandu, isPosyandu, session])
 
   const handleEdit = (report: any) => {
     const flat = mapNestedToFlatForm(report)
@@ -572,11 +1026,22 @@ export default function Sip7Page() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      const updated = dummyHasilKegiatan.filter(r => r.id !== id)
-      setDummyHasilKegiatan(updated)
-      localStorage.setItem('sip7_reports', JSON.stringify(updated))
+      try {
+        const res = await fetch(`/api/sip7?id=${id}`, {
+          method: 'DELETE',
+        })
+        if (res.ok) {
+          const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
+          await fetchReports7(activePosyanduId)
+        } else {
+          alert('Gagal menghapus laporan dari database.')
+        }
+      } catch (err) {
+        console.error(err)
+        alert('Terjadi kesalahan saat menghapus data.')
+      }
     }
   }
 
@@ -591,7 +1056,7 @@ export default function Sip7Page() {
     setShowForm(true)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Validasi angka negatif
@@ -604,6 +1069,10 @@ export default function Sip7Page() {
     }
 
     const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
+    if (!activePosyanduId) {
+      alert('Silakan pilih posyandu terlebih dahulu.');
+      return;
+    }
 
     // Validasi bulan ganda dalam setahun
     const isDuplicate = dummyHasilKegiatan.some(r => 
@@ -634,18 +1103,85 @@ export default function Sip7Page() {
       if (!confirmSync) return;
     }
 
-    const newReport = mapFlatFormToNested(formData7, editId7 || Date.now().toString());
-    const updated = editId7
-      ? dummyHasilKegiatan.map(r => r.id === editId7 ? newReport : r)
-      : [newReport, ...dummyHasilKegiatan];
+    const payload = {
+      posyanduId: activePosyanduId,
+      tahun: formData7.tahun,
+      bulan: formData7.bulan,
+      jmlBumil: formData7.bumilJml || 0,
+      bumilDiperiksa: formData7.bumilDiperiksa || 0,
+      bumilFeTab: formData7.bumilFeTab || 0,
+      jmlBusui: formData7.busuiJml || 0,
+      kbKondom: formData7.kbKondom || 0,
+      kbPil: formData7.kbPil || 0,
+      kbImplant: formData7.kbImplant || 0,
+      kbMOP: formData7.kbMop || 0,
+      kbMOW: formData7.kbMow || 0,
+      kbIUD: formData7.kbIud || 0,
+      kbSuntik: formData7.kbSuntik || 0,
+      kbLainnya: formData7.kbLainnya || 0,
+      balitaS_L: formData7.timbangS_L || 0,
+      balitaS_P: formData7.timbangS_P || 0,
+      balitaK_L: formData7.timbangK_L || 0,
+      balitaK_P: formData7.timbangK_P || 0,
+      balitaD_L: formData7.timbangD_L || 0,
+      balitaD_P: formData7.timbangD_P || 0,
+      balitaN_L: formData7.timbangN_L || 0,
+      balitaN_P: formData7.timbangN_P || 0,
+      vitA_L: formData7.timbangVitA_L || 0,
+      vitA_P: formData7.timbangVitA_P || 0,
+      pmt_L: formData7.timbangPmt_L || 0,
+      pmt_P: formData7.timbangPmt_P || 0,
+      imTT: formData7.imTT || 0,
+      imBCG_L: formData7.imBCG_L || 0,
+      imBCG_P: formData7.imBCG_P || 0,
+      imDPT1_L: formData7.imDPT1_L || 0,
+      imDPT1_P: formData7.imDPT1_P || 0,
+      imDPT2_L: formData7.imDPT2_L || 0,
+      imDPT2_P: formData7.imDPT2_P || 0,
+      imDPT3_L: formData7.imDPT3_L || 0,
+      imDPT3_P: formData7.imDPT3_P || 0,
+      imPolio1_L: formData7.imPolio1_L || 0,
+      imPolio1_P: formData7.imPolio1_P || 0,
+      imPolio2_L: formData7.imPolio2_L || 0,
+      imPolio2_P: formData7.imPolio2_P || 0,
+      imPolio3_L: formData7.imPolio3_L || 0,
+      imPolio3_P: formData7.imPolio3_P || 0,
+      imPolio4_L: formData7.imPolio4_L || 0,
+      imPolio4_P: formData7.imPolio4_P || 0,
+      imCampak_L: formData7.imCampak_L || 0,
+      imCampak_P: formData7.imCampak_P || 0,
+      imHepB1_L: formData7.imHepB1_L || 0,
+      imHepB1_P: formData7.imHepB1_P || 0,
+      imHepB2_L: formData7.imHepB2_L || 0,
+      imHepB2_P: formData7.imHepB2_P || 0,
+      imHepB3_L: formData7.imHepB3_L || 0,
+      imHepB3_P: formData7.imHepB3_P || 0,
+      diareJml_L: formData7.diareJml_L || 0,
+      diareJml_P: formData7.diareJml_P || 0,
+      diareOralit_L: formData7.diareOralit_L || 0,
+      diareOralit_P: formData7.diareOralit_P || 0,
+    }
 
-    setDummyHasilKegiatan(updated)
-    localStorage.setItem('sip7_reports', JSON.stringify(updated))
-
-    alert('Data SIP 7 berhasil disimpan!')
-    setShowForm(false)
-    setFormData7(initialForm)
-    setEditId7(null)
+    try {
+      const res = await fetch('/api/sip7', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok) {
+        alert('Data SIP 7 berhasil disimpan!')
+        await fetchReports7(activePosyanduId)
+        setShowForm(false)
+        setFormData7(initialForm)
+        setEditId7(null)
+      } else {
+        const err = await res.json()
+        alert('Gagal menyimpan data ke database: ' + (err.error || 'error'))
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat menyimpan data.')
+    }
   }
 
   const getTotals7 = (months: number[]) => {
@@ -971,6 +1507,10 @@ export default function Sip7Page() {
   }
 
   const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
+  const filteredSip7 = dummyHasilKegiatan.filter((r: any) => 
+    r.tahun === tahunAktif && 
+    (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
+  );
 
   return (
     <div className="space-y-6">
@@ -1773,60 +2313,77 @@ export default function Sip7Page() {
                         <th className="px-4 py-3">BB Kurang (Merah)</th>
                         <th className="px-4 py-3">LILA KEK (Merah)</th>
                         <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3 text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {dummyRekapBumil.map((row, index) => (
-                        <Fragment key={row.id}>
-                          <tr
-                            onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)}
-                            className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
-                          >
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
-                            <td className="px-4 py-3">{row.datang.bumil}</td>
-                            <td className="px-4 py-3">{row.datang.busui}</td>
-                            <td className="px-4 py-3 text-rose-600 font-medium">{row.bb.merah}</td>
-                            <td className="px-4 py-3 text-rose-600 font-medium">{row.lila.merah}</td>
-                            <td className="px-4 py-3"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">Tersimpan</span></td>
-                          </tr>
-                          {expandedRow === row.id && (
-                            <tr className="bg-slate-50 dark:bg-zinc-900/50">
-                              <td colSpan={7} className="px-4 py-4">
-                                <div className="space-y-4">
-                                  <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                                    <ClipboardList className="w-4 h-4 text-emerald-500" />
-                                    Detail Rekapitulasi Bumil (Bulan {row.bulan})
-                                  </h4>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Kehadiran</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>Bumil Datang:</span><span>{row.datang.bumil}</span></div>
-                                        <div className="flex justify-between"><span>Bumil Tidak Datang:</span><span>{row.tidakDatang.bumil}</span></div>
+                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                        const row = getRekapBumil(report);
+                        return (
+                          <Fragment key={row.id}>
+                            <tr
+                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
+                            >
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{index + 1}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">{row.datang.bumil}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">{row.datang.busui}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 text-rose-600 font-medium cursor-pointer">{row.bb.merah}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 text-rose-600 font-medium cursor-pointer">{row.lila.merah}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">
+                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                  {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3 text-right">
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedRekapForEdit({ type: 'bumil', report })}
+                                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                                >
+                                  <Edit2 className="w-4 h-4 inline" />
+                                </button>
+                              </td>
+                            </tr>
+                            {expandedRow === row.id && (
+                              <tr className="bg-slate-50 dark:bg-zinc-900/50">
+                                <td colSpan={8} className="px-4 py-4">
+                                  <div className="space-y-4">
+                                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                                      <ClipboardList className="w-4 h-4 text-emerald-500" />
+                                      Detail Rekapitulasi Bumil (Bulan {row.bulan})
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Kehadiran</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>Bumil Datang:</span><span>{row.datang.bumil}</span></div>
+                                          <div className="flex justify-between"><span>Bumil Tidak Datang:</span><span>{row.tidakDatang.bumil}</span></div>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Pemeriksaan</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>BB Normal:</span><span>{row.bb.hijau}</span></div>
-                                        <div className="flex justify-between"><span>BB Merah:</span><span className="text-rose-600 font-medium">{row.bb.merah}</span></div>
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Pemeriksaan</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>BB Normal:</span><span>{row.bb.hijau}</span></div>
+                                          <div className="flex justify-between"><span>BB Merah:</span><span className="text-rose-600 font-medium">{row.bb.merah}</span></div>
+                                          <div className="flex justify-between"><span>LILA Normal:</span><span>{row.lila.hijau}</span></div>
+                                          <div className="flex justify-between"><span>LILA KEK (Merah):</span><span className="text-rose-600 font-medium">{row.lila.merah}</span></div>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Intervensi</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>Konsumsi TTD:</span><span>{row.ttd.tiapHari}</span></div>
-                                        <div className="flex justify-between"><span>Konsumsi PMT:</span><span>{row.pmt.tiapHari}</span></div>
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Informasi Tambahan</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>Status Pengisian:</span><span>{row.isEdited ? 'Diedit Manual' : 'Otomatis dari SIP 6'}</span></div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                        </Fragment>
-                      ))}
+                                </td>
+                              </tr>
+                            )}
+                          </Fragment>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -1853,60 +2410,79 @@ export default function Sip7Page() {
                         <th className="px-4 py-3">BB Naik</th>
                         <th className="px-4 py-3">ASI Eksklusif</th>
                         <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3 text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {dummyRekapBayi.map((row, index) => (
-                        <Fragment key={row.id}>
-                          <tr
-                            onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)}
-                            className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
-                          >
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
-                            <td className="px-4 py-3">{row.datang.bayi}</td>
-                            <td className="px-4 py-3">{row.datang.balita}</td>
-                            <td className="px-4 py-3">{row.bb.naik}</td>
-                            <td className="px-4 py-3">{row.asi}</td>
-                            <td className="px-4 py-3"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 px-2.5 py-1 rounded-full">Tersimpan</span></td>
-                          </tr>
-                          {expandedRow === row.id && (
-                            <tr className="bg-slate-50 dark:bg-zinc-900/50">
-                              <td colSpan={7} className="px-4 py-4">
-                                <div className="space-y-4">
-                                  <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                                    <ClipboardList className="w-4 h-4 text-emerald-500" />
-                                    Detail Rekapitulasi Bayi (Bulan {row.bulan})
-                                  </h4>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Kehadiran</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>Bayi Datang:</span><span>{row.datang.bayi}</span></div>
-                                        <div className="flex justify-between"><span>Balita Datang:</span><span>{row.datang.balita}</span></div>
+                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                        const row = getRekapBayi(report);
+                        return (
+                          <Fragment key={row.id}>
+                            <tr
+                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
+                            >
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.datang.bayi}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.datang.balita}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.bb.naik}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.asi}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">
+                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                  {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3 text-right">
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedRekapForEdit({ type: 'bayi', report })}
+                                  className="text-blue-500 hover:text-blue-600 transition-colors"
+                                >
+                                  <Edit2 className="w-4 h-4 inline" />
+                                </button>
+                              </td>
+                            </tr>
+                            {expandedRow === row.id && (
+                              <tr className="bg-slate-50 dark:bg-zinc-900/50">
+                                <td colSpan={8} className="px-4 py-4">
+                                  <div className="space-y-4">
+                                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                                      <ClipboardList className="w-4 h-4 text-emerald-500" />
+                                      Detail Rekapitulasi Bayi (Bulan {row.bulan})
+                                    </h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Kehadiran</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>Bayi Datang:</span><span>{row.datang.bayi} (dari {row.bayi} Sasaran)</span></div>
+                                          <div className="flex justify-between"><span>Balita Datang:</span><span>{row.datang.balita} (dari {row.balita} Sasaran)</span></div>
+                                          <div className="flex justify-between"><span>Tidak Datang Bayi:</span><span>{row.tidakDatang.bayi}</span></div>
+                                          <div className="flex justify-between"><span>Tidak Datang Balita:</span><span>{row.tidakDatang.balita}</span></div>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Penimbangan</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>BB Naik:</span><span>{row.bb.naik}</span></div>
-                                        <div className="flex justify-between"><span>BB Tidak Naik:</span><span>{row.bb.tidak}</span></div>
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Penimbangan</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>BB Naik:</span><span>{row.bb.naik}</span></div>
+                                          <div className="flex justify-between"><span>BB Tidak Naik:</span><span>{row.bb.tidak}</span></div>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
-                                      <h5 className="font-semibold mb-2">Intervensi</h5>
-                                      <div className="text-sm space-y-1">
-                                        <div className="flex justify-between"><span>ASI Eksklusif:</span><span>{row.asi}</span></div>
-                                        <div className="flex justify-between"><span>Vit A:</span><span>{row.vitA}</span></div>
+                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <h5 className="font-semibold mb-2">Intervensi & Rujukan</h5>
+                                        <div className="text-sm space-y-1">
+                                          <div className="flex justify-between"><span>ASI Eksklusif:</span><span>{row.asi}</span></div>
+                                          <div className="flex justify-between"><span>Rujuk Bayi:</span><span>{row.rujuk.bayi}</span></div>
+                                          <div className="flex justify-between"><span>Rujuk Balita:</span><span>{row.rujuk.balita}</span></div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                        </Fragment>
-                      ))}
+                                </td>
+                              </tr>
+                            )}
+                          </Fragment>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -1932,12 +2508,41 @@ export default function Sip7Page() {
                         <th className="px-4 py-3">15-18 Th Datang</th>
                         <th className="px-4 py-3">IMT Normal</th>
                         <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3 text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td colSpan={6} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Remaja</td>
-                      </tr>
+                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                        const row = getRekapRemaja(report);
+                        return (
+                          <tr key={row.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
+                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                            <td className="px-4 py-3">{row.remaja614Datang}</td>
+                            <td className="px-4 py-3">{row.remaja1518Datang}</td>
+                            <td className="px-4 py-3 text-emerald-600 font-medium">{row.imtNormal}</td>
+                            <td className="px-4 py-3">
+                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedRekapForEdit({ type: 'remaja', report })}
+                                className="text-blue-500 hover:text-blue-600 transition-colors"
+                              >
+                                <Edit2 className="w-4 h-4 inline" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {filteredSip7.length === 0 && (
+                        <tr>
+                          <td colSpan={7} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Remaja</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -1963,12 +2568,41 @@ export default function Sip7Page() {
                         <th className="px-4 py-3">Gula Darah Tinggi</th>
                         <th className="px-4 py-3">Mandiri</th>
                         <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3 text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td colSpan={6} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Lansia</td>
-                      </tr>
+                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                        const row = getRekapLansia(report);
+                        return (
+                          <tr key={row.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
+                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                            <td className="px-4 py-3 text-rose-600 font-medium">{row.tensiTinggi}</td>
+                            <td className="px-4 py-3 text-rose-600 font-medium">{row.gulaDarahTinggi}</td>
+                            <td className="px-4 py-3 text-emerald-600 font-medium">{row.mandiri}</td>
+                            <td className="px-4 py-3">
+                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedRekapForEdit({ type: 'lansia', report })}
+                                className="text-blue-500 hover:text-blue-600 transition-colors"
+                              >
+                                <Edit2 className="w-4 h-4 inline" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      {filteredSip7.length === 0 && (
+                        <tr>
+                          <td colSpan={7} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Lansia</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -2184,6 +2818,329 @@ export default function Sip7Page() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Edit Rekapitulasi Modal */}
+      <AnimatePresence>
+        {selectedRekapForEdit && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedRekapForEdit(null)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 dark:border-zinc-800 text-slate-800 dark:text-white"
+            >
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
+              
+              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold">
+                      Edit Rekapitulasi {selectedRekapForEdit.type === 'bumil' ? 'Ibu Hamil' : selectedRekapForEdit.type === 'bayi' ? 'Bayi/Balita' : selectedRekapForEdit.type === 'remaja' ? 'Remaja' : 'Lansia'}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Bulan {selectedRekapForEdit.report.bulan} / Tahun {selectedRekapForEdit.report.tahun}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRekapForEdit(null)}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto">
+                {selectedRekapForEdit.type === 'bumil' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Bumil Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bumilDatang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bumilDatang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Busui Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.busuiDatang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, busuiDatang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Bumil Tidak Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.tidakDatangBumil}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBumil: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">BB Normal</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bbNormal}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbNormal: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1 text-rose-500">BB Kurang (Merah)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bbKurang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbKurang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">LILA Normal</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.lilaNormal}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, lilaNormal: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1 text-rose-500">LILA KEK (Merah)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.lilaKek}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, lilaKek: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {selectedRekapForEdit.type === 'bayi' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Total Sasaran Bayi</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.totalBayi}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, totalBayi: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Total Sasaran Balita</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.totalBalita}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, totalBalita: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Bayi Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bayiDatang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bayiDatang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Balita Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.balitaDatang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, balitaDatang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Tidak Datang Bayi</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.tidakDatangBayi}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBayi: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Tidak Datang Balita</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.tidakDatangBalita}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBalita: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">BB Naik</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bbNaik}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbNaik: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">BB Tidak Naik</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.bbTidakNaik}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbTidakNaik: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">ASI Eksklusif</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.asiEksklusif}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, asiEksklusif: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {selectedRekapForEdit.type === 'remaja' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">6-14 Th Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.remaja614Datang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, remaja614Datang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">15-18 Th Datang</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.remaja1518Datang}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, remaja1518Datang: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">IMT Normal</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.imtNormal}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, imtNormal: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">IMT Tidak Normal</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.imtTidakNormal}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, imtTidakNormal: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {selectedRekapForEdit.type === 'lansia' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold block mb-1 text-rose-500">Tensi Tinggi</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.tensiTinggi}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, tensiTinggi: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1 text-rose-500">Gula Darah Tinggi</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.gulaDarahTinggi}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, gulaDarahTinggi: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Mandiri</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.mandiri}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, mandiri: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold block mb-1">Tidak Mandiri</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={rekapEditForm.tidakMandiri}
+                        onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakMandiri: e.target.value })}
+                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-6 border-t border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/30 flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setSelectedRekapForEdit(null)}
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveRekap}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
+                >
+                  Simpan
+                </button>
               </div>
             </motion.div>
           </div>

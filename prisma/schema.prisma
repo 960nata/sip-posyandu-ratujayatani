@@ -159,6 +159,7 @@ model SasaranIndividu {
   okt Boolean @default(false)
   nov Boolean @default(false)
   des Boolean @default(false)
+  detailKunjungan Json?            @default("{}")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

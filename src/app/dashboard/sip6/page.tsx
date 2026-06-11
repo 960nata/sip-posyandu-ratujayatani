@@ -61,66 +61,6 @@ export default function Sip6Page() {
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
     setFormData(prev => ({ ...prev, tahun: parseInt(savedTahun) }))
-
-    const savedReports = localStorage.getItem('sip6_reports')
-    if (savedReports) {
-      setReports(JSON.parse(savedReports))
-    } else {
-      fetch('/api/sip6')
-        .then(res => res.json())
-        .then(data => {
-          if (data && Array.isArray(data) && data.length > 0) {
-            const mapped = data.map(r => ({
-              id: r.id,
-              posyanduId: r.posyanduId,
-              bulan: r.bulan,
-              tahun: r.tahun,
-              namaKader: r.keterangan || 'Petugas',
-              tanggalInput: new Date(r.createdAt).toLocaleDateString('id-ID'),
-              bayiBaruL: r.bayiBaruL || 0,
-              bayiBaruP: r.bayiBaruP || 0,
-              bayiLamaL: r.bayiLamaL || 0,
-              bayiLamaP: r.bayiLamaP || 0,
-              balitaBaruL: r.balitaBaruL || 0,
-              balitaBaruP: r.balitaBaruP || 0,
-              balitaLamaL: r.balitaLamaL || 0,
-              balitaLamaP: r.balitaLamaP || 0,
-              anakBaruL: r.anakBaruL || 0,
-              anakBaruP: r.anakBaruP || 0,
-              anakLamaL: r.anakLamaL || 0,
-              anakLamaP: r.anakLamaP || 0,
-              prodBaruL: r.prodBaruL || 0,
-              prodBaruP: r.prodBaruP || 0,
-              prodLamaL: r.prodLamaL || 0,
-              prodLamaP: r.prodLamaP || 0,
-              hamilBaru: r.ibuHamil || 0,
-              hamilLama: 0,
-              busuiBaru: r.ibuMenyusui || 0,
-              busuiLama: 0,
-              lansiaL: r.lansiaBaruL || 0,
-              lansiaP: r.lansiaBaruP || 0,
-              wus: r.pus || 0,
-              ibu: 0,
-              kader: r.kaderL || 0,
-              plkb: r.plkbL || 0,
-              medis: r.medisL || 0,
-              lahirL: r.lahirL || 0,
-              lahirP: r.lahirP || 0,
-              meninggalL: r.meninggalL || 0,
-              meninggalP: r.meninggalP || 0,
-              status: 'Tersimpan'
-            }))
-            setReports(mapped)
-            localStorage.setItem('sip6_reports', JSON.stringify(mapped))
-          } else {
-            localStorage.setItem('sip6_reports', JSON.stringify(reports))
-          }
-        })
-        .catch(err => {
-          console.error(err)
-          localStorage.setItem('sip6_reports', JSON.stringify(reports))
-        })
-    }
   }, [])
 
   const fetchKecamatans = async () => {
@@ -128,6 +68,112 @@ export default function Sip6Page() {
     const data = await res.json()
     setKecamatans(data)
   }
+
+  const fetchReports = async (posyanduId: string) => {
+    if (!posyanduId) return
+    try {
+      const res = await fetch(`/api/sip6?posyanduId=${posyanduId}`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        const mapped = data.map(r => ({
+          id: r.id,
+          posyanduId: r.posyanduId,
+          bulan: r.bulan,
+          tahun: r.tahun,
+          namaKader: r.keterangan || 'Petugas',
+          tanggalInput: new Date(r.createdAt).toLocaleDateString('id-ID'),
+          bayiBaruL: r.bayiBaruL || 0,
+          bayiBaruP: r.bayiBaruP || 0,
+          bayiLamaL: r.bayiLamaL || 0,
+          bayiLamaP: r.bayiLamaP || 0,
+          balitaBaruL: r.balitaBaruL || 0,
+          balitaBaruP: r.balitaBaruP || 0,
+          balitaLamaL: r.balitaLamaL || 0,
+          balitaLamaP: r.balitaLamaP || 0,
+          anakBaruL: r.anakBaruL || 0,
+          anakBaruP: r.anakBaruP || 0,
+          anakLamaL: r.anakLamaL || 0,
+          anakLamaP: r.anakLamaP || 0,
+          prodBaruL: r.prodBaruL || 0,
+          prodBaruP: r.prodBaruP || 0,
+          prodLamaL: r.prodLamaL || 0,
+          prodLamaP: r.prodLamaP || 0,
+          hamilBaru: r.ibuHamil || 0,
+          hamilLama: 0,
+          busuiBaru: r.ibuMenyusui || 0,
+          busuiLama: 0,
+          lansiaL: r.lansiaBaruL || 0,
+          lansiaP: r.lansiaBaruP || 0,
+          wus: r.pus || 0,
+          ibu: 0,
+          kader: r.kaderL || 0,
+          plkb: r.plkbL || 0,
+          medis: r.medisL || 0,
+          lahirL: r.lahirL || 0,
+          lahirP: r.lahirP || 0,
+          meninggalL: r.meninggalL || 0,
+          meninggalP: r.meninggalP || 0,
+          status: 'Tersimpan'
+        }))
+        setReports(mapped)
+        localStorage.setItem('sip6_reports', JSON.stringify(mapped))
+      }
+    } catch (err) {
+      console.error("Error fetching reports:", err)
+    }
+  }
+
+  const fetchSasaran = async (posyanduId: string) => {
+    if (!posyanduId) return
+    try {
+      const res = await fetch(`/api/sasaran?posyanduId=${posyanduId}`)
+      const data = await res.json()
+      if (Array.isArray(data)) {
+        const mapped = data.map((s: any) => {
+          const type = s.kategori === 'IBU_HAMIL' ? 'sasaran_bumil' :
+                       s.kategori === 'BAYI_BALITA' ? 'sasaran_bayi' :
+                       s.kategori === 'REMAJA' ? 'sasaran_remaja' :
+                       s.kategori === 'LANSIA' ? 'sasaran_lansia' : 'sasaran_bumil';
+          
+          const kunjungan: string[] = [];
+          if (s.jan) kunjungan.push('JAN');
+          if (s.feb) kunjungan.push('FEB');
+          if (s.mar) kunjungan.push('MAR');
+          if (s.apr) kunjungan.push('APR');
+          if (s.mei) kunjungan.push('MEI');
+          if (s.jun) kunjungan.push('JUN');
+          if (s.jul) kunjungan.push('JUL');
+          if (s.agu) kunjungan.push('AGU');
+          if (s.sep) kunjungan.push('SEP');
+          if (s.okt) kunjungan.push('OKT');
+          if (s.nov) kunjungan.push('NOV');
+          if (s.des) kunjungan.push('DES');
+
+          return {
+            ...s,
+            type,
+            kunjungan,
+            detailKunjungan: s.detailKunjungan || {}
+          }
+        })
+        setDummySasaran(mapped)
+        localStorage.setItem('sip6_sasaran_individus', JSON.stringify(mapped))
+      }
+    } catch (err) {
+      console.error("Error fetching sasaran:", err)
+    }
+  }
+
+  useEffect(() => {
+    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+    if (activePosyanduId) {
+      fetchReports(activePosyanduId)
+      fetchSasaran(activePosyanduId)
+    } else {
+      setReports([])
+      setDummySasaran([])
+    }
+  }, [selectedPosyanduId, isPosyandu, session])
 
   useEffect(() => {
     if (role === 'ADMIN_KECAMATAN' && kecamatans.length > 0 && !selectedKecamatanId) {
@@ -178,33 +224,189 @@ export default function Sip6Page() {
     setPosyandus(data)
   }
 
-  const [dummySasaran, setDummySasaran] = useState([
-    { id: '1', type: 'sasaran_bumil', namaIbu: 'Siti Aminah', namaSuami: 'Budi', namaBayi: 'Rizki', tahun: 2026, kunjungan: ['JAN', 'FEB', 'MAR', 'MEI'] },
-    { id: '2', type: 'sasaran_bumil', namaIbu: 'Sri Wahyuni', namaSuami: 'Agus', namaBayi: 'Ahmad', tahun: 2026, kunjungan: ['JAN', 'APR', 'MEI'] },
-    { id: '3', type: 'sasaran_bayi', nama: 'Budi Kecil', jenisKelamin: 'L', tanggalLahir: '2025-01-15', namaIbuOrtu: 'Siti', namaAyah: 'Budi', tahun: 2026, kunjungan: ['JAN', 'FEB'] },
-    { id: '4', type: 'sasaran_remaja', nama: 'Ani', jenisKelamin: 'P', tanggalLahir: '2010-05-20', namaIbuOrtu: 'Siti', namaAyah: 'Budi', tahun: 2026, kunjungan: ['JAN'] },
-    { id: '5', type: 'sasaran_lansia', nama: 'Mbah Jo', jenisKelamin: 'L', tanggalLahir: '1950-08-10', namaIbuOrtu: '-', namaAyah: '-', tahun: 2026, kunjungan: ['JAN', 'FEB', 'MAR'] },
-  ])
-
+  const [dummySasaran, setDummySasaran] = useState<any[]>([])
   const [editingId, setEditingId] = useState<string | null>(null)
-
-  const [sasaranForm, setSasaranForm] = useState({
-    namaIbu: '', namaSuami: '', namaBayi: '', tahun: 2026, kunjungan: [] as string[]
+  const [sasaranForm, setSasaranForm] = useState<any>({
+    namaIbu: '',
+    namaSuami: '',
+    namaBayi: '',
+    nama: '',
+    jenisKelamin: 'L',
+    tanggalLahir: '',
+    namaIbuOrtu: '',
+    namaAyah: '',
+    tahun: 2026,
+    kunjungan: []
+  })
+  const [selectedAttendanceForModal, setSelectedAttendanceForModal] = useState<{ sasaran: any, month: string } | null>(null)
+  const [checklistForm, setChecklistForm] = useState<any>({
+    bumilDatang: false,
+    busuiDatang: false,
+    bbKurang: false,
+    lilaKek: false,
+    balitaDatang: false,
+    bbNaik: false,
+    asiEksklusif: false,
+    remaja614Datang: false,
+    remaja1518Datang: false,
+    imtNormal: false,
+    tensiTinggi: false,
+    gulaDarahTinggi: false,
+    mandiri: false,
   })
 
-  const toggleAttendance = (id: string, month: string) => {
-    setDummySasaran(dummySasaran.map(s => {
-      if (s.id === id) {
-        const hasVisited = s.kunjungan.includes(month)
-        return {
-          ...s,
-          kunjungan: hasVisited
-            ? s.kunjungan.filter(m => m !== month)
-            : [...s.kunjungan, month]
+  const handleChecklistClick = (sasaran: any, month: string) => {
+    setSelectedAttendanceForModal({ sasaran, month })
+  }
+
+  // Prefill check list form when selectedAttendanceForModal opens
+  useEffect(() => {
+    if (selectedAttendanceForModal) {
+      const { sasaran, month } = selectedAttendanceForModal
+      const savedDetails = sasaran.detailKunjungan?.[month] || {}
+      
+      const defaultBumilDatang = sasaran.type === 'sasaran_bumil'
+      const defaultBalitaDatang = sasaran.type === 'sasaran_bayi'
+      
+      let default614 = false
+      let default1518 = false
+      if (sasaran.type === 'sasaran_remaja') {
+        let age = 10
+        if (sasaran.tanggalLahir) {
+          const birthYear = new Date(sasaran.tanggalLahir).getFullYear()
+          age = 2026 - birthYear
+        }
+        if (age >= 6 && age <= 14) {
+          default614 = true
+        } else if (age >= 15 && age <= 18) {
+          default1518 = true
+        } else {
+          default614 = true
         }
       }
-      return s
-    }))
+
+      setChecklistForm({
+        bumilDatang: savedDetails.bumilDatang !== undefined ? savedDetails.bumilDatang : defaultBumilDatang,
+        busuiDatang: savedDetails.busuiDatang !== undefined ? savedDetails.busuiDatang : false,
+        bbKurang: savedDetails.bbKurang !== undefined ? savedDetails.bbKurang : false,
+        lilaKek: savedDetails.lilaKek !== undefined ? savedDetails.lilaKek : false,
+        balitaDatang: savedDetails.balitaDatang !== undefined ? savedDetails.balitaDatang : defaultBalitaDatang,
+        bbNaik: savedDetails.bbNaik !== undefined ? savedDetails.bbNaik : false,
+        asiEksklusif: savedDetails.asiEksklusif !== undefined ? savedDetails.asiEksklusif : false,
+        remaja614Datang: savedDetails.remaja614Datang !== undefined ? savedDetails.remaja614Datang : default614,
+        remaja1518Datang: savedDetails.remaja1518Datang !== undefined ? savedDetails.remaja1518Datang : default1518,
+        imtNormal: savedDetails.imtNormal !== undefined ? savedDetails.imtNormal : false,
+        tensiTinggi: savedDetails.tensiTinggi !== undefined ? savedDetails.tensiTinggi : false,
+        gulaDarahTinggi: savedDetails.gulaDarahTinggi !== undefined ? savedDetails.gulaDarahTinggi : false,
+        mandiri: savedDetails.mandiri !== undefined ? savedDetails.mandiri : false,
+      })
+    }
+  }, [selectedAttendanceForModal])
+
+  const saveAttendanceDetails = async (sasaranId: string, month: string, details: any) => {
+    const s = dummySasaran.find(item => item.id === sasaranId)
+    if (!s) return
+
+    const monthsKeys = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt', 'nov', 'des']
+    const monthKey = month.toLowerCase()
+
+    const payload: any = {
+      id: s.id,
+      posyanduId: s.posyanduId,
+      kategori: s.kategori,
+      nama: s.nama,
+      jenisKelamin: s.jenisKelamin,
+      tanggalLahir: s.tanggalLahir,
+      namaIbu: s.namaIbu,
+      namaAyah: s.namaAyah,
+      namaSuami: s.namaSuami,
+      namaBayi: s.namaBayi,
+      tahun: s.tahun,
+      detailKunjungan: {
+        ...(s.detailKunjungan || {}),
+        [month]: details
+      }
+    }
+
+    monthsKeys.forEach(m => {
+      const monthNameUpper = m.toUpperCase()
+      if (m === monthKey) {
+        payload[m] = true
+      } else {
+        payload[m] = s.kunjungan.includes(monthNameUpper)
+      }
+    })
+
+    try {
+      const res = await fetch('/api/sasaran', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok) {
+        const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+        await fetchSasaran(activePosyanduId)
+        setSelectedAttendanceForModal(null)
+      } else {
+        alert('Gagal mencatat kehadiran di database.')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat menyimpan.')
+    }
+  }
+
+  const deleteAttendance = async (sasaranId: string, month: string) => {
+    const s = dummySasaran.find(item => item.id === sasaranId)
+    if (!s) return
+
+    const monthsKeys = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt', 'nov', 'des']
+    const monthKey = month.toLowerCase()
+
+    const newDetail = { ...(s.detailKunjungan || {}) }
+    delete newDetail[month]
+
+    const payload: any = {
+      id: s.id,
+      posyanduId: s.posyanduId,
+      kategori: s.kategori,
+      nama: s.nama,
+      jenisKelamin: s.jenisKelamin,
+      tanggalLahir: s.tanggalLahir,
+      namaIbu: s.namaIbu,
+      namaAyah: s.namaAyah,
+      namaSuami: s.namaSuami,
+      namaBayi: s.namaBayi,
+      tahun: s.tahun,
+      detailKunjungan: newDetail
+    }
+
+    monthsKeys.forEach(m => {
+      const monthNameUpper = m.toUpperCase()
+      if (m === monthKey) {
+        payload[m] = false
+      } else {
+        payload[m] = s.kunjungan.includes(monthNameUpper)
+      }
+    })
+
+    try {
+      const res = await fetch('/api/sasaran', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok) {
+        const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+        await fetchSasaran(activePosyanduId)
+        setSelectedAttendanceForModal(null)
+      } else {
+        alert('Gagal menghapus kehadiran dari database.')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat menghapus.')
+    }
   }
 
   const exportUnifiedExcel = () => {
@@ -434,11 +636,22 @@ export default function Sip6Page() {
     setShowForm(true)
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      const updated = reports.filter(r => r.id !== id);
-      setReports(updated);
-      localStorage.setItem('sip6_reports', JSON.stringify(updated));
+      try {
+        const res = await fetch(`/api/sip6?id=${id}`, {
+          method: 'DELETE',
+        })
+        if (res.ok) {
+          const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+          await fetchReports(currentPosyanduId)
+        } else {
+          alert('Gagal menghapus laporan dari database.')
+        }
+      } catch (err) {
+        console.error(err)
+        alert('Terjadi kesalahan saat menghapus data.')
+      }
     }
   }
 
@@ -572,7 +785,7 @@ export default function Sip6Page() {
     reader.readAsText(file);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Validasi angka negatif
@@ -585,6 +798,10 @@ export default function Sip6Page() {
     }
 
     const currentPosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+    if (!currentPosyanduId) {
+      alert('Silakan pilih posyandu terlebih dahulu.');
+      return;
+    }
 
     // Validasi bulan ganda dalam setahun
     const isDuplicate = reports.some(r =>
@@ -598,26 +815,61 @@ export default function Sip6Page() {
       return;
     }
 
-    const oldReport = reports.find(r => r.id === editId)
-    const newReport = {
-      ...formData,
+    const payload = {
       posyanduId: currentPosyanduId,
-      id: editId || Date.now().toString(),
-      status: 'Tersimpan',
-      tanggalInput: (oldReport as any)?.tanggalInput || new Date().toLocaleDateString('id-ID')
+      tahun: formData.tahun,
+      bulan: formData.bulan,
+      bayiBaruL: formData.bayiBaruL || 0,
+      bayiBaruP: formData.bayiBaruP || 0,
+      bayiLamaL: formData.bayiLamaL || 0,
+      bayiLamaP: formData.bayiLamaP || 0,
+      balitaBaruL: formData.balitaBaruL || 0,
+      balitaBaruP: formData.balitaBaruP || 0,
+      balitaLamaL: formData.balitaLamaL || 0,
+      balitaLamaP: formData.balitaLamaP || 0,
+      anakBaruL: formData.anakBaruL || 0,
+      anakBaruP: formData.anakBaruP || 0,
+      anakLamaL: formData.anakLamaL || 0,
+      anakLamaP: formData.anakLamaP || 0,
+      prodBaruL: formData.prodBaruL || 0,
+      prodBaruP: formData.prodBaruP || 0,
+      prodLamaL: formData.prodLamaL || 0,
+      prodLamaP: formData.prodLamaP || 0,
+      ibuHamil: formData.hamilBaru || 0,
+      ibuMenyusui: formData.busuiBaru || 0,
+      lansiaBaruL: formData.lansiaL || 0,
+      lansiaBaruP: formData.lansiaP || 0,
+      pus: formData.wus || 0,
+      kaderL: formData.kader || 0,
+      plkbL: formData.plkb || 0,
+      medisL: formData.medis || 0,
+      lahirL: formData.lahirL || 0,
+      lahirP: formData.lahirP || 0,
+      meninggalL: formData.meninggalL || 0,
+      meninggalP: formData.meninggalP || 0,
+      keterangan: formData.namaKader || 'Petugas',
     }
 
-    const updated = editId
-      ? reports.map(r => r.id === editId ? newReport : r)
-      : [newReport, ...reports];
-
-    setReports(updated)
-    localStorage.setItem('sip6_reports', JSON.stringify(updated))
-
-    alert('Data SIP 6 berhasil disimpan!')
-    setShowForm(false)
-    setFormData(initialForm)
-    setEditId(null)
+    try {
+      const res = await fetch('/api/sip6', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok) {
+        alert('Data SIP 6 berhasil disimpan!')
+        await fetchReports(currentPosyanduId)
+        setShowForm(false)
+        setFormData(initialForm)
+        setEditId(null)
+      } else {
+        const err = await res.json()
+        alert('Gagal menyimpan data ke database: ' + (err.error || 'error'))
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat menyimpan data.')
+    }
   }
 
   if (!mounted) return null
@@ -653,16 +905,51 @@ export default function Sip6Page() {
 
 
       {showFormSasaran ? (
-        <form onSubmit={(e) => {
+        <form onSubmit={async (e) => {
           e.preventDefault();
-          if (editingId) {
-            setDummySasaran(dummySasaran.map(item => item.id === editingId ? ({ ...item, ...sasaranForm } as any) : item));
-            setEditingId(null);
-          } else {
-            setDummySasaran([...dummySasaran, { id: Date.now().toString(), type: activeTab, ...sasaranForm } as any]);
+          const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+          if (!activePosyanduId) {
+            alert('Silakan pilih posyandu terlebih dahulu.');
+            return;
           }
-          setShowFormSasaran(false);
-          setSasaranForm({ namaIbu: '', namaSuami: '', namaBayi: '', tahun: 2026, kunjungan: [] });
+
+          const kategori = activeTab === 'sasaran_bumil' ? 'IBU_HAMIL' :
+                           activeTab === 'sasaran_bayi' ? 'BAYI_BALITA' :
+                           activeTab === 'sasaran_remaja' ? 'REMAJA' : 'LANSIA';
+                           
+          const payload = {
+            id: editingId || undefined,
+            posyanduId: activePosyanduId,
+            kategori,
+            nama: sasaranForm.nama || sasaranForm.namaIbu || 'Tanpa Nama',
+            jenisKelamin: activeTab === 'sasaran_bumil' ? 'P' : sasaranForm.jenisKelamin || 'L',
+            tanggalLahir: sasaranForm.tanggalLahir || null,
+            namaIbu: sasaranForm.namaIbu || sasaranForm.namaIbuOrtu || null,
+            namaAyah: sasaranForm.namaAyah || null,
+            namaSuami: sasaranForm.namaSuami || null,
+            namaBayi: sasaranForm.namaBayi || null,
+            tahun: sasaranForm.tahun || tahunAktif,
+          }
+
+          try {
+            const res = await fetch('/api/sasaran', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            })
+            if (res.ok) {
+              await fetchSasaran(activePosyanduId);
+              setShowFormSasaran(false);
+              setEditingId(null);
+              setSasaranForm({ namaIbu: '', namaSuami: '', namaBayi: '', nama: '', jenisKelamin: 'L', tanggalLahir: '', namaIbuOrtu: '', namaAyah: '', tahun: 2026, kunjungan: [] });
+            } else {
+              const err = await res.json();
+              alert('Gagal menyimpan sasaran: ' + (err.error || 'error'));
+            }
+          } catch (err) {
+            console.error(err);
+            alert('Terjadi kesalahan saat menyimpan data.');
+          }
         }} className="space-y-6">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -1042,7 +1329,7 @@ export default function Sip6Page() {
                               {['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'].map(m => (
                                 <td key={m} className="px-2 py-3 text-center">
                                   <button
-                                    onClick={() => toggleAttendance(s.id, m)}
+                                    onClick={() => handleChecklistClick(s, m)}
                                     className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
                                         ? `${theme.bgSolid} text-white`
                                         : 'bg-slate-100 dark:bg-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
@@ -1065,9 +1352,22 @@ export default function Sip6Page() {
                                     <Edit2 className="w-4 h-4" />
                                   </button>
                                   <button
-                                    onClick={() => {
+                                    onClick={async () => {
                                       if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                                        setDummySasaran(dummySasaran.filter(item => item.id !== s.id));
+                                        try {
+                                          const res = await fetch(`/api/sasaran?id=${s.id}`, {
+                                            method: 'DELETE',
+                                          });
+                                          if (res.ok) {
+                                            const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+                                            await fetchSasaran(activePosyanduId);
+                                          } else {
+                                            alert('Gagal menghapus data.');
+                                          }
+                                        } catch (err) {
+                                          console.error(err);
+                                          alert('Terjadi kesalahan saat menghapus data.');
+                                        }
                                       }
                                     }}
                                     className="text-rose-500 hover:text-rose-600 transition-colors"
@@ -1285,6 +1585,225 @@ export default function Sip6Page() {
                     </div>
                   );
                 })()}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Attendance Checklist Details Popup Modal */}
+      <AnimatePresence>
+        {selectedAttendanceForModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedAttendanceForModal(null)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2 }}
+              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-100 dark:border-zinc-800"
+            >
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
+              
+              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      Pencatatan Kehadiran
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {selectedAttendanceForModal.sasaran.type === 'sasaran_bumil' ? selectedAttendanceForModal.sasaran.namaIbu : selectedAttendanceForModal.sasaran.nama} • Bulan {selectedAttendanceForModal.month}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedAttendanceForModal(null)}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-4">
+                {selectedAttendanceForModal.sasaran.type === 'sasaran_bumil' && (
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.bumilDatang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, bumilDatang: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Bumil Datang</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.busuiDatang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, busuiDatang: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Busui Datang</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.bbKurang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, bbKurang: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-rose-600 focus:ring-rose-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                        <span>BB Kurang</span>
+                        <span className="text-xs text-rose-500 font-semibold">(Garis Merah)</span>
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.lilaKek}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, lilaKek: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-rose-600 focus:ring-rose-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                        <span>LILA KEK</span>
+                        <span className="text-xs text-rose-500 font-semibold">(Merah)</span>
+                      </span>
+                    </label>
+                  </div>
+                )}
+
+                {selectedAttendanceForModal.sasaran.type === 'sasaran_bayi' && (
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.balitaDatang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, balitaDatang: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Balita Datang</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.bbNaik}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, bbNaik: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">BB Naik</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.asiEksklusif}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, asiEksklusif: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">ASI Eksklusif</span>
+                    </label>
+                  </div>
+                )}
+
+                {selectedAttendanceForModal.sasaran.type === 'sasaran_remaja' && (
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.remaja614Datang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, remaja614Datang: e.target.checked, remaja1518Datang: e.target.checked ? false : checklistForm.remaja1518Datang })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">6-14 Th Datang</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.remaja1518Datang}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, remaja1518Datang: e.target.checked, remaja614Datang: e.target.checked ? false : checklistForm.remaja614Datang })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">15-18 Th Datang</span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.imtNormal}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, imtNormal: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">IMT Normal</span>
+                    </label>
+                  </div>
+                )}
+
+                {selectedAttendanceForModal.sasaran.type === 'sasaran_lansia' && (
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.tensiTinggi}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, tensiTinggi: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-rose-600 focus:ring-rose-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                        <span>Tensi Tinggi</span>
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.gulaDarahTinggi}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, gulaDarahTinggi: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-rose-600 focus:ring-rose-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                        <span>Gula Darah Tinggi</span>
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={checklistForm.mandiri}
+                        onChange={(e) => setChecklistForm({ ...checklistForm, mandiri: e.target.checked })}
+                        className="w-5 h-5 rounded border-slate-300 dark:border-zinc-700 text-emerald-600 focus:ring-emerald-500"
+                      />
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Mandiri</span>
+                    </label>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-6 border-t border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/30 flex items-center justify-end gap-2.5">
+                {selectedAttendanceForModal.sasaran.kunjungan?.includes(selectedAttendanceForModal.month) && (
+                  <button
+                    type="button"
+                    onClick={() => deleteAttendance(selectedAttendanceForModal.sasaran.id, selectedAttendanceForModal.month)}
+                    className="mr-auto text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 text-sm font-semibold transition-colors"
+                  >
+                    Hapus Kehadiran
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setSelectedAttendanceForModal(null)}
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={() => saveAttendanceDetails(selectedAttendanceForModal.sasaran.id, selectedAttendanceForModal.month, checklistForm)}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
+                >
+                  Simpan
+                </button>
               </div>
             </motion.div>
           </div>

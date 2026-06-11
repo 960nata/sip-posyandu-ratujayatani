@@ -1,24 +1,36 @@
 const XLSX = require('xlsx');
 
-const filePath = '/Users/indragandi/Developer/SIP SISTEM INFORMASI POSYANDU/web/EXCEL/REKAP DESA/KEC PEKALONGAN/TULUS REJO.xlsx';
+const filePath = process.argv[2] || '/Users/indragandi/Developer/SIP SISTEM INFORMASI POSYANDU/web/EXCEL/REKAP DESA/KEC PEKALONGAN/TULUS REJO.xlsx';
 
-try {
-  const workbook = XLSX.readFile(filePath);
-  
-  for (const name of ['KESEHATAN SIP 6', 'KESEHATAN SIP 7']) {
-    const sheet = workbook.Sheets[name];
-    console.log(`\n=== Inspeksi Sheet ${name} ===`);
-    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-    
-    // Find rows containing "TAHUN" or numbers like 2025 or 2026
-    rows.forEach((row, i) => {
-      row.forEach((cell, j) => {
-        if (cell && (String(cell).includes('TAHUN') || String(cell) === '2025' || String(cell) === '2026')) {
-          console.log(`Row ${i + 1}, Col ${j + 1}: "${cell}" | Konteks:`, row.slice(0, 5).join(' | '));
-        }
-      });
-    });
+console.log('Inspecting:', filePath);
+const workbook = XLSX.readFile(filePath);
+
+function inspectSheet(sheetName, startRow, endRow) {
+  const sheet = workbook.Sheets[sheetName];
+  if (!sheet) {
+    console.log(`Sheet ${sheetName} not found.`);
+    return;
   }
-} catch (error) {
-  console.error(error);
+  
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+  console.log(`\n--- ${sheetName} ---`);
+  
+  for (let i = startRow; i <= endRow; i++) {
+    const row = rows[i];
+    if (!row) continue;
+    console.log(`Row ${i}:`);
+    for (let c = 0; c < row.length; c++) {
+      if (row[c] !== undefined && row[c] !== null && String(row[c]).trim() !== '') {
+        console.log(`  Col ${c}: ${row[c]}`);
+      }
+    }
+  }
 }
+
+inspectSheet('KESEHATAN SIP 6', 5, 12);
+inspectSheet('KESEHATAN SIP 7', 5, 12);
+inspectSheet('PENDIDIKAN', 4, 12);
+inspectSheet('PU', 4, 12);
+inspectSheet('PR', 4, 12);
+inspectSheet('TRANTIB LINMAS', 4, 12);
+inspectSheet('SOSIAL', 4, 12);

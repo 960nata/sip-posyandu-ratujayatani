@@ -175,7 +175,8 @@ async function main() {
   
   console.log('Cleaning existing seeded reports...');
   await prisma.laporanPengaduan.deleteMany({ where: { createdBy: 'SEEDER' } });
-  await prisma.laporanPR.deleteMany({ where: { keteranganPermohonan: 'SEEDER' } });
+  // PR: cleanup all rows seeded (keteranganPermohonan contains 'SEEDER' or 'Perumahan Rakyat')
+  await prisma.laporanPR.deleteMany({ where: { keteranganPermohonan: { in: ['SEEDER', 'Perumahan Rakyat'] } } });
   
   console.log('Cleaning existing health data (SIP 6 & 7) for years 2025 and 2026...');
   await prisma.sip6Bulanan.deleteMany({ where: { tahun: { in: [2025, 2026] } } });
@@ -491,7 +492,8 @@ async function main() {
         const fcKTP = (row[7] && String(row[7]).toLowerCase().includes('v')) ? true : false;
         const suratPermohonan = (row[8] && String(row[8]).toLowerCase().includes('v')) ? true : false;
         const suketPenghasilan = (row[9] && String(row[9]).toLowerCase().includes('v')) ? true : false;
-        const fotoKondisiRumah = (row[10] && String(row[10]).toLowerCase().includes('v')) ? true : false;
+        const fotoKondisiRumah = (row[10] && String(row[10]).trim() !== '') ? true : false;
+        const keteranganPermohonan = row[10] ? String(row[10]).trim() : 'Perumahan Rakyat';
         
         const keteranganTL = row[11] ? String(row[11]).trim() : '';
         const keteranganBTL = row[12] ? String(row[12]).trim() : '';
@@ -516,7 +518,7 @@ async function main() {
           keteranganTL,
           keteranganBTL,
           status,
-          keteranganPermohonan: 'SEEDER'
+          keteranganPermohonan
         });
       }
     }
@@ -608,52 +610,83 @@ async function main() {
         'JULI': 7, 'AGUSTUS': 8, 'SEPTEMBER': 9, 'OKTOBER': 10, 'NOVEMBER': 11, 'DESEMBER': 12
       };
       
-      for (let i = 9; i <= 20; i++) {
+      // Find numbering row (row that has numbers 1, 2, 3...)
+      let numRowIndex = -1;
+      for (let r = 5; r <= 15; r++) {
+        if (rows[r] && String(rows[r][0]).trim() === '1' && String(rows[r][1]).trim() === '2' && String(rows[r][2]).trim() === '3') {
+          numRowIndex = r;
+          break;
+        }
+      }
+      
+      let colMap = {};
+      if (numRowIndex !== -1) {
+        for (let c = 0; c < rows[numRowIndex].length; c++) {
+          const val = parseIntSafe(rows[numRowIndex][c]);
+          if (val > 0) colMap[val] = c;
+        }
+      } else {
+        // Fallback to strict mapping if no number row found
+        for (let i = 0; i <= 37; i++) colMap[i] = i - 1;
+      }
+
+      for (let i = numRowIndex !== -1 ? numRowIndex + 1 : 9; i <= Math.min(numRowIndex !== -1 ? numRowIndex + 15 : 20, rows.length - 1); i++) {
         const row = rows[i];
-        if (!row || !row[1]) continue;
+        if (!row || !row[colMap[2]]) continue;
         
-        const monthName = String(row[1]).trim().toUpperCase();
+        const monthName = String(row[colMap[2]]).trim().toUpperCase();
         const bulan = monthsMap[monthName];
         if (!bulan) continue;
         
-        const bayiBaruL = parseIntSafe(row[2]);
-        const bayiBaruP = parseIntSafe(row[3]);
-        const bayiLamaL = parseIntSafe(row[4]);
-        const bayiLamaP = parseIntSafe(row[5]);
-        const balitaBaruL = parseIntSafe(row[6]);
-        const balitaBaruP = parseIntSafe(row[7]);
-        const balitaLamaL = parseIntSafe(row[8]);
-        const balitaLamaP = parseIntSafe(row[9]);
-        const anakBaruL = parseIntSafe(row[10]);
-        const anakBaruP = parseIntSafe(row[11]);
-        const anakLamaL = parseIntSafe(row[12]);
-        const anakLamaP = parseIntSafe(row[13]);
-        const prodBaruL = parseIntSafe(row[14]);
-        const prodBaruP = parseIntSafe(row[15]);
-        const prodLamaL = parseIntSafe(row[16]);
-        const prodLamaP = parseIntSafe(row[17]);
-        const lansiaBaruL = parseIntSafe(row[18]);
-        const lansiaBaruP = parseIntSafe(row[19]);
-        const lansiaLamaL = parseIntSafe(row[20]);
-        const lansiaLamaP = parseIntSafe(row[21]);
+        const bayiBaruL = parseIntSafe(row[colMap[3]]);
+        const bayiBaruP = parseIntSafe(row[colMap[4]]);
+        const bayiLamaL = parseIntSafe(row[colMap[5]]);
+        const bayiLamaP = parseIntSafe(row[colMap[6]]);
+        const balitaBaruL = parseIntSafe(row[colMap[7]]);
+        const balitaBaruP = parseIntSafe(row[colMap[8]]);
+        const balitaLamaL = parseIntSafe(row[colMap[9]]);
+        const balitaLamaP = parseIntSafe(row[colMap[10]]);
+        const anakBaruL = parseIntSafe(row[colMap[11]]);
+        const anakBaruP = parseIntSafe(row[colMap[12]]);
+        const anakLamaL = parseIntSafe(row[colMap[13]]);
+        const anakLamaP = parseIntSafe(row[colMap[14]]);
+        const prodBaruL = parseIntSafe(row[colMap[15]]);
+        const prodBaruP = parseIntSafe(row[colMap[16]]);
+        const prodLamaL = parseIntSafe(row[colMap[17]]);
+        const prodLamaP = parseIntSafe(row[colMap[18]]);
+        const lansiaBaruL = parseIntSafe(row[colMap[19]]);
+        const lansiaBaruP = parseIntSafe(row[colMap[20]]);
+        const lansiaLamaL = parseIntSafe(row[colMap[21]]);
+        const lansiaLamaP = parseIntSafe(row[colMap[22]]);
         
-        const pus = parseIntSafe(row[22]);
-        const ibuHamil = parseIntSafe(row[23]);
-        const ibuMenyusui = parseIntSafe(row[24]);
+        const pus = parseIntSafe(row[colMap[24]]);
+        const ibuHamil = parseIntSafe(row[colMap[25]]);
+        const ibuMenyusui = parseIntSafe(row[colMap[26]]);
         
-        const kaderL = parseIntSafe(row[25]);
-        const kaderP = parseIntSafe(row[26]);
-        const plkbL = parseIntSafe(row[27]);
-        const plkbP = parseIntSafe(row[28]);
-        const medisL = parseIntSafe(row[29]);
-        const medisP = parseIntSafe(row[30]);
+        const kaderL = parseIntSafe(row[colMap[27]]);
+        const kaderP = parseIntSafe(row[colMap[28]]);
+        const plkbL = parseIntSafe(row[colMap[29]]);
+        const plkbP = parseIntSafe(row[colMap[30]]);
+        const medisL = parseIntSafe(row[colMap[31]]);
+        const medisP = parseIntSafe(row[colMap[32]]);
         
-        const lahirL = parseIntSafe(row[31]);
-        const lahirP = parseIntSafe(row[32]);
-        const meninggalL = parseIntSafe(row[33]);
-        const meninggalP = parseIntSafe(row[34]);
-        const keterangan = row[35] ? String(row[35]).trim() : '';
+        const lahirL = parseIntSafe(row[colMap[33]]);
+        const lahirP = parseIntSafe(row[colMap[34]]);
+        const meninggalL = parseIntSafe(row[colMap[35]]);
+        const meninggalP = parseIntSafe(row[colMap[36]]);
+        const keterangan = row[colMap[37]] ? String(row[colMap[37]]).trim() : '';
         
+        const totalSip6 = bayiBaruL + bayiBaruP + bayiLamaL + bayiLamaP +
+          balitaBaruL + balitaBaruP + balitaLamaL + balitaLamaP +
+          anakBaruL + anakBaruP + anakLamaL + anakLamaP +
+          prodBaruL + prodBaruP + prodLamaL + prodLamaP +
+          lansiaBaruL + lansiaBaruP + lansiaLamaL + lansiaLamaP +
+          pus + ibuHamil + ibuMenyusui +
+          kaderL + kaderP + plkbL + plkbP + medisL + medisP +
+          lahirL + lahirP + meninggalL + meninggalP;
+          
+        if (totalSip6 === 0) continue; // Skip non-operational / empty month
+
         const key = `${defaultPosyandu.id}_${year}_${bulan}`;
         sip6Map.set(key, {
           id: createId(),
@@ -681,72 +714,101 @@ async function main() {
         'JULI': 7, 'AGUSTUS': 8, 'SEPTEMBER': 9, 'OKTOBER': 10, 'NOVEMBER': 11, 'DESEMBER': 12
       };
       
-      for (let i = 10; i <= 21; i++) {
+      let numRowIndex = -1;
+      for (let r = 5; r <= 15; r++) {
+        if (rows[r] && String(rows[r][0]).trim() === '1' && String(rows[r][1]).trim() === '2' && String(rows[r][2]).trim() === '3') {
+          numRowIndex = r;
+          break;
+        }
+      }
+      
+      let colMap = {};
+      if (numRowIndex !== -1) {
+        for (let c = 0; c < rows[numRowIndex].length; c++) {
+          const val = parseIntSafe(rows[numRowIndex][c]);
+          if (val > 0) colMap[val] = c;
+        }
+      } else {
+        for (let i = 0; i <= 56; i++) colMap[i] = i - 1;
+      }
+
+      for (let i = numRowIndex !== -1 ? numRowIndex + 1 : 10; i <= Math.min(numRowIndex !== -1 ? numRowIndex + 15 : 21, rows.length - 1); i++) {
         const row = rows[i];
-        if (!row || !row[1]) continue;
+        if (!row || !row[colMap[2]]) continue;
         
-        const monthName = String(row[1]).trim().toUpperCase();
+        const monthName = String(row[colMap[2]]).trim().toUpperCase();
         const bulan = monthsMap[monthName];
         if (!bulan) continue;
         
-        const jmlBumil = parseIntSafe(row[2]);
-        const bumilDiperiksa = parseIntSafe(row[3]);
-        const bumilFeTab = parseIntSafe(row[4]);
-        const jmlBusui = parseIntSafe(row[5]);
+        const jmlBumil = parseIntSafe(row[colMap[3]]);
+        const bumilDiperiksa = parseIntSafe(row[colMap[4]]);
+        const bumilFeTab = parseIntSafe(row[colMap[5]]);
+        const jmlBusui = parseIntSafe(row[colMap[6]]);
         
-        const kbKondom = parseIntSafe(row[6]);
-        const kbPil = parseIntSafe(row[7]);
-        const kbImplant = parseIntSafe(row[8]);
-        const kbMOP = parseIntSafe(row[9]);
-        const kbMOW = parseIntSafe(row[10]);
-        const kbIUD = parseIntSafe(row[11]);
-        const kbSuntik = parseIntSafe(row[12]);
-        const kbLainnya = parseIntSafe(row[13]);
+        const kbKondom = parseIntSafe(row[colMap[7]]);
+        const kbPil = parseIntSafe(row[colMap[8]]);
+        const kbImplant = parseIntSafe(row[colMap[9]]);
+        const kbMOP = parseIntSafe(row[colMap[10]]);
+        const kbMOW = parseIntSafe(row[colMap[11]]);
+        const kbIUD = parseIntSafe(row[colMap[12]]);
+        const kbSuntik = parseIntSafe(row[colMap[13]]);
+        const kbLainnya = parseIntSafe(row[colMap[14]]);
         
-        const balitaS_L = parseIntSafe(row[14]);
-        const balitaS_P = parseIntSafe(row[15]);
-        const balitaK_L = parseIntSafe(row[16]);
-        const balitaK_P = parseIntSafe(row[17]);
-        const balitaD_L = parseIntSafe(row[18]);
-        const balitaD_P = parseIntSafe(row[19]);
-        const balitaN_L = parseIntSafe(row[20]);
-        const balitaN_P = parseIntSafe(row[21]);
-        const vitA_L = parseIntSafe(row[22]);
-        const vitA_P = parseIntSafe(row[23]);
-        const pmt_L = parseIntSafe(row[24]);
-        const pmt_P = parseIntSafe(row[25]);
+        const balitaS_L = parseIntSafe(row[colMap[15]]);
+        const balitaS_P = parseIntSafe(row[colMap[16]]);
+        const balitaK_L = parseIntSafe(row[colMap[17]]);
+        const balitaK_P = parseIntSafe(row[colMap[18]]);
+        const balitaD_L = parseIntSafe(row[colMap[19]]);
+        const balitaD_P = parseIntSafe(row[colMap[20]]);
+        const balitaN_L = parseIntSafe(row[colMap[21]]);
+        const balitaN_P = parseIntSafe(row[colMap[22]]);
+        const vitA_L = parseIntSafe(row[colMap[23]]);
+        const vitA_P = parseIntSafe(row[colMap[24]]);
+        const pmt_L = parseIntSafe(row[colMap[25]]);
+        const pmt_P = parseIntSafe(row[colMap[26]]);
         
-        const imTT = parseIntSafe(row[26]);
+        const imTT = parseIntSafe(row[colMap[27]]);
         
-        const imBCG_L = parseIntSafe(row[27]);
-        const imBCG_P = parseIntSafe(row[28]);
-        const imDPT1_L = parseIntSafe(row[29]);
-        const imDPT1_P = parseIntSafe(row[30]);
-        const imDPT2_L = parseIntSafe(row[31]);
-        const imDPT2_P = parseIntSafe(row[32]);
-        const imDPT3_L = parseIntSafe(row[33]);
-        const imDPT3_P = parseIntSafe(row[34]);
-        const imPolio1_L = parseIntSafe(row[35]);
-        const imPolio1_P = parseIntSafe(row[36]);
-        const imPolio2_L = parseIntSafe(row[37]);
-        const imPolio2_P = parseIntSafe(row[38]);
-        const imPolio3_L = parseIntSafe(row[39]);
-        const imPolio3_P = parseIntSafe(row[40]);
-        const imPolio4_L = parseIntSafe(row[41]);
-        const imPolio4_P = parseIntSafe(row[42]);
-        const imCampak_L = parseIntSafe(row[43]);
-        const imCampak_P = parseIntSafe(row[44]);
-        const imHepB1_L = parseIntSafe(row[45]);
-        const imHepB1_P = parseIntSafe(row[46]);
-        const imHepB2_L = parseIntSafe(row[47]);
-        const imHepB2_P = parseIntSafe(row[48]);
-        const imHepB3_L = parseIntSafe(row[49]);
-        const imHepB3_P = parseIntSafe(row[50]);
+        const imBCG_L = parseIntSafe(row[colMap[28]]);
+        const imBCG_P = parseIntSafe(row[colMap[29]]);
+        const imDPT1_L = parseIntSafe(row[colMap[30]]);
+        const imDPT1_P = parseIntSafe(row[colMap[31]]);
+        const imDPT2_L = parseIntSafe(row[colMap[32]]);
+        const imDPT2_P = parseIntSafe(row[colMap[33]]);
+        const imDPT3_L = parseIntSafe(row[colMap[34]]);
+        const imDPT3_P = parseIntSafe(row[colMap[35]]);
+        const imPolio1_L = parseIntSafe(row[colMap[36]]);
+        const imPolio1_P = parseIntSafe(row[colMap[37]]);
+        const imPolio2_L = parseIntSafe(row[colMap[38]]);
+        const imPolio2_P = parseIntSafe(row[colMap[39]]);
+        const imPolio3_L = parseIntSafe(row[colMap[40]]);
+        const imPolio3_P = parseIntSafe(row[colMap[41]]);
+        const imPolio4_L = parseIntSafe(row[colMap[42]]);
+        const imPolio4_P = parseIntSafe(row[colMap[43]]);
+        const imCampak_L = parseIntSafe(row[colMap[44]]);
+        const imCampak_P = parseIntSafe(row[colMap[45]]);
+        const imHepB1_L = parseIntSafe(row[colMap[46]]);
+        const imHepB1_P = parseIntSafe(row[colMap[47]]);
+        const imHepB2_L = parseIntSafe(row[colMap[48]]);
+        const imHepB2_P = parseIntSafe(row[colMap[49]]);
+        const imHepB3_L = parseIntSafe(row[colMap[50]]);
+        const imHepB3_P = parseIntSafe(row[colMap[51]]);
         
-        const diareJml_L = parseIntSafe(row[51]);
-        const diareJml_P = parseIntSafe(row[52]);
-        const diareOralit_L = parseIntSafe(row[53]);
-        const diareOralit_P = parseIntSafe(row[54]);
+        const diareJml_L = parseIntSafe(row[colMap[52]]);
+        const diareJml_P = parseIntSafe(row[colMap[53]]);
+        const diareOralit_L = parseIntSafe(row[colMap[54]]);
+        const diareOralit_P = parseIntSafe(row[colMap[55]]);
+        
+        const totalSip7 = jmlBumil + bumilDiperiksa + bumilFeTab + jmlBusui +
+          kbKondom + kbPil + kbImplant + kbMOP + kbMOW + kbIUD + kbSuntik + kbLainnya +
+          balitaS_L + balitaS_P + balitaK_L + balitaK_P + balitaD_L + balitaD_P + balitaN_L + balitaN_P +
+          vitA_L + vitA_P + pmt_L + pmt_P + imTT +
+          imBCG_L + imBCG_P + imDPT1_L + imDPT1_P + imDPT2_L + imDPT2_P + imDPT3_L + imDPT3_P +
+          imPolio1_L + imPolio1_P + imPolio2_L + imPolio2_P + imPolio3_L + imPolio3_P + imPolio4_L + imPolio4_P +
+          imCampak_L + imCampak_P + imHepB1_L + imHepB1_P + imHepB2_L + imHepB2_P + imHepB3_L + imHepB3_P +
+          diareJml_L + diareJml_P + diareOralit_L + diareOralit_P;
+          
+        if (totalSip7 === 0) continue; // Skip non-operational / empty month
         
         const key = `${defaultPosyandu.id}_${year}_${bulan}`;
         sip7Map.set(key, {

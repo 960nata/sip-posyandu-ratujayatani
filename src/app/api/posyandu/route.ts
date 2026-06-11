@@ -84,3 +84,82 @@ export async function POST(request: Request) {
 
   return NextResponse.json(newPosyandu)
 }
+
+export async function PUT(request: Request) {
+  const session = await auth()
+  if (!session || !session.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  try {
+    const body = await request.json()
+    const { id, nama, hariBuka, strata } = body
+
+    if (!id) {
+      return NextResponse.json({ error: "Missing posyandu ID" }, { status: 400 })
+    }
+
+    const updated = await prisma.posyandu.update({
+      where: { id },
+      data: {
+        ...(nama && { nama }),
+        ...(hariBuka && { hariBuka }),
+        ...(strata && { strata }),
+      },
+    })
+
+    return NextResponse.json(updated)
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  const session = await auth()
+  if (!session || !session.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get("id")
+
+    if (!id) {
+      return NextResponse.json({ error: "Missing posyandu ID" }, { status: 400 })
+    }
+
+    // Cascade delete semua data terkait dalam satu transaksi
+    await prisma.$transaction(async (tx) => {
+      // 1. Hapus data SIP 6 terkait
+      await tx.sip6Bulanan.deleteMany({ where: { posyanduId: id } })
+
+      // 2. Hapus data SIP 7 terkait
+      await tx.sip7Bulanan.deleteMany({ where: { posyanduId: id } })
+
+      // 3. Hapus laporan pengaduan terkait
+      await tx.laporanPengaduan.deleteMany({ where: { posyanduId: id } })
+
+      // 4. Hapus laporan PR terkait
+      await tx.laporanPR.deleteMany({ where: { posyanduId: id } })
+
+      // 5. Hapus data dukung terkait
+      await tx.dataDukung.deleteMany({ where: { posyanduId: id } })
+
+      // 6. Hapus SK kepengurusan terkait
+      await tx.skKepengurusan.deleteMany({ where: { posyanduId: id } })
+
+      // 7. Lepaskan user dari posyandu (set posyanduId = null)
+      await tx.user.updateMany({
+        where: { posyanduId: id },
+        data: { posyanduId: null },
+      })
+
+      // 8. Hapus posyandu
+      await tx.posyandu.delete({ where: { id } })
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}

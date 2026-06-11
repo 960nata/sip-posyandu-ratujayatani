@@ -147,13 +147,21 @@ export default function DashboardPage() {
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
 
+  const [selectedBulan, setSelectedBulan] = useState(5) // Default to May
+  const [selectedTahun, setSelectedTahun] = useState(2026) // Default to 2026
+
   const [healthStats, setHealthStats] = useState<any>(null)
   const [statsLoading, setStatsLoading] = useState(true)
 
   useEffect(() => {
     if (session?.user) {
       setStatsLoading(true)
-      fetch('/api/dashboard/kesehatan')
+      let url = `/api/dashboard/kesehatan?tahun=${selectedTahun}&bulan=${selectedBulan}`
+      if (selectedKec) url += `&kecamatan=${encodeURIComponent(selectedKec)}`
+      if (selectedDesa) url += `&desa=${encodeURIComponent(selectedDesa)}`
+      if (selectedPosyandu) url += `&posyandu=${encodeURIComponent(selectedPosyandu)}`
+
+      fetch(url)
         .then(res => res.json())
         .then(data => {
           if (data && !data.error) {
@@ -163,7 +171,7 @@ export default function DashboardPage() {
         .catch(err => console.error(err))
         .finally(() => setStatsLoading(false))
     }
-  }, [session])
+  }, [session, selectedBulan, selectedTahun, selectedKec, selectedDesa, selectedPosyandu])
 
   // Auto-set region based on role (Mocking coverage area)
   useEffect(() => {
@@ -279,7 +287,8 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Total Balita</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalBalita ?? 150}</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalBalita ?? 0}</p>
+                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
                 </div>
                 <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center text-rose-500">
                   <HeartPulse className="w-6 h-6" />
@@ -290,7 +299,8 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Ibu Hamil</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalIbuHamil ?? 24}</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalIguHamil ?? healthStats?.sip6?.totalIbuHamil ?? 0}</p>
+                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
                 </div>
                 <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-xl flex items-center justify-center text-pink-500">
                   <Heart className="w-6 h-6" />
@@ -300,8 +310,9 @@ export default function DashboardPage() {
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Lansia</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalLansia ?? 45}</p>
+                  <p className="text-sm text-slate-500 dark:text-zinc-400">Lansia & Produktif</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalLansia ?? 0}</p>
+                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Hadir terdata</p>
                 </div>
                 <div className="w-10 h-10 bg-violet-50 dark:bg-violet-900/20 rounded-xl flex items-center justify-center text-violet-500">
                   <Users className="w-6 h-6" />
@@ -465,21 +476,25 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#3b82f6', '#8b5cf6'], // Emerald, Blue, Violet
-        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'], labels: { style: { colors: '#94a3b8' } } },
+        colors: ['#10b981', '#059669', '#3b82f6', '#2563eb', '#8b5cf6'],
+        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
         markers: { size: 4 },
         legend: { position: 'bottom', labels: { colors: '#94a3b8' } }
       }
       const trendChartSeries = healthStats?.monthlyTrend ? [
-        { name: 'Balita', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.balita) },
-        { name: 'Ibu Hamil', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.bumil) },
-        { name: 'Lansia', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.lansia) }
+        { name: 'Balita (Kehadiran - SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.balita) },
+        { name: 'Balita Ditimbang (SIP 7)', data: healthStats.monthlyTrend.map((m: any) => m.balitaS || m.balitaD || 0) },
+        { name: 'Ibu Hamil (Kehadiran - SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.bumil) },
+        { name: 'Ibu Hamil Diperiksa (SIP 7)', data: healthStats.monthlyTrend.map((m: any) => m.bumilDiperiksa) },
+        { name: 'Lansia & Produktif (SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.lansia) }
       ] : [
-        { name: 'Balita', data: [120, 135, 150, 140, 160, 155] },
-        { name: 'Ibu Hamil', data: [30, 35, 40, 38, 45, 42] },
-        { name: 'Lansia', data: [80, 85, 90, 88, 95, 92] }
+        { name: 'Balita (Kehadiran - SIP 6)', data: [120, 135, 150, 140, 160, 155, 145, 138, 152, 163, 158, 170] },
+        { name: 'Balita Ditimbang (SIP 7)', data: [110, 125, 140, 130, 150, 142, 135, 128, 140, 155, 148, 160] },
+        { name: 'Ibu Hamil (Kehadiran - SIP 6)', data: [30, 35, 40, 38, 45, 42, 39, 36, 41, 44, 43, 47] },
+        { name: 'Ibu Hamil Diperiksa (SIP 7)', data: [25, 30, 35, 32, 40, 38, 35, 31, 37, 40, 38, 42] },
+        { name: 'Lansia & Produktif (SIP 6)', data: [80, 85, 90, 88, 95, 92, 87, 83, 89, 96, 91, 98] }
       ]
 
       return (
@@ -498,23 +513,23 @@ export default function DashboardPage() {
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
-              <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 350}</p>
-              <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
+              <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Kehadiran Bulan ini (SIP 6)</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <p className="text-sm font-medium text-slate-400">Sasaran Lansia</p>
-              <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 120}</p>
-              <p className="text-xs text-slate-400 mt-1">Jiwa terpantau</p>
+              <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
+              <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Hadir terdata (SIP 6)</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
-              <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 45}</p>
-              <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
+              <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Balita</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 350}</p>
-              <p className="text-xs text-slate-400 mt-1">Terdata</p>
+              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
             </div>
           </div>
 
@@ -770,46 +785,55 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#3b82f6', '#8b5cf6'], // Emerald, Blue, Violet
-        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'], labels: { style: { colors: '#94a3b8' } } },
+        colors: ['#10b981', '#059669', '#3b82f6', '#2563eb', '#8b5cf6'],
+        xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
         markers: { size: 4 },
         legend: { position: 'bottom', labels: { colors: '#94a3b8' } }
       }
       const trendChartSeries = healthStats?.monthlyTrend ? [
-        { name: 'Balita', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.balita) },
-        { name: 'Ibu Hamil', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.bumil) },
-        { name: 'Lansia', data: healthStats.monthlyTrend.slice(0, 6).map((m: any) => m.lansia) }
+        { name: 'Balita (Kehadiran - SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.balita) },
+        { name: 'Balita Ditimbang (SIP 7)', data: healthStats.monthlyTrend.map((m: any) => m.balitaS || m.balitaD || 0) },
+        { name: 'Ibu Hamil (Kehadiran - SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.bumil) },
+        { name: 'Ibu Hamil Diperiksa (SIP 7)', data: healthStats.monthlyTrend.map((m: any) => m.bumilDiperiksa) },
+        { name: 'Lansia & Produktif (SIP 6)', data: healthStats.monthlyTrend.map((m: any) => m.lansia) }
       ] : [
-        { name: 'Balita', data: [120, 135, 150, 140, 160, 155] },
-        { name: 'Ibu Hamil', data: [30, 35, 40, 38, 45, 42] },
-        { name: 'Lansia', data: [80, 85, 90, 88, 95, 92] }
+        { name: 'Balita (Kehadiran - SIP 6)', data: [120, 135, 150, 140, 160, 155, 145, 138, 152, 163, 158, 170] },
+        { name: 'Balita Ditimbang (SIP 7)', data: [110, 125, 140, 130, 150, 142, 135, 128, 140, 155, 148, 160] },
+        { name: 'Ibu Hamil (Kehadiran - SIP 6)', data: [30, 35, 40, 38, 45, 42, 39, 36, 41, 44, 43, 47] },
+        { name: 'Ibu Hamil Diperiksa (SIP 7)', data: [25, 30, 35, 32, 40, 38, 35, 31, 37, 40, 38, 42] },
+        { name: 'Lansia & Produktif (SIP 6)', data: [80, 85, 90, 88, 95, 92, 87, 83, 89, 96, 91, 98] }
       ]
 
       return (
         <div className="space-y-6">
           {/* Summary Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <p className="text-sm font-medium text-slate-400">Total Desa</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">12</p>
-              <p className="text-xs text-slate-400 mt-1">Di wilayah Kecamatan Anda</p>
-            </div>
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
               <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 60}</p>
               <p className="text-xs text-slate-400 mt-1">Tersebar di semua desa</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <p className="text-sm font-medium text-slate-400">Sasaran Lansia</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats ? (healthStats.sip6.totalLansia * 10) : 1240}</p>
-              <p className="text-xs text-slate-400 mt-1">Jiwa terpantau</p>
+              <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
+              <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Kehadiran (SIP 6)</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <p className="text-sm font-medium text-slate-400">Desa Selesai Laporan</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">08 <span className="text-xl text-slate-300">/ 12</span></p>
-              <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
+              <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
+              <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Jiwa terpantau (SIP 6)</p>
+            </div>
+            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+              <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
+              <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
+            </div>
+            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+              <p className="text-sm font-medium text-slate-400">Balita</p>
+              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
+              <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
             </div>
           </div>
 
@@ -1045,9 +1069,39 @@ export default function DashboardPage() {
 
         <div className="flex items-center space-x-3">
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Periode</span>
-          <select className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer shadow-sm">
-            <option>Mei 2026</option>
-            <option>April 2026</option>
+          <select 
+            value={`${selectedBulan}-${selectedTahun}`}
+            onChange={(e) => {
+              const [b, t] = e.target.value.split('-')
+              setSelectedBulan(parseInt(b))
+              setSelectedTahun(parseInt(t))
+            }}
+            className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer shadow-sm"
+          >
+            <option value="12-2026">Desember 2026</option>
+            <option value="11-2026">November 2026</option>
+            <option value="10-2026">Oktober 2026</option>
+            <option value="9-2026">September 2026</option>
+            <option value="8-2026">Agustus 2026</option>
+            <option value="7-2026">Juli 2026</option>
+            <option value="6-2026">Juni 2026</option>
+            <option value="5-2026">Mei 2026</option>
+            <option value="4-2026">April 2026</option>
+            <option value="3-2026">Maret 2026</option>
+            <option value="2-2026">Februari 2026</option>
+            <option value="1-2026">Januari 2026</option>
+            <option value="12-2025">Desember 2025</option>
+            <option value="11-2025">November 2025</option>
+            <option value="10-2025">Oktober 2025</option>
+            <option value="9-2025">September 2025</option>
+            <option value="8-2025">Agustus 2025</option>
+            <option value="7-2025">Juli 2025</option>
+            <option value="6-2025">Juni 2025</option>
+            <option value="5-2025">Mei 2025</option>
+            <option value="4-2025">April 2025</option>
+            <option value="3-2025">Maret 2025</option>
+            <option value="2-2025">Februari 2025</option>
+            <option value="1-2025">Januari 2025</option>
           </select>
         </div>
       </div>

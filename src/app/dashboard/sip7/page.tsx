@@ -233,15 +233,6 @@ export default function Sip7Page() {
   const [rekapEditForm, setRekapEditForm] = useState<any>({})
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedSasaran = localStorage.getItem('sip6_sasaran_individus')
-      if (savedSasaran) {
-        setSip6SasaranList(JSON.parse(savedSasaran))
-      }
-    }
-  }, [activeTab])
-
-  useEffect(() => {
     if (selectedRekapForEdit) {
       const { type, report } = selectedRekapForEdit
       if (type === 'bumil') {
@@ -1588,7 +1579,7 @@ export default function Sip7Page() {
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
               >
-                Rekapitulasi Lansia
+                Rekapitulasi Lansia/Produktif
               </button>
             </div>
 
@@ -2554,7 +2545,7 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Dewasa dan Lansia</h2>
+                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Lansia/Produktif</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                 </div>

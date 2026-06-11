@@ -12,7 +12,7 @@ export default function CreditsPage() {
     <div className="relative min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased">
       <Header />
 
-      <main className="h-[750px] flex items-center justify-center pt-20 pb-16 relative overflow-hidden">
+      <main className="min-h-[calc(100vh-130px)] flex items-center justify-center pt-28 pb-16 relative overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image

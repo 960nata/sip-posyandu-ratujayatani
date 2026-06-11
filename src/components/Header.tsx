@@ -45,12 +45,12 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 w-screen z-50 transition-all duration-500 flex justify-center ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 flex justify-center ${
         isScrolled ? "pt-2" : "pt-4"
       }`}
     >
       <div
-        className={`w-[calc(100vw-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-full border box-border relative ${
+        className={`w-[calc(100%-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-full border box-border relative ${
           isScrolled
             ? "bg-white/90 backdrop-blur-2xl border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] h-14 px-4 lg:px-6"
             : "bg-black/20 backdrop-blur-2xl border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.2)] h-16 px-4 lg:px-8"

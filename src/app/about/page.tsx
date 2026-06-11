@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { Heart, ArrowRight, Building, Users, Shield } from "lucide-react";
@@ -22,39 +23,7 @@ export default function AboutPage() {
   return (
     <div className="relative min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased">
       {/* Header/Navbar */}
-      <header
-        className={`fixed top-0 left-0 w-screen z-50 transition-all duration-500 flex justify-center ${isScrolled ? "pt-2" : "pt-4"
-          }`}
-      >
-        <div className={`w-[calc(100vw-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-full border box-border ${isScrolled
-            ? "bg-white/90 backdrop-blur-2xl border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] h-14 px-4 lg:px-6"
-            : "bg-black/20 backdrop-blur-2xl border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.2)] h-16 px-4 lg:px-8"
-          }`}>
-          <div className="flex items-center space-x-2">
-            <Heart className="w-8 h-8 text-emerald-500 fill-emerald-500/10" />
-            <span className={`font-bold text-xl transition-colors ${isScrolled ? "text-slate-900" : "text-white"}`}>SIP</span>
-          </div>
-
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`text-sm font-medium transition-colors ${isScrolled ? "text-slate-600 hover:text-emerald-500" : "text-white/80 hover:text-white"}`}>Beranda</Link>
-            <Link href="/tujuan" className={`text-sm font-medium transition-colors ${isScrolled ? "text-slate-600 hover:text-emerald-500" : "text-white/80 hover:text-white"}`}>Tujuan</Link>
-            <Link href="/#data" className={`text-sm font-medium transition-colors ${isScrolled ? "text-slate-600 hover:text-emerald-500" : "text-white/80 hover:text-white"}`}>Data</Link>
-            <Link href="/about" className={`text-sm font-medium transition-colors ${isScrolled ? "text-slate-600 hover:text-emerald-500" : "text-white/80 hover:text-white"}`}>Tentang</Link>
-          </nav>
-
-          <Link
-            href={session ? "/dashboard" : "/login"}
-            className={`inline-flex items-center justify-center px-5 py-2 rounded-full text-[12px] font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-0.5 gap-2 ${isScrolled
-                ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-900/10"
-                : "bg-emerald-600 text-white hover:bg-white hover:text-emerald-600 shadow-lg shadow-black/20"
-              }`}
-          >
-            {session ? "Masuk Dashboard" : "Masuk"}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-slate-900 text-white">

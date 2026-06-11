@@ -1506,29 +1506,34 @@ export default function Sip7Page() {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Bulanan Posyandu</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (SIP 7) Desa {namaDesa}</p>
+      {!(isPosyandu || (selectedDesa && selectedPosyandu)) && (
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Bulanan Posyandu</h1>
+            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (SIP 7) Desa {namaDesa}</p>
+          </div>
         </div>
-      </div>
+      )}
       {(isPosyandu || (selectedDesa && selectedPosyandu)) ? (
         // Level 3: Detail Posyandu (Data SIP 7)
         <div className="space-y-6">
           {/* Header Section */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            {!isPosyandu && (
+              <button
+                onClick={() => setSelectedPosyandu('')}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
+                title="Kembali ke Daftar Posyandu"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            )}
             <div>
-              {!isPosyandu && (
-                <button
-                  onClick={() => setSelectedPosyandu('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
-                  title="Kembali ke Daftar Posyandu"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                {selectedPosyandu || `Posyandu Desa ${namaDesa}`}
+              </h1>
               <p className="text-sm text-slate-500 dark:text-zinc-400">
-                {isPosyandu ? '' : `Detail data untuk Posyandu ${selectedPosyandu}`}
+                {isPosyandu ? '' : `Detail data untuk ${selectedPosyandu}`}
               </p>
             </div>
           </div>

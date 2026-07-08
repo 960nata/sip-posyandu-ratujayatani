@@ -6,9 +6,8 @@ import {
   BarChart3, Download, Users, Building, 
   Home, BookOpen, Shield, HeartPulse 
 } from 'lucide-react'
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
-} from 'recharts'
+import dynamic from 'next/dynamic'
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import ExcelJS from 'exceljs'
 import { useSession } from 'next-auth/react'
 
@@ -58,6 +57,92 @@ export default function AnalisaDataPage() {
     chartColor: isPosyandu ? '#8b5cf6' : '#10b981', // Purple vs Emerald
   }
 
+  const chartSeries = [
+    {
+      name: 'Total',
+      data: chartData.map(d => d.Total)
+    },
+    {
+      name: 'Selesai',
+      data: chartData.map(d => d.Selesai)
+    }
+  ]
+
+  const chartOptions = {
+    chart: {
+      type: 'bar',
+      toolbar: {
+        show: false
+      },
+      fontFamily: 'Inter, sans-serif',
+      foreColor: '#94a3b8'
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        borderRadius: 4
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: chartData.map(d => d.name),
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#94a3b8'
+        }
+      }
+    },
+    fill: {
+      opacity: 1
+    },
+    tooltip: {
+      theme: 'dark',
+      y: {
+        formatter: function (val: number) {
+          return val + " Laporan"
+        }
+      }
+    },
+    colors: ['#94a3b8', theme.chartColor],
+    grid: {
+      borderColor: '#e2e8f0',
+      opacity: 0.1,
+      strokeDashArray: 4,
+      yaxis: {
+        lines: {
+          show: true
+        }
+      }
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'center',
+      fontSize: '14px',
+      labels: {
+        colors: '#64748b'
+      },
+      markers: {
+        radius: 12
+      }
+    }
+  }
+
   const [isExporting, setIsExporting] = useState(false)
 
   const handleExportExcel = async () => {
@@ -66,120 +151,154 @@ export default function AnalisaDataPage() {
     try {
       const workbook = new ExcelJS.Workbook();
       
-      // Helper function to style headers
-      const styleHeader = (cell: any, bgColor: string) => {
-        cell.font = { bold: true, color: { argb: 'FFFFFF' }, name: 'Calibri', size: 11 };
-        cell.fill = {
-          type: 'pattern',
-          pattern: 'solid',
-          fgColor: { argb: bgColor }
-        };
-        cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-        cell.border = {
-          top: { style: 'thin', color: { argb: 'FFFFFF' } },
-          left: { style: 'thin', color: { argb: 'FFFFFF' } },
-          bottom: { style: 'thin', color: { argb: 'FFFFFF' } },
-          right: { style: 'thin', color: { argb: 'FFFFFF' } }
-        };
-      };
+      // Helper function to format premium sheets
+      const formatPremiumSheet = (sheet: any, headerBgColor: string, zebraBgColor: string, headerRowIndex: number = 3) => {
+        sheet.views = [{ showGridLines: true }];
 
-      const styleDataCell = (cell: any) => {
-        cell.border = {
-          top: { style: 'thin', color: { argb: 'CBD5E1' } },
-          left: { style: 'thin', color: { argb: 'CBD5E1' } },
-          bottom: { style: 'thin', color: { argb: 'CBD5E1' } },
-          right: { style: 'thin', color: { argb: 'CBD5E1' } }
-        };
-        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        // Style Title Row
+        const titleRow = sheet.getRow(1);
+        titleRow.height = 32;
+        const titleCell = titleRow.getCell(1);
+        titleCell.font = { name: 'Segoe UI', size: 14, bold: true, color: { argb: '1E293B' } };
+        titleCell.alignment = { vertical: 'middle', horizontal: 'left' };
+
+        // Style Header Row
+        const headerRow = sheet.getRow(headerRowIndex);
+        headerRow.height = 26;
+        headerRow.eachCell((cell: any) => {
+          cell.font = { name: 'Segoe UI', size: 11, bold: true, color: { argb: 'FFFFFF' } };
+          cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: headerBgColor }
+          };
+          cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+          cell.border = {
+            top: { style: 'thin', color: { argb: headerBgColor } },
+            left: { style: 'thin', color: { argb: 'FFFFFF' } },
+            bottom: { style: 'thin', color: { argb: headerBgColor } },
+            right: { style: 'thin', color: { argb: 'FFFFFF' } }
+          };
+        });
+
+        // Style Data Rows
+        sheet.eachRow((row: any, rowNumber: number) => {
+          if (rowNumber > headerRowIndex) {
+            row.height = 22;
+            const isEven = (rowNumber - headerRowIndex) % 2 === 0;
+
+            row.eachCell((cell: any) => {
+              cell.font = { name: 'Segoe UI', size: 10, color: { argb: '334155' } };
+              cell.border = {
+                top: { style: 'thin', color: { argb: 'E2E8F0' } },
+                left: { style: 'thin', color: { argb: 'E2E8F0' } },
+                bottom: { style: 'thin', color: { argb: 'E2E8F0' } },
+                right: { style: 'thin', color: { argb: 'E2E8F0' } }
+              };
+              
+              // Smart alignment based on content length
+              const valStr = cell.value ? String(cell.value) : '';
+              if (valStr.length > 20) {
+                cell.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
+              } else {
+                cell.alignment = { vertical: 'middle', horizontal: 'center' };
+              }
+
+              if (isEven) {
+                cell.fill = {
+                  type: 'pattern',
+                  pattern: 'solid',
+                  fgColor: { argb: zebraBgColor }
+                };
+              } else {
+                cell.fill = {
+                  type: 'pattern',
+                  pattern: 'solid',
+                  fgColor: { argb: 'FFFFFF' }
+                };
+              }
+            });
+          }
+        });
+
+        // Auto-fit Columns
+        sheet.columns.forEach((column: any) => {
+          let maxLen = 0;
+          column.eachCell({ includeEmpty: true }, (cell: any, rowNumber: number) => {
+            if (rowNumber >= headerRowIndex) {
+              const val = cell.value ? String(cell.value) : '';
+              if (val.length > maxLen) maxLen = val.length;
+            }
+          });
+          column.width = Math.max(12, maxLen + 4);
+        });
       };
 
       // 1. Sheet Pendidikan
       const sheetPend = workbook.addWorksheet('Pendidikan');
-      sheetPend.addRow(['DATA PENDIDIKAN']).font = { bold: true, size: 14 };
+      sheetPend.addRow(['DATA PENDIDIKAN (SPM)']).font = { bold: true, size: 14 };
       sheetPend.addRow([]);
-      const pendHeaders = ['No', 'Tanggal', 'NIK', 'Nama', 'Alamat', 'Hal', 'Status'];
+      const pendHeaders = ['No', 'Tanggal', 'NIK', 'Nama Lengkap', 'Alamat', 'Hal Laporan', 'Status'];
       sheetPend.addRow(pendHeaders);
       const dataPendidikan = [
-        [1, '2025-06-16', '3217064006750012', 'Yanti Nurhayati', 'RT 10/25', 'Pengajuan KIP', 'TL'],
-        [2, '2025-06-18', '3217064006750013', 'Budi Santoso', 'RT 11/25', 'Kekurangan buku paket', 'BTL'],
+        [1, '2025-06-16', '3217064006750012', 'Yanti Nurhayati', 'RT 10/25, Adijaya', 'Pengajuan KIP (Kartu Indonesia Pintar)', 'SELESAI'],
+        [2, '2025-06-18', '3217064006750013', 'Budi Santoso', 'RT 11/25, Adijaya', 'Kekurangan buku paket di sekolah dasar', 'PROSES'],
       ];
       dataPendidikan.forEach(r => sheetPend.addRow(r));
-      
-      // Style Pendidikan
-      sheetPend.getRow(3).eachCell(cell => styleHeader(cell, '10B981')); // Emerald
-      sheetPend.eachRow((row, rowNumber) => {
-        if (rowNumber > 3) row.eachCell(cell => styleDataCell(cell));
-      });
-      sheetPend.columns.forEach(col => col.width = 15);
+      formatPremiumSheet(sheetPend, '10B981', 'F0FDF4', 3); // Emerald
 
       // 2. Sheet Pekerjaan Umum
       const sheetPU = workbook.addWorksheet('Pekerjaan Umum');
-      sheetPU.addRow(['DATA PEKERJAAN UMUM']).font = { bold: true, size: 14 };
+      sheetPU.addRow(['DATA PEKERJAAN UMUM (SPM)']).font = { bold: true, size: 14 };
       sheetPU.addRow([]);
-      sheetPU.addRow(['No', 'Tanggal', 'Lokasi', 'Hal', 'Status']);
+      sheetPU.addRow(['No', 'Tanggal', 'Lokasi Kejadian', 'Hal Laporan', 'Status']);
       const dataPU = [
-        [1, '2025-06-17', 'Jl. Merdeka', 'Jalan Berlubang parah', 'BTL'],
-        [2, '2025-06-19', 'Jembatan Adirejo', 'Pondasi jembatan retak', 'TL'],
+        [1, '2025-06-17', 'Jl. Merdeka RT 04', 'Jalan desa berlubang parah', 'PROSES'],
+        [2, '2025-06-19', 'Jembatan Adirejo', 'Pondasi jembatan retak tergerus air', 'SELESAI'],
       ];
       dataPU.forEach(r => sheetPU.addRow(r));
-      sheetPU.getRow(3).eachCell(cell => styleHeader(cell, 'F59E0B')); // Amber
-      sheetPU.eachRow((row, rowNumber) => {
-        if (rowNumber > 3) row.eachCell(cell => styleDataCell(cell));
-      });
-      sheetPU.columns.forEach(col => col.width = 15);
+      formatPremiumSheet(sheetPU, 'F59E0B', 'FEF3C7', 3); // Amber
 
       // 3. Sheet Perumahan
       const sheetPerumahan = workbook.addWorksheet('Perumahan');
-      sheetPerumahan.addRow(['DATA PERUMAHAN']).font = { bold: true, size: 14 };
+      sheetPerumahan.addRow(['DATA PERUMAHAN RAKYAT (SPM)']).font = { bold: true, size: 14 };
       sheetPerumahan.addRow([]);
-      sheetPerumahan.addRow(['No', 'Tanggal', 'Nama', 'Hal', 'Status']);
+      sheetPerumahan.addRow(['No', 'Tanggal', 'Nama Pemilik', 'Hal Laporan', 'Status']);
       const dataPerumahan = [
-        [1, '2025-06-20', 'Siti Aminah', 'Atap rumah rubuh karena angin', 'TL'],
+        [1, '2025-06-20', 'Siti Aminah', 'Atap rumah roboh terkena angin kencang', 'SELESAI'],
       ];
       dataPerumahan.forEach(r => sheetPerumahan.addRow(r));
-      sheetPerumahan.getRow(3).eachCell(cell => styleHeader(cell, '06B6D4')); // Cyan
-      sheetPerumahan.eachRow((row, rowNumber) => {
-        if (rowNumber > 3) row.eachCell(cell => styleDataCell(cell));
-      });
-      sheetPerumahan.columns.forEach(col => col.width = 15);
+      formatPremiumSheet(sheetPerumahan, '06B6D4', 'ECFEFF', 3); // Cyan
 
       // 4. Sheet Sosial
       const sheetSosial = workbook.addWorksheet('Sosial');
-      sheetSosial.addRow(['DATA SOSIAL']).font = { bold: true, size: 14 };
+      sheetSosial.addRow(['DATA SOSIAL KELUARGA (SPM)']).font = { bold: true, size: 14 };
       sheetSosial.addRow([]);
-      sheetSosial.addRow(['No', 'Tanggal', 'NIK', 'Nama', 'Hal', 'Tanggapan', 'Status']);
+      sheetSosial.addRow(['No', 'Tanggal', 'NIK', 'Nama Lengkap', 'Hal Laporan', 'Tanggapan Petugas', 'Status']);
       const dataSosial = [
-        [1, '2025-07-20', '3217060812490003', 'SAFEI', 'PENGAJUAN KIS', 'Langsung diproses', 'SELESAI'],
+        [1, '2025-07-20', '3217060812490003', 'SAFEI', 'PENGAJUAN KARTU KIS', 'Diproses ke Dinas Sosial setempat', 'SELESAI'],
       ];
       dataSosial.forEach(r => sheetSosial.addRow(r));
-      sheetSosial.getRow(3).eachCell(cell => styleHeader(cell, '8B5CF6')); // Violet
-      sheetSosial.eachRow((row, rowNumber) => {
-        if (rowNumber > 3) row.eachCell(cell => styleDataCell(cell));
-      });
-      sheetSosial.columns.forEach(col => col.width = 15);
+      formatPremiumSheet(sheetSosial, '8B5CF6', 'F5F3FF', 3); // Violet
 
       // 5. Sheet Trantib
       const sheetTrantib = workbook.addWorksheet('Trantib');
-      sheetTrantib.addRow(['DATA TRANTIB']).font = { bold: true, size: 14 };
+      sheetTrantib.addRow(['DATA KETRAMPILAN & TERTIB SOSIAL (SPM)']).font = { bold: true, size: 14 };
       sheetTrantib.addRow([]);
-      sheetTrantib.addRow(['No', 'Tanggal', 'Pelapor', 'Hal', 'Status']);
+      sheetTrantib.addRow(['No', 'Tanggal', 'Nama Pelapor', 'Hal Laporan', 'Status']);
       const dataTrantib = [
-        [1, '2025-05-01', 'Budi Mulyono', 'Laporan poskamling kurang aktif', 'BTL'],
+        [1, '2025-05-01', 'Budi Mulyono', 'Laporan poskamling kurang aktif ronda malam', 'PROSES'],
       ];
       dataTrantib.forEach(r => sheetTrantib.addRow(r));
-      sheetTrantib.getRow(3).eachCell(cell => styleHeader(cell, 'EF4444')); // Red
-      sheetTrantib.eachRow((row, rowNumber) => {
-        if (rowNumber > 3) row.eachCell(cell => styleDataCell(cell));
-      });
-      sheetTrantib.columns.forEach(col => col.width = 15);
+      formatPremiumSheet(sheetTrantib, 'EF4444', 'FEF2F2', 3); // Red
 
       // 6. Sheet SIP 6
       const sheetSIP6 = workbook.addWorksheet('SIP 6');
-      sheetSIP6.addRow(['DATA PENGUNJUNG (SIP 6)']).font = { bold: true, size: 14 };
+      sheetSIP6.views = [{ showGridLines: true }];
+      sheetSIP6.addRow(['DATA PENGUNJUNG (SIP 6)']).font = { name: 'Segoe UI', bold: true, size: 14, color: { argb: '1E293B' } };
       sheetSIP6.addRow([]);
-      sheetSIP6.addRow(['DESA : ADIJAYA']).font = { bold: true };
+      sheetSIP6.addRow(['DESA : ADIJAYA']).font = { name: 'Segoe UI', bold: true, size: 11 };
       
-      // Headers
       const sip6Headers = [
         ['NO', 'BULAN', 'JUMLAH PENGUNJUNG', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'JUMLAH PETUGAS YG HADIR', '', '', '', '', 'JUMLAH BAYI', '', '', '', 'KET'],
         ['', '', 'B A L I T A', '', '', '', '', '', 'ANAK USIA 6-18 TAHUN', '', '', '', 'USIA PRODUKTIF', '', '', '', 'LANSIA', '', '', '', 'WUS', 'IBU', '', '', '', '', '', 'KADER', 'PLKB', '', 'MEDIS DAN PARA MEDIS', '', 'YANG LAHIR', '', 'MENINGGAL', '', ''],
@@ -188,99 +307,171 @@ export default function AnalisaDataPage() {
         ['', '', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', '', '', '', '', '', '', '', '', 'L', 'P', 'L', 'P', 'L', 'P', ''],
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
       ];
-      
       sip6Headers.forEach(h => sheetSIP6.addRow(h));
       
-      // Data
       const dataSIP6 = [
         [1, 'JANUARI', 0, 1, 22, 25, 0, 1, 63, 62, 0, 0, 1, 0, 0, 0, 85, 87, 2, 1, 125, 121, 172, 170, 15, 79, '', 57, 1, '', 1, 3, 0, 1, 0, 0, ''],
         [2, 'FEBRUARI', 0, 0, 20, 20, 0, 0, 60, 59, 0, 0, 0, 1, 0, 0, 80, 79, 1, 0, 120, 180, 159, 155, 18, 80, '', 57, 1, '', 1, 3, 0, 0, 0, 0, ''],
         [3, 'MARET', 0, 1, 20, 18, 1, 0, 61, 59, 0, 0, 1, 0, 0, 0, 81, 77, 1, 1, 125, 99, 158, 154, 20, 78, '', 57, 1, '', 1, 3, 0, 1, 0, 0, ''],
         [4, 'APRIL', 0, 2, 15, 15, 0, 1, 63, 60, 0, 0, 0, 1, 0, 0, 78, 75, 1, 0, 120, 101, 153, 150, 25, 83, '', 57, 1, '', 1, 3, 1, 2, 0, 0, '']
       ];
-      
       dataSIP6.forEach(r => sheetSIP6.addRow(r));
       
-      // Merges
-      sheetSIP6.mergeCells('A4:A8'); // NO
-      sheetSIP6.mergeCells('B4:B8'); // BULAN
-      sheetSIP6.mergeCells('C4:AA4'); // JUMLAH PENGUNJUNG
-      sheetSIP6.mergeCells('AB4:AF4'); // JUMLAH PETUGAS YG HADIR
-      sheetSIP6.mergeCells('AG4:AJ4'); // JUMLAH BAYI
-      sheetSIP6.mergeCells('AK4:AK8'); // KET
+      sheetSIP6.mergeCells('A4:A8');
+      sheetSIP6.mergeCells('B4:B8');
+      sheetSIP6.mergeCells('C4:AA4');
+      sheetSIP6.mergeCells('AB4:AF4');
+      sheetSIP6.mergeCells('AG4:AJ4');
+      sheetSIP6.mergeCells('AK4:AK8');
 
       // Style SIP 6 Headers
       [4, 5, 6, 7, 8].forEach(r => {
-        sheetSIP6.getRow(r).eachCell(cell => styleHeader(cell, 'EC4899')); // Pink
+        sheetSIP6.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: 'FFFFFF' } };
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'EC4899' } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'EC4899' } },
+            left: { style: 'thin', color: { argb: 'FFFFFF' } },
+            bottom: { style: 'thin', color: { argb: 'EC4899' } },
+            right: { style: 'thin', color: { argb: 'FFFFFF' } }
+          };
+        });
       });
       
-      // Style Row 9 (Numbers)
       sheetSIP6.getRow(9).eachCell(cell => {
-        styleHeader(cell, 'E2E8F0');
-        cell.font = { bold: true, color: { argb: '334155' } };
+        cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: '334155' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E2E8F0' } };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'CBD5E1' } },
+          left: { style: 'thin', color: { argb: 'CBD5E1' } },
+          bottom: { style: 'thin', color: { argb: 'CBD5E1' } },
+          right: { style: 'thin', color: { argb: 'CBD5E1' } }
+        };
       });
 
-      // Style Data
       sheetSIP6.eachRow((row, rowNumber) => {
-        if (rowNumber > 9) row.eachCell(cell => styleDataCell(cell));
+        if (rowNumber > 9 && rowNumber <= 13) {
+          row.height = 20;
+          const isEven = rowNumber % 2 === 0;
+          row.eachCell(cell => {
+            cell.font = { name: 'Segoe UI', size: 9, color: { argb: '334155' } };
+            cell.alignment = { vertical: 'middle', horizontal: 'center' };
+            cell.border = {
+              top: { style: 'thin', color: { argb: 'E2E8F0' } },
+              left: { style: 'thin', color: { argb: 'E2E8F0' } },
+              bottom: { style: 'thin', color: { argb: 'E2E8F0' } },
+              right: { style: 'thin', color: { argb: 'E2E8F0' } }
+            };
+            if (isEven) {
+              cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FDF2F8' } };
+            }
+          });
+        }
       });
-
-      sheetSIP6.columns.forEach(col => col.width = 6);
-      sheetSIP6.getColumn(1).width = 5;
-      sheetSIP6.getColumn(2).width = 12;
 
       // Other Tables in SIP 6
       sheetSIP6.addRow([]);
       sheetSIP6.addRow([]);
-      sheetSIP6.addRow(['DATA SASARAN KUNJUNGAN']).font = { bold: true, size: 12 };
-      sheetSIP6.addRow(['DESA : ADIJAYA']);
-      sheetSIP6.addRow(['TAHUN : 2025']);
+      sheetSIP6.addRow(['DATA SASARAN KUNJUNGAN']).font = { name: 'Segoe UI', bold: true, size: 12 };
+      sheetSIP6.addRow(['DESA : ADIJAYA']).font = { name: 'Segoe UI', size: 10 };
+      sheetSIP6.addRow(['TAHUN : 2025']).font = { name: 'Segoe UI', size: 10 };
       sheetSIP6.addRow([]);
 
-      // Data Sasaran Ibu Hamil
       const startRowIbu = sheetSIP6.rowCount + 1;
-      sheetSIP6.addRow(['DATA SASARAN IBU HAMIL/NIFAS/MENYUSUI']).font = { bold: true };
+      sheetSIP6.addRow(['DATA SASARAN IBU HAMIL/NIFAS/MENYUSUI']).font = { name: 'Segoe UI', bold: true, size: 11 };
       sheetSIP6.addRow(['NO', 'SASARAN IBU HAMIL/MENYUSUI', '', '', 'JUMLAH KUNJUNGAN DAN JUMLAH SASARAN IBU HAMIL/NIFAS/MENYUSUI']);
       sheetSIP6.addRow(['', 'NAMA IBU', 'NAMA SUAMI', 'NAMA BAYI', 'JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES']);
       sheetSIP6.addRow([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
       
-      // Dummy data for Ibu Hamil
       for(let i=1; i<=5; i++) {
         sheetSIP6.addRow([i, `Ibu ${i}`, `Suami ${i}`, `Bayi ${i}`, '', '', '', '', '', '', '', '', '', '', '', '']);
       }
-
       sheetSIP6.mergeCells(`B${startRowIbu+1}:D${startRowIbu+1}`);
       sheetSIP6.mergeCells(`E${startRowIbu+1}:P${startRowIbu+1}`);
       
-      // Style Ibu Hamil Headers
       [startRowIbu+1, startRowIbu+2].forEach(r => {
-        sheetSIP6.getRow(r).eachCell(cell => styleHeader(cell, 'EC4899'));
+        sheetSIP6.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: 'FFFFFF' } };
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'EC4899' } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'EC4899' } },
+            left: { style: 'thin', color: { argb: 'FFFFFF' } },
+            bottom: { style: 'thin', color: { argb: 'EC4899' } },
+            right: { style: 'thin', color: { argb: 'FFFFFF' } }
+          };
+        });
       });
 
-      // Data Sasaran Bayi
+      for(let r = startRowIbu+4; r < startRowIbu+4+5; r++) {
+        sheetSIP6.getRow(r).height = 20;
+        const isEven = r % 2 === 0;
+        sheetSIP6.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, color: { argb: '334155' } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'E2E8F0' } },
+            left: { style: 'thin', color: { argb: 'E2E8F0' } },
+            bottom: { style: 'thin', color: { argb: 'E2E8F0' } },
+            right: { style: 'thin', color: { argb: 'E2E8F0' } }
+          };
+          if (isEven) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FDF2F8' } };
+        });
+      }
+
       sheetSIP6.addRow([]);
       const startRowBayi = sheetSIP6.rowCount + 1;
-      sheetSIP6.addRow(['DATA SASARAN BAYI/ BALITA/APRAS']).font = { bold: true };
+      sheetSIP6.addRow(['DATA SASARAN BAYI/ BALITA/APRAS']).font = { name: 'Segoe UI', bold: true, size: 11 };
       sheetSIP6.addRow(['NO', 'NAMA BAYI/BALITA', 'JENIS KELAMIN', 'TANGGAL LAHIR', 'NAMA', '', 'JUMLAH KUNJUNGAN DAN JUMLAH SASARAN BAYI/BALITA/APRAS']);
       sheetSIP6.addRow(['', '', '', '', 'IBU', 'AYAH', 'JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES']);
       sheetSIP6.addRow([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
       
-      // Dummy data for Bayi
       for(let i=1; i<=5; i++) {
         sheetSIP6.addRow([i, `Bayi ${i}`, i%2===0?'L':'P', '2025-01-01', `Ibu ${i}`, `Ayah ${i}`, '', '', '', '', '', '', '', '', '', '', '', '']);
       }
-
       sheetSIP6.mergeCells(`E${startRowBayi+1}:F${startRowBayi+1}`);
       sheetSIP6.mergeCells(`G${startRowBayi+1}:R${startRowBayi+1}`);
       
-      // Style Bayi Headers
       [startRowBayi+1, startRowBayi+2].forEach(r => {
-        sheetSIP6.getRow(r).eachCell(cell => styleHeader(cell, 'EC4899'));
+        sheetSIP6.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: 'FFFFFF' } };
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'EC4899' } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'EC4899' } },
+            left: { style: 'thin', color: { argb: 'FFFFFF' } },
+            bottom: { style: 'thin', color: { argb: 'EC4899' } },
+            right: { style: 'thin', color: { argb: 'FFFFFF' } }
+          };
+        });
       });
 
-      // 7. Sheet SIP 7 (Complex Headers)
+      for(let r = startRowBayi+4; r < startRowBayi+4+5; r++) {
+        sheetSIP6.getRow(r).height = 20;
+        const isEven = r % 2 === 0;
+        sheetSIP6.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, color: { argb: '334155' } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'E2E8F0' } },
+            left: { style: 'thin', color: { argb: 'E2E8F0' } },
+            bottom: { style: 'thin', color: { argb: 'E2E8F0' } },
+            right: { style: 'thin', color: { argb: 'E2E8F0' } }
+          };
+          if (isEven) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FDF2F8' } };
+        });
+      }
+
+      sheetSIP6.columns.forEach(col => col.width = 10);
+      sheetSIP6.getColumn(1).width = 5;
+      sheetSIP6.getColumn(2).width = 15;
+
+      // 7. Sheet SIP 7
       const sheetSIP7 = workbook.addWorksheet('SIP 7');
-      sheetSIP7.addRow(['DATA HASIL KEGIATAN (SIP 7)']).font = { bold: true, size: 14 };
+      sheetSIP7.views = [{ showGridLines: true }];
+      sheetSIP7.addRow(['DATA HASIL KEGIATAN (SIP 7)']).font = { name: 'Segoe UI', bold: true, size: 14, color: { argb: '1E293B' } };
       sheetSIP7.addRow([]);
       sheetSIP7.addRow(['NO', 'BULAN', 'IBU HAMIL', '', '', 'JUMLAH IBU MENYUSUI', 'JUMLAH AKSEPTOR', '', '', '', '', '', '', '', 'PENIMBANGAN BALITA', '', '', '', '', '', '', '', '', '', '', '', 'IMUNISASI TT IBU HAMIL', '', 'JUMLAH BAYI YANG DIIMUNISASI']);
       sheetSIP7.addRow(['', '', 'JUMLAH', 'DIPERIKSA', 'FE TAB', '', 'KONDOM', 'PIL', 'IMPLANT', 'MOP', 'MOW', 'IUD', 'SUNTIK', 'LAIN-LAIN', 'JML BALITA (S)', '', 'JML BALITA YANG MEMILIKI KMS (K)', '', 'JML BALITA YANG DITIMBANG (D)', '', 'JML BALTA YANG NAIK (N)', '', 'JML BALITA YG MENDAPAT VIT. A', '', 'JML BALITA YG MENDAPATKAN PMT', '', 'I', 'II', 'BCG', '', 'DPT', '', '', '', '', '', 'POLIO', '', '', '', '', '', '', '', 'CAMPAK', '', 'HEPATITIS B']);
@@ -292,7 +483,6 @@ export default function AnalisaDataPage() {
       ];
       dataSIP7.forEach(r => sheetSIP7.addRow(r));
 
-      // Merges for SIP 7
       sheetSIP7.mergeCells('C3:E3');
       sheetSIP7.mergeCells('G3:N3');
       sheetSIP7.mergeCells('O3:Z3');
@@ -301,18 +491,47 @@ export default function AnalisaDataPage() {
 
       // Style SIP 7 Headers
       [3, 4, 5].forEach(r => {
-        sheetSIP7.getRow(r).eachCell(cell => styleHeader(cell, '10B981')); // Emerald
+        sheetSIP7.getRow(r).eachCell(cell => {
+          cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: 'FFFFFF' } };
+          cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '10B981' } }; // Emerald
+          cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+          cell.border = {
+            top: { style: 'thin', color: { argb: '10B981' } },
+            left: { style: 'thin', color: { argb: 'FFFFFF' } },
+            bottom: { style: 'thin', color: { argb: '10B981' } },
+            right: { style: 'thin', color: { argb: 'FFFFFF' } }
+          };
+        });
       });
       
-      // Style Row 6 (Numbers)
       sheetSIP7.getRow(6).eachCell(cell => {
-        styleHeader(cell, 'E2E8F0');
-        cell.font = { bold: true, color: { argb: '334155' } };
+        cell.font = { name: 'Segoe UI', size: 9, bold: true, color: { argb: '334155' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E2E8F0' } };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        cell.border = {
+          top: { style: 'thin', color: { argb: 'CBD5E1' } },
+          left: { style: 'thin', color: { argb: 'CBD5E1' } },
+          bottom: { style: 'thin', color: { argb: 'CBD5E1' } },
+          right: { style: 'thin', color: { argb: 'CBD5E1' } }
+        };
       });
 
-      // Style Data
       sheetSIP7.eachRow((row, rowNumber) => {
-        if (rowNumber > 6) row.eachCell(cell => styleDataCell(cell));
+        if (rowNumber > 6) {
+          row.height = 20;
+          const isEven = rowNumber % 2 === 0;
+          row.eachCell(cell => {
+            cell.font = { name: 'Segoe UI', size: 9, color: { argb: '334155' } };
+            cell.alignment = { vertical: 'middle', horizontal: 'center' };
+            cell.border = {
+              top: { style: 'thin', color: { argb: 'E2E8F0' } },
+              left: { style: 'thin', color: { argb: 'E2E8F0' } },
+              bottom: { style: 'thin', color: { argb: 'E2E8F0' } },
+              right: { style: 'thin', color: { argb: 'E2E8F0' } }
+            };
+            if (isEven) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'F0FDF4' } };
+          });
+        }
       });
 
       sheetSIP7.columns.forEach(col => col.width = 10);
@@ -388,23 +607,7 @@ export default function AnalisaDataPage() {
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
         <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Grafik Pelaporan per Bidang</h2>
         <div className="h-[400px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b' }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b' }} />
-              <Tooltip 
-                cursor={{ fill: '#f1f5f9', opacity: 0.1 }}
-                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-              />
-              <Legend wrapperStyle={{ paddingTop: '20px' }} />
-              <Bar dataKey="Total" fill="#94a3b8" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Selesai" fill={theme.chartColor} radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <Chart options={chartOptions as any} series={chartSeries} type="bar" height="100%" />
         </div>
       </div>
     </div>

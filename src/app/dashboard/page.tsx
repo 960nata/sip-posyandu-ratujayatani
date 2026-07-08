@@ -6,7 +6,6 @@ import {
   UserPlus, Activity, List, Lock, FileText, CheckCircle2,
   Mail, Tag, ChevronDown, MapPin, Plus, Eye, HeartPulse
 } from 'lucide-react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { useSession } from 'next-auth/react'
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'

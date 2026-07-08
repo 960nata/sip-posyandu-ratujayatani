@@ -18,6 +18,11 @@ export async function GET() {
     return NextResponse.json({ error: "User not found" }, { status: 404 })
   }
 
+  // Restrict access to SUPERADMIN, ADMIN_KECAMATAN, and OPERATOR_DESA
+  if (user.role !== 'SUPERADMIN' && user.role !== 'ADMIN_KECAMATAN' && user.role !== 'OPERATOR_DESA') {
+    return NextResponse.json({ error: "Forbidden: Role tidak diizinkan" }, { status: 403 })
+  }
+
   let whereClause = {}
   
   if (user.role === 'ADMIN_KECAMATAN') {
@@ -58,6 +63,14 @@ export async function POST(request: Request) {
   const session = await auth()
   if (!session || !session.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  // Restrict access to SUPERADMIN only
+  const requester = await prisma.user.findUnique({
+    where: { email: session.user.email as string }
+  })
+  if (!requester || requester.role !== 'SUPERADMIN') {
+    return NextResponse.json({ error: "Forbidden: Hanya SUPERADMIN yang diizinkan" }, { status: 403 })
   }
 
   const body = await request.json()
@@ -115,6 +128,14 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
+  // Restrict access to SUPERADMIN only
+  const requester = await prisma.user.findUnique({
+    where: { email: session.user.email as string }
+  })
+  if (!requester || requester.role !== 'SUPERADMIN') {
+    return NextResponse.json({ error: "Forbidden: Hanya SUPERADMIN yang diizinkan" }, { status: 403 })
+  }
+
   try {
     const body = await request.json()
     const { id, name, email, role, password, posyanduId, desaId, kecamatanId } = body
@@ -150,6 +171,14 @@ export async function DELETE(request: Request) {
   const session = await auth()
   if (!session || !session.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  // Restrict access to SUPERADMIN only
+  const requester = await prisma.user.findUnique({
+    where: { email: session.user.email as string }
+  })
+  if (!requester || requester.role !== 'SUPERADMIN') {
+    return NextResponse.json({ error: "Forbidden: Hanya SUPERADMIN yang diizinkan" }, { status: 403 })
   }
 
   try {

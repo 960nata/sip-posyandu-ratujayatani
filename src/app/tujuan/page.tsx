@@ -237,7 +237,7 @@ export default function TujuanPage() {
                   <Target className="w-4 h-4" />
                 </div>
                 <p className="text-slate-700 font-medium leading-relaxed">
-                  "Terwujudnya Kabupaten Lampung Timur yang maju dan sejahtera melalui pengelolaan data Posyandu yang terintegrasi, akurat, dan transparan sebagai dasar pengambilan kebijakan publik."
+                  &quot;Terwujudnya Kabupaten Lampung Timur yang maju dan sejahtera melalui pengelolaan data Posyandu yang terintegrasi, akurat, dan transparan sebagai dasar pengambilan kebijakan publik.&quot;
                 </p>
               </div>
             </motion.div>

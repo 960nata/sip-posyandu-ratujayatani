@@ -39,16 +39,6 @@ export default function ManagePosyanduPage() {
   const [actionLoading, setActionLoading] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
-  useEffect(() => {
-    setMounted(true)
-    fetchData()
-  }, [])
-
-  const showToast = (message: string, type: 'success' | 'error') => {
-    setToast({ message, type })
-    setTimeout(() => setToast(null), 3000)
-  }
-
   const fetchData = async () => {
     setLoading(true)
     try {
@@ -64,6 +54,16 @@ export default function ManagePosyanduPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  useEffect(() => {
+    setMounted(true)
+    fetchData()
+  }, [])
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 3000)
   }
 
   if (!mounted) return null

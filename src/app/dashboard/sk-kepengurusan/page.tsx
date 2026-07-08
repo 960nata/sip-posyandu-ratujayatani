@@ -352,9 +352,19 @@ export default function SKKepengurusanPage() {
 
       {/* Loading State */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-20 space-y-4">
-          <div className={`w-10 h-10 border-4 border-slate-200 dark:border-slate-700 ${theme.borderT} rounded-full animate-spin`}></div>
-          <p className="text-sm text-slate-500 dark:text-zinc-400">Memuat data SK...</p>
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 animate-pulse">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 flex-shrink-0"></div>
+                <div className="flex-1 space-y-3">
+                  <div className="h-5 w-48 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
+                  <div className="h-4 w-32 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
+                  <div className="h-4 w-full bg-slate-100 dark:bg-slate-900 rounded animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 

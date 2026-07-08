@@ -98,7 +98,7 @@ export async function PUT(
       posyanduId
     } = body
 
-    let updateData: any = {
+    const updateData: any = {
       nomorSK,
       tanggalPenetapan: new Date(tanggalPenetapan),
       pejabatPenetap,

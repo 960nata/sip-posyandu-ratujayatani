@@ -116,6 +116,7 @@ export default function UsersPage() {
   const [mounted, setMounted] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editId, setEditId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
   
   const initialForm = { name: '', email: '', role: 'OPERATOR_POSYANDU', kecamatan: '', desa: '', posyandu: '', password: '' }
   const [formData, setFormData] = useState(initialForm)
@@ -123,9 +124,14 @@ export default function UsersPage() {
 
   useEffect(() => {
     setMounted(true)
+    setLoading(true)
     fetch('/api/users')
       .then(res => res.json())
-      .then(data => setUsers(data))
+      .then(data => {
+        setUsers(data)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
   }, [])
 
   useEffect(() => {
@@ -239,45 +245,74 @@ export default function UsersPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map((user) => (
-                <tr key={user.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                  <td className="px-6 py-4 font-medium text-slate-800 dark:text-white flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm">
-                      {user.name.charAt(0)}
-                    </div>
-                    {user.name}
-                  </td>
-                  <td className="px-6 py-4">{user.email}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      user.role === 'SUPERADMIN' ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400' :
-                      user.role === 'ADMIN_KECAMATAN' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400' :
-                      user.role === 'OPERATOR_DESA' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' :
-                      'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400'
-                    }`}>
-                      {user.role}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-xs space-y-0.5">
-                      {user.kecamatan !== '-' && <div><span className="text-slate-400">Kec:</span> {user.kecamatan}</div>}
-                      {user.desa !== '-' && <div><span className="text-slate-400">Desa:</span> {user.desa}</div>}
-                      {user.posyandu !== '-' && <div><span className="text-slate-400">Pos:</span> {user.posyandu}</div>}
-                      {user.kecamatan === '-' && <span className="text-slate-400">Semua Wilayah</span>}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => handleEdit(user)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete(user.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+              {loading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i} className="border-b border-slate-100 dark:border-zinc-700 animate-pulse">
+                    <td className="px-6 py-4 flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-zinc-700"></div>
+                      <div className="h-4 w-24 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="h-4 w-32 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="h-6 w-16 bg-slate-200 dark:bg-zinc-700 rounded-full"></div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="h-4 w-24 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="h-8 w-16 bg-slate-200 dark:bg-zinc-700 rounded ml-auto"></div>
+                    </td>
+                  </tr>
+                ))
+              ) : filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-slate-400">
+                    Tidak ada data user.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredUsers.map((user) => (
+                  <tr key={user.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+                        {user.name.charAt(0)}
+                      </div>
+                      {user.name}
+                    </td>
+                    <td className="px-6 py-4">{user.email}</td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        user.role === 'SUPERADMIN' ? 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400' :
+                        user.role === 'ADMIN_KECAMATAN' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400' :
+                        user.role === 'OPERATOR_DESA' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' :
+                        'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400'
+                      }`}>
+                        {user.role}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-xs space-y-0.5">
+                        {user.kecamatan !== '-' && <div><span className="text-slate-400">Kec:</span> {user.kecamatan}</div>}
+                        {user.desa !== '-' && <div><span className="text-slate-400">Desa:</span> {user.desa}</div>}
+                        {user.posyandu !== '-' && <div><span className="text-slate-400">Pos:</span> {user.posyandu}</div>}
+                        {user.kecamatan === '-' && <span className="text-slate-400">Semua Wilayah</span>}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button onClick={() => handleEdit(user)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => handleDelete(user.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -8,6 +8,7 @@ import {
   Users, Calendar, Hash, User, Shield, Award, Phone, MapPin, Eye,
   CheckCircle, XCircle, Briefcase, AlertCircle, Search
 } from 'lucide-react'
+import Skeleton from '@/components/Skeleton'
 
 type AnggotaForm = {
   nama: string
@@ -354,13 +355,13 @@ export default function SKKepengurusanPage() {
       {loading && (
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 animate-pulse">
+            <div key={i} className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 flex-shrink-0"></div>
+                <Skeleton variant="rectangular" width={48} height={48} className="rounded-xl flex-shrink-0" />
                 <div className="flex-1 space-y-3">
-                  <div className="h-5 w-48 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
-                  <div className="h-4 w-32 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
-                  <div className="h-4 w-full bg-slate-100 dark:bg-slate-900 rounded animate-pulse"></div>
+                  <Skeleton variant="rectangular" width={192} height={20} className="rounded" />
+                  <Skeleton variant="rectangular" width={128} height={16} className="rounded" />
+                  <Skeleton variant="rectangular" width="100%" height={16} className="rounded" />
                 </div>
               </div>
             </div>

@@ -8,6 +8,7 @@ import {
   Mail, MapPin, Building, Lock
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import Skeleton from '@/components/Skeleton'
 
 import { dummyUsers } from './dummyData'
 
@@ -247,22 +248,22 @@ export default function UsersPage() {
             <tbody>
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
-                  <tr key={i} className="border-b border-slate-100 dark:border-zinc-700 animate-pulse">
+                  <tr key={i} className="border-b border-slate-100 dark:border-zinc-700">
                     <td className="px-6 py-4 flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-zinc-700"></div>
-                      <div className="h-4 w-24 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                      <Skeleton variant="circular" width={32} height={32} />
+                      <Skeleton variant="text" width={96} />
                     </td>
                     <td className="px-6 py-4">
-                      <div className="h-4 w-32 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                      <Skeleton variant="text" width={128} />
                     </td>
                     <td className="px-6 py-4">
-                      <div className="h-6 w-16 bg-slate-200 dark:bg-zinc-700 rounded-full"></div>
+                      <Skeleton variant="rectangular" width={72} height={22} className="rounded-full" />
                     </td>
                     <td className="px-6 py-4">
-                      <div className="h-4 w-24 bg-slate-200 dark:bg-zinc-700 rounded"></div>
+                      <Skeleton variant="text" width={96} />
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="h-8 w-16 bg-slate-200 dark:bg-zinc-700 rounded ml-auto"></div>
+                      <Skeleton variant="rectangular" width={64} height={32} className="rounded ml-auto" />
                     </td>
                   </tr>
                 ))

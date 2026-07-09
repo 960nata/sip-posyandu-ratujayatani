@@ -298,7 +298,7 @@ export default function Home() {
                   }`}
                 >
                   {/* Corner notch (cutout) */}
-                  <div className="absolute top-0 right-0 w-14 h-14 bg-white rounded-bl-2xl flex items-start justify-end">
+                  <div className="absolute top-0 right-0 w-14 h-14 bg-white rounded-bl-full flex items-start justify-end">
                     {/* Inverted corner: left of notch */}
                     <div className="absolute top-0 -left-4 w-4 h-4 rounded-tr-xl shadow-[4px_-4px_0_0_#fff]" />
                     {/* Inverted corner: below notch */}

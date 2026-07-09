@@ -142,7 +142,7 @@ export default function Home() {
             className="text-3xl md:text-6xl font-extrabold tracking-tight mb-6 text-white"
           >
             Modernisasi Data & Pelayanan <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Sistem Informasi Posyandu</span>
+            <span className="text-white">Sistem Informasi Posyandu</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -255,7 +255,7 @@ export default function Home() {
           </div>
 
           {/* SPM Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
             {[
               {

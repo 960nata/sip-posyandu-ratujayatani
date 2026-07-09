@@ -255,7 +255,7 @@ export default function Home() {
           </div>
 
           {/* SPM Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
 
             {[
               {
@@ -293,29 +293,24 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className={`relative rounded-2xl p-6 min-h-[180px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
-                    isAccent ? "bg-emerald-400" : "bg-slate-50"
+                  className={`relative rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 ${
+                    isAccent ? "bg-emerald-400" : "bg-emerald-50/60"
                   }`}
                 >
                   {/* Arrow circle */}
-                  <div className={`absolute top-5 right-5 w-8 h-8 rounded-full border flex items-center justify-center ${
-                    isAccent ? "border-slate-900/20" : "border-slate-200 bg-white"
-                  }`}>
-                    <ArrowUpRight className="w-4 h-4 text-slate-900" />
+                  <div className="absolute top-4 right-4 w-7 h-7 rounded-full border border-slate-900/20 flex items-center justify-center">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-900" />
                   </div>
 
                   {/* Big number */}
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
-                    {String(index + 1).padStart(2, "0")}
+                  <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    {spm.title}
                   </p>
 
                   {/* Caption */}
-                  <div className="mt-8">
-                    <p className="text-sm font-bold text-slate-900 mb-1">{spm.title}</p>
-                    <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
-                      {spm.desc}
-                    </p>
-                  </div>
+                  <p className={`text-xs leading-relaxed pr-8 ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
+                    {spm.desc}
+                  </p>
                 </div>
               );
             })}

@@ -154,10 +154,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex justify-end gap-3">
-            <button className="px-5 py-2.5 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-medium rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors text-sm shadow-sm">
+            <button className="px-5 py-2.5 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-medium rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors text-sm shadow-sm">
               Batal
             </button>
-            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-500/20 text-sm">
+            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-[10px] transition-all shadow-lg shadow-emerald-500/20 text-sm">
               <Save className="w-4 h-4" />
               Simpan Perubahan
             </button>

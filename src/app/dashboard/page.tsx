@@ -354,7 +354,7 @@ export default function DashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard/${module.slug}`}
-                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-xl transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Input Data
@@ -438,7 +438,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-xl transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50">
+                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50">
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
                   </Link>
@@ -673,7 +673,7 @@ export default function DashboardPage() {
                   </div>
                   <Link
                     href={`/dashboard/${module.slug}`}
-                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-xl transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50"
+                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data

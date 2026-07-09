@@ -343,7 +343,7 @@ export default function SKKepengurusanPage() {
         {((session?.user as any)?.role === 'OPERATOR_POSYANDU' || (session?.user as any)?.role === 'OPERATOR_DESA') && (
           <button
             onClick={handleOpenAdd}
-            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2 text-sm`}
+            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah SK Baru
@@ -390,7 +390,7 @@ export default function SKKepengurusanPage() {
           {(isPosyandu || userRole === 'OPERATOR_DESA') && (
             <button
               onClick={handleOpenAdd}
-              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-xl transition-all shadow-lg ${theme.shadow} inline-flex items-center gap-2 text-sm`}
+              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-[10px] transition-all shadow-lg ${theme.shadow} inline-flex items-center gap-2 text-sm`}
             >
               <Plus className="w-4 h-4" />
               Buat SK Pertama
@@ -525,7 +525,7 @@ export default function SKKepengurusanPage() {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={() => setExpandedId(expandedId === sk.id ? null : sk.id)}
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-xs font-medium transition-colors ${
                         expandedId === sk.id
                           ? `${theme.bgLight} ${theme.bgDarkLight} ${theme.text} ${theme.textDark}`
                           : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-zinc-400'
@@ -539,13 +539,13 @@ export default function SKKepengurusanPage() {
                       <>
                         <button
                           onClick={() => handleOpenEdit(sk)}
-                          className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                          className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-[10px] transition-colors"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => setDeleteConfirm(sk.id)}
-                          className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors"
+                          className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-[10px] transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -648,13 +648,13 @@ export default function SKKepengurusanPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setDeleteConfirm(null)}
-                    className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
+                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
                   >
                     Batal
                   </button>
                   <button
                     onClick={() => handleDelete(deleteConfirm)}
-                    className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors"
+                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors"
                   >
                     Ya, Hapus
                   </button>
@@ -957,14 +957,14 @@ export default function SKKepengurusanPage() {
               <div className="p-6 border-t border-slate-100 dark:border-zinc-800 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
+                  className="px-5 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
                 >
                   Batal
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className={`px-5 py-2.5 rounded-xl text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-5 py-2.5 rounded-[10px] text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {saving ? (
                     <>

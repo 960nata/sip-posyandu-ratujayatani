@@ -570,7 +570,7 @@ export default function AnalisaDataPage() {
         <button 
           onClick={handleExportExcel}
           disabled={isExporting}
-          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
+          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-[10px] ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
         >
           <Download className="w-5 h-5" />
           {isExporting ? 'Memproses...' : 'Export Excel (Semua Bidang)'}

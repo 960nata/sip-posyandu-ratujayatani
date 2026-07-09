@@ -2087,8 +2087,8 @@ export default function Sip7Page() {
 
                       {/* Form buttons */}
                       <div className="flex items-center justify-end gap-3 mt-6">
-                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-xl transition-all">Batal</button>
-                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
+                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-[10px] transition-all">Batal</button>
+                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
                           <Save className="w-5 h-5" /> Simpan Data
                         </button>
                       </div>
@@ -2136,7 +2136,7 @@ export default function Sip7Page() {
                                 }));
                                 alert("Data referensi SIP 6 diterapkan!");
                               }}
-                              className={`w-full py-2 px-4 rounded-xl text-xs font-semibold text-white ${theme.bgSolid} ${theme.hoverSolid} transition-all`}
+                              className={`w-full py-2 px-4 rounded-[10px] text-xs font-semibold text-white ${theme.bgSolid} ${theme.hoverSolid} transition-all`}
                             >
                               Terapkan Referensi
                             </button>
@@ -2164,7 +2164,7 @@ export default function Sip7Page() {
                   <div className="flex flex-wrap gap-2 w-full md:w-auto">
                     <button
                       onClick={exportUnifiedExcel}
-                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-700 transition-all text-sm flex items-center justify-center gap-2"
+                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-700 transition-all text-sm flex items-center justify-center gap-2"
                     >
                       <Download className="w-4 h-4" /> Ekspor Excel (SIP 6 & 7)
                     </button>
@@ -2177,7 +2177,7 @@ export default function Sip7Page() {
                     {canEdit && (
                       <button
                         onClick={handleAdd}
-                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
+                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
                       >
                         <Plus className="w-4 h-4" /> Tambah Data
                       </button>
@@ -3126,14 +3126,14 @@ export default function Sip7Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedRekapForEdit(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-[10px] transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveRekap}
-                  className={`px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
                 >
                   Simpan
                 </button>

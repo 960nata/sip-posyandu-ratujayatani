@@ -276,14 +276,14 @@ export default function ManagePosyanduPage() {
         <div className="flex gap-2">
           <button
             onClick={() => setIsUserModalOpen(true)}
-            className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+            className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
           >
             <UserPlus className="w-5 h-5" />
             Buat Akun
           </button>
           <button
             onClick={() => setIsPosyanduModalOpen(true)}
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
+            className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Tambah Posyandu
@@ -369,14 +369,14 @@ export default function ManagePosyanduPage() {
                         </button>
                         <button
                           onClick={() => handleOpenEditPosyandu(p)}
-                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-[10px] hover:bg-blue-50 dark:hover:bg-blue-900/20"
                           title="Edit Posyandu"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => { setSelectedPosyandu(p); setIsDeletePosyanduModalOpen(true); }}
-                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-[10px] hover:bg-rose-50 dark:hover:bg-rose-900/20"
                           title="Hapus Posyandu"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -415,14 +415,14 @@ export default function ManagePosyanduPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenEditUser(u)}
-                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-[10px] hover:bg-blue-50 dark:hover:bg-blue-900/20"
                           title="Edit User"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => { setSelectedUser(u); setIsDeleteUserModalOpen(true); }}
-                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-[10px] hover:bg-rose-50 dark:hover:bg-rose-900/20"
                           title="Hapus User"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -466,8 +466,8 @@ export default function ManagePosyanduPage() {
                   </select>
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan & Kelola User'}
                   </button>
                 </div>
@@ -506,8 +506,8 @@ export default function ManagePosyanduPage() {
                   </select>
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsEditPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsEditPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                   </button>
                 </div>
@@ -536,8 +536,8 @@ export default function ManagePosyanduPage() {
                 Semua data SIP 6, SIP 7, laporan, dan relasi yang terhubung ke <b>{selectedPosyandu.nama}</b> akan ikut dihapus secara permanen.
               </p>
               <div className="flex items-center justify-end gap-3">
-                <button onClick={() => setIsDeletePosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                <button onClick={handleDeletePosyandu} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-xl transition-all disabled:opacity-60">
+                <button onClick={() => setIsDeletePosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                <button onClick={handleDeletePosyandu} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-[10px] transition-all disabled:opacity-60">
                   {actionLoading ? 'Menghapus...' : 'Ya, Hapus'}
                 </button>
               </div>
@@ -570,8 +570,8 @@ export default function ManagePosyanduPage() {
                   <input type="password" value={userForm.password} onChange={e => setUserForm({...userForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" placeholder="Minimal 6 karakter" required />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Buat Akun'}
                   </button>
                 </div>
@@ -614,8 +614,8 @@ export default function ManagePosyanduPage() {
                   <input type="password" value={editUserForm.password} onChange={e => setEditUserForm({...editUserForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all" placeholder="Kosongkan jika tidak diubah" />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsEditUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsEditUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                   </button>
                 </div>
@@ -644,8 +644,8 @@ export default function ManagePosyanduPage() {
                 Akun <b>{selectedUser.name || selectedUser.nama}</b> ({selectedUser.email}) akan dihapus secara permanen.
               </p>
               <div className="flex items-center justify-end gap-3">
-                <button onClick={() => setIsDeleteUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                <button onClick={handleDeleteUser} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-xl transition-all disabled:opacity-60">
+                <button onClick={() => setIsDeleteUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                <button onClick={handleDeleteUser} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-[10px] transition-all disabled:opacity-60">
                   {actionLoading ? 'Menghapus...' : 'Ya, Hapus'}
                 </button>
               </div>
@@ -689,8 +689,8 @@ export default function ManagePosyanduPage() {
                 ))}
               </div>
               <div className="flex items-center justify-end gap-3 mt-6">
-                <button type="button" onClick={() => setIsAssignModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-all">Batal</button>
-                <button onClick={handleAssignUsers} disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
+                <button type="button" onClick={() => setIsAssignModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
+                <button onClick={handleAssignUsers} disabled={actionLoading} className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-60">
                   {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                 </button>
               </div>

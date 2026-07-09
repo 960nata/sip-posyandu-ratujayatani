@@ -722,7 +722,7 @@ export default function PekerjaanUmumPage() {
               <div className="flex bg-slate-100 dark:bg-zinc-800 p-1 rounded-xl border border-slate-200 dark:border-zinc-700">
                 <button
                   onClick={() => handleTahunChange(2025)}
-                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                  className={`px-4 py-2 rounded-[10px] font-semibold text-sm transition-all ${
                     selectedTahun === 2025
                       ? 'bg-white dark:bg-zinc-700 text-slate-800 dark:text-white shadow-sm'
                       : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
@@ -732,7 +732,7 @@ export default function PekerjaanUmumPage() {
                 </button>
                 <button
                   onClick={() => handleTahunChange(2026)}
-                  className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                  className={`px-4 py-2 rounded-[10px] font-semibold text-sm transition-all ${
                     selectedTahun === 2026
                       ? 'bg-white dark:bg-zinc-700 text-slate-800 dark:text-white shadow-sm'
                       : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
@@ -745,14 +745,14 @@ export default function PekerjaanUmumPage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleExportCSV}
-                  className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+                  className="bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <FileText className="w-5 h-5" />
                   Export CSV
                 </button>
                 <button
                   onClick={handleExportExcel}
-                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
                   Export Excel
@@ -760,7 +760,7 @@ export default function PekerjaanUmumPage() {
                 {canEdit && (
                   <button
                     onClick={handleAdd}
-                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-[10px] ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2`}
                   >
                     <Plus className="w-5 h-5" />
                     Tambah Laporan
@@ -840,7 +840,7 @@ export default function PekerjaanUmumPage() {
                             href={report.dataDukungs[0].filePath}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 hover:bg-indigo-100 transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[10px] text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 hover:bg-indigo-100 transition-colors"
                           >
                             <FileText className="w-3.5 h-3.5" />
                             PDF/Berkas
@@ -1216,7 +1216,7 @@ export default function PekerjaanUmumPage() {
                       <button
                         type="button"
                         onClick={() => setUploadedFile(null)}
-                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
+                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-[10px] hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
                       >
                         <X className="w-5 h-5" />
                       </button>
@@ -1256,13 +1256,13 @@ export default function PekerjaanUmumPage() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-[10px] transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
-                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-6 rounded-xl ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-6 rounded-[10px] ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow}`}
                   >
                     {editId ? 'Simpan Perubahan' : 'Simpan'}
                   </button>

@@ -1023,8 +1023,8 @@ export default function Sip6Page() {
 
           </motion.div>
           <div className="flex items-center justify-end gap-3">
-            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-xl transition-all">Batal</button>
-            <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
+            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-[10px] transition-all">Batal</button>
+            <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
               <Save className="w-5 h-5" /> Simpan Sasaran
             </button>
           </div>
@@ -1101,7 +1101,7 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-xl ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
+                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-zinc-800 ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/20 transition-all text-sm`}>
                         Ekspor Excel (SIP 6 & 7)
                       </button>
                       {canEdit && (
@@ -1262,7 +1262,7 @@ export default function Sip6Page() {
                     </div>
                     <button
                       onClick={() => setShowFormSasaran(true)}
-                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
+                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
                     >
                       <Plus className="w-4 h-4" /> Tambah Sasaran
                     </button>
@@ -1330,7 +1330,7 @@ export default function Sip6Page() {
                                 <td key={m} className="px-2 py-3 text-center">
                                   <button
                                     onClick={() => handleChecklistClick(s, m)}
-                                    className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
+                                    className={`w-5 h-5 mx-auto rounded-[10px] flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
                                         ? `${theme.bgSolid} text-white`
                                         : 'bg-slate-100 dark:bg-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
                                       }`}
@@ -1793,14 +1793,14 @@ export default function Sip6Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedAttendanceForModal(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-all"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-[10px] transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="button"
                   onClick={() => saveAttendanceDetails(selectedAttendanceForModal.sasaran.id, selectedAttendanceForModal.month, checklistForm)}
-                  className={`px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
                 >
                   Simpan
                 </button>

@@ -211,7 +211,7 @@ export default function PushNotificationPage() {
               <button
                 type="submit"
                 disabled={isSending}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
               >
                 {isSending ? (
                   <>

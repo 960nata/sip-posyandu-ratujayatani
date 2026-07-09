@@ -268,7 +268,7 @@ export default function ProfilePage() {
           <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-lg transition-all shadow-lg shadow-emerald-500/20 text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-[10px] transition-all shadow-lg shadow-emerald-500/20 text-sm"
             >
               <Save className="w-4 h-4" />
               Simpan Perubahan

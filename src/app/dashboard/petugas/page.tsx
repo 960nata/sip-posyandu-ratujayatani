@@ -123,7 +123,7 @@ export default function PetugasPage() {
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">Daftar Petugas</h2>
           <button 
             onClick={handleOpenAdd}
-            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-xl transition-all shadow-sm flex items-center gap-2 text-sm`}
+            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-[10px] transition-all shadow-sm flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah Petugas
@@ -202,7 +202,7 @@ export default function PetugasPage() {
                       <td key={monthIndex} className="px-3 py-3 text-center min-w-[60px]">
                         <button
                           onClick={() => toggleAttendance(p.id, monthIndex)}
-                              className={`w-6 h-6 rounded-md flex items-center justify-center transition-all border mx-auto ${
+                              className={`w-6 h-6 rounded-[10px] flex items-center justify-center transition-all border mx-auto ${
                                 isPresent
                                   ? `${theme.bgLight} border-emerald-200 ${theme.text} dark:${theme.textDark} dark:border-emerald-800`
                                   : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-600 hover:border-emerald-300 dark:hover:border-emerald-700'
@@ -294,13 +294,13 @@ export default function PetugasPage() {
               <div className="p-6 border-t border-slate-100 dark:border-zinc-800 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Batal
                 </button>
                 <button
                   onClick={handleSave}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium text-white ${theme.bgSolid} ${theme.hoverSolid} transition-colors flex items-center gap-2`}
+                  className={`px-4 py-2 rounded-[10px] text-sm font-medium text-white ${theme.bgSolid} ${theme.hoverSolid} transition-colors flex items-center gap-2`}
                 >
                   <Save className="w-4 h-4" />
                   Simpan

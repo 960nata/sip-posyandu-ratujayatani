@@ -293,22 +293,29 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className={`relative rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 ${
-                    isAccent ? "bg-emerald-400" : "bg-emerald-50/60"
+                  className={`relative rounded-2xl p-5 min-h-[150px] transition-all duration-300 hover:-translate-y-1 ${
+                    isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
                   }`}
                 >
-                  {/* Arrow circle */}
-                  <div className="absolute top-4 right-4 w-7 h-7 rounded-full border border-slate-900/20 flex items-center justify-center">
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-900" />
+                  {/* Corner notch (cutout) */}
+                  <div className="absolute top-0 right-0 w-14 h-14 bg-white rounded-bl-2xl flex items-start justify-end">
+                    {/* Inverted corner: left of notch */}
+                    <div className="absolute top-0 -left-4 w-4 h-4 rounded-tr-xl shadow-[4px_-4px_0_0_#fff]" />
+                    {/* Inverted corner: below notch */}
+                    <div className="absolute right-0 -bottom-4 w-4 h-4 rounded-tr-xl shadow-[4px_-4px_0_0_#fff]" />
+                    {/* Arrow button */}
+                    <div className="w-10 h-10 mt-1 mr-1 rounded-full border border-slate-300 bg-white flex items-center justify-center">
+                      <ArrowUpRight className="w-4 h-4 text-slate-900" />
+                    </div>
                   </div>
 
-                  {/* Big number */}
-                  <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-10">
+                  {/* Title */}
+                  <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-14">
                     {spm.title}
                   </p>
 
                   {/* Caption */}
-                  <p className={`text-xs leading-relaxed pr-8 ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
+                  <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
                     {spm.desc}
                   </p>
                 </div>

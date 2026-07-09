@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   Heart, Activity, Users, ClipboardList,
-  ArrowRight, Sparkles, Building, BookOpen,
+  ArrowRight, ArrowUpRight, Sparkles, Building, BookOpen,
   Shield, Baby, Syringe,
   Globe, Scale
 } from "lucide-react";
@@ -253,6 +253,42 @@ export default function Home() {
             <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-light">
               Sesuai Permendagri No. 13 Tahun 2024, Posyandu melayani 6 Bidang Standar Pelayanan Minimal untuk masyarakat desa.
             </p>
+          </div>
+
+          {/* Stat Highlight Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            {/* Card 1: Light */}
+            <div className="relative bg-emerald-50 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
+              <div className="absolute top-5 right-5 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <ArrowUpRight className="w-4 h-4 text-slate-800" />
+              </div>
+              <p className="text-4xl font-extrabold text-slate-900 tracking-tight">6</p>
+              <p className="text-sm text-slate-600 font-light leading-relaxed mt-4 pr-10">
+                Bidang Standar Pelayanan Minimal yang dilayani Posyandu sesuai regulasi
+              </p>
+            </div>
+
+            {/* Card 2: Solid */}
+            <div className="relative bg-emerald-600 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
+              <div className="absolute top-5 right-5 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <ArrowUpRight className="w-4 h-4 text-white" />
+              </div>
+              <p className="text-4xl font-extrabold text-white tracking-tight">1.100+</p>
+              <p className="text-sm text-emerald-50/90 font-light leading-relaxed mt-4 pr-10">
+                Posyandu aktif di Lampung Timur yang menerapkan 6 bidang layanan SPM
+              </p>
+            </div>
+
+            {/* Card 3: Light */}
+            <div className="relative bg-emerald-50 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
+              <div className="absolute top-5 right-5 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <ArrowUpRight className="w-4 h-4 text-slate-800" />
+              </div>
+              <p className="text-4xl font-extrabold text-slate-900 tracking-tight">5.500+</p>
+              <p className="text-sm text-slate-600 font-light leading-relaxed mt-4 pr-10">
+                Kader terlatih yang menjadi ujung tombak pelayanan di lapangan
+              </p>
+            </div>
           </div>
 
           {/* SPM Grid */}

@@ -290,34 +290,35 @@ export default function Home() {
               },
             ].map((spm, index) => {
               const isAccent = index % 2 === 1;
+              const notchMask =
+                "radial-gradient(circle 34px at calc(100% - 22px) 22px, transparent 33px, black 34px)";
               return (
                 <div
                   key={index}
-                  className={`relative rounded-2xl p-5 min-h-[150px] transition-all duration-300 hover:-translate-y-1 ${
-                    isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
-                  }`}
+                  className="relative transition-all duration-300 hover:-translate-y-1"
                 >
-                  {/* Corner notch (cutout) */}
-                  <div className="absolute top-0 right-0 w-14 h-14 bg-white rounded-bl-full flex items-start justify-end">
-                    {/* Inverted corner: left of notch */}
-                    <div className="absolute top-0 -left-4 w-4 h-4 rounded-tr-xl shadow-[4px_-4px_0_0_#fff]" />
-                    {/* Inverted corner: below notch */}
-                    <div className="absolute right-0 -bottom-4 w-4 h-4 rounded-tr-xl shadow-[4px_-4px_0_0_#fff]" />
-                    {/* Arrow button */}
-                    <div className="w-10 h-10 mt-1 mr-1 rounded-full border border-slate-300 bg-white flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4 text-slate-900" />
-                    </div>
+                  {/* Card body with circular corner cutout */}
+                  <div
+                    className={`rounded-2xl p-5 min-h-[150px] ${
+                      isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
+                    }`}
+                    style={{ WebkitMaskImage: notchMask, maskImage: notchMask }}
+                  >
+                    {/* Title */}
+                    <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-14">
+                      {spm.title}
+                    </p>
+
+                    {/* Caption */}
+                    <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
+                      {spm.desc}
+                    </p>
                   </div>
 
-                  {/* Title */}
-                  <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-14">
-                    {spm.title}
-                  </p>
-
-                  {/* Caption */}
-                  <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
-                    {spm.desc}
-                  </p>
+                  {/* Arrow button in the cutout */}
+                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border border-slate-300 bg-white flex items-center justify-center">
+                    <ArrowUpRight className="w-4 h-4 text-slate-900" />
+                  </div>
                 </div>
               );
             })}

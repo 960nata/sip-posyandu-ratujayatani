@@ -53,7 +53,6 @@ function StatCard({ target, suffix, label, visible, delay }: { target: number; s
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const [activeSpm, setActiveSpm] = useState<number | null>(null);
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
@@ -255,42 +254,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Stat Highlight Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-            {/* Card 1: Light */}
-            <div className="relative bg-emerald-50 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
-              <div className="absolute top-5 right-5 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm">
-                <ArrowUpRight className="w-4 h-4 text-slate-800" />
-              </div>
-              <p className="text-4xl font-extrabold text-slate-900 tracking-tight">6</p>
-              <p className="text-sm text-slate-600 font-light leading-relaxed mt-4 pr-10">
-                Bidang Standar Pelayanan Minimal yang dilayani Posyandu sesuai regulasi
-              </p>
-            </div>
-
-            {/* Card 2: Solid */}
-            <div className="relative bg-emerald-600 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
-              <div className="absolute top-5 right-5 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <ArrowUpRight className="w-4 h-4 text-white" />
-              </div>
-              <p className="text-4xl font-extrabold text-white tracking-tight">1.100+</p>
-              <p className="text-sm text-emerald-50/90 font-light leading-relaxed mt-4 pr-10">
-                Posyandu aktif di Lampung Timur yang menerapkan 6 bidang layanan SPM
-              </p>
-            </div>
-
-            {/* Card 3: Light */}
-            <div className="relative bg-emerald-50 rounded-2xl p-6 flex flex-col justify-between min-h-[170px]">
-              <div className="absolute top-5 right-5 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm">
-                <ArrowUpRight className="w-4 h-4 text-slate-800" />
-              </div>
-              <p className="text-4xl font-extrabold text-slate-900 tracking-tight">5.500+</p>
-              <p className="text-sm text-slate-600 font-light leading-relaxed mt-4 pr-10">
-                Kader terlatih yang menjadi ujung tombak pelayanan di lapangan
-              </p>
-            </div>
-          </div>
-
           {/* SPM Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -299,120 +262,71 @@ export default function Home() {
                 code: "SPM 01",
                 title: "Pendidikan",
                 desc: "PAUD, literasi digital, perpustakaan desa, alat peraga edukasi",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <path d="M24 6L4 16L24 26L44 16L24 6Z" stroke="#059669" strokeWidth="2.5" strokeLinejoin="round" fill="#d1fae5"/>
-                    <path d="M4 16V30" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M12 20V34C12 34 16 38 24 38C32 38 36 34 36 34V20" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="4" cy="33" r="2.5" fill="#059669"/>
-                  </svg>
-                ),
               },
               {
                 code: "SPM 02",
                 title: "Kesehatan",
                 desc: "Ibu, bayi, balita, remaja, lansia — 5 meja layanan dan kunjungan rumah",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <rect x="6" y="10" width="36" height="30" rx="4" stroke="#059669" strokeWidth="2.5" fill="#d1fae5"/>
-                    <path d="M16 6v8M32 6v8" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M24 20v12M18 26h12" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                  </svg>
-                ),
               },
               {
                 code: "SPM 03",
                 title: "Pekerjaan Umum",
                 desc: "Air bersih, sanitasi, embung, jaringan air, jalan desa",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <path d="M10 38C10 38 10 28 24 28C38 28 38 38 38 38" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M24 10C24 10 14 18 14 26H34C34 18 24 10 24 10Z" stroke="#059669" strokeWidth="2.5" strokeLinejoin="round" fill="#d1fae5"/>
-                    <path d="M24 10V6" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M10 38H38" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <circle cx="24" cy="22" r="3" fill="#059669"/>
-                  </svg>
-                ),
               },
               {
                 code: "SPM 04",
                 title: "Perumahan Rakyat",
                 desc: "Identifikasi & rehabilitasi rumah tidak layak huni",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <path d="M6 22L24 8L42 22" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M10 20V40H20V30H28V40H38V20" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="#d1fae5"/>
-                    <rect x="20" y="30" width="8" height="10" rx="1" fill="#059669" opacity="0.3"/>
-                  </svg>
-                ),
               },
               {
                 code: "SPM 05",
                 title: "Trantibum Linmas",
                 desc: "Ketertiban umum, pengaduan masyarakat, deteksi dini bencana",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <path d="M24 6L8 12V24C8 33 16 40 24 42C32 40 40 33 40 24V12L24 6Z" stroke="#059669" strokeWidth="2.5" strokeLinejoin="round" fill="#d1fae5"/>
-                    <path d="M17 24L22 29L31 19" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                ),
               },
               {
                 code: "SPM 06",
                 title: "Sosial",
                 desc: "Bansos, disabilitas, lansia terlantar, inklusi sosial, kesetaraan gender",
-                icon: (
-                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
-                    <circle cx="16" cy="14" r="6" stroke="#059669" strokeWidth="2.5" fill="#d1fae5"/>
-                    <circle cx="32" cy="14" r="6" stroke="#059669" strokeWidth="2.5" fill="#d1fae5"/>
-                    <path d="M4 38C4 30 9 26 16 26" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M44 38C44 30 39 26 32 26" stroke="#059669" strokeWidth="2.5" strokeLinecap="round"/>
-                    <path d="M16 26C16 26 19 30 24 30C29 30 32 26 32 26C32 26 37 30 37 38H11C11 30 16 26 16 26Z" stroke="#059669" strokeWidth="2.5" strokeLinejoin="round" fill="#d1fae5"/>
-                  </svg>
-                ),
               },
             ].map((spm, index) => {
-              const isActive = activeSpm === index;
+              const isSolid = index % 2 === 1;
               return (
-                <button
+                <div
                   key={index}
-                  onClick={() => setActiveSpm(isActive ? null : index)}
-                  className={`group relative w-full text-left bg-white rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer
-                    border ${
-                      isActive
-                        ? "border-emerald-500 shadow-md shadow-emerald-100"
-                        : "border-slate-200 hover:border-slate-300 hover:shadow-sm"
-                    }`}
+                  className={`relative rounded-2xl p-6 min-h-[190px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
+                    isSolid ? "bg-emerald-600" : "bg-emerald-50"
+                  }`}
                 >
-                  {/* Badge */}
-                  <span className={`inline-block text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full mb-4 transition-colors ${
-                    isActive ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-500"
+                  {/* Arrow circle */}
+                  <div className={`absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center ${
+                    isSolid ? "bg-white/20 backdrop-blur-sm" : "bg-white shadow-sm"
                   }`}>
-                    {spm.code}
-                  </span>
-
-                  {/* SVG Icon */}
-                  <div className="mb-3 transition-transform duration-300 group-hover:scale-110 origin-left">
-                    {spm.icon}
+                    <ArrowUpRight className={`w-4 h-4 ${isSolid ? "text-white" : "text-slate-800"}`} />
                   </div>
 
-                  {/* Title */}
-                  <h3 className={`text-lg font-bold mb-2 transition-colors ${
-                    isActive ? "text-emerald-700" : "text-slate-800 group-hover:text-emerald-600"
-                  }`}>
-                    {spm.title}
-                  </h3>
+                  <div>
+                    {/* Badge */}
+                    <span className={`inline-block text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full mb-3 ${
+                      isSolid ? "bg-white/20 text-white" : "bg-white text-emerald-700 shadow-sm"
+                    }`}>
+                      {spm.code}
+                    </span>
+
+                    {/* Title */}
+                    <h3 className={`text-2xl font-extrabold tracking-tight pr-10 ${
+                      isSolid ? "text-white" : "text-slate-900"
+                    }`}>
+                      {spm.title}
+                    </h3>
+                  </div>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-500 font-light leading-relaxed">
+                  <p className={`text-sm font-light leading-relaxed mt-4 ${
+                    isSolid ? "text-emerald-50/90" : "text-slate-600"
+                  }`}>
                     {spm.desc}
                   </p>
-
-                  {/* Bottom accent line */}
-                  <div className={`absolute bottom-0 left-0 h-0.5 bg-emerald-500 transition-all duration-500 ${
-                    isActive ? "w-full" : "w-0 group-hover:w-full"
-                  }`} />
-                </button>
+                </div>
               );
             })}
           </div>

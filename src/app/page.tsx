@@ -11,7 +11,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import {
   Heart, Activity, Users, ClipboardList,
   ArrowRight, Sparkles, Building, BookOpen,
-  Shield, ChevronRight, Baby, Syringe,
+  Shield, Baby, Syringe,
   Globe, Scale
 } from "lucide-react";
 
@@ -105,7 +105,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-slate-50">
+      <section className="relative min-h-[700px] flex items-center pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-slate-50">
         {/* Background Image Carousel */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <AnimatePresence initial={false}>
@@ -168,7 +168,7 @@ export default function Home() {
               className="group w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-[10px] shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
               Mulai Sekarang
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
 
           </motion.div>

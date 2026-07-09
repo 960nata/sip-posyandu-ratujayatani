@@ -289,43 +289,33 @@ export default function Home() {
                 desc: "Bansos, disabilitas, lansia terlantar, inklusi sosial, kesetaraan gender",
               },
             ].map((spm, index) => {
-              const isSolid = index % 2 === 1;
+              const isAccent = index % 2 === 1;
               return (
                 <div
                   key={index}
-                  className={`relative rounded-2xl p-6 min-h-[190px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
-                    isSolid ? "bg-emerald-600" : "bg-emerald-50"
+                  className={`relative rounded-2xl p-6 min-h-[180px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
+                    isAccent ? "bg-emerald-400" : "bg-slate-50"
                   }`}
                 >
                   {/* Arrow circle */}
-                  <div className={`absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center ${
-                    isSolid ? "bg-white/20 backdrop-blur-sm" : "bg-white shadow-sm"
+                  <div className={`absolute top-5 right-5 w-8 h-8 rounded-full border flex items-center justify-center ${
+                    isAccent ? "border-slate-900/20" : "border-slate-200 bg-white"
                   }`}>
-                    <ArrowUpRight className={`w-4 h-4 ${isSolid ? "text-white" : "text-slate-800"}`} />
+                    <ArrowUpRight className="w-4 h-4 text-slate-900" />
                   </div>
 
-                  <div>
-                    {/* Badge */}
-                    <span className={`inline-block text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full mb-3 ${
-                      isSolid ? "bg-white/20 text-white" : "bg-white text-emerald-700 shadow-sm"
-                    }`}>
-                      {spm.code}
-                    </span>
-
-                    {/* Title */}
-                    <h3 className={`text-2xl font-extrabold tracking-tight pr-10 ${
-                      isSolid ? "text-white" : "text-slate-900"
-                    }`}>
-                      {spm.title}
-                    </h3>
-                  </div>
-
-                  {/* Description */}
-                  <p className={`text-sm font-light leading-relaxed mt-4 ${
-                    isSolid ? "text-emerald-50/90" : "text-slate-600"
-                  }`}>
-                    {spm.desc}
+                  {/* Big number */}
+                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight">
+                    {String(index + 1).padStart(2, "0")}
                   </p>
+
+                  {/* Caption */}
+                  <div className="mt-8">
+                    <p className="text-sm font-bold text-slate-900 mb-1">{spm.title}</p>
+                    <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
+                      {spm.desc}
+                    </p>
+                  </div>
                 </div>
               );
             })}

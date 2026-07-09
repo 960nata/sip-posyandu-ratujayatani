@@ -9,7 +9,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "SIP LAMTIM - Sistem Informasi Posyandu",
+  title: "SIPANDU - Sistem Informasi Posyandu",
   description: "Platform digital untuk optimalisasi pelayanan Posyandu di Kabupaten Lampung Timur.",
 };
 

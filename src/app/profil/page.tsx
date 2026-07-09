@@ -20,7 +20,7 @@
              </Link>
              <div className="flex items-center space-x-2">
                <Heart className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />
-               <span className="font-bold text-lg text-slate-900">SIP</span>
+               <span className="font-bold text-lg text-slate-900">SIPANDU</span>
              </div>
            </div>
          </div>

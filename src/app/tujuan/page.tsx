@@ -227,7 +227,7 @@ export default function TujuanPage() {
               <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
                 Visi & Misi
               </span>
-              <h2 className="text-3xl font-bold text-slate-900 mb-4">SIP: Lampung Timur Berbasis Data</h2>
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">SIPANDU: Lampung Timur Berbasis Data</h2>
               <p className="text-slate-500 font-light leading-relaxed mb-6">
                 SIP dibangun dengan visi menjadikan Lampung Timur sebagai kabupaten yang data-driven dalam setiap kebijakan publik.
               </p>

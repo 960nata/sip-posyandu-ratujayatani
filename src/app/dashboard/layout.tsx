@@ -157,7 +157,7 @@ export default function DashboardLayout({
               <Link href="/dashboard" className="flex items-center space-x-3">
                 <Image src="/images/logo/logo.png" alt="Logo" width={36} height={36} className="object-contain" />
                 <div className="flex flex-col">
-                  <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIP</span>
+                  <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIPANDU</span>
                   <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">Sistem Informasi Posyandu</span>
                 </div>
               </Link>

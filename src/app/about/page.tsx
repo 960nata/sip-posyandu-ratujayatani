@@ -82,7 +82,7 @@ export default function AboutPage() {
               <div className="aspect-square bg-gradient-to-br from-emerald-100 to-teal-50 rounded-3xl overflow-hidden flex items-center justify-center p-8">
                 <div className="text-center">
                   <Heart className="w-24 h-24 text-emerald-500 fill-emerald-500/10 mx-auto mb-4" />
-                  <p className="text-lg font-semibold text-slate-900">SIP Lampung Timur</p>
+                  <p className="text-lg font-semibold text-slate-900">SIPANDU Lampung Timur</p>
                   <p className="text-sm text-slate-500">Membangun Negeri dari Data Desa</p>
                 </div>
               </div>

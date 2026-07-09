@@ -60,7 +60,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-widest mb-4">
-              Kelembagaan SIP LAMTIM
+              Kelembagaan SIPANDU
             </span>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Tentang Sistem Informasi Posyandu</h1>
             <p className="text-base md:text-lg text-emerald-50 font-light max-w-3xl leading-relaxed">

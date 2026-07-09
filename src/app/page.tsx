@@ -545,7 +545,7 @@ export default function Home() {
               Kab. Lampung Timur dalam Angka
             </h2>
             <p className="text-slate-500 mt-3 max-w-xl mx-auto font-light">
-              Gambaran skala pelayanan Posyandu yang dikelola melalui sistem SIP LAMTIM.
+              Gambaran skala pelayanan Posyandu yang dikelola melalui sistem SIPANDU.
             </p>
           </div>
 
@@ -698,7 +698,7 @@ export default function Home() {
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
               Landasan Hukum
             </span>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi SIP LAMTIM</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi SIPANDU</h2>
             <p className="text-slate-500 font-light max-w-2xl mx-auto">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
             </p>

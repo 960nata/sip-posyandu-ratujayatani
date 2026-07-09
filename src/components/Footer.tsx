@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Heart className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />
-              <span className="font-bold text-lg text-white">SIP</span>
+              <span className="font-bold text-lg text-white">SIPANDU</span>
             </div>
             <p className="text-sm text-slate-500 max-w-sm">
               Sistem Informasi Posyandu Kabupaten Lampung Timur. Mewujudkan tata kelola data yang baik untuk pelayanan publik yang prima.

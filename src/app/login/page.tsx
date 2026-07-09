@@ -69,7 +69,7 @@ export default function LoginPage() {
               <Image src="/images/logo/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="text-base font-extrabold tracking-tight text-slate-800 leading-none">SIP Posyandu</span>
+              <span className="text-base font-extrabold tracking-tight text-slate-800 leading-none">SIPANDU</span>
               <span className="text-[10px] text-slate-400 font-light mt-0.5">Kab. Lampung Timur</span>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function LoginPage() {
             <p className="text-[11px] text-slate-400 font-light leading-relaxed max-w-xs mx-auto">
               Dengan masuk, Anda menyetujui{' '}
               <span className="text-slate-600 font-medium hover:underline cursor-pointer">Ketentuan Layanan</span> dan{' '}
-              <span className="text-slate-600 font-medium hover:underline cursor-pointer">Kebijakan Privasi</span> SIP Posyandu.
+              <span className="text-slate-600 font-medium hover:underline cursor-pointer">Kebijakan Privasi</span> SIPANDU.
             </p>
             <div className="pt-1">
               <Link href="/" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold transition-colors hover:underline">

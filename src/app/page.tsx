@@ -290,8 +290,20 @@ export default function Home() {
               },
             ].map((spm, index) => {
               const isAccent = index % 2 === 1;
-              const notchMask =
-                "radial-gradient(circle 34px at calc(100% - 22px) 22px, transparent 33px, black 34px)";
+              // Corner notch: scoop hugging the button circle, with smooth fillets
+              // where it meets the top and right edges (no sharp tips)
+              const notchSvg =
+                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M0 0 H10.4 A7 7 0 0 1 16.7 10 A28 28 0 0 0 54 47.3 A7 7 0 0 1 64 53.6 V64 H0 Z'/%3E%3C/svg%3E\")";
+              const maskStyle = {
+                maskImage: `linear-gradient(#000,#000), linear-gradient(#000,#000), ${notchSvg}`,
+                maskSize: "calc(100% - 63px) 100%, 64px calc(100% - 63px), 64px 64px",
+                maskPosition: "left top, right bottom, right top",
+                maskRepeat: "no-repeat",
+                WebkitMaskImage: `linear-gradient(#000,#000), linear-gradient(#000,#000), ${notchSvg}`,
+                WebkitMaskSize: "calc(100% - 63px) 100%, 64px calc(100% - 63px), 64px 64px",
+                WebkitMaskPosition: "left top, right bottom, right top",
+                WebkitMaskRepeat: "no-repeat",
+              } as React.CSSProperties;
               return (
                 <div
                   key={index}
@@ -302,7 +314,7 @@ export default function Home() {
                     className={`rounded-2xl p-5 min-h-[150px] ${
                       isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
                     }`}
-                    style={{ WebkitMaskImage: notchMask, maskImage: notchMask }}
+                    style={maskStyle}
                   >
                     {/* Title */}
                     <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-14">

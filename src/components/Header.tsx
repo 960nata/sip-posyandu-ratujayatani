@@ -50,7 +50,7 @@ export default function Header() {
       }`}
     >
       <div
-        className={`w-[calc(100%-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-full border box-border relative ${
+        className={`w-[calc(100%-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-[10px] border box-border relative ${
           isScrolled
             ? "bg-white/90 backdrop-blur-2xl border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] h-14 px-4 lg:px-6"
             : "bg-black/20 backdrop-blur-2xl border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.2)] h-16 px-4 lg:px-8"
@@ -122,7 +122,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className={`absolute ${isScrolled ? "top-[64px]" : "top-[80px]"} left-4 right-4 bg-white/80 rounded-3xl border border-white/50 shadow-[0_15px_35px_rgba(0,0,0,0.1)] p-6 z-50 md:hidden flex flex-col space-y-4`}
+            className={`absolute ${isScrolled ? "top-[64px]" : "top-[80px]"} left-4 right-4 bg-white/80 rounded-[10px] border border-white/50 shadow-[0_15px_35px_rgba(0,0,0,0.1)] p-6 z-50 md:hidden flex flex-col space-y-4`}
             style={{ backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)" }}
           >
             <nav className="flex flex-col space-y-2">

@@ -681,7 +681,7 @@ export default function TrantibPage() {
                     setSelectedPosyandu('')
                     setSelectedPosyanduId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -896,7 +896,7 @@ export default function TrantibPage() {
                     setSelectedDesa('')
                     setSelectedDesaId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -941,7 +941,7 @@ export default function TrantibPage() {
                     setSelectedKecamatan('')
                     setSelectedKecamatanId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
                   title="Kembali ke Daftar Kecamatan"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -1010,7 +1010,7 @@ export default function TrantibPage() {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>

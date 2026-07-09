@@ -1522,7 +1522,7 @@ export default function Sip7Page() {
             {!isPosyandu && (
               <button
                 onClick={() => setSelectedPosyandu('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                 title="Kembali ke Daftar Posyandu"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -1543,7 +1543,7 @@ export default function Sip7Page() {
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               <button
                 onClick={() => { setActiveTab('hasil_kegiatan'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'hasil_kegiatan'
+                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'hasil_kegiatan'
                     ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
@@ -1552,7 +1552,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_bumil'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'rekap_bumil'
+                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bumil'
                     ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
@@ -1561,7 +1561,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_bayi'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'rekap_bayi'
+                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bayi'
                     ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
@@ -1570,7 +1570,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_remaja'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'rekap_remaja'
+                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_remaja'
                     ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
@@ -1579,7 +1579,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_lansia'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all whitespace-nowrap ${activeTab === 'rekap_lansia'
+                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_lansia'
                     ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
                   }`}
@@ -2640,7 +2640,7 @@ export default function Sip7Page() {
             {role === 'SUPERADMIN' && (
               <button
                 onClick={() => setSelectedKecamatan('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
                 title="Kembali ke Daftar Kecamatan"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -2677,7 +2677,7 @@ export default function Sip7Page() {
               {role !== 'OPERATOR_DESA' && (
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-full ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
+                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -2746,7 +2746,7 @@ export default function Sip7Page() {
                   </div>
                   <button
                     onClick={() => setIsDetailModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -2853,7 +2853,7 @@ export default function Sip7Page() {
                   <button
                     type="button"
                     onClick={() => setSelectedRekapForEdit(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>

@@ -61,7 +61,7 @@ export default function ProfilePage() {
                 />
                 <button 
                   onClick={() => document.getElementById('avatar-input')?.click()}
-                  className="absolute bottom-1 right-1 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white hover:bg-emerald-600 transition-colors shadow-lg"
+                  className="absolute bottom-1 right-1 w-8 h-8 bg-emerald-500 rounded-[10px] flex items-center justify-center text-white hover:bg-emerald-600 transition-colors shadow-lg"
                 >
                   <Camera className="w-4 h-4" />
                 </button>

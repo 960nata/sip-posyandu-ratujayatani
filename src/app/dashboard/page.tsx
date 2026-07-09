@@ -405,7 +405,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -638,7 +638,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -693,7 +693,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Desa"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />

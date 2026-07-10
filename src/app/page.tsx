@@ -311,7 +311,7 @@ export default function Home() {
                 >
                   {/* Card body with circular corner cutout */}
                   <div
-                    className={`rounded-2xl p-7 min-h-[170px] transition-colors duration-300 ${
+                    className={`rounded-2xl p-7 min-h-[170px] flex flex-col justify-center transition-colors duration-300 ${
                       isAccent
                         ? "bg-emerald-400 group-hover:bg-emerald-500"
                         : "bg-emerald-50/70 group-hover:bg-emerald-100/80"
@@ -319,12 +319,12 @@ export default function Home() {
                     style={maskStyle}
                   >
                     {/* Title */}
-                    <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2.5 text-center transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2.5 pr-12 transition-transform duration-300 group-hover:-translate-y-0.5">
                       {spm.title}
                     </p>
 
                     {/* Caption */}
-                    <p className={`text-xs leading-relaxed text-center max-w-[85%] mx-auto transition-transform duration-300 delay-[50ms] group-hover:-translate-y-0.5 ${
+                    <p className={`text-xs leading-relaxed transition-transform duration-300 delay-[50ms] group-hover:-translate-y-0.5 ${
                       isAccent ? "text-slate-800/80" : "text-slate-500"
                     }`}>
                       {spm.desc}

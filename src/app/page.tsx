@@ -240,9 +240,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold uppercase tracking-widest mb-4">
-              Permendagri No. 13 Tahun 2024
-            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
               Cakupan Pelayanan{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">

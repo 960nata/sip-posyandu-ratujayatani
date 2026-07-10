@@ -66,6 +66,7 @@ export default function Home() {
     "/images/hero/hero5.avif",
     "/images/hero/hero6.avif"
   ];
+  const safeImageIndex = currentImageIndex < images.length ? currentImageIndex : 0;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -108,7 +109,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <AnimatePresence initial={false}>
             <motion.div
-              key={currentImageIndex}
+              key={safeImageIndex}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -117,7 +118,7 @@ export default function Home() {
               style={{ y }}
             >
               <Image
-                src={images[currentImageIndex]}
+                src={images[safeImageIndex]}
                 alt="Hero Background"
                 fill
                 className="object-cover"

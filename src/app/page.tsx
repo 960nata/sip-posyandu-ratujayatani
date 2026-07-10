@@ -459,7 +459,7 @@ export default function Home() {
                 Tata Kelola
               </span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Tata Kelola Kelembagaan yang Kuat &amp; Transparan
+                Tata Kelola Kelembagaan yang Kuat & Transparan
               </h2>
             </div>
             <div className="max-w-md">
@@ -509,7 +509,7 @@ export default function Home() {
               },
               {
                 badge: "Akuntabilitas",
-                title: "Transparansi Data Laporan Real-Time &amp; Akuntabel",
+                title: "Transparansi Data Laporan Real-Time & Akuntabel",
                 mockup: (
                   <div className="w-full h-full flex items-center justify-between gap-4 p-4">
                     <div className="flex flex-col gap-2 w-1/2">

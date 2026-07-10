@@ -599,7 +599,7 @@ export default function Home() {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="group relative p-6 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[380px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50"
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[380px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
               >
                 <div className="flex flex-col">
                   {/* Badge */}
@@ -614,7 +614,7 @@ export default function Home() {
                 </div>
 
                 {/* Mockup Image/Graphic */}
-                <div className="mt-6 w-full h-40 rounded-[20px] transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
+                <div className="mt-6 w-full h-40 rounded-t-[20px] rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
                   {feature.mockup}
                 </div>
               </div>

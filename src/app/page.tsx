@@ -932,43 +932,84 @@ export default function Home() {
               </div>
 
               {/* Network Graph Interactive Mockup Graphic (Top-Down Tree like mockup) */}
-              <div className="relative h-[220px] bg-slate-50/50 border-t border-slate-100 flex items-center justify-center mt-auto overflow-hidden">
-                <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 210">
-                  {/* Connection curves branching from center top to children bottom */}
-                  <path d="M 150,40 C 150,85 60,85 60,130" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 150,40 C 150,95 105,95 105,160" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 150,40 L 150,170" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 150,40 C 150,95 195,95 195,160" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 150,40 C 150,85 240,85 240,130" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
-
-                  {/* Top center node (Root - PUSAT) */}
-                  <g>
-                    <circle cx="150" cy="40" r="22" fill="#0a2f1c" stroke="#34d399" strokeWidth="2.5" />
-                    <text x="150" y="46" fontSize="14" textAnchor="middle">🏛️</text>
-                  </g>
-
-                  {/* Bottom Avatar nodes */}
-                  <g className="cursor-pointer">
-                    <circle cx="60" cy="130" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="60" y="136" fontSize="16" textAnchor="middle">👩‍💼</text>
-                  </g>
-                  <g className="cursor-pointer">
-                    <circle cx="105" cy="160" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="105" y="166" fontSize="16" textAnchor="middle">👨‍💼</text>
-                  </g>
-                  <g className="cursor-pointer">
-                    <circle cx="150" cy="170" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="150" y="176" fontSize="16" textAnchor="middle">👩‍⚕️</text>
-                  </g>
-                  <g className="cursor-pointer">
-                    <circle cx="195" cy="160" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="195" y="166" fontSize="16" textAnchor="middle">👨‍⚕️</text>
-                  </g>
-                  <g className="cursor-pointer">
-                    <circle cx="240" cy="130" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="240" y="136" fontSize="16" textAnchor="middle">👩</text>
-                  </g>
+              <div className="relative h-[220px] bg-[#f8fafc] border-t border-slate-100 flex items-center justify-center mt-auto overflow-hidden">
+                <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 200">
+                  <path d="M 150,36 C 130,85 50,85 50,140" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,36 C 135,100 100,100 100,165" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,36 L 150,175" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,36 C 165,100 200,100 200,165" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,36 C 170,85 250,85 250,140" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
                 </svg>
+
+                {/* Top node (Pusat) */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-emerald-500 bg-emerald-50 shadow-md flex items-center justify-center overflow-hidden relative">
+                    <Image
+                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop"
+                      alt="Pusat"
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  </div>
+                </div>
+
+                {/* Bottom nodes (Prov, Kab, Kec, Desa, Kader) */}
+                <div className="absolute bottom-10 left-[10%]">
+                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop"
+                      alt="Prov"
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-[22px] left-[27%]">
+                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop"
+                      alt="Kab"
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2">
+                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop"
+                      alt="Kec"
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-[22px] right-[27%]">
+                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop"
+                      alt="Desa"
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-10 right-[10%]">
+                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
+                    <Image
+                      src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop"
+                      alt="Kader"
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -985,7 +1026,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="p-8 pt-6 text-center">
+              <div className="p-8 pt-6 text-center flex flex-col justify-center items-center">
                 {/* Centered badge pill */}
                 <div className="flex justify-center mb-4">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-bold text-slate-800 shadow-sm">
@@ -1000,7 +1041,7 @@ export default function Home() {
                 </p>
 
                 {/* Mock Search Bar like mockup */}
-                <div className="relative mb-2">
+                <div className="relative mb-2 w-full max-w-xs">
                   <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-100 bg-slate-50/50 shadow-inner">
                     <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.3-4.3" />
@@ -1021,7 +1062,7 @@ export default function Home() {
               </div>
 
               {/* 3D Wave Abstract Graphic at the bottom */}
-              <div className="relative h-[300px] w-full mt-auto overflow-hidden">
+              <div className="relative flex-1 w-full min-h-[340px] mt-auto overflow-hidden">
                 <Image
                   src="/images/abstrak_green_wave.png"
                   alt="3D Wave Pattern"
@@ -1040,7 +1081,10 @@ export default function Home() {
             </div>
 
             {/* Card 3: New-packed education (Transformasi Posyandu) - Col 1 & 2, Row 2 (Wide horizontal card) */}
-            <div className="bg-gradient-to-br from-[#b8cf6e] via-[#5fa86d] to-[#1e7a50] bg-[linear-gradient(120deg,#b8cf6e_0%,#5fa86d_45%,#1e7a50_100%)] rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
+            <div 
+              style={{ background: "linear-gradient(135deg, #f59e0b 0%, #84cc16 35%, #10b981 70%, #064e3b 100%)" }}
+              className="rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300"
+            >
               <div className="flex-1 text-left z-10">
                 <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-lg leading-[1.1]">
                   Transformasi<br />Posyandu
@@ -1049,10 +1093,10 @@ export default function Home() {
                   <strong className="text-white font-semibold">Permendagri No. 13 Tahun 2024</strong> mentransformasikan Posyandu agar mencakup <strong className="text-white font-semibold">6 Bidang SPM</strong> secara menyeluruh.
                 </p>
                 <div className="flex items-center gap-3">
-                  <button className="px-5 py-2.5 bg-[#14532d] text-white text-xs font-semibold rounded-full hover:bg-[#0e3f22] transition-colors shadow-sm">
+                  <button className="px-6 py-2.5 bg-emerald-950 text-emerald-300 text-xs font-bold rounded-full hover:bg-emerald-900 transition-colors shadow-md">
                     Unduh Permendagri
                   </button>
-                  <button className="px-5 py-2.5 bg-white text-slate-900 text-xs font-semibold rounded-full hover:bg-slate-100 transition-colors shadow-sm">
+                  <button className="px-6 py-2.5 bg-white text-slate-950 text-xs font-bold rounded-full hover:bg-slate-50 transition-colors shadow-md">
                     Pelajari Selengkapnya
                   </button>
                 </div>

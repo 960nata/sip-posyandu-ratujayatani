@@ -42,7 +42,7 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
       <p className="text-3xl font-extrabold text-white mb-1 tracking-tight">
         {formatted}{suffix}
       </p>
-      <p className="text-sm text-emerald-100/60 font-native font-normal">{label}</p>
+      <p className="text-sm text-emerald-100/60 font-normal">{label}</p>
     </div>
   );
 }
@@ -136,7 +136,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-slate-200 mb-8 max-w-4xl mx-auto font-native font-normal leading-relaxed"
+            className="text-lg text-slate-200 mb-8 max-w-4xl mx-auto font-normal leading-relaxed"
           >
             Platform digital terpadu untuk monitoring, pencatatan, dan pelaporan 6 Bidang Standar Pelayanan Minimal (SPM). Mengonsolidasikan data secara real-time dari 1.100+ Posyandu aktif dan 5.500+ kader kesehatan di 264 desa/kelurahan di wilayah Kabupaten Lampung Timur.
           </motion.p>
@@ -169,7 +169,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
-            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal">
+            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-normal">
               Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
             </p>
           </div>
@@ -212,7 +212,7 @@ export default function Home() {
                 {/* Label */}
                 <div className="absolute bottom-6 left-6 right-6">
                   <h3 className="text-xl font-bold text-white mb-1.5">{card.title}</h3>
-                  <p className="text-sm text-white/75 font-native font-normal leading-relaxed">{card.desc}</p>
+                  <p className="text-sm text-white/75 font-normal leading-relaxed">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -232,7 +232,7 @@ export default function Home() {
                 Posyandu
               </span>
             </h2>
-            <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
+            <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
               Berdasarkan Peraturan Menteri Dalam Negeri Nomor 13 Tahun 2024, Pos Pelayanan Terpadu (Posyandu) kini bertransformasi menjadi lembaga kemasyarakatan desa yang memfasilitasi 6 Bidang Standar Pelayanan Minimal (SPM) untuk peningkatan kesejahteraan masyarakat secara merata.
             </p>
           </div>
@@ -345,7 +345,7 @@ export default function Home() {
               Posyandu
             </span>
           </h2>
-          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-native font-normal">
+          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal">
             Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
           </p>
         </div>
@@ -428,7 +428,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
               Kabupaten Lampung Timur dalam Angka
             </h2>
-            <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
+            <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
               Visualisasi skala operasional dan sebaran cakupan pelayanan Posyandu di seluruh wilayah Kabupaten Lampung Timur. Seluruh data dikonsolidasikan secara digital melalui pangkalan data terintegrasi Sistem Informasi Posyandu (SIPANDU).
             </p>
           </div>
@@ -463,7 +463,7 @@ export default function Home() {
               </h2>
             </div>
             <div className="max-w-md">
-              <p className="text-slate-500 font-native font-normal leading-relaxed text-sm md:text-base">
+              <p className="text-slate-500 font-normal leading-relaxed text-sm md:text-base">
                 SIP bukan sekadar aplikasi, melainkan ekosistem tata kelola data yang mengintegrasikan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur.
               </p>
             </div>
@@ -635,7 +635,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
               Koordinasi Berjenjang SIPANDU
             </h2>
-            <p className="text-slate-500 font-native font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
               Alur koordinasi 5 tingkat Tim Pembina Posyandu dari Pusat hingga tingkat Kader di Kabupaten Lampung Timur.
             </p>
           </div>
@@ -777,7 +777,7 @@ export default function Home() {
                       </span>
 
                       {/* Description Paragraph */}
-                      <p className={`text-xs font-native font-normal leading-relaxed ${
+                      <p className={`text-xs font-normal leading-relaxed ${
                         isGreen ? "text-emerald-950/80" : "text-slate-600"
                       }`}>
                         {step.desc}
@@ -811,7 +811,7 @@ export default function Home() {
               Landasan Hukum
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)</h2>
-            <p className="text-slate-500 font-native font-normal max-w-2xl mx-auto">
+            <p className="text-slate-500 font-normal max-w-2xl mx-auto">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
             </p>
           </div>
@@ -832,7 +832,7 @@ export default function Home() {
                 {/* Content */}
                 <div>
                   <h3 className="text-base font-bold text-slate-900 mb-1">{reg.title}</h3>
-                  <p className="text-sm text-slate-500 font-native font-normal leading-relaxed">{reg.detail}</p>
+                  <p className="text-sm text-slate-500 font-normal leading-relaxed">{reg.detail}</p>
                 </div>
               </div>
             ))}

@@ -141,8 +141,8 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl md:text-6xl font-extrabold tracking-tight mb-6 text-white"
           >
-            Modernisasi Pelayanan & Integrasi Data <br />
-            <span className="text-white">Sistem Informasi Posyandu Kabupaten Lampung Timur</span>
+            Modernisasi Data & Pelayanan <br />
+            <span className="text-white">Sistem Informasi Posyandu</span>
           </motion.h1>
 
           {/* Subtitle */}

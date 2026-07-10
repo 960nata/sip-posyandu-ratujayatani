@@ -9,7 +9,8 @@ import Header from "../components/Header";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   Activity, Users, ClipboardList,
-  ArrowRight, ArrowUpRight, Building, MapPin
+  ArrowRight, ArrowUpRight, Building, MapPin,
+  Landmark, Home as HomeIcon
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -35,7 +36,15 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
   const formatted = count.toLocaleString("id-ID");
 
   return (
-    <div className="bg-white/[0.04] border border-white/10 rounded-lg p-6 hover:bg-white/[0.08] transition-colors">
+    <motion.div 
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } }
+      }}
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white/[0.04] border border-white/10 rounded-lg p-6 hover:bg-white/[0.08] transition-colors cursor-pointer"
+    >
       <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center mb-5">
         <Icon className="w-5 h-5 text-emerald-950" />
       </div>
@@ -43,13 +52,28 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
         {formatted}{suffix}
       </p>
       <p className="text-sm text-emerald-100/60 font-normal">{label}</p>
-    </div>
+    </motion.div>
   );
 }
 
 export default function Home() {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      }
+    }
+  } as const;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+  } as const;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
@@ -175,7 +199,13 @@ export default function Home() {
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1200px] mx-auto">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1200px] mx-auto"
+          >
             {[
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg",
@@ -193,9 +223,12 @@ export default function Home() {
                 desc: "Data yang akurat dan terpercaya, dapat diakses setiap saat.",
               },
             ].map((card, i) => (
-              <div
+              <motion.div
                 key={card.title}
-                className="relative h-96 rounded-2xl overflow-hidden shadow-xl shadow-emerald-900/5 group"
+                variants={itemVariants}
+                whileHover={{ y: -8, scale: 1.015 }}
+                transition={{ duration: 0.3 }}
+                className="relative h-96 rounded-[10px] overflow-hidden shadow-xl shadow-emerald-900/5 group cursor-pointer"
               >
                 <Image
                   src={card.img}
@@ -214,9 +247,9 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-1.5">{card.title}</h3>
                   <p className="text-sm text-white/75 font-normal leading-relaxed">{card.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -236,10 +269,14 @@ export default function Home() {
               Berdasarkan Peraturan Menteri Dalam Negeri Nomor 13 Tahun 2024, Pos Pelayanan Terpadu (Posyandu) kini bertransformasi menjadi lembaga kemasyarakatan desa yang memfasilitasi 6 Bidang Standar Pelayanan Minimal (SPM) untuk peningkatan kesejahteraan masyarakat secara merata.
             </p>
           </div>
-
           {/* SPM Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
+          >
             {[
               {
                 code: "SPM 01",
@@ -269,7 +306,7 @@ export default function Home() {
               {
                 code: "SPM 06",
                 title: "Sosial",
-                desc: "Pendataan penerima bantuan sosial terpadu, pendampingan lansia terlantar dan penyandang disabilitas, promosi inklusi sosial, serta fasilitasi kesetaraan gender.",
+                desc: "Pendataan penerima bantuan sosial terpadu, pendampingan lansia terlantar and penyandang disabilitas, promosi inklusi sosial, serta fasilitasi kesetaraan gender.",
               },
             ].map((spm, index) => {
               const isAccent = index % 2 === 1;
@@ -290,13 +327,16 @@ export default function Home() {
                 WebkitMaskRepeat: "no-repeat",
               } as React.CSSProperties;
               return (
-                <div
+                <motion.div
                   key={index}
-                  className="group relative transition-all duration-300 ease-out hover:-translate-y-2"
+                  variants={itemVariants}
+                  whileHover={{ y: -8, scale: 1.015 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative cursor-pointer"
                 >
                   {/* Card body with circular corner cutout */}
                   <div
-                    className={`relative overflow-hidden rounded-2xl p-4 sm:p-7 min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
+                    className={`relative overflow-hidden rounded-[10px] p-4 sm:p-7 min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
                       isAccentMobile ? "bg-emerald-400" : "bg-emerald-50/70"
                     } ${isAccent ? "lg:bg-emerald-400" : "lg:bg-emerald-50/70"}`}
                     style={maskStyle}
@@ -326,10 +366,10 @@ export default function Home() {
                   <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border-2 border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-emerald-200/70">
                     <ArrowUpRight className="w-4 h-4 text-slate-900 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -350,7 +390,14 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <motion.div 
+            ref={statsRef} 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
+          >
             {[
               { target: 264, suffix: "", label: "Desa & Kelurahan", icon: Building },
               { target: 24, suffix: "", label: "Kecamatan", icon: MapPin },
@@ -360,7 +407,7 @@ export default function Home() {
             ].map((stat, i) => (
               <StatCard key={i} target={stat.target} suffix={stat.suffix} label={stat.label} icon={stat.icon} visible={statsVisible} delay={i * 120} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -385,7 +432,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {[
               {
                 badge: "Kelembagaan",
@@ -513,9 +566,12 @@ export default function Home() {
                 )
               }
             ].map((feature, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-3xl transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[320px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
+                variants={itemVariants}
+                whileHover={{ y: -8, scale: 1.015 }}
+                transition={{ duration: 0.3 }}
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden transition-colors duration-500 hover:bg-emerald-950 hover:shadow-2xl hover:shadow-emerald-950/20"
               >
                 <div className="flex flex-col">
                   {/* Badge */}
@@ -533,9 +589,9 @@ export default function Home() {
                 <div className="mt-6 w-full h-40 rounded-t-2xl rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
                   {feature.mockup}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -650,7 +706,7 @@ export default function Home() {
                 >
                   {/* Outer Card with border and shadow */}
                   <div
-                    className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-3xl border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+                    className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-[10px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
                         ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
                         : "bg-white border-slate-100 hover:bg-slate-50/50"
@@ -665,7 +721,7 @@ export default function Home() {
                           transition: { type: "spring", stiffness: 120, damping: 16, delay: idx * 0.15 + 0.2 }
                         }
                       }}
-                      className={`origin-top flex items-center justify-center py-4 px-2.5 w-10 rounded-2xl transition-colors duration-500 shrink-0 select-none ${
+                      className={`origin-top flex items-center justify-center py-4 px-2.5 w-10 rounded-[10px] transition-colors duration-500 shrink-0 select-none ${
                         isGreen
                           ? "bg-[#0a2f1c] text-[#d9f99d]"
                           : "bg-slate-900 text-slate-300"
@@ -877,21 +933,32 @@ export default function Home() {
           </div>
 
           {/* Grid Layout (Mockup style) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1140px] mx-auto">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1140px] mx-auto"
+          >
             {/* Card 1: Pathways (Undang-Undang Desa) - Col 1, Row 1 */}
-            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
-              <div className="p-8">
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.015 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
+            >
+              <div className="p-8 pb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block mb-2">
                   Regulasi Dasar
                 </span>
                 <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
                   Undang-Undang Desa
                 </h3>
-                <p className="text-slate-500 text-sm font-normal leading-relaxed mb-4">
+                <p className="text-slate-500 text-sm font-normal leading-relaxed">
                   Mengatur <strong className="text-slate-800 font-bold">kedudukan formal Posyandu</strong> sebagai Lembaga Kemasyarakatan Desa (LKD). Memberikan otonomi untuk mengelola dan memfasilitasi pembangunan desa secara mandiri.
                 </p>
               </div>
-              <div className="relative h-[220px] w-full overflow-hidden mt-auto">
+              <div className="relative h-[220px] w-full overflow-hidden mt-2">
                 <Image
                   src="/images/uu_desa_hukum.png"
                   alt="Undang-Undang Desa"
@@ -915,11 +982,16 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2: Teamwork (Sinergi Pembinaan) - Col 2, Row 1 */}
-            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
-              <div className="p-8">
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.015 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
+            >
+              <div className="p-8 pb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
                   Keputusan Bersama
                 </span>
@@ -932,7 +1004,7 @@ export default function Home() {
               </div>
 
               {/* Network Graph Interactive Mockup Graphic (Top-Down Tree like mockup) */}
-              <div className="relative h-[220px] bg-white flex items-center justify-center mt-auto overflow-hidden">
+              <div className="relative h-[220px] bg-white flex items-center justify-center mt-2 overflow-hidden">
                 <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 200">
                   <path d="M 150,36 C 130,85 50,85 50,140" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
                   <path d="M 150,36 C 135,100 100,100 100,165" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -942,123 +1014,63 @@ export default function Home() {
                 </svg>
 
                 {/* Top node (Pusat) */}
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full border-2 border-emerald-500 bg-emerald-50 shadow-md flex items-center justify-center overflow-hidden relative">
-                    <Image
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop"
-                      alt="Pusat"
-                      fill
-                      className="object-cover"
-                      sizes="48px"
-                    />
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center" title="Kementerian (Pusat)">
+                  <div className="w-12 h-12 rounded-full border-2 border-amber-300 bg-gradient-to-tr from-amber-600 to-yellow-500 shadow-md flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Landmark className="w-6 h-6 text-amber-50" />
                   </div>
                 </div>
 
                 {/* Bottom nodes (Prov, Kab, Kec, Desa, Kader) */}
-                <div className="absolute bottom-10 left-[10%]">
-                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop"
-                      alt="Prov"
-                      fill
-                      className="object-cover"
-                      sizes="36px"
-                    />
+                {/* Provinsi */}
+                <div className="absolute bottom-10 left-[10%]" title="Pemerintah Provinsi">
+                  <div className="w-9 h-9 rounded-full border border-sky-300 bg-gradient-to-tr from-sky-600 to-blue-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Building className="w-4 h-4 text-sky-50" />
                   </div>
                 </div>
-                <div className="absolute bottom-[22px] left-[27%]">
-                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop"
-                      alt="Kab"
-                      fill
-                      className="object-cover"
-                      sizes="36px"
-                    />
+                {/* Kabupaten */}
+                <div className="absolute bottom-[22px] left-[27%]" title="Pemerintah Kabupaten">
+                  <div className="w-9 h-9 rounded-full border border-indigo-300 bg-gradient-to-tr from-indigo-600 to-violet-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Building className="w-4 h-4 text-indigo-50" />
                   </div>
                 </div>
-                <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2">
-                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop"
-                      alt="Kec"
-                      fill
-                      className="object-cover"
-                      sizes="36px"
-                    />
+                {/* Kecamatan */}
+                <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2" title="Pemerintah Kecamatan">
+                  <div className="w-9 h-9 rounded-full border border-teal-300 bg-gradient-to-tr from-teal-600 to-emerald-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Building className="w-4 h-4 text-teal-50" />
                   </div>
                 </div>
-                <div className="absolute bottom-[22px] right-[27%]">
-                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop"
-                      alt="Desa"
-                      fill
-                      className="object-cover"
-                      sizes="36px"
-                    />
+                {/* Desa */}
+                <div className="absolute bottom-[22px] right-[27%]" title="Pemerintah Desa">
+                  <div className="w-9 h-9 rounded-full border border-emerald-300 bg-gradient-to-tr from-emerald-600 to-green-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <HomeIcon className="w-4 h-4 text-emerald-50" />
                   </div>
                 </div>
-                <div className="absolute bottom-10 right-[10%]">
-                  <div className="w-9 h-9 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center overflow-hidden relative hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop"
-                      alt="Kader"
-                      fill
-                      className="object-cover"
-                      sizes="36px"
-                    />
+                {/* Kader */}
+                <div className="absolute bottom-10 right-[10%]" title="Kader Posyandu">
+                  <div className="w-9 h-9 rounded-full border border-rose-300 bg-gradient-to-tr from-rose-600 to-pink-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Users className="w-4 h-4 text-rose-50" />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 4: Discover learning path (Aturan Pelaksanaan PP) - Col 3, Row 1 & 2 (Tall vertical card) */}
-            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md transition-all duration-300">
-              {/* Browser bar like mockup */}
-              <div className="p-3 pb-0">
-                <div className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-100/80">
-                  <span className="text-[10px] font-semibold text-slate-500 lowercase">sipandu.go.id</span>
-                  <div className="flex flex-col gap-[3px] items-end cursor-pointer">
-                    <span className="w-3.5 h-[1.5px] bg-slate-400 rounded-full"></span>
-                    <span className="w-2.5 h-[1.5px] bg-slate-400 rounded-full"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8 pt-6 text-center flex flex-col justify-center items-center">
-                {/* Centered badge pill */}
-                <div className="flex justify-center mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-bold text-slate-800 shadow-sm">
-                    Pelaksanaan <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  </span>
-                </div>
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.015 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md cursor-pointer"
+            >
+              <div className="p-8 pb-3 text-left">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
+                  Pelaksanaan
+                </span>
                 <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3 leading-tight">
                   Aturan Pelaksanaan
                 </h3>
-                <p className="text-slate-500 text-sm font-normal leading-relaxed mb-6">
+                <p className="text-slate-500 text-sm font-normal leading-relaxed mb-2">
                   PP No. 43/2014 & PP No. 11/2019 memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu.
                 </p>
-
-                {/* Mock Search Bar like mockup */}
-                <div className="relative mb-2 w-full max-w-xs">
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-100 bg-slate-50/50 shadow-inner">
-                    <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.3-4.3" />
-                    </svg>
-                    <input
-                      type="text"
-                      placeholder="Cari pasal regulasi..."
-                      className="bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none w-full font-normal"
-                      disabled
-                    />
-                    <button className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white shrink-0">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
               </div>
 
               {/* 3D Wave Abstract Graphic at the bottom */}
@@ -1070,6 +1082,9 @@ export default function Home() {
                   className="object-cover transition-transform duration-500 hover:scale-105"
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
+                {/* Gradient overlay to fade to white as it goes up */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-white/50 to-transparent pointer-events-none z-10" />
+
                 {/* Logo strip overlay like mockup */}
                 <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4 z-10 px-4">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Kemendagri</span>
@@ -1078,12 +1093,15 @@ export default function Home() {
                   <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Desa</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3: New-packed education (Transformasi Posyandu) - Col 1 & 2, Row 2 (Wide horizontal card) */}
-            <div 
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ y: -8, scale: 1.015 }}
+              transition={{ duration: 0.3 }}
               style={{ background: "linear-gradient(135deg, #f59e0b 0%, #84cc16 35%, #10b981 70%, #064e3b 100%)" }}
-              className="rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300"
+              className="rounded-[10px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl cursor-pointer"
             >
               <div className="flex-1 text-left z-10">
                 <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-lg leading-[1.1]">
@@ -1092,20 +1110,13 @@ export default function Home() {
                 <p className="text-white/85 text-sm font-normal leading-relaxed mb-6 max-w-md">
                   <strong className="text-white font-semibold">Permendagri No. 13 Tahun 2024</strong> mentransformasikan Posyandu agar mencakup <strong className="text-white font-semibold">6 Bidang SPM</strong> secara menyeluruh.
                 </p>
-                <div className="flex items-center gap-3">
-                  <button className="px-6 py-2.5 bg-emerald-950 text-emerald-300 text-xs font-bold rounded-full hover:bg-emerald-900 transition-colors shadow-md">
-                    Unduh Permendagri
-                  </button>
-                  <button className="px-6 py-2.5 bg-white text-slate-950 text-xs font-bold rounded-full hover:bg-slate-50 transition-colors shadow-md">
-                    Pelajari Selengkapnya
-                  </button>
-                </div>
+
               </div>
 
               {/* 3D Floating Document Mockup on Right */}
               <div className="relative w-full md:w-[320px] h-[220px] mt-6 md:mt-0 overflow-hidden z-10">
                 <Image
-                  src="/images/permendagri_mockup.png"
+                  src="/images/permendagri_mockup.avif"
                   alt="Permendagri No 13 2024"
                   fill
                   className="object-contain transition-transform duration-500 hover:scale-105"
@@ -1115,8 +1126,8 @@ export default function Home() {
 
               {/* Decorative radial overlay blur */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none" />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

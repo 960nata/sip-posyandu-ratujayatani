@@ -599,7 +599,7 @@ export default function Home() {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[380px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[320px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
               >
                 <div className="flex flex-col">
                   {/* Badge */}

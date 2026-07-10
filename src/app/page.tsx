@@ -888,7 +888,7 @@ export default function Home() {
                   Undang-Undang Desa
                 </h3>
                 <p className="text-slate-500 text-sm font-normal leading-relaxed mb-4">
-                  Mengatur kedudukan formal Posyandu sebagai <strong className="text-slate-800 font-semibold">Lembaga Kemasyarakatan Desa (LKD)</strong>. Memberikan otonomi untuk mengelola dan memfasilitasi pembangunan desa secara mandiri.
+                  Mengatur <strong className="text-slate-800 font-bold">kedudukan formal Posyandu</strong> sebagai Lembaga Kemasyarakatan Desa (LKD). Memberikan otonomi untuk mengelola dan memfasilitasi pembangunan desa secara mandiri.
                 </p>
               </div>
               <div className="relative h-[220px] w-full overflow-hidden mt-auto">
@@ -931,47 +931,42 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Network Fan Graphic (Teamwork style) */}
-              <div className="relative h-[220px] mt-auto overflow-hidden">
+              {/* Network Graph Interactive Mockup Graphic (Top-Down Tree like mockup) */}
+              <div className="relative h-[220px] bg-slate-50/50 border-t border-slate-100 flex items-center justify-center mt-auto overflow-hidden">
                 <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 210">
-                  {/* Decorative fan rays from top-center node */}
-                  <path d="M150,38 Q60,90 14,145" stroke="#eef2f6" strokeWidth="1" />
-                  <path d="M150,38 Q85,100 52,180" stroke="#eef2f6" strokeWidth="1" />
-                  <path d="M150,38 Q125,110 118,195" stroke="#eef2f6" strokeWidth="1" />
-                  <path d="M150,38 Q175,110 182,195" stroke="#eef2f6" strokeWidth="1" />
-                  <path d="M150,38 Q215,100 248,180" stroke="#eef2f6" strokeWidth="1" />
-                  <path d="M150,38 Q240,90 286,145" stroke="#eef2f6" strokeWidth="1" />
+                  {/* Connection curves branching from center top to children bottom */}
+                  <path d="M 150,40 C 150,85 60,85 60,130" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,40 C 150,95 105,95 105,160" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,40 L 150,170" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,40 C 150,95 195,95 195,160" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 150,40 C 150,85 240,85 240,130" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="3 3" />
 
-                  {/* Connector curves to nodes */}
-                  <path d="M150,38 Q95,78 64,116" stroke="#e2e8f0" strokeWidth="1.2" />
-                  <path d="M150,38 Q118,102 113,148" stroke="#e2e8f0" strokeWidth="1.2" />
-                  <path d="M150,38 Q182,102 187,148" stroke="#e2e8f0" strokeWidth="1.2" />
-                  <path d="M150,38 Q205,78 236,116" stroke="#e2e8f0" strokeWidth="1.2" />
+                  {/* Top center node (Root - PUSAT) */}
+                  <g>
+                    <circle cx="150" cy="40" r="22" fill="#0a2f1c" stroke="#34d399" strokeWidth="2.5" />
+                    <text x="150" y="46" fontSize="14" textAnchor="middle">🏛️</text>
+                  </g>
 
-                  {/* Top center node (PUSAT) */}
-                  <circle cx="150" cy="30" r="19" fill="#0a2f1c" stroke="#bbf7d0" strokeWidth="3" />
-                  <text x="150" y="33" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#d9f99d">PUSAT</text>
-
-                  {/* Scattered nodes with colored status dots */}
+                  {/* Bottom Avatar nodes */}
                   <g className="cursor-pointer">
-                    <circle cx="58" cy="128" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="58" y="131" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">PRV</text>
-                    <circle cx="69" cy="117" r="4.5" fill="#f59e0b" stroke="#fff" strokeWidth="1.5" />
+                    <circle cx="60" cy="130" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="60" y="136" fontSize="16" textAnchor="middle">👩‍💼</text>
                   </g>
                   <g className="cursor-pointer">
-                    <circle cx="112" cy="162" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="112" y="165" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">KAB</text>
-                    <circle cx="123" cy="151" r="4.5" fill="#f43f5e" stroke="#fff" strokeWidth="1.5" />
+                    <circle cx="105" cy="160" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="105" y="166" fontSize="16" textAnchor="middle">👨‍💼</text>
                   </g>
                   <g className="cursor-pointer">
-                    <circle cx="188" cy="162" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="188" y="165" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">KEC</text>
-                    <circle cx="199" cy="151" r="4.5" fill="#0ea5e9" stroke="#fff" strokeWidth="1.5" />
+                    <circle cx="150" cy="170" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="150" y="176" fontSize="16" textAnchor="middle">👩‍⚕️</text>
                   </g>
                   <g className="cursor-pointer">
-                    <circle cx="242" cy="128" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
-                    <text x="242" y="131" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">DES</text>
-                    <circle cx="253" cy="117" r="4.5" fill="#10b981" stroke="#fff" strokeWidth="1.5" />
+                    <circle cx="195" cy="160" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="195" y="166" fontSize="16" textAnchor="middle">👨‍⚕️</text>
+                  </g>
+                  <g className="cursor-pointer">
+                    <circle cx="240" cy="130" r="16" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="240" y="136" fontSize="16" textAnchor="middle">👩</text>
                   </g>
                 </svg>
               </div>
@@ -982,29 +977,26 @@ export default function Home() {
               {/* Browser bar like mockup */}
               <div className="p-3 pb-0">
                 <div className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-100/80">
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-slate-800 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M22 7l-8.5 8.5-5-5L2 17" /><path d="M16 7h6v6" />
-                    </svg>
-                    <span className="text-sm font-bold text-slate-800 tracking-tight">SIPANDU.id</span>
+                  <span className="text-[10px] font-semibold text-slate-500 lowercase">sipandu.go.id</span>
+                  <div className="flex flex-col gap-[3px] items-end cursor-pointer">
+                    <span className="w-3.5 h-[1.5px] bg-slate-400 rounded-full"></span>
+                    <span className="w-2.5 h-[1.5px] bg-slate-400 rounded-full"></span>
                   </div>
-                  <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />
-                  </svg>
                 </div>
               </div>
 
-              <div className="p-8 pt-8 text-center">
+              <div className="p-8 pt-6 text-center">
                 {/* Centered badge pill */}
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-[11px] font-bold text-slate-800 mb-5">
+                <div className="flex justify-center mb-4">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-[10px] font-bold text-slate-800 shadow-sm">
+                    Pelaksanaan <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  </span>
+                </div>
+                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3 leading-tight">
                   Aturan Pelaksanaan
-                  <span className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[8px] font-black">P</span>
-                </span>
-                <h3 className="text-2xl md:text-[28px] font-extrabold text-slate-900 tracking-tight mb-3 leading-tight">
-                  Landasan Operasional
                 </h3>
                 <p className="text-slate-500 text-sm font-normal leading-relaxed mb-6">
-                  <strong className="text-slate-800 font-semibold">PP No. 43/2014 & PP No. 11/2019</strong> memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu.
+                  PP No. 43/2014 & PP No. 11/2019 memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu.
                 </p>
 
                 {/* Mock Search Bar like mockup */}
@@ -1037,26 +1029,30 @@ export default function Home() {
                   className="object-cover transition-transform duration-500 hover:scale-105"
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
+                {/* Logo strip overlay like mockup */}
+                <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4 z-10 px-4">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Kemendagri</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Pemprov</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Pemkab</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 whitespace-nowrap">Desa</span>
+                </div>
               </div>
             </div>
 
             {/* Card 3: New-packed education (Transformasi Posyandu) - Col 1 & 2, Row 2 (Wide horizontal card) */}
-            <div className="bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-gradient-to-br from-[#b8cf6e] via-[#5fa86d] to-[#1e7a50] bg-[linear-gradient(120deg,#b8cf6e_0%,#5fa86d_45%,#1e7a50_100%)] rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex-1 text-left z-10">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-200 block mb-2">
-                  Transformasi Layanan Posyandu
-                </span>
-                <h3 className="text-3xl font-extrabold tracking-tight mb-4 max-w-lg leading-tight">
-                  Transformasi Posyandu
+                <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-lg leading-[1.1]">
+                  Transformasi<br />Posyandu
                 </h3>
-                <p className="text-emerald-55 text-sm font-light leading-relaxed mb-6 max-w-md">
-                  <strong className="text-white font-semibold">Permendagri No. 13 Tahun 2024</strong> mentransformasikan Posyandu agar mencakup 6 Bidang Standar Pelayanan Minimal (SPM) secara menyeluruh.
+                <p className="text-white/85 text-sm font-normal leading-relaxed mb-6 max-w-md">
+                  <strong className="text-white font-semibold">Permendagri No. 13 Tahun 2024</strong> mentransformasikan Posyandu agar mencakup <strong className="text-white font-semibold">6 Bidang SPM</strong> secara menyeluruh.
                 </p>
                 <div className="flex items-center gap-3">
-                  <button className="px-5 py-2.5 bg-emerald-950 text-emerald-300 text-xs font-semibold rounded-full hover:bg-emerald-900 transition-colors shadow-sm">
+                  <button className="px-5 py-2.5 bg-[#14532d] text-white text-xs font-semibold rounded-full hover:bg-[#0e3f22] transition-colors shadow-sm">
                     Unduh Permendagri
                   </button>
-                  <button className="px-5 py-2.5 bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold rounded-full hover:bg-white/20 transition-colors">
+                  <button className="px-5 py-2.5 bg-white text-slate-900 text-xs font-semibold rounded-full hover:bg-slate-100 transition-colors shadow-sm">
                     Pelajari Selengkapnya
                   </button>
                 </div>

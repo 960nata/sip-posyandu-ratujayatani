@@ -45,7 +45,7 @@ function StatCard({ target, suffix, label, visible, delay }: { target: number; s
       <p className="text-3xl font-extrabold text-emerald-700 mb-1 tracking-tight">
         {formatted}{suffix}
       </p>
-      <p className="text-sm text-slate-500 font-light">{label}</p>
+      <p className="text-sm text-slate-500 font-native font-normal">{label}</p>
     </div>
   );
 }
@@ -150,7 +150,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-slate-200 mb-8 max-w-2xl mx-auto font-light"
+            className="text-lg text-slate-200 mb-8 max-w-2xl mx-auto font-native font-normal"
           >
             Platform digital terintegrasi untuk pengelolaan data lintas sektor mulai dari Kesehatan, Pendidikan, hingga Infrastruktur.
           </motion.p>
@@ -183,7 +183,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
-            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-light">
+            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal">
               Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
             </p>
           </div>
@@ -226,7 +226,7 @@ export default function Home() {
                 {/* Label */}
                 <div className="absolute bottom-6 left-6 right-6">
                   <h3 className="text-xl font-bold text-white mb-1.5">{card.title}</h3>
-                  <p className="text-sm text-white/75 font-light leading-relaxed">{card.desc}</p>
+                  <p className="text-sm text-white/75 font-native font-normal leading-relaxed">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -249,7 +249,7 @@ export default function Home() {
                 Posyandu
               </span>
             </h2>
-            <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-light">
+            <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-native font-normal">
               Sesuai Permendagri No. 13 Tahun 2024, Posyandu melayani 6 Bidang Standar Pelayanan Minimal untuk masyarakat desa.
             </p>
           </div>
@@ -360,7 +360,7 @@ export default function Home() {
               Posyandu
             </span>
           </h2>
-          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-light">
+          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-native font-normal">
             Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
           </p>
         </div>
@@ -443,7 +443,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
               Kab. Lampung Timur dalam Angka
             </h2>
-            <p className="text-slate-500 mt-3 max-w-xl mx-auto font-light">
+            <p className="text-slate-500 mt-3 max-w-xl mx-auto font-native font-normal">
               Gambaran skala pelayanan Posyandu yang dikelola melalui sistem SIPANDU.
             </p>
           </div>
@@ -471,7 +471,7 @@ export default function Home() {
               Tata Kelola
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Kelembagaan yang Kuat & Transparan</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-slate-500 max-w-2xl mx-auto font-native font-normal leading-relaxed">
               SIP bukan sekadar aplikasi, melainkan ekosistem tata kelola data yang melibatkan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur.
             </p>
           </div>
@@ -489,7 +489,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-slate-900 mb-0.5">{feature.title}</h4>
-                  <p className="text-sm text-slate-500 font-light leading-relaxed">{feature.desc}</p>
+                  <p className="text-sm text-slate-500 font-native font-normal leading-relaxed">{feature.desc}</p>
                 </div>
               </div>
             ))}
@@ -506,7 +506,7 @@ export default function Home() {
               Struktur Kelembagaan
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-2">Koordinasi Berjenjang</h2>
-            <p className="text-slate-500 font-light">5 tingkat Tim Pembina sesuai regulasi</p>
+            <p className="text-slate-500 font-native font-normal">5 tingkat Tim Pembina sesuai regulasi</p>
           </div>
 
           {/* Timeline / Cards */}
@@ -542,7 +542,7 @@ export default function Home() {
                   <div className="text-center">
                     <h3 className="text-sm font-bold text-slate-900 mb-0.5">{step.title}</h3>
                     <p className="text-xs text-emerald-600 font-medium mb-2">{step.subtitle}</p>
-                    <p className="text-xs text-slate-500 font-light leading-relaxed">{step.desc}</p>
+                    <p className="text-xs text-slate-500 font-native font-normal leading-relaxed">{step.desc}</p>
                   </div>
                 </motion.div>
 
@@ -566,7 +566,7 @@ export default function Home() {
               Keunggulan
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-2">Manfaat Utama SIP</h2>
-            <p className="text-slate-500 font-light max-w-2xl mx-auto">
+            <p className="text-slate-500 font-native font-normal max-w-2xl mx-auto">
               Mewujudkan tata kelola yang lebih baik melalui digitalisasi.
             </p>
           </div>
@@ -582,7 +582,7 @@ export default function Home() {
                   {item.num}
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h3>
-                <p className="text-sm text-slate-500 font-light">{item.desc}</p>
+                <p className="text-sm text-slate-500 font-native font-normal">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -598,7 +598,7 @@ export default function Home() {
               Landasan Hukum
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi SIPANDU</h2>
-            <p className="text-slate-500 font-light max-w-2xl mx-auto">
+            <p className="text-slate-500 font-native font-normal max-w-2xl mx-auto">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
             </p>
           </div>
@@ -619,7 +619,7 @@ export default function Home() {
                 {/* Content */}
                 <div>
                   <h3 className="text-base font-bold text-slate-900 mb-1">{reg.title}</h3>
-                  <p className="text-sm text-slate-500 font-light leading-relaxed">{reg.detail}</p>
+                  <p className="text-sm text-slate-500 font-native font-normal leading-relaxed">{reg.detail}</p>
                 </div>
               </div>
             ))}

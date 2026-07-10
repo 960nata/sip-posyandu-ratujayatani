@@ -640,8 +640,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Timeline Grid Wrapper */}
-          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-12 max-w-4xl mx-auto mt-12">
+          {/* Timeline Wrapper (Flex Column matching the mockup layout) */}
+          <div className="relative flex flex-col space-y-16 lg:space-y-24 max-w-4xl mx-auto mt-12">
             {/* Mobile Vertical Connecting Line */}
             <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
 
@@ -718,8 +718,8 @@ export default function Home() {
               return (
                 <motion.div
                   key={idx}
-                  className={`relative z-10 w-full flex items-stretch lg:odd:col-start-1 lg:even:col-start-2 ${
-                    isEven ? "lg:mt-20" : ""
+                  className={`relative z-10 w-full lg:w-[48%] flex items-stretch ${
+                    isEven ? "self-end" : "self-start"
                   }`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -789,10 +789,10 @@ export default function Home() {
                   {idx < 4 && (
                     isEven ? (
                       /* Connects Even Card (Right Col) down to Odd Card (Left Col) in the next row */
-                      <div className="hidden lg:block absolute right-[95%] top-[50%] w-[35%] h-[220px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
+                      <div className="hidden lg:block absolute right-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
                     ) : (
                       /* Connects Odd Card (Left Col) down to Even Card (Right Col) in the same row */
-                      <div className="hidden lg:block absolute left-[95%] top-[50%] w-[35%] h-[140px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
+                      <div className="hidden lg:block absolute left-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
                     )
                   )}
                 </motion.div>

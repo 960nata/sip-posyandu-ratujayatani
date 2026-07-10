@@ -6,12 +6,10 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Heart, BarChart3, Folder, Menu, X, Bell, User, 
-  Settings, LogOut, ChevronRight, BookOpen, Building, 
-  Home, Shield, Users, Sun, Moon, Search, ChevronDown,
-  Sparkles, UserCheck, Handshake, Newspaper, Briefcase, Activity,
-  FileText
+import {
+  Menu, X, Bell, User, LogOut, BookOpen, Building,
+  Home, Shield, Users, Sun, Moon, ChevronDown,
+  UserCheck, Activity, FileText
 } from 'lucide-react'
 
 const menuGroups = [
@@ -153,13 +151,10 @@ export default function DashboardLayout({
           className={`fixed inset-y-0 left-0 bg-white dark:bg-[#111827] border-r border-slate-100 dark:border-slate-800 z-30 flex flex-col shadow-sm w-[280px] transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
         >
             {/* Sidebar Header */}
-            <div className="h-16 flex items-center justify-between px-6 border-b border-slate-50 dark:border-slate-800">
+            <div className="h-16 flex items-center justify-between px-6">
               <Link href="/dashboard" className="flex items-center space-x-3">
-                <Image src="/images/logo/logo.png" alt="Logo" width={36} height={36} className="object-contain" />
-                <div className="flex flex-col">
-                  <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIPANDU</span>
-                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">Sistem Informasi Posyandu</span>
-                </div>
+                <Image src="/images/logo/logo.png" alt="Logo" width={32} height={32} className="object-contain" />
+                <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIPANDU</span>
               </Link>
               <button 
                 onClick={() => setSidebarOpen(false)}
@@ -182,8 +177,8 @@ export default function DashboardLayout({
                 if (filteredItems.length === 0) return null
 
                 return (
-                  <div key={group.title} className={groupIndex > 0 ? 'mt-4 pt-4 border-t border-slate-100 dark:border-slate-800' : ''}>
-                    <p className="px-4 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+                  <div key={group.title} className={groupIndex > 0 ? 'mt-6' : ''}>
+                    <p className="px-4 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">
                       {group.title}
                     </p>
                     <div className="space-y-0.5">
@@ -201,10 +196,9 @@ export default function DashboardLayout({
                             }`}
                           >
                             <div className="flex items-center space-x-3">
-                              <item.icon className={`w-5 h-5 ${isActive ? `${theme.text} ${theme.textDark}` : 'text-slate-500 dark:text-slate-500'}`} />
+                              <item.icon className={`w-[18px] h-[18px] ${isActive ? `${theme.text} ${theme.textDark}` : 'text-slate-400 dark:text-slate-500'}`} />
                               <span>{item.name}</span>
                             </div>
-                            {isActive && <ChevronRight className={`w-4 h-4 ${theme.text} ${theme.textDark}`} />}
                           </Link>
                         )
                       })}
@@ -215,9 +209,9 @@ export default function DashboardLayout({
             </nav>
 
             {/* Sidebar Footer */}
-            <div className="p-4 border-t border-slate-50 dark:border-slate-800">
-              <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl">
-                <div className={`w-9 h-9 ${theme.iconBg} ${theme.iconBgDark} rounded-lg flex items-center justify-center`}>
+            <div className="p-4 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-[10px]">
+                <div className={`w-9 h-9 ${theme.iconBg} ${theme.iconBgDark} rounded-[10px] flex items-center justify-center`}>
                   <User className={`w-5 h-5 ${theme.text} ${theme.textDark}`} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -237,7 +231,7 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 lg:pl-[280px]`}>
         {/* Header */}
-        <header className="h-16 bg-white/80 dark:bg-[#111827]/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-6 sticky top-0 z-20 shadow-sm shadow-slate-100/50 dark:shadow-none">
+        <header className="h-16 bg-white/80 dark:bg-[#111827]/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-6 sticky top-0 z-20">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -252,21 +246,7 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="hidden md:flex items-center flex-1 max-w-md mx-4">
-            <div className="relative w-full">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <Search className="w-4 h-4 text-slate-400" />
-              </span>
-              <input
-                type="text"
-                placeholder="Cari sesuatu..."
-                className={`w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 text-sm focus:outline-none focus:ring-2 ${theme.focusRing} focus:border-transparent dark:text-white transition-all`}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
@@ -283,7 +263,9 @@ export default function DashboardLayout({
                 className="relative p-2.5 text-slate-500 hover:text-slate-700 dark:hover:text-white rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <Bell className="w-5 h-5" />
-                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-rose-500 rounded-full"></span>
+                {notifications.length > 0 && (
+                  <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-rose-500 rounded-full"></span>
+                )}
               </button>
               
 
@@ -328,7 +310,7 @@ export default function DashboardLayout({
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 className="flex items-center space-x-2 p-1.5 rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none"
               >
-                <div className={`w-8 h-8 bg-gradient-to-br ${theme.gradient} rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-md ${theme.shadow}`}>
+                <div className={`w-8 h-8 ${isPosyandu ? 'bg-purple-600' : 'bg-emerald-600'} rounded-full flex items-center justify-center text-white font-semibold text-sm`}>
                   {session?.user?.name?.[0] || 'U'}
                 </div>
                 <span className="hidden md:inline text-sm font-semibold text-slate-800 dark:text-white">{session?.user?.name || 'User'}</span>

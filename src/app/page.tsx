@@ -721,10 +721,16 @@ export default function Home() {
                   className={`relative z-10 w-full lg:w-[480px] flex items-stretch ${
                     isEven ? "self-end" : "self-start"
                   } ${idx > 0 ? "lg:-mt-12" : ""}`}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: idx * 0.15 }}
+                  initial="hidden"
+                  whileInView="show"
                   viewport={{ once: true, margin: "-100px" }}
+                  variants={{
+                    hidden: { opacity: 0, x: isEven ? 80 : -80, y: 30, scale: 0.9, rotate: isEven ? 2 : -2 },
+                    show: {
+                      opacity: 1, x: 0, y: 0, scale: 1, rotate: 0,
+                      transition: { type: "spring", stiffness: 70, damping: 15, delay: idx * 0.15 }
+                    }
+                  }}
                 >
                   {/* Outer Card with border and shadow */}
                   <div
@@ -735,8 +741,15 @@ export default function Home() {
                     }`}
                   >
                     {/* Rotated Vertical Pill Badge on Left */}
-                    <div
-                      className={`flex items-center justify-center py-4 px-2.5 w-10 rounded-2xl transition-all duration-500 shrink-0 select-none ${
+                    <motion.div
+                      variants={{
+                        hidden: { scaleY: 0, opacity: 0 },
+                        show: {
+                          scaleY: 1, opacity: 1,
+                          transition: { type: "spring", stiffness: 120, damping: 16, delay: idx * 0.15 + 0.2 }
+                        }
+                      }}
+                      className={`origin-top flex items-center justify-center py-4 px-2.5 w-10 rounded-2xl transition-colors duration-500 shrink-0 select-none ${
                         isGreen
                           ? "bg-[#0a2f1c] text-[#d9f99d]"
                           : "bg-slate-900 text-slate-300"
@@ -745,22 +758,29 @@ export default function Home() {
                       <span className="[writing-mode:vertical-lr] rotate-180 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
                         {step.role}
                       </span>
-                    </div>
+                    </motion.div>
 
                     {/* Content Section on Right */}
                     <div className="flex flex-col justify-between p-3.5 flex-1">
                       {/* Top Header Row (Icon + Number + Title) */}
                       <div className="flex items-center gap-2.5 mb-2">
                         {/* Icon Container */}
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        <motion.div
+                          variants={{
+                            hidden: { scale: 0, rotate: -90 },
+                            show: {
+                              scale: 1, rotate: 0,
+                              transition: { type: "spring", stiffness: 200, damping: 13, delay: idx * 0.15 + 0.35 }
+                            }
+                          }}
+                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12 ${
                             isGreen
                               ? "bg-[#d8f3b8] text-[#0a2f1c]"
                               : "bg-slate-100 text-slate-700"
                           }`}
                         >
                           {step.icon}
-                        </div>
+                        </motion.div>
                         {/* Step Number & Title (Mockup style) */}
                         <h3 className={`text-lg md:text-xl font-extrabold tracking-tight whitespace-nowrap ${
                           isGreen ? "text-[#0a2f1c]" : "text-slate-900"
@@ -792,11 +812,21 @@ export default function Home() {
                       <div className="hidden lg:block absolute right-[90%] top-[75px] w-[428px] h-[160px] pointer-events-none z-0">
                         <svg className="w-full h-full" fill="none" viewBox="0 0 428 160">
                           <defs>
-                            <marker id={`arrow-slate-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                              <path d="M 2 1 L 8 5 L 2 9 z" fill="#64748b" />
+                            <marker id={`arrow-slate-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                              <path d="M 1.5 2 L 5 7 L 8.5 2" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </marker>
+                            <mask id={`reveal-slate-${idx}`}>
+                              <motion.path
+                                d="M 428,30 H 59 Q 43,30 43,46 V 144"
+                                stroke="#fff" strokeWidth="14" strokeLinecap="round" fill="none"
+                                variants={{
+                                  hidden: { pathLength: 0 },
+                                  show: { pathLength: 1, transition: { duration: 0.9, ease: "easeInOut", delay: idx * 0.15 + 0.5 } }
+                                }}
+                              />
+                            </mask>
                           </defs>
-                          <path d="M 428,30 C 220,30 43,30 43,90 L 43,148" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" marker-end={`url(#arrow-slate-${idx})`} />
+                          <path d="M 428,30 H 59 Q 43,30 43,46 V 144" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" markerEnd={`url(#arrow-slate-${idx})`} mask={`url(#reveal-slate-${idx})`} />
                         </svg>
                       </div>
                     ) : (
@@ -804,11 +834,21 @@ export default function Home() {
                       <div className="hidden lg:block absolute left-[90%] top-[75px] w-[428px] h-[160px] pointer-events-none z-0">
                         <svg className="w-full h-full" fill="none" viewBox="0 0 428 160">
                           <defs>
-                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                              <path d="M 2 1 L 8 5 L 2 9 z" fill="#059669" />
+                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                              <path d="M 1.5 2 L 5 7 L 8.5 2" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </marker>
+                            <mask id={`reveal-emerald-${idx}`}>
+                              <motion.path
+                                d="M 0,30 H 369 Q 385,30 385,46 V 144"
+                                stroke="#fff" strokeWidth="14" strokeLinecap="round" fill="none"
+                                variants={{
+                                  hidden: { pathLength: 0 },
+                                  show: { pathLength: 1, transition: { duration: 0.9, ease: "easeInOut", delay: idx * 0.15 + 0.5 } }
+                                }}
+                              />
+                            </mask>
                           </defs>
-                          <path d="M 0,30 C 208,30 385,30 385,90 L 385,148" stroke="#a7f3d0" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" marker-end={`url(#arrow-emerald-${idx})`} />
+                          <path d="M 0,30 H 369 Q 385,30 385,46 V 144" stroke="#a7f3d0" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" markerEnd={`url(#arrow-emerald-${idx})`} mask={`url(#reveal-emerald-${idx})`} />
                         </svg>
                       </div>
                     )
@@ -821,39 +861,194 @@ export default function Home() {
       </section>
 
       {/* Section: Landasan Hukum */}
-      <section id="hukum" className="py-20 bg-white">
+      <section id="hukum" className="py-24 bg-slate-50/50">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
               Landasan Hukum
             </span>
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)</h2>
-            <p className="text-slate-500 font-normal max-w-2xl mx-auto">
-              Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+              Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)
+            </h2>
+            <p className="text-slate-500 font-normal max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+              Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku di Indonesia.
             </p>
           </div>
 
-          {/* List of Regulations */}
-          <div className="space-y-4 max-w-4xl mx-auto">
-            {[
-              { type: "UU", title: "UU No. 6 Tahun 2014 tentang Desa", detail: "diubah dengan UU No. 3 Tahun 2024. Mengatur kedudukan Posyandu sebagai Lembaga Kemasyarakatan Desa (LKD) dan kewenangannya." },
-              { type: "PP", title: "PP No. 43 Tahun 2014", detail: "tentang Pelaksanaan UU Desa, diubah terakhir dengan PP No. 11 Tahun 2019. Pasal 150 menetapkan Posyandu sebagai LKD." },
-              { type: "PM", title: "Permendagri No. 13 Tahun 2024 tentang Pos Pelayanan Terpadu", detail: "regulasi utama yang mengatur transformasi Posyandu ke 6 Bidang SPM, ditetapkan 23 Agustus 2024." },
-              { type: "KM", title: "Kepmendagri No. 400.5.1-3703 Tahun 2023", detail: "tentang Pembinaan dan Sinergitas Pos Pelayanan Terpadu di seluruh Indonesia." },
-            ].map((reg, idx) => (
-              <div key={idx} className="flex flex-col sm:flex-row gap-4 p-5 bg-slate-50 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
-                {/* Badge */}
-                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-lg">
-                  {reg.type}
-                </div>
-                {/* Content */}
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 mb-1">{reg.title}</h3>
-                  <p className="text-sm text-slate-500 font-normal leading-relaxed">{reg.detail}</p>
+          {/* Grid Layout (Mockup style) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1140px] mx-auto">
+            {/* Card 1: Pathways (Undang-Undang Desa) - Col 1, Row 1 */}
+            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
+              <div className="p-8">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block mb-2">
+                  Regulasi Dasar
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
+                  Undang-Undang Desa
+                </h3>
+                <p className="text-slate-500 text-sm font-normal leading-relaxed mb-4">
+                  Mengatur kedudukan formal Posyandu sebagai <strong className="text-slate-800 font-semibold">Lembaga Kemasyarakatan Desa (LKD)</strong>. Memberikan otonomi untuk mengelola dan memfasilitasi pembangunan desa secara mandiri.
+                </p>
+              </div>
+              <div className="relative h-[220px] w-full overflow-hidden mt-auto">
+                <Image
+                  src="/images/uu_desa_hukum.png"
+                  alt="Undang-Undang Desa"
+                  fill
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  sizes="(max-w-768px) 100vw, 33vw"
+                />
+                {/* Overlay Tags like mockup */}
+                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 z-10">
+                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
+                    LKD Resmi
+                  </span>
+                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
+                    Otonomi Desa
+                  </span>
+                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
+                    UU No. 3/2024
+                  </span>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Card 2: Teamwork (Sinergi Pembinaan) - Col 2, Row 1 */}
+            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
+              <div className="p-8">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
+                  Keputusan Bersama
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
+                  Sinergi Pembinaan
+                </h3>
+                <p className="text-slate-500 text-sm font-normal leading-relaxed">
+                  Kolaborasi multi-sektor nasional yang menyatukan peran Kementerian, Provinsi, Kabupaten, hingga Kader Posyandu dalam satu rantai pembinaan yang terintegrasi.
+                </p>
+              </div>
+
+              {/* Network Graph Interactive Mockup Graphic */}
+              <div className="relative h-[220px] bg-slate-50/50 flex items-center justify-center border-t border-slate-50 mt-auto overflow-hidden">
+                {/* SVG Network Graph Grid Animation */}
+                <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 200 200">
+                  {/* Orbit Rings */}
+                  <circle cx="100" cy="100" r="70" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                  <circle cx="100" cy="100" r="45" stroke="#f1f5f9" strokeWidth="1" />
+                  
+                  {/* Connection Lines to Orbiting nodes */}
+                  <line x1="100" y1="100" x2="40" y2="60" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
+                  <line x1="100" y1="100" x2="160" y2="70" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
+                  <line x1="100" y1="100" x2="70" y2="155" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
+                  <line x1="100" y1="100" x2="140" y2="150" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
+
+                  {/* Outer Orbiting nodes */}
+                  <g className="cursor-pointer group">
+                    <circle cx="40" cy="60" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
+                    <text x="40" y="63" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">PRV</text>
+                  </g>
+                  <g className="cursor-pointer group">
+                    <circle cx="160" cy="70" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
+                    <text x="160" y="73" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">KAB</text>
+                  </g>
+                  <g className="cursor-pointer group">
+                    <circle cx="70" cy="155" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
+                    <text x="70" y="158" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">KEC</text>
+                  </g>
+                  <g className="cursor-pointer group">
+                    <circle cx="140" cy="150" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
+                    <text x="140" y="153" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">DES</text>
+                  </g>
+
+                  {/* Center Node (Mendagri) */}
+                  <circle cx="100" cy="100" r="22" fill="#0a2f1c" />
+                  <text x="100" y="103" fontSize="9" fontWeight="black" textAnchor="middle" fill="#d9f99d">PUSAT</text>
+                </svg>
+              </div>
+            </div>
+
+            {/* Card 4: Discover learning path (Aturan Pelaksanaan PP) - Col 3, Row 1 & 2 (Tall vertical card) */}
+            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md transition-all duration-300">
+              <div className="p-8">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
+                  Aturan Pelaksanaan
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
+                  Aturan Pelaksanaan
+                </h3>
+                <p className="text-slate-500 text-sm font-normal leading-relaxed mb-6">
+                  PP No. 43 Tahun 2014 & PP No. 11 Tahun 2019 memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu sebagai bagian dari program kesejahteraan nasional.
+                </p>
+
+                {/* Mock Search Bar like mockup */}
+                <div className="relative mb-6">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-100 bg-slate-50/50 shadow-inner">
+                    <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.3-4.3" />
+                    </svg>
+                    <input
+                      type="text"
+                      placeholder="Cari pasal regulasi..."
+                      className="bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none w-full font-normal"
+                      disabled
+                    />
+                    <button className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white shrink-0">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3D Wave Abstract Graphic at the bottom */}
+              <div className="relative h-[300px] w-full mt-auto overflow-hidden">
+                <Image
+                  src="/images/abstrak_green_wave.png"
+                  alt="3D Wave Pattern"
+                  fill
+                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  sizes="(max-w-768px) 100vw, 33vw"
+                />
+              </div>
+            </div>
+
+            {/* Card 3: New-packed education (Transformasi Posyandu) - Col 1 & 2, Row 2 (Wide horizontal card) */}
+            <div className="bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 rounded-[32px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="flex-1 text-left z-10">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-200 block mb-2">
+                  Transformasi Layanan Posyandu
+                </span>
+                <h3 className="text-3xl font-extrabold tracking-tight mb-4 max-w-lg leading-tight">
+                  Transformasi Posyandu
+                </h3>
+                <p className="text-emerald-55 text-sm font-light leading-relaxed mb-6 max-w-md">
+                  <strong className="text-white font-semibold">Permendagri No. 13 Tahun 2024</strong> mentransformasikan Posyandu agar mencakup 6 Bidang Standar Pelayanan Minimal (SPM) secara menyeluruh.
+                </p>
+                <div className="flex items-center gap-3">
+                  <button className="px-5 py-2.5 bg-emerald-950 text-emerald-300 text-xs font-semibold rounded-full hover:bg-emerald-900 transition-colors shadow-sm">
+                    Unduh Permendagri
+                  </button>
+                  <button className="px-5 py-2.5 bg-white/10 backdrop-blur border border-white/20 text-white text-xs font-semibold rounded-full hover:bg-white/20 transition-colors">
+                    Pelajari Selengkapnya
+                  </button>
+                </div>
+              </div>
+
+              {/* 3D Floating Document Mockup on Right */}
+              <div className="relative w-full md:w-[320px] h-[220px] mt-6 md:mt-0 overflow-hidden z-10">
+                <Image
+                  src="/images/permendagri_mockup.png"
+                  alt="Permendagri No 13 2024"
+                  fill
+                  className="object-contain transition-transform duration-500 hover:scale-105"
+                  sizes="320px"
+                />
+              </div>
+
+              {/* Decorative radial overlay blur */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none" />
+            </div>
           </div>
         </div>
       </section>

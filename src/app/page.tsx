@@ -473,44 +473,62 @@ export default function Home() {
             {[
               {
                 badge: "Kelembagaan",
-                title: "Terstruktur",
-                desc: "Pembagian peran yang jelas dari Kabupaten hingga Kader Desa sesuai Permendagri No. 13/2024. Setiap jenjang memiliki tugas dan kewenangan yang ditetapkan.",
+                title: "Tata Kelola Terstruktur Hingga Tingkat Kader Desa",
                 mockup: (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center">
-                    <div className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
-                      Kabupaten
+                  <div className="w-full h-full flex items-center justify-between gap-4 p-4">
+                    <div className="flex flex-col gap-2 w-2/3">
+                      {[
+                        { label: "Kabupaten", val: "Aktif", isBadge: true },
+                        { label: "Kecamatan", val: "24 Wilayah", isBadge: false },
+                        { label: "Posyandu Desa", val: "1.100+ Pos", isBadge: false }
+                      ].map((item, i) => (
+                        <div key={i} className="flex justify-between items-center gap-2">
+                          <span className="text-[10px] opacity-80 font-medium transition-colors duration-500 text-white group-hover:text-emerald-950">
+                            {item.label}
+                          </span>
+                          {item.isBadge ? (
+                            <span className="px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wide transition-all duration-500 bg-emerald-800 text-emerald-300 group-hover:bg-emerald-950/20 group-hover:text-emerald-900">
+                              {item.val}
+                            </span>
+                          ) : (
+                            <span className="text-[9px] font-semibold transition-colors duration-500 text-emerald-300 group-hover:text-emerald-900">
+                              {item.val}
+                            </span>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                    <svg className="w-full h-10 my-1 stroke-current transition-colors duration-500 text-emerald-600/50 group-hover:text-emerald-800/50" viewBox="0 0 100 40" fill="none">
-                      <path d="M50 0 V20 M50 20 H20 V40 M50 20 H80 V40" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                    <div className="flex justify-between w-full px-1">
-                      <div className="px-2 py-1 rounded text-[9px] font-semibold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
-                        Kecamatan
-                      </div>
-                      <div className="px-2 py-1 rounded text-[9px] font-semibold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
-                        Kader Desa
-                      </div>
+                    <div className="w-1/3 h-full flex flex-col justify-end items-end">
+                      <svg className="w-full h-12 stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-900" viewBox="0 0 60 30" fill="none" strokeWidth="2" strokeLinecap="round">
+                        <path d="M5 25 Q 15 15, 25 20 T 45 5 T 55 10" />
+                        <circle cx="45" cy="5" r="3" className="fill-current" />
+                      </svg>
                     </div>
                   </div>
                 )
               },
               {
                 badge: "Akuntabilitas",
-                title: "Transparan",
-                desc: "Data laporan yang dapat dipertanggungjawabkan dan terpantau. Pelaporan dilakukan secara berjenjang minimal 1 kali per tahun atau sewaktu-waktu jika diperlukan.",
+                title: "Transparansi Data Laporan Real-Time &amp; Akuntabel",
                 mockup: (
-                  <div className="w-full h-full flex items-center justify-between gap-4">
-                    <div className="flex flex-col gap-2.5 w-1/2">
-                      {[1, 2, 3].map((n) => (
-                        <div key={n} className="flex items-center gap-1.5">
-                          <svg className="w-3.5 h-3.5 shrink-0 stroke-current text-emerald-400 group-hover:text-emerald-950" fill="none" viewBox="0 0 24 24" strokeWidth="3">
+                  <div className="w-full h-full flex items-center justify-between gap-4 p-4">
+                    <div className="flex flex-col gap-2 w-1/2">
+                      {[
+                        "100% Valid",
+                        "Akuntabel",
+                        "Ditinjau"
+                      ].map((txt, i) => (
+                        <div key={i} className="flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5 shrink-0 stroke-current text-emerald-400 group-hover:text-emerald-900" fill="none" viewBox="0 0 24 24" strokeWidth="3">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                           </svg>
-                          <div className="h-1.5 w-12 rounded-full transition-colors duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/40"></div>
+                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-emerald-950">
+                            {txt}
+                          </span>
                         </div>
                       ))}
                     </div>
-                    <div className="flex items-end justify-around gap-1.5 h-24 w-1/2 bg-emerald-950/40 rounded-xl p-2 transition-colors duration-500 group-hover:bg-white/40">
+                    <div className="flex items-end justify-around gap-1 h-24 w-1/2 bg-emerald-950/40 rounded-xl p-2 transition-colors duration-500 group-hover:bg-white/50">
                       {[30, 60, 45, 90, 75].map((h, i) => (
                         <div
                           key={i}
@@ -524,29 +542,28 @@ export default function Home() {
               },
               {
                 badge: "Konektivitas",
-                title: "Terintegrasi",
-                desc: "Menghubungkan semua Posyandu dalam satu jaringan digital. Data dari desa mengalir ke kecamatan, kabupaten, provinsi, hingga pusat secara terstruktur.",
+                title: "Integrasi Jaringan Layanan Lintas Sektor Desa",
                 mockup: (
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <svg className="absolute inset-0 w-full h-full stroke-current transition-colors duration-500 text-emerald-800/70 group-hover:text-emerald-600/50" viewBox="0 0 160 120" fill="none">
+                  <div className="relative w-full h-full flex items-center justify-center p-4">
+                    <svg className="absolute inset-0 w-full h-full stroke-current transition-colors duration-500 text-emerald-800/80 group-hover:text-emerald-900/40" viewBox="0 0 160 120" fill="none">
                       <line x1="80" y1="60" x2="30" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="130" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="30" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="130" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
                     </svg>
-                    <div className="absolute w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black transition-all duration-500 bg-emerald-400 text-emerald-950 group-hover:bg-emerald-950 group-hover:text-white shadow-md">
+                    <div className="absolute w-9 h-9 rounded-full flex items-center justify-center text-[9px] font-black transition-all duration-500 bg-emerald-400 text-emerald-950 group-hover:bg-emerald-950 group-hover:text-white shadow-md">
                       SIP
                     </div>
-                    <div className="absolute top-4 left-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
-                      Kesehatan
+                    <div className="absolute top-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
+                      KIA
                     </div>
-                    <div className="absolute top-4 right-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                    <div className="absolute top-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
                       PAUD
                     </div>
-                    <div className="absolute bottom-4 left-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                    <div className="absolute bottom-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
                       Sosial
                     </div>
-                    <div className="absolute bottom-4 right-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                    <div className="absolute bottom-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
                       PU
                     </div>
                   </div>
@@ -554,15 +571,27 @@ export default function Home() {
               },
               {
                 badge: "Regulasi",
-                title: "Berbasis Hukum",
-                desc: "Seluruh proses mengacu pada UU No. 6/2014 tentang Desa, PP No. 43/2014, dan Permendagri No. 13 Tahun 2024 tentang Pos Pelayanan Terpadu.",
+                title: "Kepatuhan Hukum Sesuai Regulasi Permendagri",
                 mockup: (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center">
-                    <svg className="w-14 h-14 fill-none stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-950" viewBox="0 0 24 24" strokeWidth="1.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17M12 5l-8 3h16l-8-3zM4 8l3 8h-6l3-8zM20 8l3 8h-6l3-8zM9 20h6" />
-                    </svg>
-                    <div className="mt-2 text-[7px] tracking-wider uppercase font-bold text-emerald-500 group-hover:text-emerald-900 font-mono">
-                      Permendagri No. 13/2024
+                  <div className="w-full h-full flex items-center justify-between gap-4 p-4">
+                    <div className="flex flex-col gap-2 w-2/3">
+                      {[
+                        "UU Desa No. 6/2014",
+                        "PP No. 43/2014",
+                        "Permendagri 13/2024"
+                      ].map((txt, i) => (
+                        <div key={i} className="flex items-center gap-1.5">
+                          <div className="w-1.5 h-1.5 rounded-full transition-colors duration-500 bg-emerald-400 group-hover:bg-emerald-950"></div>
+                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-emerald-950">
+                            {txt}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="w-1/3 h-full flex items-center justify-center">
+                      <svg className="w-12 h-12 fill-none stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-900" viewBox="0 0 24 24" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17M12 5l-8 3h16l-8-3zM4 8l3 8h-6l3-8zM20 8l3 8h-6l3-8zM9 20h6" />
+                      </svg>
                     </div>
                   </div>
                 )
@@ -570,27 +599,22 @@ export default function Home() {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="group relative p-6 bg-white border border-slate-100 rounded-3xl transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[480px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2"
+                className="group relative p-6 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[380px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50"
               >
                 <div className="flex flex-col">
                   {/* Badge */}
-                  <span className="inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 transition-colors duration-500 group-hover:bg-emerald-500/20 group-hover:text-emerald-300">
+                  <span className="inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 transition-colors duration-500 group-hover:bg-white/20 group-hover:text-white">
                     {feature.badge}
                   </span>
 
                   {/* Title */}
-                  <h4 className="text-lg font-extrabold text-slate-900 mt-4 leading-snug transition-colors duration-500 group-hover:text-white">
+                  <h4 className="text-lg md:text-xl font-extrabold text-slate-900 mt-4 leading-snug transition-colors duration-500 group-hover:text-white tracking-tight">
                     {feature.title}
                   </h4>
-
-                  {/* Description */}
-                  <p className="text-xs text-slate-500 mt-2 font-native font-normal leading-relaxed transition-colors duration-500 group-hover:text-emerald-100/70">
-                    {feature.desc}
-                  </p>
                 </div>
 
                 {/* Mockup Image/Graphic */}
-                <div className="mt-6 w-full h-40 rounded-2xl p-4 transition-all duration-500 flex flex-col justify-between overflow-hidden bg-emerald-900/95 text-white group-hover:bg-emerald-400 group-hover:text-emerald-950">
+                <div className="mt-6 w-full h-40 rounded-[20px] transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
                   {feature.mockup}
                 </div>
               </div>

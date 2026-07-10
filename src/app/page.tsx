@@ -624,62 +624,185 @@ export default function Home() {
       </section>
 
       {/* Section: Struktur Kelembagaan */}
-      <section className="py-20 bg-slate-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-slate-50/50 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+          <div className="text-center mb-20">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Struktur Kelembagaan
             </span>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Koordinasi Berjenjang</h2>
-            <p className="text-slate-500 font-native font-normal">5 tingkat Tim Pembina sesuai regulasi</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+              Koordinasi Berjenjang SIPANDU
+            </h2>
+            <p className="text-slate-500 font-native font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+              Alur koordinasi 5 tingkat Tim Pembina Posyandu dari Pusat hingga tingkat Kader di Kabupaten Lampung Timur.
+            </p>
           </div>
 
-          {/* Timeline / Cards */}
-          <div className="relative flex flex-col lg:flex-row justify-between items-start gap-2 lg:gap-6 max-w-6xl mx-auto">
-            {/* Connecting line for desktop */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-emerald-100 -translate-y-1/2 z-0" />
+          {/* Timeline Wrapper */}
+          <div className="relative flex flex-col space-y-8 lg:-space-y-24 max-w-4xl mx-auto">
+            {/* Mobile Vertical Connecting Line */}
+            <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
 
             {[
-              { num: "01", title: "Pemerintah Pusat", subtitle: "Menteri Dalam Negeri", desc: "Perumusan kebijakan nasional, regulasi Standar Pelayanan Minimal (SPM), dan fasilitasi Tim Pembina Posyandu Pusat." },
-              { num: "02", title: "Pemerintah Provinsi", subtitle: "Gubernur / Dinas PMD", desc: "Koordinasi pembinaan, pengawasan pelaksanaan program kerja daerah, serta penetapan Tim Pembina Posyandu Tingkat Provinsi." },
-              { num: "03", title: "Pemerintah Kabupaten / Kota", subtitle: "Bupati / Walikota", desc: "Penyusunan kebijakan daerah, penyediaan alokasi anggaran APBD, pembinaan berkala, serta penetapan Tim Pembina Kabupaten." },
-              { num: "04", title: "Kecamatan & Puskesmas", subtitle: "Camat & Kepala Puskesmas", desc: "Pengawasan operasional lapangan, bimbingan teknis berkala kepada kader, serta sinkronisasi data pelayanan kesehatan dasar." },
-              { num: "05", title: "Kader Posyandu Desa", subtitle: "Pengurus & Kader Desa", desc: "Pelaksanaan operasional langsung pelayanan 6 Bidang SPM, pencatatan data secara riil, dan pendekatan pelayanan ke warga desa." },
-            ].map((step, idx) => (
-              <motion.div
-                key={idx}
-                className="relative z-10 w-full lg:w-1/5 flex flex-col items-center pt-5 lg:pt-0"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                {/* Number Badge */}
-                <div className="absolute top-0 lg:relative lg:top-auto w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-emerald-500/20 z-20 mb-0 lg:mb-4">
-                  {step.num}
-                </div>
-                
-                {/* Card */}
+              {
+                num: "01",
+                title: "Pemerintah Pusat",
+                subtitle: "Menteri Dalam Negeri",
+                desc: "Perumusan kebijakan nasional, regulasi Standar Pelayanan Minimal (SPM), dan fasilitasi Tim Pembina Posyandu Pusat.",
+                role: "Mendagri",
+                theme: "green",
+                icon: (
+                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                  </svg>
+                )
+              },
+              {
+                num: "02",
+                title: "Pemerintah Provinsi",
+                subtitle: "Gubernur / Dinas PMD",
+                desc: "Koordinasi pembinaan, pengawasan pelaksanaan program kerja daerah, serta penetapan Tim Pembina Posyandu Tingkat Provinsi.",
+                role: "Gubernur",
+                theme: "slate",
+                icon: (
+                  <svg className="w-4 h-4 transition-colors duration-500 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                )
+              },
+              {
+                num: "03",
+                title: "Pemerintah Kabupaten / Kota",
+                subtitle: "Bupati / Walikota",
+                desc: "Penyusunan kebijakan daerah, penyediaan alokasi anggaran APBD, pembinaan berkala, serta penetapan Tim Pembina Kabupaten.",
+                role: "Bupati",
+                theme: "green",
+                icon: (
+                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                )
+              },
+              {
+                num: "04",
+                title: "Kecamatan & Puskesmas",
+                subtitle: "Camat & Kepala Puskesmas",
+                desc: "Pengawasan operasional lapangan, bimbingan teknis berkala kepada kader, serta sinkronisasi data pelayanan kesehatan dasar.",
+                role: "Camat",
+                theme: "slate",
+                icon: (
+                  <svg className="w-4 h-4 transition-colors duration-500 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg>
+                )
+              },
+              {
+                num: "05",
+                title: "Kader Posyandu Desa",
+                subtitle: "Pengurus & Kader Desa",
+                desc: "Pelaksanaan operasional langsung pelayanan 6 Bidang SPM, pencatatan data secara riil, dan pendekatan pelayanan ke warga desa.",
+                role: "Kader Desa",
+                theme: "green",
+                icon: (
+                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11v11a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                )
+              }
+            ].map((step, idx) => {
+              const isGreen = step.theme === "green";
+              const isEven = idx % 2 !== 0;
+              return (
                 <motion.div
-                  className="bg-white p-5 pt-8 lg:pt-5 rounded-xl border border-slate-100 shadow-sm transition-all w-full min-h-[140px] lg:min-h-[160px] flex flex-col justify-center lg:justify-between z-10 cursor-pointer"
-                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
+                  key={idx}
+                  className={`relative z-10 w-full lg:w-[calc(50%-1.5rem)] flex items-stretch ${
+                    isEven ? "self-end" : "self-start"
+                  }`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.15 }}
+                  viewport={{ once: true, margin: "-100px" }}
                 >
-                  <div className="text-center">
-                    <h3 className="text-sm font-bold text-slate-900 mb-0.5">{step.title}</h3>
-                    <p className="text-xs text-emerald-600 font-medium mb-2">{step.subtitle}</p>
-                    <p className="text-xs text-slate-500 font-native font-normal leading-relaxed">{step.desc}</p>
-                  </div>
-                </motion.div>
+                  {/* Outer Card with border and shadow */}
+                  <div
+                    className={`group relative flex items-stretch w-full p-3 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+                      isGreen
+                        ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
+                        : "bg-white border-slate-100 hover:bg-slate-50/50"
+                    }`}
+                  >
+                    {/* Rotated Vertical Pill Badge on Left */}
+                    <div
+                      className={`flex items-center justify-center py-4 px-2.5 w-10 rounded-2xl transition-all duration-500 shrink-0 select-none ${
+                        isGreen
+                          ? "bg-[#0a2f1c] text-[#d9f99d]"
+                          : "bg-slate-900 text-slate-300"
+                      }`}
+                    >
+                      <span className="[writing-mode:vertical-lr] rotate-180 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
+                        {step.role}
+                      </span>
+                    </div>
 
-                {/* Arrow for mobile */}
-                {idx < 4 && (
-                  <div className="block lg:hidden mt-2 mb-0 text-emerald-500 font-bold text-xl">
-                    ↓
+                    {/* Content Section on Right */}
+                    <div className="flex flex-col justify-between p-4 flex-1">
+                      {/* Top Header Row (Icon + Number + Title) */}
+                      <div className="flex items-center gap-2 mb-2">
+                        {/* Icon Container */}
+                        <div
+                          className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                            isGreen
+                              ? "bg-[#e5f4d2] text-[#0a2f1c]"
+                              : "bg-slate-100 text-slate-700"
+                          }`}
+                        >
+                          {step.icon}
+                        </div>
+                        {/* Step Number & Title */}
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="text-xs font-bold font-mono opacity-65">
+                            {step.num}
+                          </span>
+                          <h3 className={`text-base font-extrabold tracking-tight ${
+                            isGreen ? "text-[#0a2f1c]" : "text-slate-900"
+                          }`}>
+                            {step.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Subtitle / Department */}
+                      <span className={`text-[10px] font-bold uppercase tracking-wider mb-2 block ${
+                        isGreen ? "text-emerald-700" : "text-slate-500"
+                      }`}>
+                        {step.subtitle}
+                      </span>
+
+                      {/* Description Paragraph */}
+                      <p className={`text-xs font-native font-normal leading-relaxed ${
+                        isGreen ? "text-emerald-950/80" : "text-slate-600"
+                      }`}>
+                        {step.desc}
+                      </p>
+                    </div>
                   </div>
-                )}
-              </motion.div>
-            ))}
+
+                  {/* Connecting Line (Only on Desktop) */}
+                  {idx < 4 && (
+                    isEven ? (
+                      /* Connects Even Card (Right Col) down to Odd Card (Left Col) */
+                      <div className="hidden lg:block absolute right-[95%] top-[60%] w-[30%] h-[180px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
+                    ) : (
+                      /* Connects Odd Card (Left Col) down to Even Card (Right Col) */
+                      <div className="hidden lg:block absolute left-[95%] top-[60%] w-[30%] h-[180px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
+                    )
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

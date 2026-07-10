@@ -762,7 +762,7 @@ export default function Home() {
                           {step.icon}
                         </div>
                         {/* Step Number & Title (Mockup style) */}
-                        <h3 className={`text-base md:text-lg font-extrabold tracking-tight ${
+                        <h3 className={`text-lg md:text-xl font-extrabold tracking-tight ${
                           isGreen ? "text-[#0a2f1c]" : "text-slate-900"
                         }`}>
                           {parseInt(step.num)} {step.title}
@@ -777,7 +777,7 @@ export default function Home() {
                       </span>
 
                       {/* Description Paragraph */}
-                      <p className={`text-xs font-normal leading-relaxed ${
+                      <p className={`text-xs md:text-sm font-normal leading-relaxed ${
                         isGreen ? "text-emerald-950/80" : "text-slate-600"
                       }`}>
                         {step.desc}

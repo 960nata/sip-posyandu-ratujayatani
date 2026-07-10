@@ -932,7 +932,7 @@ export default function Home() {
               </div>
 
               {/* Network Graph Interactive Mockup Graphic (Top-Down Tree like mockup) */}
-              <div className="relative h-[220px] bg-[#f8fafc] border-t border-slate-100 flex items-center justify-center mt-auto overflow-hidden">
+              <div className="relative h-[220px] bg-white flex items-center justify-center mt-auto overflow-hidden">
                 <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 200">
                   <path d="M 150,36 C 130,85 50,85 50,140" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />
                   <path d="M 150,36 C 135,100 100,100 100,165" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 3" />

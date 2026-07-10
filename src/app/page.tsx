@@ -183,8 +183,8 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
-            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal max-w-3xl text-center">
-              Mentransformasi pencatatan manual menjadi digital guna mendukung keputusan strategis berbasis data.
+            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal">
+              Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
             </p>
           </div>
 
@@ -193,18 +193,18 @@ export default function Home() {
             {[
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg",
-                title: "Integrasi Sektoral",
-                desc: "Menghubungkan data pelayanan 6 Bidang Standar Pelayanan Minimal (SPM) mulai dari Kesehatan, Pendidikan Anak Usia Dini (PAUD), Sanitasi Lingkungan, Pekerjaan Umum, hingga Layanan Sosial dalam satu pangkalan data terpadu.",
+                title: "Integrasi Data",
+                desc: "Menghubungkan berbagai sektor krusial dalam satu platform terpadu.",
               },
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg",
-                title: "Efisiensi Operasional",
-                desc: "Mengotomatisasi pelaporan berkala berjenjang dari tingkat Posyandu desa langsung ke tingkat Kecamatan dan Kabupaten, meminimalisir waktu kader desa untuk administrasi formulir fisik.",
+                title: "Efisiensi Pelayanan",
+                desc: "Mempercepat proses pencatatan dan pelaporan di setiap posyandu.",
               },
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg",
-                title: "Transparansi & Akurasi",
-                desc: "Menyediakan akses data statistik kesehatan dan pelayanan publik desa yang kredibel, valid, dan dapat dipertanggungjawabkan guna mendukung program pencegahan stunting dan kemiskinan ekstrem.",
+                title: "Transparansi",
+                desc: "Data yang akurat dan terpercaya, dapat diakses setiap saat.",
               },
             ].map((card, i) => (
               <div

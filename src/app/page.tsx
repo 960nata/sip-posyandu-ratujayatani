@@ -243,7 +243,7 @@ export default function Home() {
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold uppercase tracking-widest mb-4">
               Permendagri No. 13 Tahun 2024
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
               Cakupan Pelayanan{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
                 Posyandu
@@ -338,7 +338,7 @@ export default function Home() {
                   </div>
 
                   {/* Arrow button in the cutout */}
-                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-emerald-200/70">
+                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border-2 border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-emerald-200/70">
                     <ArrowUpRight className="w-4 h-4 text-slate-900 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
                   </div>
                 </div>

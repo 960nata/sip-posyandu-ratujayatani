@@ -333,90 +333,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section: Galeri Kegiatan Posyandu */}
-      <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-          <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
-            Dokumentasi Lapangan
-          </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Galeri Kegiatan{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
-              Posyandu
-            </span>
-          </h2>
-          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal">
-            Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
-          </p>
-        </div>
-
-        <div className="marquee-container space-y-6 overflow-hidden py-2">
-          {/* First Row: Left Scrolling */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee-left flex gap-6">
-              {[
-                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
-                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
-                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
-                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
-                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
-                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
-                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
-                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
-              ].map((item, idx) => (
-                <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="320px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Second Row: Right Scrolling */}
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee-right flex gap-6">
-              {[
-                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
-                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
-                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
-                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
-                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
-                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
-                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
-              ].map((item, idx) => (
-                <div key={`r2-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="320px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Section: Lampung Timur dalam Angka */}
       <section className="py-20 bg-[#12291b] overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -599,7 +515,7 @@ export default function Home() {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[32px] transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[320px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-3xl transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[320px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2 border border-slate-100/50 overflow-hidden"
               >
                 <div className="flex flex-col">
                   {/* Badge */}
@@ -614,7 +530,7 @@ export default function Home() {
                 </div>
 
                 {/* Mockup Image/Graphic */}
-                <div className="mt-6 w-full h-40 rounded-t-[20px] rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
+                <div className="mt-6 w-full h-40 rounded-t-2xl rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
                   {feature.mockup}
                 </div>
               </div>
@@ -734,7 +650,7 @@ export default function Home() {
                 >
                   {/* Outer Card with border and shadow */}
                   <div
-                    className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+                    className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-3xl border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
                         ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
                         : "bg-white border-slate-100 hover:bg-slate-50/50"
@@ -860,6 +776,90 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section: Galeri Kegiatan Posyandu */}
+      <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+          <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
+            Dokumentasi Lapangan
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Galeri Kegiatan{" "}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
+              Posyandu
+            </span>
+          </h2>
+          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal">
+            Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
+          </p>
+        </div>
+
+        <div className="marquee-container space-y-6 overflow-hidden py-2">
+          {/* First Row: Left Scrolling */}
+          <div className="flex overflow-hidden">
+            <div className="animate-marquee-left flex gap-6">
+              {[
+                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
+                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
+              ].map((item, idx) => (
+                <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="320px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Second Row: Right Scrolling */}
+          <div className="flex overflow-hidden">
+            <div className="animate-marquee-right flex gap-6">
+              {[
+                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
+                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
+                { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
+              ].map((item, idx) => (
+                <div key={`r2-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="320px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section: Landasan Hukum */}
       <section id="hukum" className="py-24 bg-slate-50/50">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -879,7 +879,7 @@ export default function Home() {
           {/* Grid Layout (Mockup style) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1140px] mx-auto">
             {/* Card 1: Pathways (Undang-Undang Desa) - Col 1, Row 1 */}
-            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
               <div className="p-8">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block mb-2">
                   Regulasi Dasar
@@ -900,22 +900,25 @@ export default function Home() {
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
                 {/* Overlay Tags like mockup */}
-                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 z-10">
-                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
+                <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-2 z-10 px-3">
+                  <span className="px-4 py-2 bg-slate-200/70 backdrop-blur-md text-xs font-semibold rounded-full text-slate-900 whitespace-nowrap">
                     LKD Resmi
                   </span>
-                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
-                    Otonomi Desa
+                  <span className="px-4 py-2 bg-slate-200/70 backdrop-blur-md text-xs font-semibold rounded-full text-slate-900 whitespace-nowrap">
+                    Otonomi
                   </span>
-                  <span className="px-3 py-1 bg-white/95 backdrop-blur text-[10px] font-bold rounded-full shadow-sm text-slate-800 uppercase tracking-wider">
-                    UU No. 3/2024
+                  <span className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-md">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </span>
+                  <span className="px-4 py-2 bg-white text-xs font-semibold rounded-full text-slate-900 shadow-sm whitespace-nowrap">
+                    UU 3/2024
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Card 2: Teamwork (Sinergi Pembinaan) - Col 2, Row 1 */}
-            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
+            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all duration-300">
               <div className="p-8">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
                   Keputusan Bersama
@@ -928,60 +931,84 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Network Graph Interactive Mockup Graphic */}
-              <div className="relative h-[220px] bg-slate-50/50 flex items-center justify-center border-t border-slate-50 mt-auto overflow-hidden">
-                {/* SVG Network Graph Grid Animation */}
-                <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 200 200">
-                  {/* Orbit Rings */}
-                  <circle cx="100" cy="100" r="70" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
-                  <circle cx="100" cy="100" r="45" stroke="#f1f5f9" strokeWidth="1" />
-                  
-                  {/* Connection Lines to Orbiting nodes */}
-                  <line x1="100" y1="100" x2="40" y2="60" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
-                  <line x1="100" y1="100" x2="160" y2="70" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
-                  <line x1="100" y1="100" x2="70" y2="155" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
-                  <line x1="100" y1="100" x2="140" y2="150" stroke="#e2e8f0" strokeWidth="1.5" strokeDasharray="2 2" />
+              {/* Network Fan Graphic (Teamwork style) */}
+              <div className="relative h-[220px] mt-auto overflow-hidden">
+                <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 300 210">
+                  {/* Decorative fan rays from top-center node */}
+                  <path d="M150,38 Q60,90 14,145" stroke="#eef2f6" strokeWidth="1" />
+                  <path d="M150,38 Q85,100 52,180" stroke="#eef2f6" strokeWidth="1" />
+                  <path d="M150,38 Q125,110 118,195" stroke="#eef2f6" strokeWidth="1" />
+                  <path d="M150,38 Q175,110 182,195" stroke="#eef2f6" strokeWidth="1" />
+                  <path d="M150,38 Q215,100 248,180" stroke="#eef2f6" strokeWidth="1" />
+                  <path d="M150,38 Q240,90 286,145" stroke="#eef2f6" strokeWidth="1" />
 
-                  {/* Outer Orbiting nodes */}
-                  <g className="cursor-pointer group">
-                    <circle cx="40" cy="60" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
-                    <text x="40" y="63" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">PRV</text>
-                  </g>
-                  <g className="cursor-pointer group">
-                    <circle cx="160" cy="70" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
-                    <text x="160" y="73" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">KAB</text>
-                  </g>
-                  <g className="cursor-pointer group">
-                    <circle cx="70" cy="155" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
-                    <text x="70" y="158" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">KEC</text>
-                  </g>
-                  <g className="cursor-pointer group">
-                    <circle cx="140" cy="150" r="14" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" className="transition-colors group-hover:stroke-emerald-400" />
-                    <text x="140" y="153" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#64748b">DES</text>
-                  </g>
+                  {/* Connector curves to nodes */}
+                  <path d="M150,38 Q95,78 64,116" stroke="#e2e8f0" strokeWidth="1.2" />
+                  <path d="M150,38 Q118,102 113,148" stroke="#e2e8f0" strokeWidth="1.2" />
+                  <path d="M150,38 Q182,102 187,148" stroke="#e2e8f0" strokeWidth="1.2" />
+                  <path d="M150,38 Q205,78 236,116" stroke="#e2e8f0" strokeWidth="1.2" />
 
-                  {/* Center Node (Mendagri) */}
-                  <circle cx="100" cy="100" r="22" fill="#0a2f1c" />
-                  <text x="100" y="103" fontSize="9" fontWeight="black" textAnchor="middle" fill="#d9f99d">PUSAT</text>
+                  {/* Top center node (PUSAT) */}
+                  <circle cx="150" cy="30" r="19" fill="#0a2f1c" stroke="#bbf7d0" strokeWidth="3" />
+                  <text x="150" y="33" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#d9f99d">PUSAT</text>
+
+                  {/* Scattered nodes with colored status dots */}
+                  <g className="cursor-pointer">
+                    <circle cx="58" cy="128" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="58" y="131" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">PRV</text>
+                    <circle cx="69" cy="117" r="4.5" fill="#f59e0b" stroke="#fff" strokeWidth="1.5" />
+                  </g>
+                  <g className="cursor-pointer">
+                    <circle cx="112" cy="162" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="112" y="165" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">KAB</text>
+                    <circle cx="123" cy="151" r="4.5" fill="#f43f5e" stroke="#fff" strokeWidth="1.5" />
+                  </g>
+                  <g className="cursor-pointer">
+                    <circle cx="188" cy="162" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="188" y="165" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">KEC</text>
+                    <circle cx="199" cy="151" r="4.5" fill="#0ea5e9" stroke="#fff" strokeWidth="1.5" />
+                  </g>
+                  <g className="cursor-pointer">
+                    <circle cx="242" cy="128" r="15" fill="#fff" stroke="#e2e8f0" strokeWidth="1.5" />
+                    <text x="242" y="131" fontSize="8" fontWeight="bold" textAnchor="middle" fill="#475569">DES</text>
+                    <circle cx="253" cy="117" r="4.5" fill="#10b981" stroke="#fff" strokeWidth="1.5" />
+                  </g>
                 </svg>
               </div>
             </div>
 
             {/* Card 4: Discover learning path (Aturan Pelaksanaan PP) - Col 3, Row 1 & 2 (Tall vertical card) */}
-            <div className="bg-white rounded-[32px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md transition-all duration-300">
-              <div className="p-8">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
+            <div className="bg-white rounded-3xl border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md transition-all duration-300">
+              {/* Browser bar like mockup */}
+              <div className="p-3 pb-0">
+                <div className="flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-100/80">
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5 text-slate-800 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path d="M22 7l-8.5 8.5-5-5L2 17" /><path d="M16 7h6v6" />
+                    </svg>
+                    <span className="text-sm font-bold text-slate-800 tracking-tight">SIPANDU.id</span>
+                  </div>
+                  <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />
+                  </svg>
+                </div>
+              </div>
+
+              <div className="p-8 pt-8 text-center">
+                {/* Centered badge pill */}
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-[11px] font-bold text-slate-800 mb-5">
                   Aturan Pelaksanaan
+                  <span className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[8px] font-black">P</span>
                 </span>
-                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
-                  Aturan Pelaksanaan
+                <h3 className="text-2xl md:text-[28px] font-extrabold text-slate-900 tracking-tight mb-3 leading-tight">
+                  Landasan Operasional
                 </h3>
                 <p className="text-slate-500 text-sm font-normal leading-relaxed mb-6">
-                  PP No. 43 Tahun 2014 & PP No. 11 Tahun 2019 memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu sebagai bagian dari program kesejahteraan nasional.
+                  <strong className="text-slate-800 font-semibold">PP No. 43/2014 & PP No. 11/2019</strong> memberikan landasan hukum operasional yang kuat untuk fasilitasi Posyandu.
                 </p>
 
                 {/* Mock Search Bar like mockup */}
-                <div className="relative mb-6">
+                <div className="relative mb-2">
                   <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-100 bg-slate-50/50 shadow-inner">
                     <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.3-4.3" />
@@ -1014,7 +1041,7 @@ export default function Home() {
             </div>
 
             {/* Card 3: New-packed education (Transformasi Posyandu) - Col 1 & 2, Row 2 (Wide horizontal card) */}
-            <div className="bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 rounded-[32px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-gradient-to-br from-amber-400 via-emerald-500 to-teal-700 rounded-3xl text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex-1 text-left z-10">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-amber-200 block mb-2">
                   Transformasi Layanan Posyandu

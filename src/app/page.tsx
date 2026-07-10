@@ -64,11 +64,7 @@ export default function Home() {
     "/images/hero/hero3.avif",
     "/images/hero/hero4.avif",
     "/images/hero/hero5.avif",
-    "/images/hero/hero6.avif",
-    "/images/hero/PHOTO-2026-05-11-21-46-02.jpg",
-    "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg",
-    "/images/hero/PHOTO-2026-05-11-21-46-04.jpg",
-    "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg"
+    "/images/hero/hero6.avif"
   ];
 
   useEffect(() => {
@@ -144,8 +140,8 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl md:text-6xl font-extrabold tracking-tight mb-6 text-white"
           >
-            Modernisasi Data & Pelayanan <br />
-            <span className="text-white">Sistem Informasi Posyandu</span>
+            Modernisasi Pelayanan & Integrasi Data <br />
+            <span className="text-white">Sistem Informasi Posyandu Kabupaten Lampung Timur</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -153,9 +149,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-slate-200 mb-8 max-w-2xl mx-auto font-native font-normal"
+            className="text-lg text-slate-200 mb-8 max-w-4xl mx-auto font-native font-normal leading-relaxed"
           >
-            Platform digital terintegrasi untuk pengelolaan data lintas sektor mulai dari Kesehatan, Pendidikan, hingga Infrastruktur.
+            Platform digital terpadu untuk monitoring, pencatatan, dan pelaporan 6 Bidang Standar Pelayanan Minimal (SPM). Mengonsolidasikan data secara real-time dari 1.100+ Posyandu aktif dan 5.500+ kader kesehatan di 264 desa/kelurahan di wilayah Kabupaten Lampung Timur.
           </motion.p>
 
           {/* CTA */}
@@ -186,8 +182,8 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
-            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal">
-              Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
+            <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-native font-normal max-w-3xl text-center">
+              Mentransformasi pencatatan manual menjadi digital guna mendukung keputusan strategis berbasis data.
             </p>
           </div>
 
@@ -196,18 +192,18 @@ export default function Home() {
             {[
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg",
-                title: "Integrasi Data",
-                desc: "Menghubungkan berbagai sektor krusial dalam satu platform terpadu.",
+                title: "Integrasi Sektoral",
+                desc: "Menghubungkan data pelayanan 6 Bidang Standar Pelayanan Minimal (SPM) mulai dari Kesehatan, Pendidikan Anak Usia Dini (PAUD), Sanitasi Lingkungan, Pekerjaan Umum, hingga Layanan Sosial dalam satu pangkalan data terpadu.",
               },
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg",
-                title: "Efisiensi Pelayanan",
-                desc: "Mempercepat proses pencatatan dan pelaporan di setiap posyandu.",
+                title: "Efisiensi Operasional",
+                desc: "Mengotomatisasi pelaporan berkala berjenjang dari tingkat Posyandu desa langsung ke tingkat Kecamatan dan Kabupaten, meminimalisir waktu kader desa untuk administrasi formulir fisik.",
               },
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg",
-                title: "Transparansi",
-                desc: "Data yang akurat dan terpercaya, dapat diakses setiap saat.",
+                title: "Transparansi & Akurasi",
+                desc: "Menyediakan akses data statistik kesehatan dan pelayanan publik desa yang kredibel, valid, dan dapat dipertanggungjawabkan guna mendukung program pencegahan stunting dan kemiskinan ekstrem.",
               },
             ].map((card, i) => (
               <div
@@ -249,8 +245,8 @@ export default function Home() {
                 Posyandu
               </span>
             </h2>
-            <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-native font-normal">
-              Sesuai Permendagri No. 13 Tahun 2024, Posyandu melayani 6 Bidang Standar Pelayanan Minimal untuk masyarakat desa.
+            <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
+              Berdasarkan Peraturan Menteri Dalam Negeri Nomor 13 Tahun 2024, Pos Pelayanan Terpadu (Posyandu) kini bertransformasi menjadi lembaga kemasyarakatan desa yang memfasilitasi 6 Bidang Standar Pelayanan Minimal (SPM) untuk peningkatan kesejahteraan masyarakat secara merata.
             </p>
           </div>
 
@@ -261,32 +257,32 @@ export default function Home() {
               {
                 code: "SPM 01",
                 title: "Pendidikan",
-                desc: "PAUD, literasi digital, perpustakaan desa, alat peraga edukasi",
+                desc: "Penyelenggaraan layanan tumbuh kembang anak usia dini (PAUD), pojok baca atau perpustakaan desa, penyediaan alat peraga edukatif, serta peningkatan literasi dasar.",
               },
               {
                 code: "SPM 02",
                 title: "Kesehatan",
-                desc: "Ibu, bayi, balita, remaja, lansia — 5 meja layanan dan kunjungan rumah",
+                desc: "Pemeriksaan kesehatan ibu hamil, pemantauan status gizi balita melalui 5 langkah pelayanan Posyandu, imunisasi dasar lengkap, serta posyandu remaja dan lansia terintegrasi.",
               },
               {
                 code: "SPM 03",
                 title: "Pekerjaan Umum",
-                desc: "Air bersih, sanitasi, embung, jaringan air, jalan desa",
+                desc: "Pemantauan dan pendataan kualitas air bersih layak konsumsi, fasilitas sanitasi keluarga (jamban sehat), pemeliharaan drainase lingkungan, serta prasarana dasar desa.",
               },
               {
                 code: "SPM 04",
                 title: "Perumahan Rakyat",
-                desc: "Identifikasi & rehabilitasi rumah tidak layak huni",
+                desc: "Pencatatan kondisi perumahan warga, identifikasi Rumah Tidak Layak Huni (RTLH) untuk program bantuan rehabilitasi sosial, serta edukasi kebersihan lingkungan tempat tinggal.",
               },
               {
                 code: "SPM 05",
                 title: "Trantibum Linmas",
-                desc: "Ketertiban umum, pengaduan masyarakat, deteksi dini bencana",
+                desc: "Deteksi dini potensi gangguan ketenteraman, penanganan cepat aduan ketertiban umum di tingkat lingkungan, sosialisasi kesiapsiagaan bencana, serta pembinaan Linmas.",
               },
               {
                 code: "SPM 06",
                 title: "Sosial",
-                desc: "Bansos, disabilitas, lansia terlantar, inklusi sosial, kesetaraan gender",
+                desc: "Pendataan penerima bantuan sosial terpadu, pendampingan lansia terlantar dan penyandang disabilitas, promosi inklusi sosial, serta fasilitasi kesetaraan gender.",
               },
             ].map((spm, index) => {
               const isAccent = index % 2 === 1;
@@ -375,12 +371,12 @@ export default function Home() {
                 { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
                 { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
                 { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
+                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
                 { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
                 { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
                 { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
+                { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
               ].map((item, idx) => (
                 <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
@@ -404,14 +400,14 @@ export default function Home() {
           <div className="flex overflow-hidden">
             <div className="animate-marquee-right flex gap-6">
               {[
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg", alt: "Penyuluhan Gizi Lansia" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-04.jpg", alt: "Kunjungan Rumah Balita" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg", alt: "Penyuluhan Gizi Lansia" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-04.jpg", alt: "Kunjungan Rumah Balita" },
-                { src: "/images/hero/PHOTO-2026-05-11-21-46-05 3.jpg", alt: "Kelas Ibu Balita Terpadu" },
+                { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
+                { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
+                { src: "/images/hero/hero6.avif", alt: "Kelas Ibu Balita Terpadu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
               ].map((item, idx) => (
@@ -442,11 +438,11 @@ export default function Home() {
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
               Data Publik
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-              Kab. Lampung Timur dalam Angka
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+              Kabupaten Lampung Timur dalam Angka
             </h2>
-            <p className="text-slate-500 mt-3 max-w-xl mx-auto font-native font-normal">
-              Gambaran skala pelayanan Posyandu yang dikelola melalui sistem SIPANDU.
+            <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
+              Visualisasi skala operasional dan sebaran cakupan pelayanan Posyandu di seluruh wilayah Kabupaten Lampung Timur. Seluruh data dikonsolidasikan secara digital melalui pangkalan data terintegrasi Sistem Informasi Posyandu (SIPANDU).
             </p>
           </div>
 
@@ -517,11 +513,11 @@ export default function Home() {
             <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-emerald-100 -translate-y-1/2 z-0" />
 
             {[
-              { num: "01", title: "Pemerintah Pusat", subtitle: "Menteri", desc: "Penetapan kebijakan nasional & Tim Pembina Pusat" },
-              { num: "02", title: "Pemerintah Provinsi", subtitle: "Gubernur", desc: "Gubernur menetapkan Tim Pembina Provinsi" },
-              { num: "03", title: "Pemkab/Kota", subtitle: "Bupati/Wali Kota", desc: "Bupati/Wali Kota — pembina & pengambil kebijakan" },
-              { num: "04", title: "Kecamatan & Puskesmas", subtitle: "Camat", desc: "Camat — pengawas dan fasilitator lapangan" },
-              { num: "05", title: "Kader Posyandu Desa", subtitle: "Pengurus & Kader", desc: "Pengurus & Kader — pelaksana operasional langsung" },
+              { num: "01", title: "Pemerintah Pusat", subtitle: "Menteri Dalam Negeri", desc: "Perumusan kebijakan nasional, regulasi Standar Pelayanan Minimal (SPM), dan fasilitasi Tim Pembina Posyandu Pusat." },
+              { num: "02", title: "Pemerintah Provinsi", subtitle: "Gubernur / Dinas PMD", desc: "Koordinasi pembinaan, pengawasan pelaksanaan program kerja daerah, serta penetapan Tim Pembina Posyandu Tingkat Provinsi." },
+              { num: "03", title: "Pemerintah Kabupaten / Kota", subtitle: "Bupati / Walikota", desc: "Penyusunan kebijakan daerah, penyediaan alokasi anggaran APBD, pembinaan berkala, serta penetapan Tim Pembina Kabupaten." },
+              { num: "04", title: "Kecamatan & Puskesmas", subtitle: "Camat & Kepala Puskesmas", desc: "Pengawasan operasional lapangan, bimbingan teknis berkala kepada kader, serta sinkronisasi data pelayanan kesehatan dasar." },
+              { num: "05", title: "Kader Posyandu Desa", subtitle: "Pengurus & Kader Desa", desc: "Pelaksanaan operasional langsung pelayanan 6 Bidang SPM, pencatatan data secara riil, dan pendekatan pelayanan ke warga desa." },
             ].map((step, idx) => (
               <motion.div
                 key={idx}
@@ -568,7 +564,7 @@ export default function Home() {
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
               Landasan Hukum
             </span>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi SIPANDU</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)</h2>
             <p className="text-slate-500 font-native font-normal max-w-2xl mx-auto">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
             </p>

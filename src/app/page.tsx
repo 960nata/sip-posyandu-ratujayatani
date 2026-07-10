@@ -166,7 +166,7 @@ export default function Home() {
 
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
             <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-normal">
@@ -226,7 +226,7 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               Cakupan Pelayanan{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
                 Posyandu
@@ -339,7 +339,7 @@ export default function Home() {
           <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
             Dokumentasi Lapangan
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
             Galeri Kegiatan{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
               Posyandu
@@ -425,7 +425,7 @@ export default function Home() {
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3 block">
               Data Publik
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
               Kabupaten Lampung Timur dalam Angka
             </h2>
             <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
@@ -810,7 +810,7 @@ export default function Home() {
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
               Landasan Hukum
             </span>
-            <h2 className="text-3xl font-bold text-slate-900 mb-2">Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)</h2>
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">Dasar Regulasi Sistem Informasi Posyandu (SIPANDU)</h2>
             <p className="text-slate-500 font-normal max-w-2xl mx-auto">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.
             </p>

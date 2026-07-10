@@ -718,9 +718,9 @@ export default function Home() {
               return (
                 <motion.div
                   key={idx}
-                  className={`relative z-10 w-full lg:w-[48%] flex items-stretch ${
+                  className={`relative z-10 w-full lg:w-[450px] flex items-stretch ${
                     isEven ? "self-end" : "self-start"
-                  }`}
+                  } ${idx > 0 ? "lg:-mt-24" : ""}`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.15 }}
@@ -728,7 +728,7 @@ export default function Home() {
                 >
                   {/* Outer Card with border and shadow */}
                   <div
-                    className={`group relative z-10 flex items-stretch w-full p-3 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+                    className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
                         ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
                         : "bg-white border-slate-100 hover:bg-slate-50/50"
@@ -748,7 +748,7 @@ export default function Home() {
                     </div>
 
                     {/* Content Section on Right */}
-                    <div className="flex flex-col justify-between p-4 flex-1">
+                    <div className="flex flex-col justify-between p-3.5 flex-1">
                       {/* Top Header Row (Icon + Number + Title) */}
                       <div className="flex items-center gap-2.5 mb-2">
                         {/* Icon Container */}
@@ -785,14 +785,22 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Connecting Line (Only on Desktop) */}
+                  {/* Connecting Line (Only on Desktop) - Responsive Cubic Bezier Curves */}
                   {idx < 4 && (
                     isEven ? (
                       /* Connects Even Card (Right Col) down to Odd Card (Left Col) in the next row */
-                      <div className="hidden lg:block absolute right-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none -z-10" />
+                      <div className="hidden lg:block absolute left-[380px] right-[380px] top-[90px] h-[200px] pointer-events-none -z-10">
+                        <svg className="w-full h-full stroke-current text-slate-300/40" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                          <path d="M100,10 C50,10 50,90 0,90" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" />
+                        </svg>
+                      </div>
                     ) : (
                       /* Connects Odd Card (Left Col) down to Even Card (Right Col) in the same row */
-                      <div className="hidden lg:block absolute left-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none -z-10" />
+                      <div className="hidden lg:block absolute left-[380px] right-[380px] top-[90px] h-[200px] pointer-events-none -z-10">
+                        <svg className="w-full h-full stroke-current text-emerald-300/30" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                          <path d="M0,10 C50,10 50,90 100,90" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" />
+                        </svg>
+                      </div>
                     )
                   )}
                 </motion.div>

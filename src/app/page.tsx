@@ -307,29 +307,33 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className="relative transition-all duration-300 hover:-translate-y-1"
+                  className="group relative transition-all duration-300 ease-out hover:-translate-y-2"
                 >
                   {/* Card body with circular corner cutout */}
                   <div
-                    className={`rounded-2xl p-5 min-h-[150px] ${
-                      isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
+                    className={`rounded-2xl p-7 min-h-[170px] transition-colors duration-300 ${
+                      isAccent
+                        ? "bg-emerald-400 group-hover:bg-emerald-500"
+                        : "bg-emerald-50/70 group-hover:bg-emerald-100/80"
                     }`}
                     style={maskStyle}
                   >
                     {/* Title */}
-                    <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2 pr-14">
+                    <p className="text-xl font-extrabold text-slate-900 tracking-tight mb-2.5 pr-12 transition-transform duration-300 group-hover:translate-x-1">
                       {spm.title}
                     </p>
 
                     {/* Caption */}
-                    <p className={`text-xs leading-relaxed ${isAccent ? "text-slate-800/80" : "text-slate-500"}`}>
+                    <p className={`text-xs leading-relaxed transition-transform duration-300 delay-[50ms] group-hover:translate-x-1 ${
+                      isAccent ? "text-slate-800/80" : "text-slate-500"
+                    }`}>
                       {spm.desc}
                     </p>
                   </div>
 
                   {/* Arrow button in the cutout */}
-                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border border-slate-300 bg-white flex items-center justify-center">
-                    <ArrowUpRight className="w-4 h-4 text-slate-900" />
+                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110">
+                    <ArrowUpRight className="w-4 h-4 text-slate-900 transition-all duration-300 group-hover:rotate-45 group-hover:text-white" />
                   </div>
                 </div>
               );

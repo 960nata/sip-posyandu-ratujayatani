@@ -640,8 +640,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Timeline Wrapper */}
-          <div className="relative flex flex-col space-y-8 lg:-space-y-24 max-w-4xl mx-auto">
+          {/* Timeline Grid Wrapper */}
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-12 max-w-4xl mx-auto mt-12">
             {/* Mobile Vertical Connecting Line */}
             <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
 
@@ -718,8 +718,8 @@ export default function Home() {
               return (
                 <motion.div
                   key={idx}
-                  className={`relative z-10 w-full lg:w-[calc(50%-1.5rem)] flex items-stretch ${
-                    isEven ? "self-end" : "self-start"
+                  className={`relative z-10 w-full flex items-stretch lg:odd:col-start-1 lg:even:col-start-2 ${
+                    isEven ? "lg:mt-20" : ""
                   }`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -750,28 +750,23 @@ export default function Home() {
                     {/* Content Section on Right */}
                     <div className="flex flex-col justify-between p-4 flex-1">
                       {/* Top Header Row (Icon + Number + Title) */}
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2.5 mb-2">
                         {/* Icon Container */}
                         <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                             isGreen
-                              ? "bg-[#e5f4d2] text-[#0a2f1c]"
+                              ? "bg-[#d8f3b8] text-[#0a2f1c]"
                               : "bg-slate-100 text-slate-700"
                           }`}
                         >
                           {step.icon}
                         </div>
-                        {/* Step Number & Title */}
-                        <div className="flex items-baseline gap-1.5">
-                          <span className="text-xs font-bold font-mono opacity-65">
-                            {step.num}
-                          </span>
-                          <h3 className={`text-base font-extrabold tracking-tight ${
-                            isGreen ? "text-[#0a2f1c]" : "text-slate-900"
-                          }`}>
-                            {step.title}
-                          </h3>
-                        </div>
+                        {/* Step Number & Title (Mockup style) */}
+                        <h3 className={`text-base md:text-lg font-extrabold tracking-tight ${
+                          isGreen ? "text-[#0a2f1c]" : "text-slate-900"
+                        }`}>
+                          {parseInt(step.num)} {step.title}
+                        </h3>
                       </div>
 
                       {/* Subtitle / Department */}
@@ -793,11 +788,11 @@ export default function Home() {
                   {/* Connecting Line (Only on Desktop) */}
                   {idx < 4 && (
                     isEven ? (
-                      /* Connects Even Card (Right Col) down to Odd Card (Left Col) */
-                      <div className="hidden lg:block absolute right-[95%] top-[60%] w-[30%] h-[180px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
+                      /* Connects Even Card (Right Col) down to Odd Card (Left Col) in the next row */
+                      <div className="hidden lg:block absolute right-[95%] top-[50%] w-[35%] h-[220px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
                     ) : (
-                      /* Connects Odd Card (Left Col) down to Even Card (Right Col) */
-                      <div className="hidden lg:block absolute left-[95%] top-[60%] w-[30%] h-[180px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
+                      /* Connects Odd Card (Left Col) down to Even Card (Right Col) in the same row */
+                      <div className="hidden lg:block absolute left-[95%] top-[50%] w-[35%] h-[140px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
                     )
                   )}
                 </motion.div>

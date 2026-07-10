@@ -785,30 +785,30 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Connecting Line (Only on Desktop) - Responsive Cubic Bezier S-Curve with Arrowheads */}
+                  {/* Connecting Line (Only on Desktop) - Fixed Pixel Coordinates for Non-Distorted S-Curves with Fine Arrowheads */}
                   {idx < 4 && (
                     isEven ? (
                       /* Connects Even Card (Right Col, Governor) down to Odd Card (Left Col, Bupati) in the next row */
                       <div className="hidden lg:block absolute right-[90%] top-[75px] w-[428px] h-[160px] pointer-events-none z-0">
-                        <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <svg className="w-full h-full" fill="none" viewBox="0 0 428 160">
                           <defs>
-                            <marker id={`arrow-slate-${idx}`} viewBox="0 0 10 10" refX="5" refY="7" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                              <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                            <marker id={`arrow-slate-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                              <path d="M 2 1 L 8 5 L 2 9 z" fill="#64748b" />
                             </marker>
                           </defs>
-                          <path d="M100,10 L 40,10 C 15,10 5,30 5,60 L 5,90" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" marker-end={`url(#arrow-slate-${idx})`} />
+                          <path d="M 428,30 C 220,30 43,30 43,90 L 43,148" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" marker-end={`url(#arrow-slate-${idx})`} />
                         </svg>
                       </div>
                     ) : (
                       /* Connects Odd Card (Left Col, Mendagri) down to Even Card (Right Col, Governor) in the same row */
                       <div className="hidden lg:block absolute left-[90%] top-[75px] w-[428px] h-[160px] pointer-events-none z-0">
-                        <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <svg className="w-full h-full" fill="none" viewBox="0 0 428 160">
                           <defs>
-                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="7" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                              <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                              <path d="M 2 1 L 8 5 L 2 9 z" fill="#059669" />
                             </marker>
                           </defs>
-                          <path d="M0,10 L 60,10 C 85,10 95,30 95,60 L 95,90" stroke="#a7f3d0" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" marker-end={`url(#arrow-emerald-${idx})`} />
+                          <path d="M 0,30 C 208,30 385,30 385,90 L 385,148" stroke="#a7f3d0" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" marker-end={`url(#arrow-emerald-${idx})`} />
                         </svg>
                       </div>
                     )

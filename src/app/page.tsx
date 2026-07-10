@@ -641,7 +641,7 @@ export default function Home() {
           </div>
 
           {/* Timeline Wrapper (Flex Column matching the mockup layout) */}
-          <div className="relative flex flex-col space-y-16 lg:space-y-24 max-w-[1200px] mx-auto mt-12">
+          <div className="relative flex flex-col space-y-16 lg:space-y-24 max-w-[1000px] mx-auto mt-12">
             {/* Mobile Vertical Connecting Line */}
             <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
 
@@ -718,7 +718,7 @@ export default function Home() {
               return (
                 <motion.div
                   key={idx}
-                  className={`relative z-10 w-full lg:w-[450px] flex items-stretch ${
+                  className={`relative z-10 w-full lg:w-[420px] flex items-stretch ${
                     isEven ? "self-end" : "self-start"
                   } ${idx > 0 ? "lg:-mt-24" : ""}`}
                   initial={{ opacity: 0, y: 30 }}
@@ -785,20 +785,30 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Connecting Line (Only on Desktop) - Responsive Cubic Bezier Curves */}
+                  {/* Connecting Line (Only on Desktop) - Responsive Cubic Bezier S-Curve with Arrowheads */}
                   {idx < 4 && (
                     isEven ? (
-                      /* Connects Even Card (Right Col) down to Odd Card (Left Col) in the next row */
-                      <div className="hidden lg:block absolute left-[380px] right-[380px] top-[90px] h-[200px] pointer-events-none -z-10">
-                        <svg className="w-full h-full stroke-current text-slate-300/40" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
-                          <path d="M100,10 C50,10 50,90 0,90" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" />
+                      /* Connects Even Card (Right Col, Governor) down to Odd Card (Left Col, Bupati) in the next row */
+                      <div className="hidden lg:block absolute right-[90%] top-[90px] w-[412px] h-[200px] pointer-events-none -z-10">
+                        <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                          <defs>
+                            <marker id={`arrow-slate-${idx}`} viewBox="0 0 10 10" refX="5" refY="7" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                              <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                            </marker>
+                          </defs>
+                          <path d="M100,10 L 40,10 C 15,10 5,30 5,60 L 5,92" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" marker-end={`url(#arrow-slate-${idx})`} />
                         </svg>
                       </div>
                     ) : (
-                      /* Connects Odd Card (Left Col) down to Even Card (Right Col) in the same row */
-                      <div className="hidden lg:block absolute left-[380px] right-[380px] top-[90px] h-[200px] pointer-events-none -z-10">
-                        <svg className="w-full h-full stroke-current text-emerald-300/30" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
-                          <path d="M0,10 C50,10 50,90 100,90" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" />
+                      /* Connects Odd Card (Left Col, Mendagri) down to Even Card (Right Col, Governor) in the same row */
+                      <div className="hidden lg:block absolute left-[90%] top-[90px] w-[412px] h-[200px] pointer-events-none -z-10">
+                        <svg className="w-full h-full" fill="none" preserveAspectRatio="none" viewBox="0 0 100 100">
+                          <defs>
+                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="7" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                              <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+                            </marker>
+                          </defs>
+                          <path d="M0,10 L 60,10 C 85,10 95,30 95,60 L 95,92" stroke="#a7f3d0" strokeWidth="2" strokeDasharray="4 4" strokeLinecap="round" marker-end={`url(#arrow-emerald-${idx})`} />
                         </svg>
                       </div>
                     )

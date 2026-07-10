@@ -116,7 +116,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/10 z-10"></div>
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+        <div className="relative z-10 max-w-[1140px] mx-auto px-4 text-center">
           {/* Badge */}
 
 
@@ -162,7 +162,7 @@ export default function Home() {
 
       {/* Section: Mengapa SIP Hadir */}
       <section id="layanan" className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
           <div className="text-center mb-12">
@@ -175,7 +175,7 @@ export default function Home() {
           </div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1140px] mx-auto">
             {[
               {
                 img: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg",
@@ -223,7 +223,7 @@ export default function Home() {
 
       {/* Section: Cakupan Pelayanan Posyandu */}
       <section id="cakupan" className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
@@ -335,7 +335,7 @@ export default function Home() {
 
       {/* Section: Galeri Kegiatan Posyandu */}
       <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
           <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
             Dokumentasi Lapangan
           </span>
@@ -419,7 +419,7 @@ export default function Home() {
 
       {/* Section: Lampung Timur dalam Angka */}
       <section className="py-20 bg-[#12291b] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3 block">
@@ -450,7 +450,7 @@ export default function Home() {
 
       {/* Section: Tata Kelola */}
       <section id="about" className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Layout matching the user's reference image style */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12">
             <div className="max-w-2xl">
@@ -625,7 +625,7 @@ export default function Home() {
 
       {/* Section: Struktur Kelembagaan */}
       <section className="py-24 bg-slate-50/50 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-20">
             <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
@@ -641,7 +641,7 @@ export default function Home() {
           </div>
 
           {/* Timeline Wrapper (Flex Column matching the mockup layout) */}
-          <div className="relative flex flex-col space-y-16 lg:space-y-24 max-w-4xl mx-auto mt-12">
+          <div className="relative flex flex-col space-y-16 lg:space-y-24 max-w-[1140px] mx-auto mt-12">
             {/* Mobile Vertical Connecting Line */}
             <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
 
@@ -728,7 +728,7 @@ export default function Home() {
                 >
                   {/* Outer Card with border and shadow */}
                   <div
-                    className={`group relative flex items-stretch w-full p-3 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+                    className={`group relative z-10 flex items-stretch w-full p-3 rounded-[32px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
                         ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
                         : "bg-white border-slate-100 hover:bg-slate-50/50"
@@ -789,10 +789,10 @@ export default function Home() {
                   {idx < 4 && (
                     isEven ? (
                       /* Connects Even Card (Right Col) down to Odd Card (Left Col) in the next row */
-                      <div className="hidden lg:block absolute right-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none z-0" />
+                      <div className="hidden lg:block absolute right-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-l-2 border-dashed border-slate-300/40 rounded-tl-[32px] pointer-events-none -z-10" />
                     ) : (
                       /* Connects Odd Card (Left Col) down to Even Card (Right Col) in the same row */
-                      <div className="hidden lg:block absolute left-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none z-0" />
+                      <div className="hidden lg:block absolute left-[90%] top-[50%] w-[35%] h-[200px] border-t-2 border-r-2 border-dashed border-emerald-300/30 rounded-tr-[32px] pointer-events-none -z-10" />
                     )
                   )}
                 </motion.div>
@@ -804,7 +804,7 @@ export default function Home() {
 
       {/* Section: Landasan Hukum */}
       <section id="hukum" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">

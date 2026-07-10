@@ -50,7 +50,7 @@ export default function Header() {
       }`}
     >
       <div
-        className={`w-[calc(100%-2rem)] max-w-7xl flex items-center justify-between transition-all duration-500 rounded-[10px] border box-border relative ${
+        className={`w-[calc(100%-2rem)] max-w-[1140px] flex items-center justify-between transition-all duration-500 rounded-[10px] border box-border relative ${
           isScrolled
             ? "bg-white/90 backdrop-blur-2xl border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] h-14 px-4 lg:px-6"
             : "bg-black/20 backdrop-blur-2xl border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.2)] h-16 px-4 lg:px-8"

@@ -293,7 +293,7 @@ export default function Home() {
               // Corner notch: scoop hugging the button circle, with smooth fillets
               // where it meets the top and right edges (no sharp tips)
               const notchSvg =
-                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M0 0 H10.4 A7 7 0 0 1 16.7 10 A28 28 0 0 0 54 47.3 A7 7 0 0 1 64 53.6 V64 H0 Z'/%3E%3C/svg%3E\")";
+                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M0 0 H3.3 A12 12 0 0 1 14.9 15 A28 28 0 0 0 49 49.1 A12 12 0 0 1 64 60.7 V64 H0 Z'/%3E%3C/svg%3E\")";
               const maskStyle = {
                 maskImage: `linear-gradient(#000,#000), linear-gradient(#000,#000), ${notchSvg}`,
                 maskSize: "calc(100% - 63px) 100%, 64px calc(100% - 63px), 64px 64px",

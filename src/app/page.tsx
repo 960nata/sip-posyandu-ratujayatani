@@ -59,9 +59,12 @@ export default function Home() {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
-    "/images/hero/hero1.png",
-    "/images/hero/hero2.png",
-    "/images/hero/hero3.png",
+    "/images/hero/hero1.avif",
+    "/images/hero/hero2.avif",
+    "/images/hero/hero3.avif",
+    "/images/hero/hero4.avif",
+    "/images/hero/hero5.avif",
+    "/images/hero/hero6.avif",
     "/images/hero/PHOTO-2026-05-11-21-46-02.jpg",
     "/images/hero/PHOTO-2026-05-11-21-46-04 3.jpg",
     "/images/hero/PHOTO-2026-05-11-21-46-04.jpg",
@@ -252,7 +255,7 @@ export default function Home() {
           </div>
 
           {/* SPM Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
 
             {[
               {
@@ -287,6 +290,8 @@ export default function Home() {
               },
             ].map((spm, index) => {
               const isAccent = index % 2 === 1;
+              // Checkerboard for the 2-col mobile grid (row parity flips each row)
+              const isAccentMobile = (index + Math.floor(index / 2)) % 2 === 1;
               // Corner notch: scoop hugging the button circle, with smooth fillets
               // where it meets the top and right edges (no sharp tips)
               const notchSvg =
@@ -308,28 +313,28 @@ export default function Home() {
                 >
                   {/* Card body with circular corner cutout */}
                   <div
-                    className={`relative overflow-hidden rounded-2xl p-7 min-h-[170px] flex flex-col justify-center ${
-                      isAccent ? "bg-emerald-400" : "bg-emerald-50/70"
-                    }`}
+                    className={`relative overflow-hidden rounded-2xl p-4 sm:p-7 min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
+                      isAccentMobile ? "bg-emerald-400" : "bg-emerald-50/70"
+                    } ${isAccent ? "lg:bg-emerald-400" : "lg:bg-emerald-50/70"}`}
                     style={maskStyle}
                   >
                     {/* Expanding blob fill on hover */}
                     <div
                       aria-hidden
                       className={`absolute -bottom-10 -left-10 w-24 h-24 rounded-full scale-0 group-hover:scale-[9] transition-transform duration-500 ease-out ${
-                        isAccent ? "bg-emerald-500" : "bg-emerald-200/90"
-                      }`}
+                        isAccentMobile ? "bg-emerald-500" : "bg-emerald-200/90"
+                      } ${isAccent ? "lg:bg-emerald-500" : "lg:bg-emerald-200/90"}`}
                     />
 
                     {/* Title */}
-                    <p className="relative text-xl font-extrabold text-slate-900 tracking-tight mb-2.5 pr-12 transition-transform duration-300 group-hover:-translate-y-1">
+                    <p className="relative text-base sm:text-xl font-extrabold text-slate-900 tracking-tight mb-1.5 sm:mb-2.5 pr-10 sm:pr-12 transition-transform duration-300 group-hover:-translate-y-1">
                       {spm.title}
                     </p>
 
                     {/* Caption */}
-                    <p className={`relative text-xs leading-relaxed transition-transform duration-300 delay-75 group-hover:-translate-y-1 ${
-                      isAccent ? "text-slate-800/80" : "text-slate-600"
-                    }`}>
+                    <p className={`relative text-[11px] sm:text-xs leading-relaxed transition-transform duration-300 delay-75 group-hover:-translate-y-1 ${
+                      isAccentMobile ? "text-slate-800/80" : "text-slate-600"
+                    } ${isAccent ? "lg:text-slate-800/80" : "lg:text-slate-600"}`}>
                       {spm.desc}
                     </p>
                   </div>
@@ -367,14 +372,14 @@ export default function Home() {
           <div className="flex overflow-hidden">
             <div className="animate-marquee-left flex gap-6">
               {[
-                { src: "/images/hero/hero1.png", alt: "Layanan Balita Terintegrasi" },
-                { src: "/images/hero/hero2.png", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
-                { src: "/images/hero/hero3.png", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
                 { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
-                { src: "/images/hero/hero1.png", alt: "Layanan Balita Terintegrasi" },
-                { src: "/images/hero/hero2.png", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
-                { src: "/images/hero/hero3.png", alt: "Pemberian Imunisasi & Vitamin" },
+                { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
+                { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
+                { src: "/images/hero/hero3.avif", alt: "Pemberian Imunisasi & Vitamin" },
                 { src: "/images/hero/PHOTO-2026-05-11-21-46-02.jpg", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
               ].map((item, idx) => (

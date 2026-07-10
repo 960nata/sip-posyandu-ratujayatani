@@ -16,7 +16,7 @@ export default function CreditsPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hero/hero2.png"
+            src="/images/hero/hero2.avif"
             alt="Beach Background"
             fill
             className="object-cover"

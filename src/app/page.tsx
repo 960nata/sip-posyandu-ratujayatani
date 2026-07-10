@@ -2,20 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
-  Heart, Activity, Users, ClipboardList,
-  ArrowRight, ArrowUpRight, Sparkles, Building, BookOpen,
-  Shield, Baby, Syringe,
-  Globe, Scale
+  Activity, Users, ClipboardList,
+  ArrowRight, ArrowUpRight, Building, MapPin
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-function StatCard({ target, suffix, label, visible, delay }: { target: number; suffix: string; label: string; visible: boolean; delay: number }) {
+function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { target: number; suffix: string; label: string; icon: LucideIcon; visible: boolean; delay: number }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!visible) return;
@@ -33,29 +31,25 @@ function StatCard({ target, suffix, label, visible, delay }: { target: number; s
     return () => cancelAnimationFrame(raf);
   }, [visible, target, delay]);
 
-  const display = target >= 1000
-    ? (count >= 1000 ? (count / 1000).toFixed(1).replace(".", ".") + ".000".slice(0, count >= 1000 ? 0 : 4) : count.toString())
-    : count.toString();
-
   // Format: 1100 → 1.100, 5500 → 5.500
   const formatted = count.toLocaleString("id-ID");
 
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-shadow">
-      <p className="text-3xl font-extrabold text-emerald-700 mb-1 tracking-tight">
+    <div className="bg-white/[0.04] border border-white/10 rounded-lg p-6 hover:bg-white/[0.08] transition-colors">
+      <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center mb-5">
+        <Icon className="w-5 h-5 text-emerald-950" />
+      </div>
+      <p className="text-3xl font-extrabold text-white mb-1 tracking-tight">
         {formatted}{suffix}
       </p>
-      <p className="text-sm text-slate-500 font-native font-normal">{label}</p>
+      <p className="text-sm text-emerald-100/60 font-native font-normal">{label}</p>
     </div>
   );
 }
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
-  const { data: session } = useSession();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
@@ -77,14 +71,6 @@ export default function Home() {
 
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, 200]); // Parallax effect
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Intersection Observer for stats count-up
   useEffect(() => {
@@ -432,17 +418,17 @@ export default function Home() {
       </section>
 
       {/* Section: Lampung Timur dalam Angka */}
-      <section className="py-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-white overflow-hidden">
+      <section className="py-20 bg-[#12291b] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3 block">
               Data Publik
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
               Kabupaten Lampung Timur dalam Angka
             </h2>
-            <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
+            <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-native font-normal leading-relaxed text-base">
               Visualisasi skala operasional dan sebaran cakupan pelayanan Posyandu di seluruh wilayah Kabupaten Lampung Timur. Seluruh data dikonsolidasikan secara digital melalui pangkalan data terintegrasi Sistem Informasi Posyandu (SIPANDU).
             </p>
           </div>
@@ -450,45 +436,162 @@ export default function Home() {
           {/* Stats */}
           <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
-              { target: 264, suffix: "", label: "Desa & Kelurahan" },
-              { target: 24, suffix: "", label: "Kecamatan" },
-              { target: 1100, suffix: "+", label: "Posyandu Aktif" },
-              { target: 5500, suffix: "+", label: "Kader Terlatih" },
-              { target: 6, suffix: "", label: "Bidang Layanan SPM" },
+              { target: 264, suffix: "", label: "Desa & Kelurahan", icon: Building },
+              { target: 24, suffix: "", label: "Kecamatan", icon: MapPin },
+              { target: 1100, suffix: "+", label: "Posyandu Aktif", icon: Activity },
+              { target: 5500, suffix: "+", label: "Kader Terlatih", icon: Users },
+              { target: 6, suffix: "", label: "Bidang Layanan SPM", icon: ClipboardList },
             ].map((stat, i) => (
-              <StatCard key={i} target={stat.target} suffix={stat.suffix} label={stat.label} visible={statsVisible} delay={i * 120} />
+              <StatCard key={i} target={stat.target} suffix={stat.suffix} label={stat.label} icon={stat.icon} visible={statsVisible} delay={i * 120} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Section: Tata Kelola */}
-      <section id="about" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
-              Tata Kelola
-            </span>
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Kelembagaan yang Kuat & Transparan</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto font-native font-normal leading-relaxed">
-              SIP bukan sekadar aplikasi, melainkan ekosistem tata kelola data yang melibatkan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur.
-            </p>
+      <section id="about" className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Layout matching the user's reference image style */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Tata Kelola
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Tata Kelola Kelembagaan yang Kuat &amp; Transparan
+              </h2>
+            </div>
+            <div className="max-w-md">
+              <p className="text-slate-500 font-native font-normal leading-relaxed text-sm md:text-base">
+                SIP bukan sekadar aplikasi, melainkan ekosistem tata kelola data yang mengintegrasikan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-4 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Building, title: "Terstruktur", desc: "Pembagian peran yang jelas dari Kabupaten hingga Kader Desa sesuai Permendagri No. 13/2024. Setiap jenjang memiliki tugas dan kewenangan yang ditetapkan." },
-              { icon: ClipboardList, title: "Transparan", desc: "Data laporan yang dapat dipertanggungjawabkan dan terpantau. Pelaporan dilakukan secara berjenjang minimal 1 kali per tahun atau sewaktu-waktu jika diperlukan." },
-              { icon: Globe, title: "Terintegrasi", desc: "Menghubungkan semua Posyandu dalam satu jaringan digital. Data dari desa mengalir ke kecamatan, kabupaten, provinsi, hingga pusat secara terstruktur." },
-              { icon: Scale, title: "Berbasis Hukum", desc: "Seluruh proses mengacu pada UU No. 6/2014 tentang Desa, PP No. 43/2014, dan Permendagri No. 13 Tahun 2024 tentang Pos Pelayanan Terpadu." },
+              {
+                badge: "Kelembagaan",
+                title: "Terstruktur",
+                desc: "Pembagian peran yang jelas dari Kabupaten hingga Kader Desa sesuai Permendagri No. 13/2024. Setiap jenjang memiliki tugas dan kewenangan yang ditetapkan.",
+                mockup: (
+                  <div className="relative w-full h-full flex flex-col items-center justify-center">
+                    <div className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
+                      Kabupaten
+                    </div>
+                    <svg className="w-full h-10 my-1 stroke-current transition-colors duration-500 text-emerald-600/50 group-hover:text-emerald-800/50" viewBox="0 0 100 40" fill="none">
+                      <path d="M50 0 V20 M50 20 H20 V40 M50 20 H80 V40" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                    <div className="flex justify-between w-full px-1">
+                      <div className="px-2 py-1 rounded text-[9px] font-semibold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
+                        Kecamatan
+                      </div>
+                      <div className="px-2 py-1 rounded text-[9px] font-semibold transition-all duration-500 bg-emerald-800/80 text-emerald-100 group-hover:bg-white group-hover:text-emerald-950 shadow-sm">
+                        Kader Desa
+                      </div>
+                    </div>
+                  </div>
+                )
+              },
+              {
+                badge: "Akuntabilitas",
+                title: "Transparan",
+                desc: "Data laporan yang dapat dipertanggungjawabkan dan terpantau. Pelaporan dilakukan secara berjenjang minimal 1 kali per tahun atau sewaktu-waktu jika diperlukan.",
+                mockup: (
+                  <div className="w-full h-full flex items-center justify-between gap-4">
+                    <div className="flex flex-col gap-2.5 w-1/2">
+                      {[1, 2, 3].map((n) => (
+                        <div key={n} className="flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5 shrink-0 stroke-current text-emerald-400 group-hover:text-emerald-950" fill="none" viewBox="0 0 24 24" strokeWidth="3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                          </svg>
+                          <div className="h-1.5 w-12 rounded-full transition-colors duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/40"></div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-end justify-around gap-1.5 h-24 w-1/2 bg-emerald-950/40 rounded-xl p-2 transition-colors duration-500 group-hover:bg-white/40">
+                      {[30, 60, 45, 90, 75].map((h, i) => (
+                        <div
+                          key={i}
+                          style={{ height: `${h}%` }}
+                          className="w-2 rounded-t-sm transition-colors duration-500 bg-emerald-400 group-hover:bg-emerald-950"
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              },
+              {
+                badge: "Konektivitas",
+                title: "Terintegrasi",
+                desc: "Menghubungkan semua Posyandu dalam satu jaringan digital. Data dari desa mengalir ke kecamatan, kabupaten, provinsi, hingga pusat secara terstruktur.",
+                mockup: (
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <svg className="absolute inset-0 w-full h-full stroke-current transition-colors duration-500 text-emerald-800/70 group-hover:text-emerald-600/50" viewBox="0 0 160 120" fill="none">
+                      <line x1="80" y1="60" x2="30" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
+                      <line x1="80" y1="60" x2="130" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
+                      <line x1="80" y1="60" x2="30" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
+                      <line x1="80" y1="60" x2="130" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
+                    </svg>
+                    <div className="absolute w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-black transition-all duration-500 bg-emerald-400 text-emerald-950 group-hover:bg-emerald-950 group-hover:text-white shadow-md">
+                      SIP
+                    </div>
+                    <div className="absolute top-4 left-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                      Kesehatan
+                    </div>
+                    <div className="absolute top-4 right-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                      PAUD
+                    </div>
+                    <div className="absolute bottom-4 left-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                      Sosial
+                    </div>
+                    <div className="absolute bottom-4 right-3 px-1.5 py-0.5 rounded text-[8px] transition-colors duration-500 bg-emerald-800/80 group-hover:bg-white text-emerald-100 group-hover:text-emerald-950">
+                      PU
+                    </div>
+                  </div>
+                )
+              },
+              {
+                badge: "Regulasi",
+                title: "Berbasis Hukum",
+                desc: "Seluruh proses mengacu pada UU No. 6/2014 tentang Desa, PP No. 43/2014, dan Permendagri No. 13 Tahun 2024 tentang Pos Pelayanan Terpadu.",
+                mockup: (
+                  <div className="relative w-full h-full flex flex-col items-center justify-center">
+                    <svg className="w-14 h-14 fill-none stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-950" viewBox="0 0 24 24" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17M12 5l-8 3h16l-8-3zM4 8l3 8h-6l3-8zM20 8l3 8h-6l3-8zM9 20h6" />
+                    </svg>
+                    <div className="mt-2 text-[7px] tracking-wider uppercase font-bold text-emerald-500 group-hover:text-emerald-900 font-mono">
+                      Permendagri No. 13/2024
+                    </div>
+                  </div>
+                )
+              }
             ].map((feature, idx) => (
-              <div key={idx} className="flex gap-4 p-4 bg-slate-50/50 rounded-xl hover:bg-emerald-50/50 transition-colors">
-                <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
-                  <feature.icon className="w-5 h-5" />
+              <div
+                key={idx}
+                className="group relative p-6 bg-white border border-slate-100 rounded-3xl transition-all duration-500 hover:bg-emerald-950 flex flex-col justify-between min-h-[480px] cursor-pointer hover:shadow-2xl hover:shadow-emerald-950/20 hover:-translate-y-2"
+              >
+                <div className="flex flex-col">
+                  {/* Badge */}
+                  <span className="inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 transition-colors duration-500 group-hover:bg-emerald-500/20 group-hover:text-emerald-300">
+                    {feature.badge}
+                  </span>
+
+                  {/* Title */}
+                  <h4 className="text-lg font-extrabold text-slate-900 mt-4 leading-snug transition-colors duration-500 group-hover:text-white">
+                    {feature.title}
+                  </h4>
+
+                  {/* Description */}
+                  <p className="text-xs text-slate-500 mt-2 font-native font-normal leading-relaxed transition-colors duration-500 group-hover:text-emerald-100/70">
+                    {feature.desc}
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 mb-0.5">{feature.title}</h4>
-                  <p className="text-sm text-slate-500 font-native font-normal leading-relaxed">{feature.desc}</p>
+
+                {/* Mockup Image/Graphic */}
+                <div className="mt-6 w-full h-40 rounded-2xl p-4 transition-all duration-500 flex flex-col justify-between overflow-hidden bg-emerald-900/95 text-white group-hover:bg-emerald-400 group-hover:text-emerald-950">
+                  {feature.mockup}
                 </div>
               </div>
             ))}

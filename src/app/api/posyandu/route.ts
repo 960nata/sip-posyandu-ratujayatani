@@ -67,21 +67,6 @@ export async function POST(request: Request) {
     }
   })
 
-  // Auto create user for this Posyandu
-  const posyanduEmail = `posyandu.${nama.toLowerCase().replace(/\s+/g, '')}@siplamtim.id`
-  const hashedPassword = await bcrypt.hash('password123', 10)
-  
-  await prisma.user.create({
-    data: {
-      nama: `Operator ${nama}`,
-      email: posyanduEmail,
-      password: hashedPassword,
-      role: 'OPERATOR_POSYANDU',
-      desaId: user.desaId,
-      posyanduId: newPosyandu.id
-    } as any
-  })
-
   return NextResponse.json(newPosyandu)
 }
 

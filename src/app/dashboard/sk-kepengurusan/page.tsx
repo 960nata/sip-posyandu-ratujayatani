@@ -79,8 +79,20 @@ const emptyAnggota: AnggotaForm = {
 
 export default function SKKepengurusanPage() {
   const { data: session } = useSession()
-  const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
   const userRole = (session?.user as any)?.role
+
+  if (userRole === 'SUPERADMIN') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm max-w-xl mx-auto my-12">
+        <h1 className="text-2xl font-bold text-red-600 dark:text-red-400">Akses Ditolak</h1>
+        <p className="text-slate-500 dark:text-zinc-400 mt-2 max-w-md">
+          Halaman SK Kepengurusan hanya ditujukan untuk operator Desa atau Posyandu.
+        </p>
+      </div>
+    )
+  }
+
+  const isPosyandu = userRole === 'OPERATOR_POSYANDU'
 
   const theme = {
     bgGradient: isPosyandu ? 'from-[var(--dash-primary)] to-[var(--dash-primary)]' : 'from-[var(--dash-primary)] to-[var(--dash-primary)]',

@@ -244,6 +244,19 @@ export default function DashboardPage() {
     return () => { cancelled = true }
   }, [selectedKec, selectedDesa])
 
+  // Posyandu milik desa (untuk OPERATOR_DESA: rekap & input per posyandu)
+  const [desaPosyandus, setDesaPosyandus] = useState<any[]>([])
+  useEffect(() => {
+    if (role === 'OPERATOR_DESA') {
+      fetch('/api/posyandu')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setDesaPosyandus(data)
+        })
+        .catch(err => console.error(err))
+    }
+  }, [role])
+
   // Skeleton Loading State
   if (status === 'loading') {
     return (
@@ -437,8 +450,8 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
-                    <Eye className="w-3.5 h-3.5" />
-                    Lihat Data
+                    <Plus className="w-3.5 h-3.5" />
+                    Input / Lihat Data
                   </Link>
                 </div>
               ))}
@@ -452,12 +465,15 @@ export default function DashboardPage() {
         chart: { type: 'bar', toolbar: { show: false }, background: 'transparent' },
         plotOptions: { bar: { borderRadius: 4, horizontal: true } },
         dataLabels: { enabled: false },
-        xaxis: { categories: ['Posyandu Mawar', 'Posyandu Melati', 'Posyandu Kenanga', 'Posyandu Kamboja', 'Posyandu Flamboyan'], labels: { style: { colors: '#94a3b8' } } },
+        xaxis: { categories: desaPosyandus.length ? desaPosyandus.map((p: any) => p.nama) : ['Posyandu Mawar', 'Posyandu Melati', 'Posyandu Kenanga', 'Posyandu Kamboja', 'Posyandu Flamboyan'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         fill: { colors: ['#7c3aed'] },
         tooltip: { theme: 'dark' }
       }
-      const desaChartSeries = [{ name: 'Laporan Selesai', data: [7, 5, 3, 6, 4] }]
+      const desaChartSeries = [{
+        name: 'Laporan Selesai',
+        data: desaPosyandus.length ? desaPosyandus.map((_: any, i: number) => [7, 5, 3, 6, 4][i % 5]) : [7, 5, 3, 6, 4],
+      }]
 
       const desaDonutOptions = {
         chart: { type: 'donut', background: 'transparent' },
@@ -500,7 +516,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 5}</p>
+              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{desaPosyandus.length || healthStats?.activePosyanduCount || 0}</p>
               <p className="text-xs text-slate-400 mt-1">Di wilayah Desa Anda</p>
             </div>
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
@@ -557,32 +573,52 @@ export default function DashboardPage() {
           {/* Monitoring Table & Last Data */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Monitoring Input Posyandu</h2>
+              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-1">Rekap Posyandu Desa</h2>
+              <p className="text-xs text-slate-400 mb-4">Pantau dan input data untuk setiap posyandu di wilayah Anda.</p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-200/70 dark:border-white/10">
                       <th className="px-4 py-3 font-medium">Nama Posyandu</th>
-                      <th className="px-4 py-3 font-medium">KES-6</th>
-                      <th className="px-4 py-3 font-medium">Sosial</th>
+                      <th className="px-4 py-3 font-medium">Strata</th>
+                      <th className="px-4 py-3 font-medium">Hari Buka</th>
                       <th className="px-4 py-3 font-medium text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                    {[
-                      { name: 'Posyandu Mawar', kes6: 'Selesai', sosial: 'Selesai', kes6Color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30', sosialColor: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
-                      { name: 'Posyandu Melati', kes6: 'Pending', sosial: 'Selesai', kes6Color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30', sosialColor: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
-                      { name: 'Posyandu Kenanga', kes6: 'Pending', sosial: 'Pending', kes6Color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30', sosialColor: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
-                    ].map((pos) => (
-                      <tr key={pos.name}>
-                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{pos.name}</td>
-                        <td className="px-4 py-3.5"><span className={`${pos.kes6Color} text-xs font-medium px-2.5 py-1 rounded-full`}>{pos.kes6}</span></td>
-                        <td className="px-4 py-3.5"><span className={`${pos.sosialColor} text-xs font-medium px-2.5 py-1 rounded-full`}>{pos.sosial}</span></td>
+                    {desaPosyandus.length > 0 ? desaPosyandus.map((pos: any) => (
+                      <tr key={pos.id}>
+                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{pos.nama}</td>
+                        <td className="px-4 py-3.5">
+                          <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full capitalize">
+                            {(pos.strata || '-').toString().toLowerCase()}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3.5 text-slate-600 dark:text-slate-300">{pos.hariBuka || '-'}</td>
                         <td className="px-4 py-3.5 text-right">
-                          <button onClick={() => setSelectedPosyandu(pos.name)} className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs">Pantau</button>
+                          <div className="inline-flex items-center gap-3">
+                            <button
+                              onClick={() => setSelectedPosyandu(pos.nama)}
+                              className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
+                            >
+                              Pantau
+                            </button>
+                            <button
+                              onClick={() => setSelectedPosyandu(pos.nama)}
+                              className="text-xs font-semibold text-white bg-[var(--dash-primary)] hover:bg-[var(--dash-primary-hover)] px-3 py-1.5 rounded-md transition-colors"
+                            >
+                              Input Data
+                            </button>
+                          </div>
                         </td>
                       </tr>
-                    ))}
+                    )) : (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-8 text-center text-sm text-slate-400">
+                          Belum ada posyandu terdaftar. Tambahkan lewat menu <span className="font-semibold">Manajemen Posyandu</span>.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

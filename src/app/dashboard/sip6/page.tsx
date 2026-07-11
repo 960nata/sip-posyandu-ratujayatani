@@ -7,7 +7,6 @@ import {
   Baby, UserCircle, UserPlus, Shield, Activity, Edit2, Trash2, Plus, HardHat, X, Search
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import * as XLSX from 'xlsx'
 
 export default function Sip6Page() {
   const { data: session } = useSession()
@@ -75,12 +74,12 @@ export default function Sip6Page() {
       const res = await fetch(`/api/sip6?posyanduId=${posyanduId}`)
       const data = await res.json()
       if (Array.isArray(data)) {
+        // Field 1:1 dengan kolom Excel SIP 6 (37 kolom) dan model Sip6Bulanan
         const mapped = data.map(r => ({
           id: r.id,
           posyanduId: r.posyanduId,
           bulan: r.bulan,
           tahun: r.tahun,
-          namaKader: r.keterangan || 'Petugas',
           tanggalInput: new Date(r.createdAt).toLocaleDateString('id-ID'),
           bayiBaruL: r.bayiBaruL || 0,
           bayiBaruP: r.bayiBaruP || 0,
@@ -98,21 +97,25 @@ export default function Sip6Page() {
           prodBaruP: r.prodBaruP || 0,
           prodLamaL: r.prodLamaL || 0,
           prodLamaP: r.prodLamaP || 0,
-          hamilBaru: r.ibuHamil || 0,
-          hamilLama: 0,
-          busuiBaru: r.ibuMenyusui || 0,
-          busuiLama: 0,
-          lansiaL: r.lansiaBaruL || 0,
-          lansiaP: r.lansiaBaruP || 0,
-          wus: r.pus || 0,
-          ibu: 0,
-          kader: r.kaderL || 0,
-          plkb: r.plkbL || 0,
-          medis: r.medisL || 0,
+          lansiaBaruL: r.lansiaBaruL || 0,
+          lansiaBaruP: r.lansiaBaruP || 0,
+          lansiaLamaL: r.lansiaLamaL || 0,
+          lansiaLamaP: r.lansiaLamaP || 0,
+          wus: r.wus || 0,
+          pus: r.pus || 0,
+          ibuHamil: r.ibuHamil || 0,
+          ibuMenyusui: r.ibuMenyusui || 0,
+          kaderL: r.kaderL || 0,
+          kaderP: r.kaderP || 0,
+          plkbL: r.plkbL || 0,
+          plkbP: r.plkbP || 0,
+          medisL: r.medisL || 0,
+          medisP: r.medisP || 0,
           lahirL: r.lahirL || 0,
           lahirP: r.lahirP || 0,
           meninggalL: r.meninggalL || 0,
           meninggalP: r.meninggalP || 0,
+          keterangan: r.keterangan || '',
           status: 'Tersimpan'
         }))
         setReports(mapped)
@@ -409,184 +412,58 @@ export default function Sip6Page() {
     }
   }
 
-  const exportUnifiedExcel = () => {
-    // 1. Load SIP 7 reports
-    const savedSip7 = localStorage.getItem('sip7_reports')
-    const localSip7 = savedSip7 ? JSON.parse(savedSip7) : []
-
-    // 2. Build Sheet 1: SIP 6
-    const headersSip6 = [
-      ['DATA PENGUNJUNG BULAN BULANAN (SIP 6)'],
-      [''],
-      [
-        'NO', 'BULAN', 'TAHUN', 'BAYI BARU L', 'BAYI BARU P', 'BAYI LAMA L', 'BAYI LAMA P',
-        'BALITA BARU L', 'BALITA BARU P', 'BALITA LAMA L', 'BALITA LAMA P',
-        'ANAK BARU L', 'ANAK BARU P', 'ANAK LAMA L', 'ANAK LAMA P',
-        'PROD BARU L', 'PROD BARU P', 'PROD LAMA L', 'PROD LAMA P',
-        'IBU HAMIL BARU', 'IBU HAMIL LAMA', 'IBU MENYUSUI BARU', 'IBU MENYUSUI LAMA',
-        'LANSIA L', 'LANSIA P', 'WUS', 'IBU', 'KADER', 'PLKB', 'MEDIS',
-        'LAHIR L', 'LAHIR P', 'MATI L', 'MATI P', 'KADER NAMA', 'TANGGAL INPUT', 'STATUS'
-      ]
-    ]
-
-    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-    const filteredSip6 = reports.filter((r: any) =>
-      r.tahun === tahunAktif &&
-      (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
-    );
-
-    const dataSip6 = filteredSip6.map((row: any, idx: number) => [
-      idx + 1,
-      row.bulan,
-      row.tahun,
-      row.bayiBaruL || 0,
-      row.bayiBaruP || 0,
-      row.bayiLamaL || 0,
-      row.bayiLamaP || 0,
-      row.balitaBaruL || 0,
-      row.balitaBaruP || 0,
-      row.balitaLamaL || 0,
-      row.balitaLamaP || 0,
-      row.anakBaruL || 0,
-      row.anakBaruP || 0,
-      row.anakLamaL || 0,
-      row.anakLamaP || 0,
-      row.prodBaruL || 0,
-      row.prodBaruP || 0,
-      row.prodLamaL || 0,
-      row.prodLamaP || 0,
-      row.hamilBaru || 0,
-      row.hamilLama || 0,
-      row.busuiBaru || 0,
-      row.busuiLama || 0,
-      row.lansiaL || 0,
-      row.lansiaP || 0,
-      row.wus || 0,
-      row.ibu || 0,
-      row.kader || 0,
-      row.plkb || 0,
-      row.medis || 0,
-      row.lahirL || 0,
-      row.lahirP || 0,
-      row.meninggalL || 0,
-      row.meninggalP || 0,
-      row.namaKader || '',
-      row.tanggalInput || '',
-      row.status || 'Tersimpan'
-    ])
-
-    const wsSip6 = XLSX.utils.aoa_to_sheet([...headersSip6, ...dataSip6])
-
-    // 3. Build Sheet 2: SIP 7
-    const headersSip7 = [
-      ['DATA HASIL KEGIATAN KESEHATAN (SIP 7)'],
-      [''],
-      ['NO', 'BULAN', 'TAHUN', 'IBU HAMIL JML', 'IBU HAMIL DIPERIKSA', 'IBU HAMIL FE TAB', 'IBU MENYUSUI JML', 'KB KONDOM', 'KB PIL', 'KB IMPLANT', 'KB MOP', 'KB MOW', 'KB IUD', 'KB SUNTIK', 'KB LAIN-LAIN', 'TIMBANG S L', 'TIMBANG S P', 'TIMBANG K L', 'TIMBANG K P', 'TIMBANG D L', 'TIMBANG D P', 'TIMBANG N L', 'TIMBANG N P', 'VIT A L', 'VIT A P', 'PMT L', 'PMT P', 'IMUNISASI TT', 'BCG L', 'BCG P', 'DPT1 L', 'DPT1 P', 'DPT2 L', 'DPT2 P', 'DPT3 L', 'DPT3 P', 'POLIO1 L', 'POLIO1 P', 'POLIO2 L', 'POLIO2 P', 'POLIO3 L', 'POLIO3 P', 'POLIO4 L', 'POLIO4 P', 'CAMPAK L', 'CAMPAK P', 'HEPB1 L', 'HEPB1 P', 'HEPB2 L', 'HEPB2 P', 'HEPB3 L', 'HEPB3 P', 'DIARE JML L', 'DIARE JML P', 'DIARE ORALIT L', 'DIARE ORALIT P'],
-    ]
-
-    const filteredSip7 = localSip7.filter((r: any) =>
-      r.tahun === tahunAktif &&
-      (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
-    );
-
-    const dataSip7 = filteredSip7.map((row: any, idx: number) => {
-      const bumil = row.bumil || {};
-      const kb = row.kb || {};
-      const timbang = row.timbang || {};
-      const imBayi = row.imBayi || {};
-      const diare = row.diare || {};
-
-      return [
-        idx + 1,
-        row.bulan,
-        row.tahun,
-        bumil.jml || 0,
-        bumil.diperiksa || 0,
-        bumil.fe || 0,
-        row.busui || 0,
-        kb.kondom || 0,
-        kb.pil || 0,
-        kb.implant || 0,
-        kb.mop || 0,
-        kb.mow || 0,
-        kb.iud || 0,
-        kb.suntik || 0,
-        kb.lainnya || 0,
-        timbang.s_l || 0,
-        timbang.s_p || 0,
-        timbang.k_l || 0,
-        timbang.k_p || 0,
-        timbang.d_l || 0,
-        timbang.d_p || 0,
-        timbang.n_l || 0,
-        timbang.n_p || 0,
-        timbang.vitA_l || 0,
-        timbang.vitA_p || 0,
-        timbang.pmt_l || 0,
-        timbang.pmt_p || 0,
-        row.imTT?.i || 0,
-        imBayi.bcg_l || 0,
-        imBayi.bcg_p || 0,
-        imBayi.dpt1_l || 0,
-        imBayi.dpt1_p || 0,
-        imBayi.dpt2_l || 0,
-        imBayi.dpt2_p || 0,
-        imBayi.dpt3_l || 0,
-        imBayi.dpt3_p || 0,
-        imBayi.polio1_l || 0,
-        imBayi.polio1_p || 0,
-        imBayi.polio2_l || 0,
-        imBayi.polio2_p || 0,
-        imBayi.polio3_l || 0,
-        imBayi.polio3_p || 0,
-        imBayi.polio4_l || 0,
-        imBayi.polio4_p || 0,
-        imBayi.campak_l || 0,
-        imBayi.campak_p || 0,
-        imBayi.hepb1_l || 0,
-        imBayi.hepb1_p || 0,
-        imBayi.hepb2_l || 0,
-        imBayi.hepb2_p || 0,
-        imBayi.hepb3_l || 0,
-        imBayi.hepb3_p || 0,
-        diare.jml_l || 0,
-        diare.jml_p || 0,
-        diare.oralit_l || 0,
-        diare.oralit_p || 0
-      ]
-    })
-
-    const wsSip7 = XLSX.utils.aoa_to_sheet([...headersSip7, ...dataSip7])
-
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, wsSip6, 'SIP 6 — Pengunjung')
-    XLSX.utils.book_append_sheet(wb, wsSip7, 'SIP 7 — Hasil Kegiatan')
-
-    XLSX.writeFile(wb, `Rekap_Posyandu_${namaDesa}_${tahunAktif}.xlsx`)
+  // Export workbook resmi 8 sheet (format persis file REKAP DESA) dari server
+  const [isExporting, setIsExporting] = useState(false)
+  const exportUnifiedExcel = async () => {
+    const desaId = (session?.user as any)?.desaId || selectedDesaId
+    const params = new URLSearchParams({ tahun: String(tahunAktif) })
+    if (desaId) params.set('desaId', desaId)
+    setIsExporting(true)
+    try {
+      const res = await fetch(`/api/export/desa?${params.toString()}`)
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        alert('Gagal export: ' + (err.error || res.statusText))
+        return
+      }
+      const blob = await res.blob()
+      const cd = res.headers.get('Content-Disposition') || ''
+      const match = cd.match(/filename="?([^";]+)"?/)
+      const a = document.createElement('a')
+      a.href = URL.createObjectURL(blob)
+      a.download = match ? match[1] : `SIP_${tahunAktif}.xlsx`
+      a.click()
+      URL.revokeObjectURL(a.href)
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat export.')
+    } finally {
+      setIsExporting(false)
+    }
   }
 
+  // Struktur form = 37 kolom sheet "KESEHATAN SIP 6" (DATA PENGUNJUNG)
   const initialForm = {
-    bulan: 5,
+    bulan: new Date().getMonth() + 1,
     tahun: 2026,
     posyanduId: '',
-    namaKader: '',
-    // Bayi 0-12 bln
-    bayiBaruL: 0, bayiLamaL: 0, bayiBaruP: 0, bayiLamaP: 0,
-    // Balita 1-5 thn
-    balitaBaruL: 0, balitaLamaL: 0, balitaBaruP: 0, balitaLamaP: 0,
-    // Anak 6-18 thn
-    anakBaruL: 0, anakLamaL: 0, anakBaruP: 0, anakLamaP: 0,
-    // Usia Produktif
-    prodBaruL: 0, prodLamaL: 0, prodBaruP: 0, prodLamaP: 0,
-    // Ibu Hamil / Menyusui / Lansia / WUS / Ibu
-    hamilBaru: 0, hamilLama: 0,
-    busuiBaru: 0, busuiLama: 0,
-    lansiaL: 0, lansiaP: 0,
-    wus: 0, ibu: 0,
-    // Petugas
-    kader: 0, plkb: 0, medis: 0,
-    // Lahir & Meninggal
+    // Kolom 3-6: Bayi 0-12 bln (Baru/Lama × L/P)
+    bayiBaruL: 0, bayiBaruP: 0, bayiLamaL: 0, bayiLamaP: 0,
+    // Kolom 7-10: Balita 1-5 thn
+    balitaBaruL: 0, balitaBaruP: 0, balitaLamaL: 0, balitaLamaP: 0,
+    // Kolom 11-14: Anak usia 6-18 thn
+    anakBaruL: 0, anakBaruP: 0, anakLamaL: 0, anakLamaP: 0,
+    // Kolom 15-18: Usia Produktif
+    prodBaruL: 0, prodBaruP: 0, prodLamaL: 0, prodLamaP: 0,
+    // Kolom 19-22: Lansia (Baru/Lama × L/P)
+    lansiaBaruL: 0, lansiaBaruP: 0, lansiaLamaL: 0, lansiaLamaP: 0,
+    // Kolom 23-26: WUS, PUS, Ibu Hamil, Ibu Menyusui
+    wus: 0, pus: 0, ibuHamil: 0, ibuMenyusui: 0,
+    // Kolom 27-32: Petugas hadir (Kader/PLKB/Medis × L/P)
+    kaderL: 0, kaderP: 0, plkbL: 0, plkbP: 0, medisL: 0, medisP: 0,
+    // Kolom 33-36: Bayi lahir & meninggal (L/P)
     lahirL: 0, lahirP: 0, meninggalL: 0, meninggalP: 0,
+    // Kolom 37: Keterangan
     keterangan: ''
   }
 
@@ -594,44 +471,18 @@ export default function Sip6Page() {
   const [editId, setEditId] = useState<string | null>(null)
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
   const [selectedReportForDetail, setSelectedReportForDetail] = useState<any>(null)
-  const [reports, setReports] = useState([
-    {
-      id: '1', bulan: 5, tahun: 2026, posyanduId: '1', namaKader: 'Siti', tanggalInput: '10/05/2026',
-      bayiBaruL: 5, bayiLamaL: 5, bayiBaruP: 5, bayiLamaP: 5,
-      balitaBaruL: 0, balitaLamaL: 0, balitaBaruP: 0, balitaLamaP: 0,
-      anakBaruL: 0, anakLamaL: 0, anakBaruP: 0, anakLamaP: 0,
-      prodBaruL: 0, prodLamaL: 0, prodBaruP: 0, prodLamaP: 0,
-      hamilBaru: 2, hamilLama: 0, busuiBaru: 0, busuiLama: 0,
-      lansiaL: 0, lansiaP: 0, wus: 0, ibu: 0,
-      kader: 3, plkb: 1, medis: 1,
-      lahirL: 0, lahirP: 0, meninggalL: 0, meninggalP: 0,
-      status: 'Tersimpan'
-    },
-    {
-      id: '2', bulan: 5, tahun: 2026, posyanduId: '1', namaKader: 'Ani', tanggalInput: '10/05/2026',
-      bayiBaruL: 2, bayiLamaL: 3, bayiBaruP: 2, bayiLamaP: 2,
-      balitaBaruL: 0, balitaLamaL: 0, balitaBaruP: 0, balitaLamaP: 0,
-      anakBaruL: 0, anakLamaL: 0, anakBaruP: 0, anakLamaP: 0,
-      prodBaruL: 0, prodLamaL: 0, prodBaruP: 0, prodLamaP: 0,
-      hamilBaru: 1, hamilLama: 0, busuiBaru: 0, busuiLama: 0,
-      lansiaL: 0, lansiaP: 0, wus: 0, ibu: 0,
-      kader: 2, plkb: 0, medis: 1,
-      lahirL: 0, lahirP: 0, meninggalL: 0, meninggalP: 0,
-      status: 'Tersimpan'
-    },
-  ])
+  const [reports, setReports] = useState<any[]>([])
 
   const handleChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
   const handleEdit = (report: any) => {
-    setFormData({
-      ...initialForm,
-      posyanduId: report.posyanduId || '',
-      bulan: report.bulan || 5,
-      tahun: report.tahun || 2026,
+    const next: any = { ...initialForm }
+    Object.keys(initialForm).forEach(key => {
+      if (report[key] !== undefined && report[key] !== null) next[key] = report[key]
     })
+    setFormData(next)
     setEditId(report.id)
     setShowForm(true)
   }
@@ -672,117 +523,45 @@ export default function Sip6Page() {
     return {
       bayi: filtered.reduce((sum, r) => sum + (r.bayiBaruL || 0) + (r.bayiBaruP || 0) + (r.bayiLamaL || 0) + (r.bayiLamaP || 0), 0),
       balita: filtered.reduce((sum, r) => sum + (r.balitaBaruL || 0) + (r.balitaBaruP || 0) + (r.balitaLamaL || 0) + (r.balitaLamaP || 0), 0),
-      bumil: filtered.reduce((sum, r) => sum + (r.hamilBaru || 0) + (r.hamilLama || 0), 0),
-      busui: filtered.reduce((sum, r) => sum + (r.busuiBaru || 0) + (r.busuiLama || 0), 0),
-      petugas: filtered.reduce((sum, r) => sum + (r.kader || 0) + (r.plkb || 0) + (r.medis || 0), 0),
+      bumil: filtered.reduce((sum, r) => sum + (r.ibuHamil || 0), 0),
+      busui: filtered.reduce((sum, r) => sum + (r.ibuMenyusui || 0), 0),
+      petugas: filtered.reduce((sum, r) => sum + (r.kaderL || 0) + (r.kaderP || 0) + (r.plkbL || 0) + (r.plkbP || 0) + (r.medisL || 0) + (r.medisP || 0), 0),
     }
   }
 
-  const handleImportCSV = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Import workbook resmi (.xlsx format REKAP DESA) — diparse & disimpan di server
+  const [isImporting, setIsImporting] = useState(false)
+  const handleImportExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = '';
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const text = event.target?.result as string;
-        const lines = text.split('\n');
-        if (lines.length < 2) {
-          alert('CSV kosong atau tidak valid!');
-          return;
-        }
+    const desaId = (session?.user as any)?.desaId || selectedDesaId
+    const formBody = new FormData()
+    formBody.append('file', file)
+    formBody.append('tahun', String(tahunAktif))
+    if (desaId) formBody.append('desaId', desaId)
 
-        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-        const newReports: any[] = [];
-        const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-
-        for (let i = 1; i < lines.length; i++) {
-          const line = lines[i].trim();
-          if (!line) continue;
-
-          const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
-          if (values.length < headers.length) continue;
-
-          const rowData: any = {};
-          headers.forEach((header, index) => {
-            rowData[header] = values[index];
-          });
-
-          const bulanTahun = rowData["Bulan"] || "";
-          let bulan = 5;
-          let tahun = 2026;
-          if (bulanTahun.includes('/')) {
-            const parts = bulanTahun.split('/');
-            bulan = parseInt(parts[0]) || 5;
-            tahun = parseInt(parts[1]) || 2026;
-          }
-
-          const report = {
-            id: 'import-' + Date.now() + '-' + i,
-            posyanduId: activePosyanduId,
-            bulan,
-            tahun,
-            namaKader: rowData["Kader / Petugas"] || "Imported",
-            tanggalInput: rowData["Tanggal Input"] || new Date().toLocaleDateString('id-ID'),
-            bayiBaruL: parseInt(rowData["Bayi Baru (L)"]) || 0,
-            bayiBaruP: parseInt(rowData["Bayi Baru (P)"]) || 0,
-            bayiLamaL: parseInt(rowData["Bayi Lama (L)"]) || 0,
-            bayiLamaP: parseInt(rowData["Bayi Lama (P)"]) || 0,
-            balitaBaruL: parseInt(rowData["Balita Baru (L)"]) || 0,
-            balitaBaruP: parseInt(rowData["Balita Baru (P)"]) || 0,
-            balitaLamaL: parseInt(rowData["Balita Lama (L)"]) || 0,
-            balitaLamaP: parseInt(rowData["Balita Lama (P)"]) || 0,
-            anakBaruL: parseInt(rowData["Anak Baru (L)"]) || 0,
-            anakBaruP: parseInt(rowData["Anak Baru (P)"]) || 0,
-            anakLamaL: parseInt(rowData["Anak Lama (L)"]) || 0,
-            anakLamaP: parseInt(rowData["Anak Lama (P)"]) || 0,
-            prodBaruL: parseInt(rowData["Prod Baru (L)"]) || 0,
-            prodBaruP: parseInt(rowData["Prod Baru (P)"]) || 0,
-            prodLamaL: parseInt(rowData["Prod Lama (L)"]) || 0,
-            prodLamaP: parseInt(rowData["Prod Lama (P)"]) || 0,
-            hamilBaru: parseInt(rowData["Hamil Baru"]) || 0,
-            hamilLama: parseInt(rowData["Hamil Lama"]) || 0,
-            busuiBaru: parseInt(rowData["Busui Baru"]) || 0,
-            busuiLama: parseInt(rowData["Busui Lama"]) || 0,
-            lansiaL: parseInt(rowData["Lansia (L)"]) || 0,
-            lansiaP: parseInt(rowData["Lansia (P)"]) || 0,
-            wus: parseInt(rowData["WUS"]) || 0,
-            ibu: parseInt(rowData["Ibu"]) || 0,
-            kader: parseInt(rowData["Kader"]) || 0,
-            plkb: parseInt(rowData["PLKB"]) || 0,
-            medis: parseInt(rowData["Medis"]) || 0,
-            lahirL: parseInt(rowData["Lahir (L)"]) || 0,
-            lahirP: parseInt(rowData["Lahir (P)"]) || 0,
-            meninggalL: parseInt(rowData["Mati (L)"]) || 0,
-            meninggalP: parseInt(rowData["Mati (P)"]) || 0,
-            status: 'Tersimpan'
-          };
-          newReports.push(report);
-        }
-
-        if (newReports.length > 0) {
-          const merged = [...reports];
-          newReports.forEach(nr => {
-            const dupIdx = merged.findIndex(r => r.bulan === nr.bulan && r.tahun === nr.tahun && r.posyanduId === nr.posyanduId);
-            if (dupIdx !== -1) {
-              merged[dupIdx] = nr;
-            } else {
-              merged.unshift(nr);
-            }
-          });
-
-          setReports(merged);
-          localStorage.setItem('sip6_reports', JSON.stringify(merged));
-          alert(`Sukses mengimpor ${newReports.length} data SIP 6!`);
-        } else {
-          alert('Tidak ada baris data valid yang ditemukan untuk diimpor.');
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Terjadi kesalahan saat mem-parsing berkas CSV.');
+    setIsImporting(true)
+    try {
+      const res = await fetch('/api/import/desa', { method: 'POST', body: formBody })
+      const result = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        alert('Gagal import: ' + (result.error || res.statusText))
+        return
       }
-    };
-    reader.readAsText(file);
+      alert(result.message || 'Import berhasil!')
+      const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+      if (activePosyanduId) {
+        await fetchReports(activePosyanduId)
+        await fetchSasaran(activePosyanduId)
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat import.')
+    } finally {
+      setIsImporting(false)
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -815,39 +594,12 @@ export default function Sip6Page() {
       return;
     }
 
+    const { posyanduId: _ignore, ...fields } = formData
     const payload = {
+      ...fields,
       posyanduId: currentPosyanduId,
       tahun: formData.tahun,
       bulan: formData.bulan,
-      bayiBaruL: formData.bayiBaruL || 0,
-      bayiBaruP: formData.bayiBaruP || 0,
-      bayiLamaL: formData.bayiLamaL || 0,
-      bayiLamaP: formData.bayiLamaP || 0,
-      balitaBaruL: formData.balitaBaruL || 0,
-      balitaBaruP: formData.balitaBaruP || 0,
-      balitaLamaL: formData.balitaLamaL || 0,
-      balitaLamaP: formData.balitaLamaP || 0,
-      anakBaruL: formData.anakBaruL || 0,
-      anakBaruP: formData.anakBaruP || 0,
-      anakLamaL: formData.anakLamaL || 0,
-      anakLamaP: formData.anakLamaP || 0,
-      prodBaruL: formData.prodBaruL || 0,
-      prodBaruP: formData.prodBaruP || 0,
-      prodLamaL: formData.prodLamaL || 0,
-      prodLamaP: formData.prodLamaP || 0,
-      ibuHamil: formData.hamilBaru || 0,
-      ibuMenyusui: formData.busuiBaru || 0,
-      lansiaBaruL: formData.lansiaL || 0,
-      lansiaBaruP: formData.lansiaP || 0,
-      pus: formData.wus || 0,
-      kaderL: formData.kader || 0,
-      plkbL: formData.plkb || 0,
-      medisL: formData.medis || 0,
-      lahirL: formData.lahirL || 0,
-      lahirP: formData.lahirP || 0,
-      meninggalL: formData.meninggalL || 0,
-      meninggalP: formData.meninggalP || 0,
-      keterangan: formData.namaKader || 'Petugas',
     }
 
     try {
@@ -1101,14 +853,19 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm`}>
-                        Ekspor Excel (SIP 6 & 7)
+                      <button onClick={exportUnifiedExcel} disabled={isExporting} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm disabled:opacity-50`}>
+                        {isExporting ? 'Menyiapkan…' : 'Ekspor Excel Desa'}
                       </button>
                       {canEdit && (
-                        <label className={`cursor-pointer bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-lg ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm flex items-center justify-center`}>
-                          <span>Impor CSV</span>
-                          <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
+                        <label className={`cursor-pointer bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-lg ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm flex items-center justify-center ${isImporting ? 'opacity-50 pointer-events-none' : ''}`}>
+                          <span>{isImporting ? 'Mengimpor…' : 'Impor Excel'}</span>
+                          <input type="file" accept=".xlsx,.xls" className="hidden" onChange={handleImportExcel} />
                         </label>
+                      )}
+                      {(canEdit || isPosyandu) && (
+                        <button onClick={handleAdd} className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all text-sm flex items-center gap-2`}>
+                          <Plus className="w-4 h-4" /> Input Bulanan
+                        </button>
                       )}
                     </div>
                   </div>
@@ -1117,12 +874,12 @@ export default function Sip6Page() {
                   <div className="md:hidden space-y-3">
                     {reports.map((report) => {
                       const balitaTotal =
-                        (report.bayiBaruP || 0) + (report.bayiLamaL || 0) + (report.bayiLamaP || 0) +
+                        (report.bayiBaruL || 0) + (report.bayiBaruP || 0) + (report.bayiLamaL || 0) + (report.bayiLamaP || 0) +
                         (report.balitaBaruL || 0) + (report.balitaBaruP || 0) + (report.balitaLamaL || 0) + (report.balitaLamaP || 0) +
                         (report.anakBaruL || 0) + (report.anakBaruP || 0) + (report.anakLamaL || 0) + (report.anakLamaP || 0)
-                      const bumilBusui = (report.hamilLama || 0) + (report.busuiBaru || 0) + (report.busuiLama || 0)
-                      const lansia = (report.lansiaL || 0) + (report.lansiaP || 0)
-                      const petugas = (report.kader || 0) + (report.plkb || 0) + (report.medis || 0)
+                      const bumilBusui = (report.ibuHamil || 0) + (report.ibuMenyusui || 0)
+                      const lansia = (report.lansiaBaruL || 0) + (report.lansiaBaruP || 0) + (report.lansiaLamaL || 0) + (report.lansiaLamaP || 0)
+                      const petugas = (report.kaderL || 0) + (report.kaderP || 0) + (report.plkbL || 0) + (report.plkbP || 0) + (report.medisL || 0) + (report.medisP || 0)
                       const namaBulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][report.bulan - 1]
                       return (
                         <button
@@ -1183,81 +940,89 @@ export default function Sip6Page() {
                           <th className="px-4 py-3">Prod Baru (P)</th>
                           <th className="px-4 py-3">Prod Lama (L)</th>
                           <th className="px-4 py-3">Prod Lama (P)</th>
-                          <th className="px-4 py-3">Hamil Baru</th>
-                          <th className="px-4 py-3">Hamil Lama</th>
-                          <th className="px-4 py-3">Busui Baru</th>
-                          <th className="px-4 py-3">Busui Lama</th>
-                          <th className="px-4 py-3">Lansia (L)</th>
-                          <th className="px-4 py-3">Lansia (P)</th>
+                          <th className="px-4 py-3">Lansia Baru (L)</th>
+                          <th className="px-4 py-3">Lansia Baru (P)</th>
+                          <th className="px-4 py-3">Lansia Lama (L)</th>
+                          <th className="px-4 py-3">Lansia Lama (P)</th>
                           <th className="px-4 py-3">WUS</th>
-                          <th className="px-4 py-3">Ibu</th>
-                          <th className="px-4 py-3">Kader</th>
-                          <th className="px-4 py-3">PLKB</th>
-                          <th className="px-4 py-3">Medis</th>
+                          <th className="px-4 py-3">PUS</th>
+                          <th className="px-4 py-3">Ibu Hamil</th>
+                          <th className="px-4 py-3">Ibu Menyusui</th>
+                          <th className="px-4 py-3">Kader (L)</th>
+                          <th className="px-4 py-3">Kader (P)</th>
+                          <th className="px-4 py-3">PLKB (L)</th>
+                          <th className="px-4 py-3">PLKB (P)</th>
+                          <th className="px-4 py-3">Medis (L)</th>
+                          <th className="px-4 py-3">Medis (P)</th>
                           <th className="px-4 py-3">Lahir (L)</th>
                           <th className="px-4 py-3">Lahir (P)</th>
-                          <th className="px-4 py-3">Mati (L)</th>
-                          <th className="px-4 py-3">Mati (P)</th>
+                          <th className="px-4 py-3">Meninggal (L)</th>
+                          <th className="px-4 py-3">Meninggal (P)</th>
+                          <th className="px-4 py-3">Ket</th>
                           <th className="px-4 py-3">Status</th>
-
+                          <th className="px-4 py-3 text-right">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {reports.map((report, index) => {
-                          const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1];
-                          const attendees = [
-                            ...dummySasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
-                            { id: 'p1', nama: 'Siti', role: 'Kader', isOfficer: true },
-                            { id: 'p2', nama: 'Ani', role: 'Kader', isOfficer: true },
-                            { id: 'p3', nama: 'Budi', role: 'PLKB', isOfficer: true },
-                          ];
-
-                          return (
-                            <Fragment key={report.id}>
-                              <tr
-                                onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
-                                className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
-                              >
-                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">{index + 1}</td>
-                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-14 z-10 bg-white dark:bg-[#202020]">{report.bulan}/{report.tahun}</td>
-
-                                <td className="px-4 py-3">{Math.floor(dummySasaran.filter(s => s.kunjungan.includes(['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1])).length / 2)}</td>
-                                <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
-                                <td className="px-4 py-3">{report.bayiLamaL || 0}</td>
-                                <td className="px-4 py-3">{report.bayiLamaP || 0}</td>
-                                <td className="px-4 py-3">{report.balitaBaruL || 0}</td>
-                                <td className="px-4 py-3">{report.balitaBaruP || 0}</td>
-                                <td className="px-4 py-3">{report.balitaLamaL || 0}</td>
-                                <td className="px-4 py-3">{report.balitaLamaP || 0}</td>
-                                <td className="px-4 py-3">{report.anakBaruL || 0}</td>
-                                <td className="px-4 py-3">{report.anakBaruP || 0}</td>
-                                <td className="px-4 py-3">{report.anakLamaL || 0}</td>
-                                <td className="px-4 py-3">{report.anakLamaP || 0}</td>
-                                <td className="px-4 py-3">{report.prodBaruL || 0}</td>
-                                <td className="px-4 py-3">{report.prodBaruP || 0}</td>
-                                <td className="px-4 py-3">{report.prodLamaL || 0}</td>
-                                <td className="px-4 py-3">{report.prodLamaP || 0}</td>
-                                <td className="px-4 py-3">{dummySasaran.filter(s => s.kunjungan.includes(['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1])).length}</td>
-                                <td className="px-4 py-3">{report.hamilLama || 0}</td>
-                                <td className="px-4 py-3">{report.busuiBaru || 0}</td>
-                                <td className="px-4 py-3">{report.busuiLama || 0}</td>
-                                <td className="px-4 py-3">{report.lansiaL || 0}</td>
-                                <td className="px-4 py-3">{report.lansiaP || 0}</td>
-                                <td className="px-4 py-3">{report.wus || 0}</td>
-                                <td className="px-4 py-3">{report.ibu || 0}</td>
-                                <td className="px-4 py-3">{report.kader || 0}</td>
-                                <td className="px-4 py-3">{report.plkb || 0}</td>
-                                <td className="px-4 py-3">{report.medis || 0}</td>
-                                <td className="px-4 py-3">{report.lahirL || 0}</td>
-                                <td className="px-4 py-3">{report.lahirP || 0}</td>
-                                <td className="px-4 py-3">{report.meninggalL || 0}</td>
-                                <td className="px-4 py-3">{report.meninggalP || 0}</td>
-                                <td className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{report.status}</span></td>
-
-                              </tr>
-                            </Fragment>
-                          );
-                        })}
+                        {reports.map((report, index) => (
+                          <Fragment key={report.id}>
+                            <tr
+                              onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
+                              className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
+                            >
+                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">{index + 1}</td>
+                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-14 z-10 bg-white dark:bg-[#202020]">{report.bulan}/{report.tahun}</td>
+                              <td className="px-4 py-3">{report.bayiBaruL || 0}</td>
+                              <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
+                              <td className="px-4 py-3">{report.bayiLamaL || 0}</td>
+                              <td className="px-4 py-3">{report.bayiLamaP || 0}</td>
+                              <td className="px-4 py-3">{report.balitaBaruL || 0}</td>
+                              <td className="px-4 py-3">{report.balitaBaruP || 0}</td>
+                              <td className="px-4 py-3">{report.balitaLamaL || 0}</td>
+                              <td className="px-4 py-3">{report.balitaLamaP || 0}</td>
+                              <td className="px-4 py-3">{report.anakBaruL || 0}</td>
+                              <td className="px-4 py-3">{report.anakBaruP || 0}</td>
+                              <td className="px-4 py-3">{report.anakLamaL || 0}</td>
+                              <td className="px-4 py-3">{report.anakLamaP || 0}</td>
+                              <td className="px-4 py-3">{report.prodBaruL || 0}</td>
+                              <td className="px-4 py-3">{report.prodBaruP || 0}</td>
+                              <td className="px-4 py-3">{report.prodLamaL || 0}</td>
+                              <td className="px-4 py-3">{report.prodLamaP || 0}</td>
+                              <td className="px-4 py-3">{report.lansiaBaruL || 0}</td>
+                              <td className="px-4 py-3">{report.lansiaBaruP || 0}</td>
+                              <td className="px-4 py-3">{report.lansiaLamaL || 0}</td>
+                              <td className="px-4 py-3">{report.lansiaLamaP || 0}</td>
+                              <td className="px-4 py-3">{report.wus || 0}</td>
+                              <td className="px-4 py-3">{report.pus || 0}</td>
+                              <td className="px-4 py-3">{report.ibuHamil || 0}</td>
+                              <td className="px-4 py-3">{report.ibuMenyusui || 0}</td>
+                              <td className="px-4 py-3">{report.kaderL || 0}</td>
+                              <td className="px-4 py-3">{report.kaderP || 0}</td>
+                              <td className="px-4 py-3">{report.plkbL || 0}</td>
+                              <td className="px-4 py-3">{report.plkbP || 0}</td>
+                              <td className="px-4 py-3">{report.medisL || 0}</td>
+                              <td className="px-4 py-3">{report.medisP || 0}</td>
+                              <td className="px-4 py-3">{report.lahirL || 0}</td>
+                              <td className="px-4 py-3">{report.lahirP || 0}</td>
+                              <td className="px-4 py-3">{report.meninggalL || 0}</td>
+                              <td className="px-4 py-3">{report.meninggalP || 0}</td>
+                              <td className="px-4 py-3 max-w-40 truncate" title={report.keterangan}>{report.keterangan || '-'}</td>
+                              <td className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{report.status}</span></td>
+                              <td className="px-4 py-3 text-right">
+                                {(canEdit || isPosyandu) && (
+                                  <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                                    <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
+                                      <Edit2 className="w-4 h-4" />
+                                    </button>
+                                    <button onClick={() => handleDelete(report.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
+                                      <Trash2 className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                )}
+                              </td>
+                            </tr>
+                          </Fragment>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -1544,6 +1309,108 @@ export default function Sip6Page() {
       )}
 
       {/* Modal Detail Pengunjung */}
+      {/* Modal Input Bulanan — field 1:1 dengan 37 kolom sheet KESEHATAN SIP 6 */}
+      <AnimatePresence>
+        {showForm && (
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowForm(false)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10"
+            >
+              <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
+              <form onSubmit={handleSubmit}>
+                <div className="p-6 border-b border-slate-200/70 dark:border-white/10 flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">{editId ? 'Edit' : 'Input'} Data Pengunjung Bulanan</h2>
+                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">Kolom sesuai format resmi SIP 6 — DATA PENGUNJUNG</p>
+                  </div>
+                  <button type="button" onClick={() => setShowForm(false)} className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="p-6 space-y-6">
+                  {/* Periode */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">Bulan</label>
+                      <select value={formData.bulan} onChange={(e) => handleChange('bulan', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
+                        {['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'].map((m, i) => (
+                          <option key={m} value={i + 1}>{m}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">Tahun</label>
+                      <select value={formData.tahun} onChange={(e) => handleChange('tahun', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
+                        {[2024, 2025, 2026, 2027].map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  {([
+                    { title: 'BAYI 0 - 12 BULAN (Kolom 3-6)', fields: [['bayiBaruL','Baru (L)'],['bayiBaruP','Baru (P)'],['bayiLamaL','Lama (L)'],['bayiLamaP','Lama (P)']] },
+                    { title: 'BALITA 1 - 5 TAHUN (Kolom 7-10)', fields: [['balitaBaruL','Baru (L)'],['balitaBaruP','Baru (P)'],['balitaLamaL','Lama (L)'],['balitaLamaP','Lama (P)']] },
+                    { title: 'ANAK USIA 6 - 18 TAHUN (Kolom 11-14)', fields: [['anakBaruL','Baru (L)'],['anakBaruP','Baru (P)'],['anakLamaL','Lama (L)'],['anakLamaP','Lama (P)']] },
+                    { title: 'USIA PRODUKTIF (Kolom 15-18)', fields: [['prodBaruL','Baru (L)'],['prodBaruP','Baru (P)'],['prodLamaL','Lama (L)'],['prodLamaP','Lama (P)']] },
+                    { title: 'LANSIA (Kolom 19-22)', fields: [['lansiaBaruL','Baru (L)'],['lansiaBaruP','Baru (P)'],['lansiaLamaL','Lama (L)'],['lansiaLamaP','Lama (P)']] },
+                    { title: 'WUS / PUS / IBU (Kolom 23-26)', fields: [['wus','WUS'],['pus','PUS'],['ibuHamil','Ibu Hamil'],['ibuMenyusui','Ibu Menyusui']] },
+                    { title: 'PETUGAS YANG HADIR (Kolom 27-32)', fields: [['kaderL','Kader (L)'],['kaderP','Kader (P)'],['plkbL','PLKB (L)'],['plkbP','PLKB (P)'],['medisL','Medis (L)'],['medisP','Medis (P)']] },
+                    { title: 'BAYI LAHIR & MENINGGAL (Kolom 33-36)', fields: [['lahirL','Lahir (L)'],['lahirP','Lahir (P)'],['meninggalL','Meninggal (L)'],['meninggalP','Meninggal (P)']] },
+                  ] as { title: string; fields: [string, string][] }[]).map(group => (
+                    <div key={group.title}>
+                      <h3 className="text-xs font-bold text-slate-600 dark:text-zinc-300 uppercase tracking-wider mb-2 pb-1.5 border-b border-slate-200/70 dark:border-white/10">{group.title}</h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                        {group.fields.map(([key, label]) => (
+                          <div key={key}>
+                            <label className="block text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-1">{label}</label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={(formData as any)[key]}
+                              onChange={(e) => handleChange(key, parseInt(e.target.value) || 0)}
+                              className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div>
+                    <h3 className="text-xs font-bold text-slate-600 dark:text-zinc-300 uppercase tracking-wider mb-2 pb-1.5 border-b border-slate-200/70 dark:border-white/10">KETERANGAN (Kolom 37)</h3>
+                    <input
+                      type="text"
+                      value={formData.keterangan}
+                      onChange={(e) => handleChange('keterangan', e.target.value)}
+                      placeholder="Keterangan (opsional)"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                    />
+                  </div>
+                </div>
+
+                <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
+                  <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+                  <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-5 rounded-md transition-all text-sm flex items-center gap-2`}>
+                    <Save className="w-4 h-4" /> Simpan
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {isDetailModalOpen && selectedReportForDetail && (
           <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
@@ -1589,9 +1456,6 @@ export default function Sip6Page() {
                   const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][selectedReportForDetail.bulan - 1];
                   const attendees = [
                     ...dummySasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
-                    { id: 'p1', nama: 'Siti', role: 'Kader', isOfficer: true },
-                    { id: 'p2', nama: 'Ani', role: 'Kader', isOfficer: true },
-                    { id: 'p3', nama: 'Budi', role: 'PLKB', isOfficer: true },
                   ];
 
                   return (

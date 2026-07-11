@@ -14,6 +14,8 @@ export default function ProfilePage() {
   
   const [namaDesa, setNamaDesa] = useState('')
   const [tahunAktif, setTahunAktif] = useState(2026)
+  const [posyandus, setPosyandus] = useState<any[]>([])
+  const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,6 +39,27 @@ export default function ProfilePage() {
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
   }, [session])
+
+  useEffect(() => {
+    if (role === 'OPERATOR_DESA') {
+      fetch('/api/posyandu')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setPosyandus(data)
+            const savedPosId = localStorage.getItem('sip_active_posyandu_id')
+            if (savedPosId) {
+              setSelectedPosyanduId(savedPosId)
+            } else if (data.length > 0) {
+              setSelectedPosyanduId(data[0].id)
+              localStorage.setItem('sip_active_posyandu_id', data[0].id)
+              localStorage.setItem('sip_active_posyandu_nama', data[0].nama)
+            }
+          }
+        })
+        .catch(err => console.error("Gagal memuat daftar posyandu:", err))
+    }
+  }, [role])
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -116,6 +139,15 @@ export default function ProfilePage() {
     e.preventDefault()
     localStorage.setItem('sip_nama_desa', namaDesa)
     localStorage.setItem('sip_tahun_aktif', tahunAktif.toString())
+    
+    if (role === 'OPERATOR_DESA' && selectedPosyanduId) {
+      const activePos = posyandus.find(p => p.id === selectedPosyanduId)
+      if (activePos) {
+        localStorage.setItem('sip_active_posyandu_id', activePos.id)
+        localStorage.setItem('sip_active_posyandu_nama', activePos.nama)
+      }
+    }
+    
     alert('Pengaturan profil dan sistem berhasil disimpan!')
   }
 
@@ -261,6 +293,24 @@ export default function ProfilePage() {
                   <option value="2027">2027</option>
                 </select>
               </div>
+              {role === 'OPERATOR_DESA' && (
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Posyandu Aktif</label>
+                  <select
+                    value={selectedPosyanduId}
+                    onChange={(e) => setSelectedPosyanduId(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  >
+                    <option value="">-- Pilih Posyandu --</option>
+                    {posyandus.map(p => (
+                      <option key={p.id} value={p.id}>{p.nama}</option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1.5">
+                    Pilih Posyandu default yang ingin Anda kelola datanya saat ini.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

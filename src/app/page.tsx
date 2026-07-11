@@ -911,16 +911,16 @@ export default function Home() {
           </motion.p>
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95, y: 50 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ type: "spring", stiffness: 70, damping: 15, mass: 0.8 }}
-          className="marquee-container space-y-6 overflow-hidden py-4"
-        >
+        <div className="marquee-container space-y-6 overflow-hidden py-4">
           {/* First Row: Left Scrolling */}
           <div className="flex overflow-hidden">
-            <div className="animate-marquee-left flex gap-6">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="animate-marquee-left flex gap-6"
+            >
               {[
                 { src: "/images/hero/hero1.avif", alt: "Layanan Balita Terintegrasi" },
                 { src: "/images/hero/hero2.avif", alt: "Pemeriksaan Kesehatan Ibu Hamil" },
@@ -933,8 +933,9 @@ export default function Home() {
                 { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
               ].map((item, idx) => (
-                <div 
+                <motion.div 
                   key={`r1-${idx}`} 
+                  variants={itemVariants}
                   className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100 group"
                 >
                   <Image
@@ -948,14 +949,20 @@ export default function Home() {
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Second Row: Right Scrolling */}
           <div className="flex overflow-hidden">
-            <div className="animate-marquee-right flex gap-6">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="animate-marquee-right flex gap-6"
+            >
               {[
                 { src: "/images/hero/hero4.avif", alt: "Penyuluhan Gizi Lansia" },
                 { src: "/images/hero/hero5.avif", alt: "Kunjungan Rumah Balita" },
@@ -968,8 +975,9 @@ export default function Home() {
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
               ].map((item, idx) => (
-                <div 
+                <motion.div 
                   key={`r2-${idx}`} 
+                  variants={itemVariants}
                   className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100 group"
                 >
                   <Image
@@ -983,11 +991,11 @@ export default function Home() {
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Section: Landasan Hukum */}

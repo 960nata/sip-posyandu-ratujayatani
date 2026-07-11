@@ -386,8 +386,22 @@ export default function Home() {
       </section>
 
       {/* Section: Lampung Timur dalam Angka */}
-      <section className="py-20 bg-[#25103c] overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 bg-[#25103c] overflow-hidden">
+        {/* Nebula background */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          {/* Glowing gas clouds */}
+          <div className="absolute -top-32 -left-24 w-[550px] h-[550px] rounded-full bg-purple-600/35 blur-[120px]" />
+          <div className="absolute top-1/3 right-[-140px] w-[500px] h-[500px] rounded-full bg-fuchsia-500/25 blur-[130px]" />
+          <div className="absolute -bottom-40 left-1/3 w-[600px] h-[400px] rounded-full bg-indigo-500/30 blur-[110px]" />
+          <div className="absolute top-10 left-1/2 w-[300px] h-[300px] rounded-full bg-violet-400/20 blur-[90px]" />
+          {/* Star field (two layers for depth) */}
+          <div className="absolute inset-0 opacity-50 bg-[radial-gradient(circle,rgba(255,255,255,0.9)_1px,transparent_1.5px)] [background-size:110px_110px]" />
+          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0.8px,transparent_1.2px)] [background-size:60px_60px] [background-position:30px_45px]" />
+          {/* Soft vignette so edges stay dark */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#25103c_100%)]" />
+        </div>
+
+        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1048,7 +1062,7 @@ export default function Home() {
               </div>
               <div className="relative h-[220px] w-full overflow-hidden mt-2">
                 <Image
-                  src="/images/uu_desa_hukum.png"
+                  src="/images/uu_desa_hukum_purple.png"
                   alt="Undang-Undang Desa"
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-105"
@@ -1164,7 +1178,7 @@ export default function Home() {
               {/* 3D Wave Abstract Graphic at the bottom */}
               <div className="relative flex-1 w-full min-h-[340px] mt-auto overflow-hidden">
                 <Image
-                  src="/images/abstrak_green_wave.png"
+                  src="/images/abstrak_purple_wave.png"
                   alt="3D Wave Pattern"
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-105"
@@ -1188,7 +1202,7 @@ export default function Home() {
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.015 }}
               transition={{ duration: 0.3 }}
-              style={{ background: "linear-gradient(135deg, #f59e0b 0%, #84cc16 35%, #10b981 70%, #064e3b 100%)" }}
+              style={{ background: "linear-gradient(135deg, #a855f7 0%, #7c3aed 35%, #6366f1 70%, #31104a 100%)" }}
               className="rounded-[10px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl cursor-pointer"
             >
               <div className="flex-1 text-left z-10">

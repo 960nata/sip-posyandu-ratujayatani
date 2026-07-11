@@ -34,6 +34,53 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ═══ DASHBOARD DESIGN TOKENS — Notion-style, calm & minimal ═══ */
+:root {
+  --dash-bg:            #fbfbfa;
+  --dash-sidebar:       #f7f7f5;
+  --dash-surface:       #ffffff;
+  --dash-surface-hover: #f1f1ef;
+  --dash-card:          #ffffff;
+  --dash-card-hover:    #f7f7f5;
+  --dash-border:        rgba(55, 53, 47, 0.09);
+  --dash-border-2:      rgba(55, 53, 47, 0.16);
+  --dash-text:          #37352f;
+  --dash-text-muted:    rgba(55, 53, 47, 0.5);
+  --dash-text-soft:     rgba(55, 53, 47, 0.65);
+  --dash-primary:       #7c3aed;
+  --dash-primary-hover: #6d28d9;
+  --dash-primary-bg:    rgba(124, 58, 237, 0.08);
+  --dash-success:       #059669;
+  --dash-success-bg:    rgba(5, 150, 105, 0.08);
+  --dash-warning:       #d97706;
+  --dash-warning-bg:    rgba(217, 119, 6, 0.08);
+  --dash-danger:        #dc2626;
+  --dash-danger-bg:     rgba(220, 38, 38, 0.08);
+}
+
+.dark {
+  --dash-bg:            #191919;
+  --dash-sidebar:       #202020;
+  --dash-surface:       #202020;
+  --dash-surface-hover: #2f2f2f;
+  --dash-card:          #252525;
+  --dash-card-hover:    #2f2f2f;
+  --dash-border:        rgba(255, 255, 255, 0.09);
+  --dash-border-2:      rgba(255, 255, 255, 0.13);
+  --dash-text:          rgba(255, 255, 255, 0.9);
+  --dash-text-muted:    rgba(255, 255, 255, 0.44);
+  --dash-text-soft:     rgba(255, 255, 255, 0.6);
+  --dash-primary:       #a78bfa;
+  --dash-primary-hover: #8b5cf6;
+  --dash-primary-bg:    rgba(167, 139, 250, 0.12);
+  --dash-success:       #34d399;
+  --dash-success-bg:    rgba(52, 211, 153, 0.12);
+  --dash-warning:       #fbbf24;
+  --dash-warning-bg:    rgba(251, 191, 36, 0.12);
+  --dash-danger:        #f87171;
+  --dash-danger-bg:     rgba(248, 113, 113, 0.12);
+}
+
 /* Native system font for body/description text (headings keep Plus Jakarta Sans) */
 .font-native {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,

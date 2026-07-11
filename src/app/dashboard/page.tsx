@@ -229,17 +229,17 @@ export default function DashboardPage() {
       <div className="space-y-8 p-6 font-sans">
         <div className="flex justify-between items-center">
           <div className="space-y-2">
-            <div className="h-10 w-56 bg-slate-100 dark:bg-zinc-800 rounded-xl animate-pulse"></div>
-            <div className="h-4 w-72 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse"></div>
+            <div className="h-10 w-56 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
+            <div className="h-4 w-72 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
           </div>
-          <div className="h-10 w-32 bg-slate-100 dark:bg-zinc-800 rounded-xl animate-pulse"></div>
+          <div className="h-10 w-32 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
-              <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800 rounded-xl animate-pulse"></div>
-              <div className="h-4 w-24 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse"></div>
-              <div className="h-8 w-16 bg-slate-100 dark:bg-zinc-800 rounded-lg animate-pulse"></div>
+            <div key={i} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 space-y-4">
+              <div className="w-10 h-10 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
+              <div className="h-4 w-24 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
+              <div className="h-8 w-16 bg-slate-100 dark:bg-[#202020] rounded-lg animate-pulse"></div>
             </div>
           ))}
         </div>
@@ -282,49 +282,49 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Total Balita</p>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalBalita ?? 0}</p>
                   <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
                 </div>
-                <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center text-rose-500">
+                <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-lg flex items-center justify-center text-rose-500">
                   <HeartPulse className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Ibu Hamil</p>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalIguHamil ?? healthStats?.sip6?.totalIbuHamil ?? 0}</p>
                   <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
                 </div>
-                <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-xl flex items-center justify-center text-pink-500">
+                <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-lg flex items-center justify-center text-pink-500">
                   <Heart className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Lansia & Produktif</p>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalLansia ?? 0}</p>
                   <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Hadir terdata</p>
                 </div>
-                <div className="w-10 h-10 bg-violet-50 dark:bg-violet-900/20 rounded-xl flex items-center justify-center text-violet-500">
+                <div className="w-10 h-10 bg-violet-50 dark:bg-violet-900/20 rounded-lg flex items-center justify-center text-violet-500">
                   <Users className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-500 dark:text-zinc-400">Laporan Baru</p>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">5</p>
                 </div>
-                <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-xl flex items-center justify-center text-purple-500">
+                <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center text-purple-500">
                   <CheckCircle className="w-6 h-6" />
                 </div>
               </div>
@@ -338,10 +338,10 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {dataModules.map((module) => (
-              <div key={module.title} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+              <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                    <div className={`w-12 h-12 ${module.color} rounded-xl flex items-center justify-center transition-transform group-hover:scale-105`}>
+                    <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                       <module.icon className="w-6 h-6" />
                     </div>
                     <div>
@@ -354,7 +354,7 @@ export default function DashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard/${module.slug}`}
-                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Input Data
@@ -363,10 +363,10 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Riwayat Aktivitas</h2>
             <div className="space-y-4">
-              <div className="flex justify-between items-center py-3 border-b border-slate-50 dark:border-slate-800">
+              <div className="flex justify-between items-center py-3 border-b border-slate-50 dark:border-white/10">
                 <div>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">Input Data KES-6</p>
                   <p className="text-xs text-slate-400 mt-0.5">Hari ini, 10:30</p>
@@ -424,10 +424,10 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                      <div className={`w-12 h-12 ${module.color} rounded-xl flex items-center justify-center transition-transform group-hover:scale-105`}>
+                      <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
@@ -438,7 +438,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
+                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
                   </Link>
@@ -500,32 +500,32 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
               <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 5}</p>
               <p className="text-xs text-slate-400 mt-1">Di wilayah Desa Anda</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Sudah Input Laporan</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.activePosyanduCount ? Math.min(healthStats.activePosyanduCount, 3) : 3} <span className="text-xl text-slate-300">/ {healthStats?.activePosyanduCount ?? 5}</span></p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
               <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
               <p className="text-xs text-slate-400 mt-1">Kehadiran Bulan ini (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
               <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Hadir terdata (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
               <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Balita</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
@@ -534,13 +534,13 @@ export default function DashboardPage() {
 
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Laporan Selesai per Posyandu</h2>
               <div className="h-64">
                 <Chart options={desaChartOptions as any} series={desaChartSeries} type="bar" height="100%" />
               </div>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Status Input</h2>
               <div className="h-64 flex items-center justify-center">
                 <Chart options={desaDonutOptions as any} series={desaDonutSeries} type="donut" height="240" />
@@ -549,7 +549,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Trends Chart Row */}
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
             <div className="h-80">
               <Chart options={trendChartOptions as any} series={trendChartSeries} type="line" height="100%" />
@@ -558,12 +558,12 @@ export default function DashboardPage() {
 
           {/* Monitoring Table & Last Data */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Monitoring Input Posyandu</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
-                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-200/70 dark:border-white/10">
                       <th className="px-4 py-3 font-medium">Nama Posyandu</th>
                       <th className="px-4 py-3 font-medium">KES-6</th>
                       <th className="px-4 py-3 font-medium">Sosial</th>
@@ -590,7 +590,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">5 Data Input Terakhir</h2>
               <div className="space-y-4">
                 {[
@@ -600,7 +600,7 @@ export default function DashboardPage() {
                   { posyandu: 'Posyandu 2', type: 'Trantib', date: '09 Mei 2026', time: '10:30' },
                   { posyandu: 'Posyandu 1', type: 'Sosial', date: '08 Mei 2026', time: '15:00' },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-zinc-700 transition-colors">
+                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#202020]/50 rounded-lg border border-transparent hover:border-slate-200/70 dark:hover:border-zinc-700 transition-colors">
                     <div>
                       <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.posyandu}</p>
                       <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
@@ -657,10 +657,10 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                      <div className={`w-12 h-12 ${module.color} rounded-xl flex items-center justify-center transition-transform group-hover:scale-105`}>
+                      <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
@@ -673,7 +673,7 @@ export default function DashboardPage() {
                   </div>
                   <Link
                     href={`/dashboard/${module.slug}`}
-                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
@@ -707,11 +707,11 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
-                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-200/70 dark:border-white/10">
                       <th className="px-4 py-3 font-medium">Nama Posyandu</th>
                       <th className="px-4 py-3 font-medium">Desa</th>
                       <th className="px-4 py-3 font-medium">Status KES-6</th>
@@ -822,27 +822,27 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
               <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 60}</p>
               <p className="text-xs text-slate-400 mt-1">Tersebar di semua desa</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
               <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
               <p className="text-xs text-slate-400 mt-1">Kehadiran (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
               <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Jiwa terpantau (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
               <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
             </div>
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">Balita</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
@@ -852,7 +852,7 @@ export default function DashboardPage() {
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Category Chart */}
-            <div className="lg:col-span-2 bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Laporan Per Kategori</h2>
               <div className="h-80">
                 <Chart options={categoryChartOptions as any} series={categoryChartSeries} type="bar" height="100%" />
@@ -860,7 +860,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Donut Chart */}
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Persentase Penyelesaian</h2>
               <div className="h-80 flex items-center justify-center">
                 <Chart options={donutChartOptions as any} series={donutChartSeries} type="donut" height="320" />
@@ -869,7 +869,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Trends Chart Row */}
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
             <div className="h-80">
               <Chart options={trendChartOptions as any} series={trendChartSeries} type="line" height="100%" />
@@ -879,12 +879,12 @@ export default function DashboardPage() {
           {/* Two Columns: List Desa & Last 5 Data */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* List Desa */}
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Daftar Desa & Progress</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
-                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                    <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-200/70 dark:border-white/10">
                       <th className="px-4 py-3 font-medium">Nama Desa</th>
                       <th className="px-4 py-3 font-medium">Progress</th>
                       <th className="px-4 py-3 font-medium">Status</th>
@@ -895,12 +895,12 @@ export default function DashboardPage() {
                     {[
                       { name: 'Desa Adijaya', progress: '5/5 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Desa Adirejo', progress: '3/5 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
-                      { name: 'Desa Ganti Warno', progress: '0/4 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-zinc-700/50' },
+                      { name: 'Desa Ganti Warno', progress: '0/4 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-[#2f2f2f]/50' },
                       { name: 'Desa Gantimulyo', progress: '4/4 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Desa Gondangrejo', progress: '2/5 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                       { name: 'Desa Jojog', progress: '1/4 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                       { name: 'Desa Kalibening', progress: '3/3 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
-                      { name: 'Desa Sidodadi', progress: '0/5 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-zinc-700/50' },
+                      { name: 'Desa Sidodadi', progress: '0/5 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-[#2f2f2f]/50' },
                     ].map((desa) => (
                       <tr key={desa.name}>
                         <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{desa.name}</td>
@@ -917,7 +917,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Last 5 Data */}
-            <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">5 Data Input Terakhir</h2>
               <div className="space-y-4">
                 {[
@@ -927,7 +927,7 @@ export default function DashboardPage() {
                   { desa: 'Desa Adijaya', posyandu: 'Posyandu 2', type: 'Trantib', date: '09 Mei 2026', time: '10:30' },
                   { desa: 'Desa Siraman', posyandu: 'Posyandu 1', type: 'Sosial', date: '08 Mei 2026', time: '15:00' },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-zinc-700 transition-colors">
+                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#202020]/50 rounded-lg border border-transparent hover:border-slate-200/70 dark:hover:border-zinc-700 transition-colors">
                     <div>
                       <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.desa} <span className="text-xs font-normal text-slate-400">({item.posyandu})</span></p>
                       <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
@@ -996,7 +996,7 @@ export default function DashboardPage() {
             { label: 'Laporan Selesai', value: '1.450', desc: 'Bulan ini', color: 'text-indigo-600' },
             { label: 'Total User', value: '350', desc: 'Semua level', color: 'text-violet-600' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white dark:bg-[#111827] p-4 md:p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            <div key={stat.label} className="bg-white dark:bg-[#202020] p-4 md:p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
               <p className="text-sm font-medium text-slate-400">{stat.label}</p>
               <p className={`text-2xl md:text-4xl font-bold tracking-tight ${stat.color} mt-2`}>{stat.value}</p>
               <p className="text-xs text-slate-400 mt-1">{stat.desc}</p>
@@ -1006,13 +1006,13 @@ export default function DashboardPage() {
 
         {/* Charts Row 1 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Aktivitas Laporan per Kecamatan</h2>
             <div className="h-80">
               <Chart options={kabKecChartOptions as any} series={kabKecChartSeries} type="bar" height="100%" />
             </div>
           </div>
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Status Laporan Global</h2>
             <div className="h-80 flex items-center justify-center">
               <Chart options={kabDonutOptions as any} series={kabDonutSeries} type="donut" height="320" />
@@ -1022,19 +1022,19 @@ export default function DashboardPage() {
 
         {/* Charts Row 2 & Table */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Pengunjung Bulanan</h2>
             <div className="h-64">
               <Chart options={kabTrendOptions as any} series={kabTrendSeries} type="line" height="100%" />
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Progress Kecamatan</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left">
                 <thead>
-                  <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                  <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-200/70 dark:border-white/10">
                     <th className="px-4 py-3 font-medium">Kecamatan</th>
                     <th className="px-4 py-3 font-medium">Desa Selesai</th>
                     <th className="px-4 py-3 font-medium">Status</th>
@@ -1088,7 +1088,7 @@ export default function DashboardPage() {
               setSelectedBulan(parseInt(b))
               setSelectedTahun(parseInt(t))
             }}
-            className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all cursor-pointer shadow-sm"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all cursor-pointer"
           >
             <option value="12-2026">Desember 2026</option>
             <option value="11-2026">November 2026</option>
@@ -1120,7 +1120,7 @@ export default function DashboardPage() {
 
       {/* DEPENDENT DROPDOWNS (WILAYAH) - Ultra Minimalist */}
       {(role === 'SUPERADMIN' || role === 'ADMIN_KABUPATEN' || role === 'ADMIN_KECAMATAN') && (
-        <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+        <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
           <div className="flex items-center gap-2 mb-4">
             <MapPin className="w-4 h-4 text-slate-400" />
             <h2 className="text-sm font-semibold text-slate-700 dark:text-white uppercase tracking-wider">Filter Wilayah</h2>
@@ -1135,7 +1135,7 @@ export default function DashboardPage() {
                   <select
                     value={selectedKec}
                     onChange={handleKecChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer"
                   >
                     <option value="">Pilih Kecamatan...</option>
                     {regionData.map(k => (
@@ -1155,7 +1155,7 @@ export default function DashboardPage() {
                   value={selectedDesa}
                   onChange={handleDesaChange}
                   disabled={role !== 'ADMIN_KECAMATAN' && !selectedKec}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option value="">Pilih Desa...</option>
                   {availableDesas.map(d => (
@@ -1174,7 +1174,7 @@ export default function DashboardPage() {
                   value={selectedPosyandu}
                   onChange={(e) => setSelectedPosyandu(e.target.value)}
                   disabled={!selectedDesa}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option value="">Pilih Posyandu...</option>
                   {availablePosyandus.map(p => (

@@ -140,9 +140,9 @@ export default function Sip7Page() {
   const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    bgGradient: isPosyandu ? 'from-[var(--dash-primary)] to-[var(--dash-primary)]' : 'from-[var(--dash-primary)] to-[var(--dash-primary)]',
+    hoverGradient: 'hover:opacity-90',
+    shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
     focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
@@ -1544,8 +1544,8 @@ export default function Sip7Page() {
               <button
                 onClick={() => { setActiveTab('hasil_kegiatan'); setShowForm(false); }}
                 className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'hasil_kegiatan'
-                    ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
-                    : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
+                    ? `${theme.bgSolid} text-white ${theme.shadow}`
+                    : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
               >
                 Data Hasil Kegiatan
@@ -1553,8 +1553,8 @@ export default function Sip7Page() {
               <button
                 onClick={() => { setActiveTab('rekap_bumil'); setShowForm(false); }}
                 className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bumil'
-                    ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
-                    : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
+                    ? `${theme.bgSolid} text-white ${theme.shadow}`
+                    : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
               >
                 Rekapitulasi Bumil
@@ -1562,8 +1562,8 @@ export default function Sip7Page() {
               <button
                 onClick={() => { setActiveTab('rekap_bayi'); setShowForm(false); }}
                 className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bayi'
-                    ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
-                    : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
+                    ? `${theme.bgSolid} text-white ${theme.shadow}`
+                    : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
               >
                 Rekapitulasi Bayi/Balita
@@ -1571,8 +1571,8 @@ export default function Sip7Page() {
               <button
                 onClick={() => { setActiveTab('rekap_remaja'); setShowForm(false); }}
                 className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_remaja'
-                    ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
-                    : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
+                    ? `${theme.bgSolid} text-white ${theme.shadow}`
+                    : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
               >
                 Rekapitulasi Remaja
@@ -1580,8 +1580,8 @@ export default function Sip7Page() {
               <button
                 onClick={() => { setActiveTab('rekap_lansia'); setShowForm(false); }}
                 className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_lansia'
-                    ? `${theme.bgSolid} text-white shadow-sm ${theme.shadow}`
-                    : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700'
+                    ? `${theme.bgSolid} text-white ${theme.shadow}`
+                    : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
               >
                 Rekapitulasi Lansia/Produktif
@@ -1593,7 +1593,7 @@ export default function Sip7Page() {
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <div className="lg:col-span-3">
                   <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm space-y-6">
+                    <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10 space-y-6">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-lg font-bold text-slate-800 dark:text-white">
                           {editId7 ? 'Edit Data Hasil Kegiatan' : 'Entry Data Hasil Kegiatan Baru'}
@@ -1604,13 +1604,13 @@ export default function Sip7Page() {
                       </div>
 
                       {/* Periode */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-slate-100 dark:border-zinc-700">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-slate-200/70 dark:border-white/10">
                         <div>
                           <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Bulan</label>
                           <select 
                             value={formData7.bulan} 
                             onChange={e => setFormData7(prev => ({ ...prev, bulan: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                           >
                             {[...Array(12)].map((_, i) => (
                               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -1623,7 +1623,7 @@ export default function Sip7Page() {
                             type="number" 
                             value={formData7.tahun} 
                             onChange={e => setFormData7(prev => ({ ...prev, tahun: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                             required 
                           />
                         </div>
@@ -1631,8 +1631,8 @@ export default function Sip7Page() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* 1. Ibu Hamil & Menyusui */}
-                        <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
+                        <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
+                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Heart className="w-4 h-4 text-rose-500" /> 1. Ibu Hamil & Menyusui
                           </h4>
                           <div className="grid grid-cols-1 gap-3">
@@ -1643,7 +1643,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.bumilJml} 
                                 onChange={e => setFormData7(prev => ({ ...prev, bumilJml: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1653,7 +1653,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.bumilDiperiksa} 
                                 onChange={e => setFormData7(prev => ({ ...prev, bumilDiperiksa: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1663,7 +1663,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.bumilFeTab} 
                                 onChange={e => setFormData7(prev => ({ ...prev, bumilFeTab: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1673,15 +1673,15 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.busuiJml} 
                                 onChange={e => setFormData7(prev => ({ ...prev, busuiJml: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                           </div>
                         </div>
 
                         {/* 2. Akseptor KB */}
-                        <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
+                        <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
+                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <ClipboardList className="w-4 h-4 text-purple-500" /> 2. Akseptor KB
                           </h4>
                           <div className="grid grid-cols-2 gap-3">
@@ -1692,7 +1692,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbKondom} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbKondom: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1702,7 +1702,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbPil} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbPil: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1712,7 +1712,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbImplant} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbImplant: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1722,7 +1722,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbMop} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbMop: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1732,7 +1732,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbMow} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbMow: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1742,7 +1742,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbIud} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbIud: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1752,7 +1752,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbSuntik} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbSuntik: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -1762,7 +1762,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.kbLainnya} 
                                 onChange={e => setFormData7(prev => ({ ...prev, kbLainnya: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                           </div>
@@ -1770,8 +1770,8 @@ export default function Sip7Page() {
                       </div>
 
                       {/* 3. Penimbangan Balita */}
-                      <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
-                        <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
+                      <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
+                        <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                           <Baby className="w-4 h-4 text-blue-500" /> 3. Penimbangan Balita
                         </h4>
                         <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
@@ -1782,7 +1782,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangS_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangS_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1792,7 +1792,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangS_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangS_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           
@@ -1803,7 +1803,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangK_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangK_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1813,7 +1813,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangK_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangK_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
 
@@ -1824,7 +1824,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangD_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangD_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1834,7 +1834,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangD_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangD_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
 
@@ -1845,7 +1845,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangN_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangN_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1855,7 +1855,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangN_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangN_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
 
@@ -1866,7 +1866,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangVitA_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangVitA_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1876,7 +1876,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangVitA_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangVitA_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
 
@@ -1887,7 +1887,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangPmt_L} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangPmt_L: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                           <div>
@@ -1897,7 +1897,7 @@ export default function Sip7Page() {
                               min="0"
                               value={formData7.timbangPmt_P} 
                               onChange={e => setFormData7(prev => ({ ...prev, timbangPmt_P: parseInt(e.target.value) || 0 }))} 
-                              className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                              className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                             />
                           </div>
                         </div>
@@ -1905,8 +1905,8 @@ export default function Sip7Page() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* 4. Imunisasi Ibu Hamil & Bayi */}
-                        <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
+                        <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
+                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Syringe className="w-4 h-4 text-violet-500" /> 4. Imunisasi
                           </h4>
                           <div className="space-y-3">
@@ -1917,118 +1917,118 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.imTT} 
                                 onChange={e => setFormData7(prev => ({ ...prev, imTT: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
-                            <div className="border-t border-slate-200/50 dark:border-zinc-700/50 pt-2 mt-2 space-y-2">
+                            <div className="border-t border-slate-200/50 dark:border-white/10/50 pt-2 mt-2 space-y-2">
                               <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block">Imunisasi Bayi (L/P)</span>
                               <div className="grid grid-cols-2 gap-2 h-60 overflow-y-auto pr-1">
                                 <div>
                                   <label className="text-[10px] text-slate-500">BCG L</label>
-                                  <input type="number" min="0" value={formData7.imBCG_L} onChange={e => setFormData7(prev => ({ ...prev, imBCG_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imBCG_L} onChange={e => setFormData7(prev => ({ ...prev, imBCG_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">BCG P</label>
-                                  <input type="number" min="0" value={formData7.imBCG_P} onChange={e => setFormData7(prev => ({ ...prev, imBCG_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imBCG_P} onChange={e => setFormData7(prev => ({ ...prev, imBCG_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT I L</label>
-                                  <input type="number" min="0" value={formData7.imDPT1_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT1_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT I P</label>
-                                  <input type="number" min="0" value={formData7.imDPT1_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT1_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT II L</label>
-                                  <input type="number" min="0" value={formData7.imDPT2_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT2_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT II P</label>
-                                  <input type="number" min="0" value={formData7.imDPT2_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT2_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT III L</label>
-                                  <input type="number" min="0" value={formData7.imDPT3_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT3_L} onChange={e => setFormData7(prev => ({ ...prev, imDPT3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">DPT III P</label>
-                                  <input type="number" min="0" value={formData7.imDPT3_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imDPT3_P} onChange={e => setFormData7(prev => ({ ...prev, imDPT3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio I L</label>
-                                  <input type="number" min="0" value={formData7.imPolio1_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio1_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio I P</label>
-                                  <input type="number" min="0" value={formData7.imPolio1_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio1_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio II L</label>
-                                  <input type="number" min="0" value={formData7.imPolio2_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio2_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio II P</label>
-                                  <input type="number" min="0" value={formData7.imPolio2_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio2_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio III L</label>
-                                  <input type="number" min="0" value={formData7.imPolio3_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio3_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio III P</label>
-                                  <input type="number" min="0" value={formData7.imPolio3_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio3_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio IV L</label>
-                                  <input type="number" min="0" value={formData7.imPolio4_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio4_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio4_L} onChange={e => setFormData7(prev => ({ ...prev, imPolio4_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Polio IV P</label>
-                                  <input type="number" min="0" value={formData7.imPolio4_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio4_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imPolio4_P} onChange={e => setFormData7(prev => ({ ...prev, imPolio4_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Campak L</label>
-                                  <input type="number" min="0" value={formData7.imCampak_L} onChange={e => setFormData7(prev => ({ ...prev, imCampak_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imCampak_L} onChange={e => setFormData7(prev => ({ ...prev, imCampak_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Campak P</label>
-                                  <input type="number" min="0" value={formData7.imCampak_P} onChange={e => setFormData7(prev => ({ ...prev, imCampak_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imCampak_P} onChange={e => setFormData7(prev => ({ ...prev, imCampak_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B I L</label>
-                                  <input type="number" min="0" value={formData7.imHepB1_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB1_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB1_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B I P</label>
-                                  <input type="number" min="0" value={formData7.imHepB1_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB1_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB1_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B II L</label>
-                                  <input type="number" min="0" value={formData7.imHepB2_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB2_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB2_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B II P</label>
-                                  <input type="number" min="0" value={formData7.imHepB2_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB2_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB2_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
 
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B III L</label>
-                                  <input type="number" min="0" value={formData7.imHepB3_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB3_L} onChange={e => setFormData7(prev => ({ ...prev, imHepB3_L: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                                 <div>
                                   <label className="text-[10px] text-slate-500">Hep B III P</label>
-                                  <input type="number" min="0" value={formData7.imHepB3_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded px-2 py-1 text-xs" />
+                                  <input type="number" min="0" value={formData7.imHepB3_P} onChange={e => setFormData7(prev => ({ ...prev, imHepB3_P: parseInt(e.target.value) || 0 }))} className="w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded px-2 py-1 text-xs" />
                                 </div>
                               </div>
                             </div>
@@ -2036,8 +2036,8 @@ export default function Sip7Page() {
                         </div>
 
                         {/* 5. Balita Diare */}
-                        <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
+                        <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
+                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Activity className="w-4 h-4 text-amber-500" /> 5. Balita Diare
                           </h4>
                           <div className="grid grid-cols-2 gap-3">
@@ -2048,7 +2048,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.diareJml_L} 
                                 onChange={e => setFormData7(prev => ({ ...prev, diareJml_L: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -2058,7 +2058,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.diareJml_P} 
                                 onChange={e => setFormData7(prev => ({ ...prev, diareJml_P: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -2068,7 +2068,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.diareOralit_L} 
                                 onChange={e => setFormData7(prev => ({ ...prev, diareOralit_L: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                             <div>
@@ -2078,7 +2078,7 @@ export default function Sip7Page() {
                                 min="0"
                                 value={formData7.diareOralit_P} 
                                 onChange={e => setFormData7(prev => ({ ...prev, diareOralit_P: parseInt(e.target.value) || 0 }))} 
-                                className="block w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-lg px-3 py-1.5 text-sm" 
+                                className="block w-full bg-white dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm" 
                               />
                             </div>
                           </div>
@@ -2087,8 +2087,8 @@ export default function Sip7Page() {
 
                       {/* Form buttons */}
                       <div className="flex items-center justify-end gap-3 mt-6">
-                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-700 rounded-[10px] transition-all">Batal</button>
-                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center gap-2`}>
+                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all">Batal</button>
+                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all ${theme.shadow} flex items-center gap-2`}>
                           <Save className="w-5 h-5" /> Simpan Data
                         </button>
                       </div>
@@ -2104,7 +2104,7 @@ export default function Sip7Page() {
                       r.posyanduId === activePosyanduId
                     );
                     return (
-                      <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4 sticky top-6">
+                      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10 space-y-4 sticky top-6">
                         <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
                           <BookOpen className="w-5 h-5 text-purple-500" />
                           Referensi SIP 6
@@ -2114,13 +2114,13 @@ export default function Sip7Page() {
                         </p>
                         {matchingSip6 ? (
                           <div className="space-y-3 pt-2">
-                            <div className="p-3 bg-slate-50 dark:bg-zinc-900 rounded-lg">
+                            <div className="p-3 bg-slate-50 dark:bg-[#252525] rounded-lg">
                               <span className="text-xs text-slate-400 block font-medium">Ibu Hamil (SIP 6)</span>
                               <span className="text-lg font-bold text-slate-800 dark:text-white">
                                 {(matchingSip6.hamilBaru || 0) + (matchingSip6.hamilLama || 0)} <span className="text-xs font-normal text-slate-500">Orang</span>
                               </span>
                             </div>
-                            <div className="p-3 bg-slate-50 dark:bg-zinc-900 rounded-lg">
+                            <div className="p-3 bg-slate-50 dark:bg-[#252525] rounded-lg">
                               <span className="text-xs text-slate-400 block font-medium">Ibu Menyusui (SIP 6)</span>
                               <span className="text-lg font-bold text-slate-800 dark:text-white">
                                 {(matchingSip6.busuiBaru || 0) + (matchingSip6.busuiLama || 0)} <span className="text-xs font-normal text-slate-500">Orang</span>
@@ -2142,7 +2142,7 @@ export default function Sip7Page() {
                             </button>
                           </div>
                         ) : (
-                          <div className="text-center py-6 bg-slate-50 dark:bg-zinc-900 rounded-lg text-xs text-slate-400">
+                          <div className="text-center py-6 bg-slate-50 dark:bg-[#252525] rounded-lg text-xs text-slate-400">
                             Tidak ada data SIP 6 untuk bulan & tahun ini.
                           </div>
                         )}
@@ -2155,7 +2155,7 @@ export default function Sip7Page() {
 
             {/* DATA TABLE (Dynamic based on Tab) */}
             {!showForm && activeTab === 'hasil_kegiatan' && (
-              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+              <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan</h2>
@@ -2164,12 +2164,12 @@ export default function Sip7Page() {
                   <div className="flex flex-wrap gap-2 w-full md:w-auto">
                     <button
                       onClick={exportUnifiedExcel}
-                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-700 transition-all text-sm flex items-center justify-center gap-2"
+                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2"
                     >
                       <Download className="w-4 h-4" /> Ekspor Excel (SIP 6 & 7)
                     </button>
                     {canEdit && (
-                      <label className="cursor-pointer bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-zinc-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-700 transition-all text-sm flex items-center justify-center gap-2">
+                      <label className="cursor-pointer bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2">
                         <span>Impor CSV</span>
                         <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
                       </label>
@@ -2177,7 +2177,7 @@ export default function Sip7Page() {
                     {canEdit && (
                       <button
                         onClick={handleAdd}
-                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
+                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
                       >
                         <Plus className="w-4 h-4" /> Tambah Data
                       </button>
@@ -2186,7 +2186,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2209,7 +2209,7 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer"
+                              className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
                             >
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
@@ -2254,11 +2254,11 @@ export default function Sip7Page() {
                 </div>
 
                 {/* Perhitungan Semester & Tahunan */}
-                <div className="mt-8 border-t border-slate-100 dark:border-zinc-700 pt-6">
+                <div className="mt-8 border-t border-slate-200/70 dark:border-white/10 pt-6">
                   <h3 className="text-base font-bold text-slate-800 dark:text-white mb-4">Ringkasan Hasil Kegiatan ({tahunAktif})</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Semester 1 */}
-                    <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
+                    <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
                       <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 1 (Jan - Jun)</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
                         <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals7([1,2,3,4,5,6]).bumil + getTotals7([1,2,3,4,5,6]).busui).toLocaleString('id-ID')}</span></div>
@@ -2267,7 +2267,7 @@ export default function Sip7Page() {
                       </div>
                     </div>
                     {/* Semester 2 */}
-                    <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50">
+                    <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
                       <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 2 (Jul - Des)</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
                         <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals7([7,8,9,10,11,12]).bumil + getTotals7([7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
@@ -2276,7 +2276,7 @@ export default function Sip7Page() {
                       </div>
                     </div>
                     {/* Tahunan */}
-                    <div className={`p-4 rounded-xl border ${theme.borderLight} bg-purple-50/20 dark:bg-purple-950/10`}>
+                    <div className={`p-4 rounded-lg border ${theme.borderLight} bg-purple-50/20 dark:bg-purple-950/10`}>
                       <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
                         <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
@@ -2291,7 +2291,7 @@ export default function Sip7Page() {
 
             {/* TABLE FOR REKAP BUMIL */}
             {!showForm && activeTab === 'rekap_bumil' && (
-              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+              <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Ibu Hamil/Nifas/Menyusui</h2>
@@ -2300,7 +2300,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2318,7 +2318,7 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
+                              className={`border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{index + 1}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{row.bulan}/{row.tahun}</td>
@@ -2342,7 +2342,7 @@ export default function Sip7Page() {
                               </td>
                             </tr>
                             {expandedRow === row.id && (
-                              <tr className="bg-slate-50 dark:bg-zinc-900/50">
+                              <tr className="bg-slate-50 dark:bg-[#252525]/50">
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
                                     <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
@@ -2350,14 +2350,14 @@ export default function Sip7Page() {
                                       Detail Rekapitulasi Bumil (Bulan {row.bulan})
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Kehadiran</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>Bumil Datang:</span><span>{row.datang.bumil}</span></div>
                                           <div className="flex justify-between"><span>Bumil Tidak Datang:</span><span>{row.tidakDatang.bumil}</span></div>
                                         </div>
                                       </div>
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Pemeriksaan</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>BB Normal:</span><span>{row.bb.hijau}</span></div>
@@ -2366,7 +2366,7 @@ export default function Sip7Page() {
                                           <div className="flex justify-between"><span>LILA KEK (Merah):</span><span className="text-rose-600 font-medium">{row.lila.merah}</span></div>
                                         </div>
                                       </div>
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Informasi Tambahan</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>Status Pengisian:</span><span>{row.isEdited ? 'Diedit Manual' : 'Otomatis dari SIP 6'}</span></div>
@@ -2388,7 +2388,7 @@ export default function Sip7Page() {
 
             {/* TABLE FOR REKAP BAYI */}
             {!showForm && activeTab === 'rekap_bayi' && (
-              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+              <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Bayi, Balita dan Apras</h2>
@@ -2397,7 +2397,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2415,7 +2415,7 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
+                              className={`border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
@@ -2439,7 +2439,7 @@ export default function Sip7Page() {
                               </td>
                             </tr>
                             {expandedRow === row.id && (
-                              <tr className="bg-slate-50 dark:bg-zinc-900/50">
+                              <tr className="bg-slate-50 dark:bg-[#252525]/50">
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
                                     <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
@@ -2447,7 +2447,7 @@ export default function Sip7Page() {
                                       Detail Rekapitulasi Bayi (Bulan {row.bulan})
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Kehadiran</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>Bayi Datang:</span><span>{row.datang.bayi} (dari {row.bayi} Sasaran)</span></div>
@@ -2456,14 +2456,14 @@ export default function Sip7Page() {
                                           <div className="flex justify-between"><span>Tidak Datang Balita:</span><span>{row.tidakDatang.balita}</span></div>
                                         </div>
                                       </div>
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Penimbangan</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>BB Naik:</span><span>{row.bb.naik}</span></div>
                                           <div className="flex justify-between"><span>BB Tidak Naik:</span><span>{row.bb.tidak}</span></div>
                                         </div>
                                       </div>
-                                      <div className="bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                      <div className="bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200">
                                         <h5 className="font-semibold mb-2">Intervensi & Rujukan</h5>
                                         <div className="text-sm space-y-1">
                                           <div className="flex justify-between"><span>ASI Eksklusif:</span><span>{row.asi}</span></div>
@@ -2487,7 +2487,7 @@ export default function Sip7Page() {
 
             {/* TABLE FOR REKAP REMAJA */}
             {!showForm && activeTab === 'rekap_remaja' && (
-              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+              <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Usia Sekolah dan Remaja</h2>
@@ -2496,7 +2496,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2511,7 +2511,7 @@ export default function Sip7Page() {
                       {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
                         const row = getRekapRemaja(report);
                         return (
-                          <tr key={row.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                          <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3">{row.remaja614Datang}</td>
@@ -2547,7 +2547,7 @@ export default function Sip7Page() {
 
             {/* TABLE FOR REKAP LANSIA */}
             {!showForm && activeTab === 'rekap_lansia' && (
-              <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+              <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Lansia/Produktif</h2>
@@ -2556,7 +2556,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2571,7 +2571,7 @@ export default function Sip7Page() {
                       {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
                         const row = getRekapLansia(report);
                         return (
-                          <tr key={row.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                          <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3 text-rose-600 font-medium">{row.tensiTinggi}</td>
@@ -2609,11 +2609,11 @@ export default function Sip7Page() {
       ) : (role === 'SUPERADMIN' && !selectedKecamatan) ? (
         // Level 1: Pilih Kecamatan (Khusus Superadmin)
         <div className="space-y-4">
-          <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Kecamatan</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                   <tr>
                     <th className="px-6 py-4">Nama Kecamatan</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
@@ -2621,7 +2621,7 @@ export default function Sip7Page() {
                 </thead>
                 <tbody>
                   {regionData.map((kec) => (
-                    <tr key={kec.name} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <tr key={kec.name} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                       <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedKecamatan(kec.name)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
@@ -2636,7 +2636,7 @@ export default function Sip7Page() {
       ) : !selectedDesa ? (
         // Level 2: Pilih Desa
         <div className="space-y-4">
-          <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
             {role === 'SUPERADMIN' && (
               <button
                 onClick={() => setSelectedKecamatan('')}
@@ -2649,7 +2649,7 @@ export default function Sip7Page() {
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+                <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                   <tr>
                     <th className="px-6 py-4">Nama Desa</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
@@ -2657,7 +2657,7 @@ export default function Sip7Page() {
                 </thead>
                 <tbody>
                   {myKec?.desas.map((desa) => (
-                    <tr key={desa} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                    <tr key={desa} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                       <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedDesa(desa)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
@@ -2671,7 +2671,7 @@ export default function Sip7Page() {
         </div>
       ) : (
         // Level 3: List Posyandu
-        <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+        <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
           <div className="flex items-center justify-between mb-6">
             <div>
               {role !== 'OPERATOR_DESA' && (
@@ -2689,7 +2689,7 @@ export default function Sip7Page() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4">Status</th>
@@ -2698,7 +2698,7 @@ export default function Sip7Page() {
               </thead>
               <tbody>
                 {[`Posyandu ${selectedDesa} I`, `Posyandu ${selectedDesa} II`, `Posyandu ${selectedDesa} III`].map((pos) => (
-                  <tr key={pos} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors">
+                  <tr key={pos} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{pos}</td>
                     <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Aktif</span></td>
                     <td className="px-6 py-4 text-right">
@@ -2729,11 +2729,11 @@ export default function Sip7Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden border border-slate-100 dark:border-zinc-800"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-4xl overflow-hidden border border-slate-200/70 dark:border-white/10"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+              <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -2746,7 +2746,7 @@ export default function Sip7Page() {
                   </div>
                   <button
                     onClick={() => setIsDetailModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -2756,7 +2756,7 @@ export default function Sip7Page() {
               <div className="p-6 space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Ibu Hamil */}
-                  <div className="bg-slate-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-slate-200 dark:border-zinc-700">
+                  <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
                     <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Heart className="w-4 h-4 text-rose-500" /> Ibu Hamil & Menyusui
                     </h5>
@@ -2769,7 +2769,7 @@ export default function Sip7Page() {
                   </div>
 
                   {/* KB */}
-                  <div className="bg-slate-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-slate-200 dark:border-zinc-700">
+                  <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
                     <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
                       <ClipboardList className="w-4 h-4 text-purple-500" /> Akseptor KB
                     </h5>
@@ -2786,7 +2786,7 @@ export default function Sip7Page() {
                   </div>
 
                   {/* Penimbangan */}
-                  <div className="bg-slate-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-slate-200 dark:border-zinc-700">
+                  <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
                     <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Baby className="w-4 h-4 text-blue-500" /> Penimbangan Balita
                     </h5>
@@ -2801,7 +2801,7 @@ export default function Sip7Page() {
                   </div>
 
                   {/* Imunisasi & Diare */}
-                  <div className="bg-slate-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-slate-200 dark:border-zinc-700">
+                  <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
                     <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Syringe className="w-4 h-4 text-violet-500" /> Imunisasi & Diare
                     </h5>
@@ -2836,11 +2836,11 @@ export default function Sip7Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-100 dark:border-zinc-800 text-slate-800 dark:text-white"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200/70 dark:border-white/10 text-slate-800 dark:text-white"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+              <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold">
@@ -2853,7 +2853,7 @@ export default function Sip7Page() {
                   <button
                     type="button"
                     onClick={() => setSelectedRekapForEdit(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -2870,7 +2870,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bumilDatang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bumilDatang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2880,7 +2880,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.busuiDatang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, busuiDatang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2890,7 +2890,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.tidakDatangBumil}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBumil: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2900,7 +2900,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bbNormal}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbNormal: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2910,7 +2910,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bbKurang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbKurang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-rose-700/50 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2920,7 +2920,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.lilaNormal}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, lilaNormal: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2930,7 +2930,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.lilaKek}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, lilaKek: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-rose-700/50 rounded-lg p-2 text-sm"
                       />
                     </div>
                   </div>
@@ -2945,7 +2945,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.totalBayi}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, totalBayi: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2955,7 +2955,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.totalBalita}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, totalBalita: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2965,7 +2965,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bayiDatang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bayiDatang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2975,7 +2975,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.balitaDatang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, balitaDatang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2985,7 +2985,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.tidakDatangBayi}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBayi: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -2995,7 +2995,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.tidakDatangBalita}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakDatangBalita: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3005,7 +3005,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bbNaik}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbNaik: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3015,7 +3015,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.bbTidakNaik}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, bbTidakNaik: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3025,7 +3025,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.asiEksklusif}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, asiEksklusif: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                   </div>
@@ -3040,7 +3040,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.remaja614Datang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, remaja614Datang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3050,7 +3050,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.remaja1518Datang}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, remaja1518Datang: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3060,7 +3060,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.imtNormal}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, imtNormal: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3070,7 +3070,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.imtTidakNormal}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, imtTidakNormal: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                   </div>
@@ -3085,7 +3085,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.tensiTinggi}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, tensiTinggi: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-rose-700/50 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3095,7 +3095,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.gulaDarahTinggi}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, gulaDarahTinggi: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-rose-700/50 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-rose-700/50 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3105,7 +3105,7 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.mandiri}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, mandiri: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                     <div>
@@ -3115,25 +3115,25 @@ export default function Sip7Page() {
                         min="0"
                         value={rekapEditForm.tidakMandiri}
                         onChange={(e) => setRekapEditForm({ ...rekapEditForm, tidakMandiri: e.target.value })}
-                        className="w-full bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg p-2 text-sm"
+                        className="w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg p-2 text-sm"
                       />
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="p-6 border-t border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/30 flex items-center justify-end gap-2.5">
+              <div className="p-6 border-t border-slate-200/70 dark:border-white/10 bg-slate-50 dark:bg-[#252525]/30 flex items-center justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setSelectedRekapForEdit(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-[10px] transition-all"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveRekap}
-                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-md ${theme.shadow}`}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow}`}
                 >
                   Simpan
                 </button>

@@ -83,9 +83,9 @@ export default function SKKepengurusanPage() {
   const userRole = (session?.user as any)?.role
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    bgGradient: isPosyandu ? 'from-[var(--dash-primary)] to-[var(--dash-primary)]' : 'from-[var(--dash-primary)] to-[var(--dash-primary)]',
+    hoverGradient: 'hover:opacity-90',
+    shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
     focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
@@ -325,7 +325,7 @@ export default function SKKepengurusanPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <div className={`w-10 h-10 ${theme.iconBg} ${theme.iconBgDark} rounded-xl flex items-center justify-center`}>
+            <div className={`w-10 h-10 ${theme.iconBg} ${theme.iconBgDark} rounded-lg flex items-center justify-center`}>
               <FileText className={`w-5 h-5 ${theme.text} ${theme.textDark}`} />
             </div>
             <div>
@@ -343,7 +343,7 @@ export default function SKKepengurusanPage() {
         {((session?.user as any)?.role === 'OPERATOR_POSYANDU' || (session?.user as any)?.role === 'OPERATOR_DESA') && (
           <button
             onClick={handleOpenAdd}
-            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-[10px] transition-all shadow-lg ${theme.shadow} flex items-center gap-2 text-sm`}
+            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-[10px] transition-all ${theme.shadow} flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah SK Baru
@@ -355,9 +355,9 @@ export default function SKKepengurusanPage() {
       {loading && (
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm p-6">
+            <div key={i} className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200/70 dark:border-white/10 p-6">
               <div className="flex items-start gap-4">
-                <Skeleton variant="rectangular" width={48} height={48} className="rounded-xl flex-shrink-0" />
+                <Skeleton variant="rectangular" width={48} height={48} className="rounded-lg flex-shrink-0" />
                 <div className="flex-1 space-y-3">
                   <Skeleton variant="rectangular" width={192} height={20} className="rounded" />
                   <Skeleton variant="rectangular" width={128} height={16} className="rounded" />
@@ -374,9 +374,9 @@ export default function SKKepengurusanPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 p-12 text-center"
+          className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200/70 dark:border-white/10 p-12 text-center"
         >
-          <div className={`w-16 h-16 ${theme.iconBg} ${theme.iconBgDark} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+          <div className={`w-16 h-16 ${theme.iconBg} ${theme.iconBgDark} rounded-lg flex items-center justify-center mx-auto mb-4`}>
             <FileText className={`w-8 h-8 ${theme.text} ${theme.textDark}`} />
           </div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
@@ -390,7 +390,7 @@ export default function SKKepengurusanPage() {
           {(isPosyandu || userRole === 'OPERATOR_DESA') && (
             <button
               onClick={handleOpenAdd}
-              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-[10px] transition-all shadow-lg ${theme.shadow} inline-flex items-center gap-2 text-sm`}
+              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-[10px] transition-all ${theme.shadow} inline-flex items-center gap-2 text-sm`}
             >
               <Plus className="w-4 h-4" />
               Buat SK Pertama
@@ -411,14 +411,14 @@ export default function SKKepengurusanPage() {
               placeholder="Cari berdasarkan nomor SK, nama posyandu, pengurus..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className={`w-full h-10 pl-10 pr-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 ${theme.focusRing} focus:border-transparent dark:text-white transition-all`}
+              className={`w-full h-10 pl-10 pr-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm focus:outline-none focus:ring-2 ${theme.focusRing} focus:border-transparent dark:text-white transition-all`}
             />
           </div>
           <div className="flex gap-3 w-full md:w-auto flex-shrink-0">
             <select
               value={typeFilter}
               onChange={e => setTypeFilter(e.target.value as any)}
-              className={`h-10 px-3 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
+              className={`h-10 px-3 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
             >
               <option value="ALL">Semua Jenis SK</option>
               <option value="SK_DESA">SK Desa</option>
@@ -433,9 +433,9 @@ export default function SKKepengurusanPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 p-12 text-center"
+          className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200/70 dark:border-white/10 p-12 text-center"
         >
-          <div className={`w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+          <div className={`w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center mx-auto mb-4`}>
             <Search className={`w-8 h-8 text-slate-400 dark:text-slate-500`} />
           </div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
@@ -456,13 +456,13 @@ export default function SKKepengurusanPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden"
+              className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200/70 dark:border-white/10 overflow-hidden"
             >
               {/* SK Card Header */}
               <div className="p-5 md:p-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
                       sk.isActive
                         ? `${theme.iconBg} ${theme.iconBgDark}`
                         : 'bg-slate-100 dark:bg-slate-800'
@@ -565,15 +565,15 @@ export default function SKKepengurusanPage() {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <div className="border-t border-slate-100 dark:border-slate-800">
+                    <div className="border-t border-slate-200/70 dark:border-white/10">
                       <div className="px-5 md:px-6 py-4">
                         <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                           <Users className={`w-4 h-4 ${theme.text} ${theme.textDark}`} />
                           Susunan Pengurus
                         </h4>
-                        <div className="overflow-x-auto rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div className="overflow-x-auto rounded-lg border border-slate-200/70 dark:border-white/10">
                           <table className="w-full text-sm text-left">
-                            <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-800/50 text-slate-600 dark:text-slate-300">
+                            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-600 dark:text-slate-300">
                               <tr>
                                 <th className="px-4 py-3 font-medium">No</th>
                                 <th className="px-4 py-3 font-medium">Nama</th>
@@ -585,7 +585,7 @@ export default function SKKepengurusanPage() {
                             </thead>
                             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                               {sk.anggota.map((anggota, idx) => (
-                                <tr key={anggota.id} className="hover:bg-slate-50/50 dark:hover:bg-zinc-800/30 transition-colors">
+                                <tr key={anggota.id} className="hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/30 transition-colors">
                                   <td className="px-4 py-3 text-slate-500 dark:text-zinc-400">{idx + 1}</td>
                                   <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{anggota.nama}</td>
                                   <td className="px-4 py-3">
@@ -603,7 +603,7 @@ export default function SKKepengurusanPage() {
                         </div>
 
                         {sk.keterangan && (
-                          <div className="mt-4 p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl">
+                          <div className="mt-4 p-3 bg-slate-50 dark:bg-[#202020]/50 rounded-lg">
                             <p className="text-xs text-slate-500 dark:text-zinc-400">
                               <span className="font-semibold text-slate-700 dark:text-zinc-300">Keterangan:</span>{' '}
                               {sk.keterangan}
@@ -635,7 +635,7 @@ export default function SKKepengurusanPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-sm p-6 border border-slate-100 dark:border-zinc-800"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-sm p-6 border border-slate-200/70 dark:border-white/10"
             >
               <div className="text-center">
                 <div className="w-14 h-14 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -648,7 +648,7 @@ export default function SKKepengurusanPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setDeleteConfirm(null)}
-                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
+                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
                   >
                     Batal
                   </button>
@@ -682,16 +682,16 @@ export default function SKKepengurusanPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden border border-slate-100 dark:border-zinc-800 my-8"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-3xl overflow-hidden border border-slate-200/70 dark:border-white/10 my-8"
             >
               {/* Gradient Top Bar */}
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
 
               {/* Modal Header */}
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+              <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 ${theme.iconBg} ${theme.iconBgDark} rounded-xl flex items-center justify-center`}>
+                    <div className={`w-10 h-10 ${theme.iconBg} ${theme.iconBgDark} rounded-lg flex items-center justify-center`}>
                       <FileText className={`w-5 h-5 ${theme.text} ${theme.textDark}`} />
                     </div>
                     <div>
@@ -705,7 +705,7 @@ export default function SKKepengurusanPage() {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -729,7 +729,7 @@ export default function SKKepengurusanPage() {
                         <select
                           value={formSK.posyanduId}
                           onChange={e => setFormSK({ ...formSK, posyanduId: e.target.value })}
-                          className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                          className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                         >
                           <option value="">— Pilih Posyandu —</option>
                           {posyandus.map(p => (
@@ -746,7 +746,7 @@ export default function SKKepengurusanPage() {
                         type="text"
                         value={formSK.nomorSK}
                         onChange={e => setFormSK({ ...formSK, nomorSK: e.target.value })}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                         placeholder="001/SK-POS/2025"
                       />
                     </div>
@@ -758,7 +758,7 @@ export default function SKKepengurusanPage() {
                         type="date"
                         value={formSK.tanggalPenetapan}
                         onChange={e => setFormSK({ ...formSK, tanggalPenetapan: e.target.value })}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                       />
                     </div>
                     <div className="md:col-span-2">
@@ -769,7 +769,7 @@ export default function SKKepengurusanPage() {
                         type="text"
                         value={formSK.pejabatPenetap}
                         onChange={e => setFormSK({ ...formSK, pejabatPenetap: e.target.value })}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                         placeholder="Nama Kepala Desa / Lurah"
                       />
                     </div>
@@ -781,7 +781,7 @@ export default function SKKepengurusanPage() {
                         type="date"
                         value={formSK.periodeAwal}
                         onChange={e => setFormSK({ ...formSK, periodeAwal: e.target.value })}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                       />
                     </div>
                     <div>
@@ -792,7 +792,7 @@ export default function SKKepengurusanPage() {
                         type="date"
                         value={formSK.periodeAkhir}
                         onChange={e => setFormSK({ ...formSK, periodeAkhir: e.target.value })}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                       />
                     </div>
                     <div className="md:col-span-2">
@@ -803,7 +803,7 @@ export default function SKKepengurusanPage() {
                         value={formSK.keterangan}
                         onChange={e => setFormSK({ ...formSK, keterangan: e.target.value })}
                         rows={2}
-                        className={`w-full p-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all resize-none`}
+                        className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all resize-none`}
                         placeholder="Catatan tambahan (opsional)"
                       />
                     </div>
@@ -817,8 +817,8 @@ export default function SKKepengurusanPage() {
                               onChange={e => setFormSK({ ...formSK, isActive: e.target.checked })}
                               className="sr-only peer"
                             />
-                            <div className="w-10 h-6 bg-slate-200 dark:bg-zinc-700 peer-checked:bg-purple-500 rounded-full transition-colors"></div>
-                            <div className="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full shadow-sm transition-transform peer-checked:translate-x-4"></div>
+                            <div className="w-10 h-6 bg-slate-200 dark:bg-[#2f2f2f] peer-checked:bg-purple-500 rounded-full transition-colors"></div>
+                            <div className="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform peer-checked:translate-x-4"></div>
                           </div>
                           <span className="text-sm font-medium text-slate-700 dark:text-zinc-300">
                             SK Aktif
@@ -830,7 +830,7 @@ export default function SKKepengurusanPage() {
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-slate-100 dark:border-zinc-800"></div>
+                <div className="border-t border-slate-200/70 dark:border-white/10"></div>
 
                 {/* Anggota Section */}
                 <div>
@@ -852,7 +852,7 @@ export default function SKKepengurusanPage() {
                     {formAnggota.map((anggota, index) => (
                       <div
                         key={index}
-                        className="p-4 bg-slate-50/50 dark:bg-zinc-800/30 rounded-xl border border-slate-100 dark:border-zinc-800"
+                        className="p-4 bg-slate-50/50 dark:bg-[#202020]/30 rounded-lg border border-slate-200/70 dark:border-white/10"
                       >
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
@@ -877,7 +877,7 @@ export default function SKKepengurusanPage() {
                               type="text"
                               value={anggota.nama}
                               onChange={e => handleAnggotaChange(index, 'nama', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                               placeholder="Nama lengkap"
                             />
                           </div>
@@ -888,7 +888,7 @@ export default function SKKepengurusanPage() {
                             <select
                               value={anggota.jabatan}
                               onChange={e => handleAnggotaChange(index, 'jabatan', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                             >
                               {JABATAN_OPTIONS.map(j => (
                                 <option key={j.value} value={j.value}>{j.label}</option>
@@ -902,7 +902,7 @@ export default function SKKepengurusanPage() {
                             <select
                               value={anggota.bidang}
                               onChange={e => handleAnggotaChange(index, 'bidang', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                             >
                               <option value="">— Pilih Bidang —</option>
                               {BIDANG_OPTIONS.map(b => (
@@ -918,7 +918,7 @@ export default function SKKepengurusanPage() {
                               type="text"
                               value={anggota.nikNip}
                               onChange={e => handleAnggotaChange(index, 'nikNip', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                               placeholder="NIK/NIP"
                             />
                           </div>
@@ -930,7 +930,7 @@ export default function SKKepengurusanPage() {
                               type="text"
                               value={anggota.noHP}
                               onChange={e => handleAnggotaChange(index, 'noHP', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                               placeholder="08xxxxxxxxxx"
                             />
                           </div>
@@ -942,7 +942,7 @@ export default function SKKepengurusanPage() {
                               type="text"
                               value={anggota.alamat}
                               onChange={e => handleAnggotaChange(index, 'alamat', e.target.value)}
-                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
+                              className={`w-full p-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-sm text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} ${theme.focusBorder} transition-all`}
                               placeholder="Alamat"
                             />
                           </div>
@@ -954,17 +954,17 @@ export default function SKKepengurusanPage() {
               </div>
 
               {/* Modal Footer */}
-              <div className="p-6 border-t border-slate-100 dark:border-zinc-800 flex justify-end gap-3">
+              <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors border border-slate-200 dark:border-zinc-700"
+                  className="px-5 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
                 >
                   Batal
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className={`px-5 py-2.5 rounded-[10px] text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-5 py-2.5 rounded-[10px] text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {saving ? (
                     <>

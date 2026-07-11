@@ -24,7 +24,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-6 p-6 bg-slate-50/50 dark:bg-[#0B0F19] min-h-screen font-sans">
+    <div className="space-y-6 p-6 bg-slate-50/50 dark:bg-[#191919] min-h-screen font-sans">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -41,12 +41,12 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Col: Photo & Summary */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 relative overflow-hidden">
             {/* Decorative background gradient */}
-            <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+            <div className="absolute top-0 inset-x-0 h-32 bg-[var(--dash-primary)]"></div>
             
             <div className="relative flex flex-col items-center mt-8">
-              <div className="relative w-28 h-28 bg-white dark:bg-zinc-800 rounded-full flex items-center justify-center text-purple-500 text-4xl font-bold mb-4 shadow-xl border-4 border-white dark:border-zinc-900 overflow-hidden">
+              <div className="relative w-28 h-28 bg-white dark:bg-[#202020] rounded-full flex items-center justify-center text-purple-500 text-4xl font-bold mb-4 shadow-xl border-4 border-white dark:border-zinc-900 overflow-hidden">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
@@ -73,7 +73,7 @@ export default function ProfilePage() {
                 </span>
               </div>
               
-              <div className="w-full border-t border-slate-100 dark:border-slate-800 my-6"></div>
+              <div className="w-full border-t border-slate-200/70 dark:border-white/10 my-6"></div>
               
               <div className="w-full space-y-3 text-sm">
                 <div className="flex justify-between items-center">
@@ -94,7 +94,7 @@ export default function ProfilePage() {
         {/* Right Col: Forms */}
         <div className="lg:col-span-2 space-y-6">
           {/* Edit Profile */}
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
               <User className="w-5 h-5 text-purple-500" />
               Informasi Pribadi
@@ -106,7 +106,7 @@ export default function ProfilePage() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="Masukkan nama lengkap"
                 />
               </div>
@@ -116,7 +116,7 @@ export default function ProfilePage() {
                   type="email"
                   value={session?.user?.email || ''}
                   disabled
-                  className="w-full h-11 px-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/50 cursor-not-allowed text-slate-500 dark:text-zinc-500"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#202020]/50 cursor-not-allowed text-slate-500 dark:text-zinc-500"
                 />
                 <p className="text-xs text-slate-400 mt-1.5 font-light">Email tidak dapat diubah karena terhubung dengan akun utama.</p>
               </div>
@@ -124,7 +124,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Change Password */}
-          <div className="bg-white dark:bg-[#111827] p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
               <Lock className="w-5 h-5 text-purple-500" />
               Keamanan Akun
@@ -136,7 +136,7 @@ export default function ProfilePage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full h-11 px-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -154,10 +154,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex justify-end gap-3">
-            <button className="px-5 py-2.5 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-medium rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors text-sm shadow-sm">
+            <button className="px-5 py-2.5 bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-zinc-300 font-medium rounded-[10px] hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors text-sm">
               Batal
             </button>
-            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold rounded-[10px] transition-all shadow-lg shadow-purple-500/20 text-sm">
+            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--dash-primary)] hover:bg-[var(--dash-primary-hover)] text-white font-semibold rounded-[10px] transition-all shadow-lg shadow-purple-500/20 text-sm">
               <Save className="w-4 h-4" />
               Simpan Perubahan
             </button>

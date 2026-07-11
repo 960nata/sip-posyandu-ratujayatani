@@ -137,14 +137,14 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
         <form onSubmit={handleSubmit} className="space-y-6">
           
           {/* Avatar Upload */}
           <div>
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Foto Profil</h2>
             <div className="flex items-center gap-6">
-              <div className="relative w-24 h-24 rounded-full bg-slate-100 dark:bg-zinc-700 flex items-center justify-center overflow-hidden border-2 border-dashed border-slate-300 dark:border-zinc-600">
+              <div className="relative w-24 h-24 rounded-full bg-slate-100 dark:bg-[#2f2f2f] flex items-center justify-center overflow-hidden border-2 border-dashed border-slate-300 dark:border-zinc-600">
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
@@ -169,7 +169,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="border-t border-slate-100 dark:border-zinc-700"></div>
+          <div className="border-t border-slate-200/70 dark:border-white/10"></div>
 
           {/* Informasi Pribadi - No Icon */}
           <div>
@@ -181,7 +181,7 @@ export default function ProfilePage() {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -190,7 +190,7 @@ export default function ProfilePage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -199,13 +199,13 @@ export default function ProfilePage() {
                   type="text"
                   value={role || ''}
                   disabled
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-700 text-slate-500 dark:text-zinc-400 cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#2f2f2f] text-slate-500 dark:text-zinc-400 cursor-not-allowed"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-slate-100 dark:border-zinc-700"></div>
+          <div className="border-t border-slate-200/70 dark:border-white/10"></div>
 
           {/* Keamanan - No Icon */}
           <div>
@@ -217,7 +217,7 @@ export default function ProfilePage() {
                   type="password"
                   value={formData.newPassword}
                   onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -226,13 +226,13 @@ export default function ProfilePage() {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-slate-100 dark:border-zinc-700"></div>
+          <div className="border-t border-slate-200/70 dark:border-white/10"></div>
 
           {/* Pengaturan Wilayah & Sistem */}
           <div>
@@ -245,7 +245,7 @@ export default function ProfilePage() {
                   value={namaDesa}
                   onChange={(e) => setNamaDesa(e.target.value)}
                   placeholder="Contoh: Adijaya"
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
               </div>
               <div>
@@ -253,7 +253,7 @@ export default function ProfilePage() {
                 <select
                   value={tahunAktif}
                   onChange={(e) => setTahunAktif(parseInt(e.target.value))}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
@@ -268,7 +268,7 @@ export default function ProfilePage() {
           <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium rounded-[10px] transition-all shadow-lg shadow-purple-500/20 text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--dash-primary)] hover:bg-[var(--dash-primary-hover)] text-white font-medium rounded-[10px] transition-all shadow-lg shadow-purple-500/20 text-sm"
             >
               <Save className="w-4 h-4" />
               Simpan Perubahan

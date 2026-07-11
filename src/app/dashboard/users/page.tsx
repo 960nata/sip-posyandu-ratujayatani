@@ -209,7 +209,7 @@ export default function UsersPage() {
         </div>
         <button
           onClick={handleAdd}
-          className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2"
+          className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2"
         >
           <Plus className="w-5 h-5" />
           Tambah User
@@ -217,7 +217,7 @@ export default function UsersPage() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-[#202020] p-4 rounded-lg border border-slate-200 dark:border-white/10">
         <div className="relative w-full md:w-96">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="h-5 w-5 text-slate-400" />
@@ -226,17 +226,17 @@ export default function UsersPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+            className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
             placeholder="Cari nama atau email..."
           />
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-700/50 text-slate-700 dark:text-slate-200">
+            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
               <tr>
                 <th className="px-6 py-4">Nama</th>
                 <th className="px-6 py-4">Email</th>
@@ -248,7 +248,7 @@ export default function UsersPage() {
             <tbody>
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
-                  <tr key={i} className="border-b border-slate-100 dark:border-zinc-700">
+                  <tr key={i} className="border-b border-slate-200/70 dark:border-white/10">
                     <td className="px-6 py-4 flex items-center gap-2">
                       <Skeleton variant="circular" width={32} height={32} />
                       <Skeleton variant="text" width={96} />
@@ -275,7 +275,7 @@ export default function UsersPage() {
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
+                  <tr key={user.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-800 dark:text-white flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-sm">
                         {user.name.charAt(0)}
@@ -335,11 +335,11 @@ export default function UsersPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-100 dark:border-zinc-800"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-200/70 dark:border-white/10"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-[var(--dash-primary)]"></div>
               
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+              <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -351,7 +351,7 @@ export default function UsersPage() {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -369,7 +369,7 @@ export default function UsersPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="Nama Lengkap"
                       required
                     />
@@ -386,7 +386,7 @@ export default function UsersPage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="email@sip.com"
                       required
                     />
@@ -403,7 +403,7 @@ export default function UsersPage() {
                       type="password"
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder={editId ? "Kosongkan jika tidak diubah" : "Password minimal 6 karakter"}
                       required={!editId}
                     />
@@ -415,7 +415,7 @@ export default function UsersPage() {
                   <select 
                     value={formData.role}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                   >
                     <option value="SUPERADMIN">Super Admin (Kabupaten)</option>
                     <option value="ADMIN_KECAMATAN">Admin Kecamatan</option>
@@ -429,7 +429,7 @@ export default function UsersPage() {
                   <select 
                     value={formData.kecamatan}
                     onChange={(e) => setFormData({...formData, kecamatan: e.target.value, desa: ''})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                     disabled={formData.role === 'SUPERADMIN'}
                   >
                     <option value="">Pilih Kecamatan</option>
@@ -444,7 +444,7 @@ export default function UsersPage() {
                   <select 
                     value={formData.desa}
                     onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                     disabled={formData.role === 'SUPERADMIN' || formData.role === 'ADMIN_KECAMATAN' || !formData.kecamatan}
                   >
                     <option value="">Pilih Desa</option>
@@ -460,23 +460,23 @@ export default function UsersPage() {
                     type="text"
                     value={formData.posyandu}
                     onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                     placeholder="Nama Posyandu"
                     disabled={formData.role !== 'OPERATOR_POSYANDU'}
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-100 dark:border-zinc-800 pt-5">
+                <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-200/70 dark:border-white/10 pt-5">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-[10px] transition-all"
+                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20"
+                    className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20"
                   >
                     {editId ? 'Simpan Perubahan' : 'Simpan'}
                   </button>

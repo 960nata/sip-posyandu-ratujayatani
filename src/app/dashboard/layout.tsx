@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Menu, X, Bell, User, LogOut, BookOpen, Building,
   Home, Shield, Users, Sun, Moon, ChevronDown,
-  UserCheck, Activity, FileText
+  UserCheck, Activity, FileText, HardDrive
 } from 'lucide-react'
 
 const menuGroups = [
@@ -23,6 +23,7 @@ const menuGroups = [
       { name: 'Manajemen Posyandu', icon: Building, href: '/dashboard/manage-posyandu', roles: ['OPERATOR_DESA'] },
       { name: 'Manajemen User', icon: Users, href: '/dashboard/users', roles: ['SUPERADMIN'] },
       { name: 'Push Notifikasi', icon: Bell, href: '/dashboard/push-notification', roles: ['SUPERADMIN'] },
+      { name: 'Galeri Media', icon: HardDrive, href: '/dashboard/data-dukung', roles: ['SUPERADMIN'] },
     ]
   },
   {
@@ -44,6 +45,36 @@ const menuGroups = [
   }
 ]
 
+const CRUMBS: Record<string, string> = {
+  '/dashboard': 'Beranda',
+  '/dashboard/petugas': 'Pengaturan Petugas',
+  '/dashboard/sk-kepengurusan': 'SK Kepengurusan',
+  '/dashboard/posyandu': 'Analisa Data',
+  '/dashboard/manage-posyandu': 'Manajemen Posyandu',
+  '/dashboard/users': 'Manajemen User',
+  '/dashboard/push-notification': 'Push Notifikasi',
+  '/dashboard/data-dukung': 'Galeri Media',
+  '/dashboard/sip6': 'Data Pengunjung (SIP 6)',
+  '/dashboard/sip6/sasaran': 'Sasaran Individu (SIP 6)',
+  '/dashboard/sip7': 'Hasil Kegiatan (SIP 7)',
+  '/dashboard/pendidikan': 'Bidang Pendidikan',
+  '/dashboard/pekerjaan-umum': 'Bidang Pekerjaan Umum',
+  '/dashboard/perumahan': 'Bidang Perumahan',
+  '/dashboard/trantib': 'Trantib & Linmas',
+  '/dashboard/sosial': 'Bidang Sosial',
+  '/dashboard/laporan': 'Laporan',
+  '/dashboard/profile': 'Profil',
+  '/dashboard/setting': 'Pengaturan Akun',
+}
+
+const ROLE_LABELS: Record<string, string> = {
+  SUPERADMIN: 'Super Admin',
+  ADMIN_KABUPATEN: 'Admin Kabupaten',
+  ADMIN_KECAMATAN: 'Admin Kecamatan',
+  OPERATOR_DESA: 'Operator Desa',
+  OPERATOR_POSYANDU: 'Operator Posyandu',
+}
+
 export default function DashboardLayout({
   children,
 }: {
@@ -53,7 +84,7 @@ export default function DashboardLayout({
   const [darkMode, setDarkMode] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
-  
+
   const notificationRef = useRef<HTMLDivElement>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
 
@@ -62,7 +93,7 @@ export default function DashboardLayout({
   const role = (session?.user as any)?.role
 
   const [notifications, setNotifications] = useState<any[]>([])
-  
+
   useEffect(() => {
     if (session?.user) {
       fetch('/api/notifications')
@@ -76,20 +107,7 @@ export default function DashboardLayout({
     }
   }, [session])
 
-  const isPosyandu = role === 'OPERATOR_POSYANDU'
-  const theme = {
-    text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
-    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
-    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
-    bgDark: isPosyandu ? 'dark:bg-purple-900/20' : 'dark:bg-purple-900/20',
-    focusRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
-    gradient: isPosyandu ? 'from-purple-400 to-indigo-500' : 'from-purple-400 to-indigo-500',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
-    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-purple-100',
-    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-purple-900/50',
-  }
-
-  // Effect to handle dark mode persistence
+  // Dark mode persistence
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme === 'dark') {
@@ -103,11 +121,7 @@ export default function DashboardLayout({
   }, [])
 
   useEffect(() => {
-    if (darkMode) {
-      localStorage.setItem('theme', 'dark')
-    } else {
-      localStorage.setItem('theme', 'light')
-    }
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
 
   useEffect(() => {
@@ -119,180 +133,181 @@ export default function DashboardLayout({
         setProfileDropdownOpen(false)
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-  }
+  const crumb = CRUMBS[pathname ?? ''] ?? 'Dashboard'
+  const roleLabel = ROLE_LABELS[role] ?? role ?? '—'
 
   return (
-    <div className={`min-h-screen font-sans transition-colors duration-300 ${darkMode ? 'dark bg-[#0B0F19] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
-      {/* Sidebar Backdrop */}
+    <div className={`min-h-screen transition-colors duration-200 ${darkMode ? 'dark' : ''} bg-[var(--dash-bg)] text-[var(--dash-text)]`}>
+      {/* Sidebar Backdrop (mobile) */}
       <AnimatePresence>
         {sidebarOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-20 lg:hidden"
+            className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-20 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
       </AnimatePresence>
 
-
-      {/* Sidebar */}
-        <aside
-          className={`fixed inset-y-0 left-0 bg-white dark:bg-[#111827] border-r border-slate-100 dark:border-slate-800 z-30 flex flex-col shadow-sm w-[280px] transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
-        >
-            {/* Sidebar Header */}
-            <div className="h-16 flex items-center justify-between px-6">
-              <Link href="/dashboard" className="flex items-center space-x-3">
-                <Image src="/images/logo/logo.png" alt="Logo" width={32} height={32} className="object-contain" />
-                <span className="font-bold text-lg tracking-tight text-slate-800 dark:text-white">SIPANDU</span>
-              </Link>
-              <button 
-                onClick={() => setSidebarOpen(false)}
-                className="lg:hidden text-slate-500 hover:text-slate-700 dark:hover:text-white p-2 rounded-[10px] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+      {/* ══ SIDEBAR ══ */}
+      <aside
+        className={`fixed inset-y-0 left-0 w-[264px] bg-[var(--dash-sidebar)] border-r border-[var(--dash-border)] z-30 flex flex-col transition-transform duration-300 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        }`}
+      >
+        {/* Brand */}
+        <div className="flex items-center justify-between px-4 pt-5 pb-4">
+          <Link href="/dashboard" className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-lg bg-[var(--dash-primary)] flex items-center justify-center shrink-0">
+              <Image src="/images/logo/logo.png" alt="Logo" width={22} height={22} className="object-contain brightness-0 invert" />
             </div>
+            <div className="leading-tight min-w-0">
+              <p className="text-sm font-extrabold tracking-tight text-[var(--dash-text)] truncate">SIPANDU</p>
+              <p className="text-[10px] font-semibold tracking-widest text-[var(--dash-primary)] uppercase">Panel Admin</p>
+            </div>
+          </Link>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-1.5 rounded-md text-[var(--dash-text-muted)] hover:bg-[var(--dash-surface-hover)] hover:text-[var(--dash-text)] transition-colors"
+          >
+            <X className="w-4.5 h-4.5" />
+          </button>
+        </div>
 
-            {/* Sidebar Menu */}
-            <nav className="flex-1 overflow-y-auto p-4 space-y-0.5">
-              {menuGroups.map((group, groupIndex) => {
-                const filteredItems = group.items.filter(item => {
-                  if (item.roles) {
-                    return item.roles.includes(role)
-                  }
-                  return true
-                })
+        {/* Nav */}
+        <nav className="flex-1 overflow-y-auto px-3 pb-3">
+          {menuGroups.map((group) => {
+            const filteredItems = group.items.filter(item => {
+              if (item.roles) return item.roles.includes(role)
+              return true
+            })
+            if (filteredItems.length === 0) return null
 
-                if (filteredItems.length === 0) return null
-
-                return (
-                  <div key={group.title} className={groupIndex > 0 ? 'mt-6' : ''}>
-                    <p className="px-4 text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">
-                      {group.title}
-                    </p>
-                    <div className="space-y-0.5">
-                      {filteredItems.map((item) => {
-                        const isActive = pathname === item.href
-                        return (
-                          <Link
-                            key={item.name}
-                            href={item.href}
-                            onClick={() => setSidebarOpen(false)}
-                            className={`flex items-center justify-between px-4 py-2.5 rounded-[10px] text-sm font-medium transition-all duration-200 ${
-                              isActive 
-                                ? `${theme.bgLight} ${theme.bgDark} ${theme.text} ${theme.textDark}`
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
-                            }`}
-                          >
-                            <div className="flex items-center space-x-3">
-                              <item.icon className={`w-[18px] h-[18px] ${isActive ? `${theme.text} ${theme.textDark}` : 'text-slate-400 dark:text-slate-500'}`} />
-                              <span>{item.name}</span>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              })}
-            </nav>
-
-            {/* Sidebar Footer */}
-            <div className="p-4 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-[10px]">
-                <div className={`w-9 h-9 ${theme.iconBg} ${theme.iconBgDark} rounded-[10px] flex items-center justify-center`}>
-                  <User className={`w-5 h-5 ${theme.text} ${theme.textDark}`} />
+            return (
+              <div key={group.title}>
+                <p className="px-3 pt-4 pb-1.5 text-[10.5px] font-bold text-[var(--dash-text-muted)] uppercase tracking-[0.08em]">
+                  {group.title}
+                </p>
+                <div className="space-y-px">
+                  {filteredItems.map((item) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setSidebarOpen(false)}
+                        className={`flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors duration-100 ${
+                          isActive
+                            ? 'bg-[var(--dash-primary-bg)] text-[var(--dash-primary)] font-semibold'
+                            : 'text-[var(--dash-text-soft)] font-medium hover:bg-[var(--dash-surface-hover)] hover:text-[var(--dash-text)]'
+                        }`}
+                      >
+                        <item.icon className={`w-[17px] h-[17px] shrink-0 ${isActive ? 'text-[var(--dash-primary)]' : 'text-[var(--dash-text-muted)]'}`} />
+                        <span className="truncate">{item.name}</span>
+                      </Link>
+                    )
+                  })}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">{session?.user?.name || 'User'}</p>
-                  <p className="text-xs text-slate-500 dark:text-zinc-400 truncate">{session?.user?.email || 'No Email'}</p>
-                </div>
-                <button 
-                  onClick={() => signOut({ callbackUrl: '/' })}
-                  className="p-2 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-[10px] hover:bg-white dark:hover:bg-slate-800 shadow-sm transition-all"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
               </div>
-            </div>
-        </aside>
+            )
+          })}
+        </nav>
 
-      {/* Main Content */}
-      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 lg:pl-[280px]`}>
+        {/* Profile card */}
+        <div className="p-3 border-t border-[var(--dash-border)]">
+          <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-[var(--dash-surface)] border border-[var(--dash-border)]">
+            <div className="w-9 h-9 rounded-lg bg-[var(--dash-primary)] flex items-center justify-center text-white font-bold text-sm shrink-0">
+              {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+            </div>
+            <div className="flex-1 min-w-0 leading-tight">
+              <p className="text-[13px] font-semibold text-[var(--dash-text)] truncate">{session?.user?.name || 'User'}</p>
+              <p className="text-[11px] font-medium text-[var(--dash-primary)] truncate">{roleLabel}</p>
+            </div>
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              title="Keluar"
+              className="p-1.5 rounded-md border border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-danger)] hover:bg-[var(--dash-danger-bg)] transition-colors shrink-0"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* ══ MAIN AREA ══ */}
+      <div className="flex-1 flex flex-col min-h-screen lg:pl-[264px]">
         {/* Header */}
-        <header className="h-16 bg-white/80 dark:bg-[#111827]/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 flex items-center justify-between px-6 sticky top-0 z-20">
-          <div className="flex items-center space-x-4">
+        <header className="h-14 bg-[var(--dash-surface)]/90 backdrop-blur-md border-b border-[var(--dash-border)] flex items-center justify-between gap-3 px-4 lg:px-6 sticky top-0 z-20">
+          <div className="flex items-center gap-3 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden text-slate-500 hover:text-slate-700 dark:hover:text-white p-2 rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-2 rounded-md border border-[var(--dash-border)] text-[var(--dash-text-soft)] hover:bg-[var(--dash-surface-hover)] transition-colors"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4.5 h-4.5" />
             </button>
-            <div className="hidden sm:flex items-center space-x-2 text-sm text-slate-500 dark:text-zinc-400">
-              <span className="font-medium">Lampung Timur</span>
-              <span>/</span>
-              <span className="text-slate-800 dark:text-white font-semibold">Dashboard</span>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-[var(--dash-text)] truncate leading-tight">{crumb}</p>
+              <p className="hidden sm:block text-[11px] text-[var(--dash-text-muted)] leading-tight">
+                SIPANDU · Kabupaten Lampung Timur
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-1.5">
             {/* Theme Toggle */}
             <button
-              onClick={toggleDarkMode}
-              className="p-2.5 text-slate-500 hover:text-slate-700 dark:hover:text-white rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              onClick={() => setDarkMode(!darkMode)}
+              className="w-9 h-9 rounded-md border border-[var(--dash-border)] flex items-center justify-center text-[var(--dash-text-soft)] hover:bg-[var(--dash-surface-hover)] transition-colors"
               aria-label="Toggle dark mode"
             >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {darkMode ? <Sun className="w-4 h-4 text-[var(--dash-warning)]" /> : <Moon className="w-4 h-4" />}
             </button>
 
             {/* Notification */}
             <div className="relative" ref={notificationRef}>
-              <button 
+              <button
                 onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                className="relative p-2.5 text-slate-500 hover:text-slate-700 dark:hover:text-white rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                className="relative w-9 h-9 rounded-md border border-[var(--dash-border)] flex items-center justify-center text-[var(--dash-text-soft)] hover:bg-[var(--dash-surface-hover)] transition-colors"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4" />
                 {notifications.length > 0 && (
-                  <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-rose-500 rounded-full"></span>
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[var(--dash-danger)] rounded-full"></span>
                 )}
               </button>
-              
 
-              
               <AnimatePresence>
                 {isNotificationOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
-                    className="absolute right-[-44px] xs:right-[-50px] md:right-[-100px] mt-4 w-72 bg-white dark:bg-[#111827] rounded-xl shadow-lg border border-slate-100 dark:border-slate-800 py-2 z-50"
+                    exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                    transition={{ duration: 0.12, ease: 'easeOut' }}
+                    className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] bg-[var(--dash-card)] rounded-xl border border-[var(--dash-border)] shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)] p-2 z-50"
                   >
-                    <div className="px-4 py-2 border-b border-slate-50 dark:border-slate-800">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-white">Notifikasi</p>
+                    <div className="px-3 py-2">
+                      <p className="text-[13px] font-bold text-[var(--dash-text)]">Notifikasi</p>
+                      <p className="text-[11px] text-[var(--dash-text-muted)]">Update terbaru untuk akun Anda.</p>
                     </div>
-                    <div className="p-2 space-y-1">
+                    <div className="border-t border-[var(--dash-border)] my-1" />
+                    <div className="max-h-72 overflow-y-auto space-y-1 p-1">
                       {notifications.length > 0 ? (
                         notifications.map((notif: any) => (
-                          <div key={notif.id} className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer border-b border-slate-50 dark:border-slate-800 last:border-0">
-                            <p className="text-xs font-semibold text-slate-800 dark:text-white">{notif.title}</p>
-                            <p className="text-xs text-slate-600 dark:text-zinc-300 line-clamp-2">{notif.message}</p>
-                            <p className="text-xs text-slate-400 mt-0.5">{new Date(notif.createdAt).toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                          <div key={notif.id} className="p-2.5 rounded-lg hover:bg-[var(--dash-surface-hover)] transition-colors cursor-pointer">
+                            <p className="text-xs font-semibold text-[var(--dash-text)]">{notif.title}</p>
+                            <p className="text-xs text-[var(--dash-text-soft)] line-clamp-2 mt-0.5">{notif.message}</p>
+                            <p className="text-[10px] text-[var(--dash-text-muted)] mt-1">
+                              {new Date(notif.createdAt).toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })}
+                            </p>
                           </div>
                         ))
                       ) : (
-                        <div className="p-4 text-center text-xs text-slate-500 dark:text-zinc-400">
+                        <div className="p-4 text-center text-xs text-[var(--dash-text-muted)]">
                           Tidak ada notifikasi baru
                         </div>
                       )}
@@ -302,51 +317,53 @@ export default function DashboardLayout({
               </AnimatePresence>
             </div>
 
-            <div className="h-6 w-px bg-slate-200 dark:bg-zinc-900 mx-1"></div>
-
             {/* Profile Dropdown */}
             <div className="relative" ref={profileDropdownRef}>
-              <button 
+              <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                className="flex items-center space-x-2 p-1.5 rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+                className="flex items-center gap-2 h-9 pl-1.5 pr-2 rounded-md border border-[var(--dash-border)] hover:bg-[var(--dash-surface-hover)] transition-colors focus:outline-none"
               >
-                <div className={`w-8 h-8 ${isPosyandu ? 'bg-purple-600' : 'bg-purple-600'} rounded-full flex items-center justify-center text-white font-semibold text-sm`}>
-                  {session?.user?.name?.[0] || 'U'}
+                <div className="w-[26px] h-[26px] bg-[var(--dash-primary)] rounded-md flex items-center justify-center text-white font-bold text-xs">
+                  {session?.user?.name?.[0]?.toUpperCase() || 'U'}
                 </div>
-                <span className="hidden md:inline text-sm font-semibold text-slate-800 dark:text-white">{session?.user?.name || 'User'}</span>
-                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+                <span className="hidden md:inline text-[13px] font-semibold text-[var(--dash-text)] max-w-[140px] truncate">
+                  {session?.user?.name || 'User'}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-[var(--dash-text-muted)] transition-transform duration-200 ${profileDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
-              
-              {/* Dropdown Menu */}
 
-              
               <AnimatePresence>
                 {profileDropdownOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.15, ease: 'easeOut' }}
-                    className="absolute right-0 mt-2 w-52 bg-white dark:bg-[#111827] rounded-xl shadow-lg border border-slate-100 dark:border-slate-800 py-1.5 z-50"
+                    exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                    transition={{ duration: 0.12, ease: 'easeOut' }}
+                    className="absolute right-0 mt-2 w-56 bg-[var(--dash-card)] rounded-xl border border-[var(--dash-border)] shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)] p-1.5 z-50"
                   >
-                    <div className="px-4 py-2 border-b border-slate-50 dark:border-slate-800">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-white">{session?.user?.name || 'User'}</p>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 truncate">{session?.user?.email || ''}</p>
+                    <div className="px-3 py-2">
+                      <p className="text-[13px] font-bold text-[var(--dash-text)] truncate">{session?.user?.name || 'User'}</p>
+                      <p className="text-[11px] text-[var(--dash-text-muted)] truncate">{session?.user?.email || ''}</p>
+                      <span className="inline-block mt-1.5 px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--dash-primary-bg)] text-[var(--dash-primary)]">
+                        {roleLabel}
+                      </span>
                     </div>
-                    <div className="p-1.5">
-                      <Link href="/dashboard/setting" className="flex items-center space-x-2 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-[10px] transition-colors">
-                        <User className="w-4 h-4 text-slate-500" />
-                        <span>Profil Saya</span>
-                      </Link>
-                      <div className="my-1 border-t border-slate-50 dark:border-slate-800"></div>
-                      <button 
-                        onClick={() => signOut({ callbackUrl: '/' })}
-                        className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-[10px] transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Keluar</span>
-                      </button>
-                    </div>
+                    <div className="border-t border-[var(--dash-border)] my-1" />
+                    <Link
+                      href="/dashboard/setting"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-[var(--dash-text-soft)] hover:bg-[var(--dash-surface-hover)] hover:text-[var(--dash-text)] rounded-lg transition-colors"
+                    >
+                      <User className="w-4 h-4 text-[var(--dash-text-muted)]" />
+                      Profil Saya
+                    </Link>
+                    <button
+                      onClick={() => signOut({ callbackUrl: '/' })}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-[var(--dash-danger)] hover:bg-[var(--dash-danger-bg)] rounded-lg transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Keluar
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -355,7 +372,7 @@ export default function DashboardLayout({
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 px-[10px] py-6 lg:p-6">
+        <main className="flex-1 px-[10px] py-5 lg:p-6">
           {children}
         </main>
       </div>

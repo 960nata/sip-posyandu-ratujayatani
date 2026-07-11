@@ -10,9 +10,9 @@ export default function PetugasPage() {
   const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    bgGradient: isPosyandu ? 'from-[var(--dash-primary)] to-[var(--dash-primary)]' : 'from-[var(--dash-primary)] to-[var(--dash-primary)]',
+    hoverGradient: 'hover:opacity-90',
+    shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
     focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
@@ -118,12 +118,12 @@ export default function PetugasPage() {
       </div>
 
       {/* Section 1: Daftar Petugas */}
-      <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">Daftar Petugas</h2>
           <button 
             onClick={handleOpenAdd}
-            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-[10px] transition-all shadow-sm flex items-center gap-2 text-sm`}
+            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-[10px] transition-all flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah Petugas
@@ -132,7 +132,7 @@ export default function PetugasPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-800/50 text-slate-700 dark:text-slate-200">
+            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-700 dark:text-slate-200">
               <tr>
                 <th className="px-4 py-3 font-medium">No</th>
                 <th className="px-4 py-3 font-medium">Nama</th>
@@ -143,7 +143,7 @@ export default function PetugasPage() {
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
               {petugas.map((p, index) => (
-                <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-zinc-800/50 transition-colors">
+                <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                   <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{index + 1}</td>
                   <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nama}</td>
                   <td className="px-4 py-3">{p.role}</td>
@@ -172,7 +172,7 @@ export default function PetugasPage() {
       </div>
 
       {/* Section 2: Absensi Bulanan */}
-      <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
         <div className="mb-6">
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">Absensi Bulanan</h2>
           <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
@@ -182,9 +182,9 @@ export default function PetugasPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-800/50 text-slate-700 dark:text-slate-200">
+            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-700 dark:text-slate-200">
               <tr>
-                <th className="px-4 py-3 font-medium sticky left-0 bg-slate-50 dark:bg-zinc-800 z-10">Nama Petugas</th>
+                <th className="px-4 py-3 font-medium sticky left-0 bg-slate-50 dark:bg-[#202020] z-10">Nama Petugas</th>
                 {months.map((month) => (
                   <th key={month} className="px-3 py-3 text-center font-medium min-w-[60px]">{month}</th>
                 ))}
@@ -192,8 +192,8 @@ export default function PetugasPage() {
             </thead>
             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
               {petugas.map((p) => (
-                <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-zinc-800/50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white sticky left-0 bg-white dark:bg-[#111827] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
+                <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
+                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white sticky left-0 bg-white dark:bg-[#202020] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
                     {p.nama}
                   </td>
                   {months.map((_, monthIndex) => {
@@ -205,7 +205,7 @@ export default function PetugasPage() {
                               className={`w-6 h-6 rounded-[10px] flex items-center justify-center transition-all border mx-auto ${
                                 isPresent
                                   ? `${theme.bgLight} border-purple-200 ${theme.text} dark:${theme.textDark} dark:border-purple-800`
-                                  : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-600 hover:border-purple-300 dark:hover:border-purple-700'
+                                  : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-[#202020] dark:border-white/10 dark:text-zinc-600 hover:border-purple-300 dark:hover:border-purple-700'
                               }`}
                         >
                           {isPresent && <Check className="w-4 h-4" />}
@@ -237,18 +237,18 @@ export default function PetugasPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-100 dark:border-zinc-800"
+              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-md overflow-hidden border border-slate-200/70 dark:border-white/10"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
-              <div className="p-6 border-b border-slate-100 dark:border-zinc-800">
+              <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                     {modalMode === 'add' ? 'Tambah Petugas' : 'Edit Petugas'}
                   </h2>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-zinc-800 text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -262,7 +262,7 @@ export default function PetugasPage() {
                     type="text"
                     value={formData.nama}
                     onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
                     placeholder="Nama Petugas"
                   />
                 </div>
@@ -272,7 +272,7 @@ export default function PetugasPage() {
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} focus:border-purple-500 transition-colors`}
+                    className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} focus:border-purple-500 transition-colors`}
                   >
                     <option value="KADER">KADER</option>
                     <option value="PLKB">PLKB</option>
@@ -286,15 +286,15 @@ export default function PetugasPage() {
                     type="text"
                     value={formData.unit}
                     readOnly
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-100 dark:bg-zinc-800/50 text-slate-500 dark:text-zinc-400 cursor-not-allowed"
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#202020]/50 text-slate-500 dark:text-zinc-400 cursor-not-allowed"
                   />
                 </div>
               </div>
 
-              <div className="p-6 border-t border-slate-100 dark:border-zinc-800 flex justify-end gap-3">
+              <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors"
                 >
                   Batal
                 </button>

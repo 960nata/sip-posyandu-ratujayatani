@@ -37,9 +37,9 @@ export default function AnalisaDataPage() {
   const isPosyandu = (session?.user as any)?.role === 'OPERATOR_POSYANDU'
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    bgGradient: isPosyandu ? 'from-[var(--dash-primary)] to-[var(--dash-primary)]' : 'from-[var(--dash-primary)] to-[var(--dash-primary)]',
+    hoverGradient: 'hover:opacity-90',
+    shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
     focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
@@ -570,7 +570,7 @@ export default function AnalisaDataPage() {
         <button 
           onClick={handleExportExcel}
           disabled={isExporting}
-          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-[10px] ${theme.hoverGradient} transition-all shadow-lg ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
+          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-[10px] ${theme.hoverGradient} transition-all ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
         >
           <Download className="w-5 h-5" />
           {isExporting ? 'Memproses...' : 'Export Excel (Semua Bidang)'}
@@ -585,9 +585,9 @@ export default function AnalisaDataPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white dark:bg-zinc-800 p-4 md:p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm flex flex-col items-center justify-center text-center gap-3"
+            className="bg-white dark:bg-[#202020] p-4 md:p-6 rounded-lg border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center text-center gap-3"
           >
-            <div className={`p-3 md:p-4 rounded-xl bg-slate-50 dark:bg-zinc-700/50 ${stat.color}`}>
+            <div className={`p-3 md:p-4 rounded-lg bg-slate-50 dark:bg-[#2f2f2f]/50 ${stat.color}`}>
               <stat.icon className="w-8 h-8" />
             </div>
             <div>
@@ -604,7 +604,7 @@ export default function AnalisaDataPage() {
       </div>
 
       {/* Chart Section */}
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
+      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
         <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Grafik Pelaporan per Bidang</h2>
         <div className="h-[400px] w-full">
           <Chart options={chartOptions as any} series={chartSeries} type="bar" height="100%" />

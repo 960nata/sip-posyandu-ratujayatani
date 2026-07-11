@@ -129,9 +129,9 @@ const regionData = [
 async function main() {
   console.log('Seeding database...')
 
-  const hashedSuperadmin = await bcrypt.hash('superadmin123', 10)
-  const hashedKecamatan = await bcrypt.hash('kecamatan123', 10)
-  const hashedDesa = await bcrypt.hash('desa123', 10)
+  const hashedSuperadmin = await bcrypt.hash('password123', 10)
+  const hashedKecamatan = await bcrypt.hash('password123', 10)
+  const hashedDesa = await bcrypt.hash('password123', 10)
   const hashedPosyandu = await bcrypt.hash('posyandu123', 10)
 
   // 1. Create Kabupaten
@@ -156,7 +156,7 @@ async function main() {
     },
   })
 
-  for (const kec of regionData) {
+  await Promise.all(regionData.map(async (kec) => {
     console.log(`Processing Kecamatan: ${kec.name}`)
     
     const kecamatan = await prisma.kecamatan.upsert({
@@ -227,23 +227,9 @@ async function main() {
             statusBangunan: StatusBangunanEnum.MILIK_SENDIRI,
           },
         })
-
-        // Create Account for this Posyandu
-        const posyanduEmail = `posyandu.${desaName.toLowerCase().replace(/\s+/g, '')}.${p}@siplamtim.id`
-        await prisma.user.upsert({
-          where: { email: posyanduEmail },
-          update: { password: hashedPosyandu },
-          create: {
-            nama: `Admin ${posyanduName}`,
-            email: posyanduEmail,
-            password: hashedPosyandu,
-            role: "OPERATOR_POSYANDU",
-            posyanduId: posyanduId,
-          } as any,
-        })
       }
     }
-  }
+  }))
 
   console.log('Seeding completed!')
 }

@@ -22,7 +22,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "mrazsardinjrphncgnhu.supabase.co"],
   },
   async headers() {
     return [

@@ -37,7 +37,7 @@ export default function LegalPage({
           <div className="absolute -top-32 -left-24 w-[450px] h-[450px] rounded-full bg-purple-600/20 blur-[120px]" />
           <div className="absolute -bottom-40 right-[-120px] w-[500px] h-[500px] rounded-full bg-indigo-500/15 blur-[130px]" />
         </div>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.span
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export default function LegalPage({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4"
+            className="text-3xl md:text-6xl font-extrabold text-white tracking-tight mb-6"
           >
             {title}
           </motion.h1>
@@ -59,7 +59,7 @@ export default function LegalPage({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-purple-100/70 text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-4"
+            className="text-purple-100/70 text-base md:text-lg font-normal leading-relaxed max-w-4xl mx-auto mb-4"
           >
             {subtitle}
           </motion.p>
@@ -76,7 +76,7 @@ export default function LegalPage({
 
       {/* Accordion */}
       <section className="py-16 bg-white flex-1">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-4">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           {sections.map((section, i) => {
             const isOpen = open === i;
             return (

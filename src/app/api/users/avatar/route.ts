@@ -15,8 +15,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Email not found in session" }, { status: 400 })
   }
 
-  // Check if running on Vercel (Read-Only Filesystem)
-  if (process.env.VERCEL) {
+  // Check if running on Vercel and storage is local (Read-Only Filesystem)
+  const storageType = process.env.STORAGE_TYPE || 'local'
+  if (process.env.VERCEL && storageType === 'local') {
     return NextResponse.json({ 
       error: "Upload foto profil belum didukung di Vercel karena sistem file bersifat Read-Only. Silakan gunakan lingkungan lokal (localhost) untuk mengetes fitur ini!" 
     }, { status: 500 })
@@ -30,23 +31,62 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
     }
 
-    // Convert Blob to Buffer
-    const buffer = Buffer.from(await file.arrayBuffer())
-
     // Create a unique filename
     const filename = `avatar-${Date.now()}.avif`
-    const publicDir = path.join(process.cwd(), 'public')
-    const uploadDir = path.join(publicDir, 'uploads', 'avatars')
+    
+    let avatarUrl = ''
 
-    // Ensure directory exists
-    await fs.mkdir(uploadDir, { recursive: true })
+    if (storageType === 'supabase') {
+      const supabaseUrl = process.env.SUPABASE_URL
+      const supabaseKey = process.env.SUPABASE_ANON_KEY
+      const bucketName = 'GAMBAR'
 
-    // Save file
-    const filePath = path.join(uploadDir, filename)
-    await fs.writeFile(filePath, buffer)
+      if (!supabaseUrl || !supabaseKey) {
+        return NextResponse.json({ 
+          error: "Supabase URL dan Anon Key harus dikonfigurasi di .env untuk menggunakan penyimpanan Supabase" 
+        }, { status: 500 })
+      }
+
+      // Convert Blob to ArrayBuffer
+      const arrayBuffer = await file.arrayBuffer()
+
+      // Upload to Supabase Storage via REST API
+      const uploadUrl = `${supabaseUrl}/storage/v1/object/${bucketName}/${filename}`
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': file.type || 'image/avif'
+        },
+        body: arrayBuffer
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("Supabase Storage avatar upload error details:", errorText)
+        return NextResponse.json({ error: `Gagal upload avatar ke Supabase: ${errorText}` }, { status: response.status })
+      }
+
+      avatarUrl = `${supabaseUrl}/storage/v1/object/public/${bucketName}/${filename}`
+    } else {
+      // Convert Blob to Buffer
+      const buffer = Buffer.from(await file.arrayBuffer())
+
+      const publicDir = path.join(process.cwd(), 'public')
+      const uploadDir = path.join(publicDir, 'uploads', 'avatars')
+
+      // Ensure directory exists
+      await fs.mkdir(uploadDir, { recursive: true })
+
+      // Save file
+      const filePath = path.join(uploadDir, filename)
+      await fs.writeFile(filePath, buffer)
+
+      avatarUrl = `/uploads/avatars/${filename}`
+    }
 
     // Update user in database
-    const avatarUrl = `/uploads/avatars/${filename}`
     await prisma.user.update({
       where: { email: email },
       data: { image: avatarUrl }

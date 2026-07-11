@@ -39,7 +39,7 @@ const menuGroups = [
       { name: 'Pengaturan Petugas', icon: UserCheck, href: '/dashboard/petugas', roles: ['OPERATOR_POSYANDU', 'OPERATOR_DESA'] },
       { name: 'SK Kepengurusan', icon: FileText, href: '/dashboard/sk-kepengurusan', roles: ['OPERATOR_POSYANDU', 'OPERATOR_DESA'] },
       { name: 'Analisa Data', icon: Activity, href: '/dashboard/posyandu' },
-      { name: 'Manajemen Posyandu', icon: Building, href: '/dashboard/manage-posyandu', roles: ['OPERATOR_DESA'] },
+      { name: 'Manajemen Posyandu', icon: Building, href: '/dashboard/manage-posyandu', roles: ['SUPERADMIN', 'OPERATOR_DESA'] },
       { name: 'Manajemen User', icon: Users, href: '/dashboard/users', roles: ['SUPERADMIN'] },
       { name: 'Push Notifikasi', icon: Bell, href: '/dashboard/push-notification', roles: ['SUPERADMIN'] },
       { name: 'Galeri Media', icon: HardDrive, href: '/dashboard/data-dukung', roles: ['SUPERADMIN'] },

@@ -53,6 +53,7 @@ model Posyandu {
   jumlahKK          Int      @default(0)
   jumlahPenduduk    Int      @default(0)
   jumlahAnak05      Int      @default(0)
+  status            String   @default("AKTIF")
   jumlahRemaja      Int      @default(0)
   jumlahProduktif   Int      @default(0)
   jumlahLansia      Int      @default(0)

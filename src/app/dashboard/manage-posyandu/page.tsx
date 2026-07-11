@@ -2,13 +2,195 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Search, Users, Building, X, Check, Trash2, Edit2, UserPlus, MapPin, AlertTriangle } from 'lucide-react'
+import { Plus, Search, Users, Building, X, Check, Trash2, Edit2, UserPlus, MapPin, AlertTriangle, ChevronDown, ChevronRight, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+
+
+export function MasterWilayahView() {
+  const [data, setData] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [expandedKec, setExpandedKec] = useState<Record<string, boolean>>({})
+  const [expandedDesa, setExpandedDesa] = useState<Record<string, boolean>>({})
+  const [actionLoading, setActionLoading] = useState<string | null>(null)
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch('/api/master-wilayah')
+      const json = await res.json()
+      setData(Array.isArray(json) ? json : [])
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const toggleKec = (id: string) => setExpandedKec(prev => ({ ...prev, [id]: !prev[id] }))
+  const toggleDesa = (id: string) => setExpandedDesa(prev => ({ ...prev, [id]: !prev[id] }))
+
+  const toggleStatus = async (posyanduId: string, currentStatus: string) => {
+    setActionLoading(posyanduId)
+    const newStatus = currentStatus === 'AKTIF' ? 'NONAKTIF' : 'AKTIF'
+    try {
+      const res = await fetch('/api/master-wilayah', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: posyanduId, type: 'posyandu', data: { status: newStatus } })
+      })
+      if (res.ok) {
+        // Update local state directly to be fast
+        setData(prev => prev.map(kec => ({
+          ...kec,
+          desas: kec.desas.map((desa: any) => ({
+            ...desa,
+            posyandus: desa.posyandus.map((p: any) => p.id === posyanduId ? { ...p, status: newStatus } : p)
+          }))
+        })))
+      }
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setActionLoading(null)
+    }
+  }
+
+  if (loading) return <div className="p-8 text-center text-[var(--dash-text-muted)] flex justify-center"><Loader2 className="w-6 h-6 animate-spin" /></div>
+
+  let globalKecIndex = 1
+  return (
+    <div className="space-y-4">
+      <div className="mb-6">
+        <h2 className="text-xl font-bold text-[var(--dash-text)]">Master Data Wilayah & Posyandu</h2>
+        <p className="text-sm text-[var(--dash-text-soft)]">Hierarki Kabupaten Lampung Timur</p>
+      </div>
+
+      <div className="dash-card p-0 overflow-hidden">
+        {data.map((kec) => {
+          const isKecExpanded = expandedKec[kec.id]
+          const totalPosyandu = kec.desas.reduce((acc: number, curr: any) => acc + curr.posyandus.length, 0)
+          
+          return (
+            <div key={kec.id} className="border-b border-[var(--dash-border)] last:border-0">
+              {/* Kecamatan Row */}
+              <div 
+                className="flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                onClick={() => toggleKec(kec.id)}
+              >
+                <div className="flex items-center gap-3">
+                  {isKecExpanded ? <ChevronDown className="w-5 h-5 text-purple-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+                  <div className="w-8 h-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-700 dark:text-purple-400 font-bold text-sm">
+                    {globalKecIndex++}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[var(--dash-text)]">Kecamatan {kec.nama}</h3>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="bg-white dark:bg-black/20 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 border border-[var(--dash-border-2)]">
+                    {kec.desas.length} Desa
+                  </span>
+                  <span className="bg-purple-50 dark:bg-purple-900/20 px-2.5 py-1 rounded-full text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                    {totalPosyandu} Posyandu
+                  </span>
+                </div>
+              </div>
+
+              {/* Desas */}
+              {isKecExpanded && (
+                <div className="bg-white dark:bg-[#121214]">
+                  {kec.desas.length === 0 ? (
+                    <div className="p-4 text-center text-sm text-[var(--dash-text-muted)]">Belum ada desa</div>
+                  ) : kec.desas.map((desa: any, desaIdx: number) => {
+                    const isDesaExpanded = expandedDesa[desa.id]
+                    return (
+                      <div key={desa.id} className="border-b border-[var(--dash-border-2)] last:border-0">
+                        <div 
+                          className="flex items-center justify-between p-3 pl-12 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+                          onClick={() => toggleDesa(desa.id)}
+                        >
+                          <div className="flex items-center gap-2">
+                            {isDesaExpanded ? <ChevronDown className="w-4 h-4 text-blue-500" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
+                            <span className="text-sm font-medium text-[var(--dash-text-soft)]">{desaIdx + 1}.</span>
+                            <h4 className="text-sm font-semibold text-[var(--dash-text)]">Desa {desa.nama}</h4>
+                          </div>
+                          <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md">
+                            {desa.posyandus.length} Posyandu
+                          </span>
+                        </div>
+
+                        {/* Posyandus */}
+                        {isDesaExpanded && (
+                          <div className="bg-slate-50/50 dark:bg-black/10 py-2">
+                            {desa.posyandus.length === 0 ? (
+                              <div className="pl-20 py-2 text-xs text-[var(--dash-text-muted)]">Belum ada posyandu</div>
+                            ) : desa.posyandus.map((pos: any, posIdx: number) => (
+                              <div key={pos.id} className="flex items-center justify-between p-2.5 pl-20 hover:bg-slate-100 dark:hover:bg-white/5 group">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-xs text-slate-400">{posIdx + 1}.</span>
+                                  <div>
+                                    <div className="text-sm font-medium text-[var(--dash-text)] flex items-center gap-2">
+                                      {pos.nama}
+                                      <span className={`text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider ${
+                                        pos.status === 'AKTIF' 
+                                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
+                                          : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
+                                      }`}>
+                                        {pos.status || 'AKTIF'}
+                                      </span>
+                                    </div>
+                                    <div className="text-xs text-[var(--dash-text-muted)]">Strata: {pos.strata} • Buka: {pos.hariBuka}</div>
+                                  </div>
+                                </div>
+                                <div className="pr-4">
+                                  <button
+                                    onClick={() => toggleStatus(pos.id, pos.status || 'AKTIF')}
+                                    disabled={actionLoading === pos.id}
+                                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition-all ${
+                                      pos.status === 'AKTIF' 
+                                        ? 'text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20' 
+                                        : 'text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+                                    }`}
+                                  >
+                                    {actionLoading === pos.id ? (
+                                      <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : pos.status === 'AKTIF' ? (
+                                      <>
+                                        <ToggleRight className="w-4 h-4 text-emerald-500" />
+                                        Nonaktifkan
+                                      </>
+                                    ) : (
+                                      <>
+                                        <ToggleLeft className="w-4 h-4 text-slate-400" />
+                                        Aktifkan
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 export default function ManagePosyanduPage() {
   const { data: session } = useSession()
   const role = (session?.user as any)?.role
-  const isOperatorDesa = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
+  const isOperatorDesa = role === 'OPERATOR_DESA'
 
   const [mounted, setMounted] = useState(false)
   const [activeTab, setActiveTab] = useState<'posyandu' | 'users'>('posyandu')
@@ -67,6 +249,8 @@ export default function ManagePosyanduPage() {
   }
 
   if (!mounted) return null
+
+  if (role === 'SUPERADMIN') return <MasterWilayahView />
 
   // ---- POSYANDU HANDLERS ----
 

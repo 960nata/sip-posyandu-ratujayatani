@@ -189,14 +189,20 @@ export default function Home() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
-          <div className="text-center mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
               Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
             </h2>
             <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-normal">
               Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
             </p>
-          </div>
+          </motion.div>
 
           {/* Cards */}
           <motion.div 
@@ -258,7 +264,13 @@ export default function Home() {
       <section id="cakupan" className="py-24 bg-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               Cakupan Pelayanan{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
@@ -268,7 +280,7 @@ export default function Home() {
             <p className="text-slate-500 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
               Berdasarkan Peraturan Menteri Dalam Negeri Nomor 13 Tahun 2024, Pos Pelayanan Terpadu (Posyandu) kini bertransformasi menjadi lembaga kemasyarakatan desa yang memfasilitasi 6 Bidang Standar Pelayanan Minimal (SPM) untuk peningkatan kesejahteraan masyarakat secara merata.
             </p>
-          </div>
+          </motion.div>
           {/* SPM Grid */}
           <motion.div 
             variants={containerVariants}
@@ -377,7 +389,13 @@ export default function Home() {
       <section className="py-20 bg-[#12291b] overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3 block">
               Data Publik
             </span>
@@ -387,7 +405,7 @@ export default function Home() {
             <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
               Visualisasi skala operasional dan sebaran cakupan pelayanan Posyandu di seluruh wilayah Kabupaten Lampung Timur. Seluruh data dikonsolidasikan secara digital melalui pangkalan data terintegrasi Sistem Informasi Posyandu (SIPANDU).
             </p>
-          </div>
+          </motion.div>
 
           {/* Stats */}
           <motion.div 
@@ -415,7 +433,13 @@ export default function Home() {
       <section id="about" className="py-24 bg-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Layout matching the user's reference image style */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12"
+          >
             <div className="max-w-2xl">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -430,7 +454,7 @@ export default function Home() {
                 SIP bukan sekadar aplikasi, melainkan ekosistem tata kelola data yang mengintegrasikan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           <motion.div 
             variants={containerVariants}
@@ -599,7 +623,13 @@ export default function Home() {
       <section className="py-24 bg-slate-50/50 overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
             <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Struktur Kelembagaan
@@ -610,7 +640,7 @@ export default function Home() {
             <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
               Alur koordinasi 5 tingkat Tim Pembina Posyandu dari Pusat hingga tingkat Kader di Kabupaten Lampung Timur.
             </p>
-          </div>
+          </motion.div>
 
           {/* Timeline Wrapper (Flex Column matching the mockup layout) */}
           <div className="relative flex flex-col space-y-16 lg:space-y-0 max-w-[1100px] mx-auto mt-12">
@@ -834,7 +864,13 @@ export default function Home() {
 
       {/* Section: Galeri Kegiatan Posyandu */}
       <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center"
+        >
           <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
             Dokumentasi Lapangan
           </span>
@@ -847,7 +883,7 @@ export default function Home() {
           <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal">
             Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
           </p>
-        </div>
+        </motion.div>
 
         <div className="marquee-container space-y-6 overflow-hidden py-2">
           {/* First Row: Left Scrolling */}
@@ -920,7 +956,13 @@ export default function Home() {
       <section id="hukum" className="py-24 bg-slate-50/50">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
             <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
               Landasan Hukum
             </span>
@@ -930,7 +972,7 @@ export default function Home() {
             <p className="text-slate-500 font-normal max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
               Sistem ini dibangun sesuai dengan ketentuan peraturan perundang-undangan yang berlaku di Indonesia.
             </p>
-          </div>
+          </motion.div>
 
           {/* Grid Layout (Mockup style) */}
           <motion.div 

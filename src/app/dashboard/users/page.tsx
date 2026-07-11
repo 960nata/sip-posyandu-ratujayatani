@@ -10,7 +10,6 @@ import {
 import { useSession } from 'next-auth/react'
 import Skeleton from '@/components/Skeleton'
 
-import { dummyUsers } from './dummyData'
 
 const regionData = [
   {

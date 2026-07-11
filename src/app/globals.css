@@ -9,254 +9,157 @@
 @custom-variant hover (&:hover, &.is-active);
 @custom-variant group-hover (:where(.group):hover &, :where(.group).is-active &);
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-
-
-:root.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* ═══ DASHBOARD DESIGN TOKENS — Notion-style, calm & minimal ═══ */
-:root {
-  --dash-bg:            #fbfbfa;
-  --dash-sidebar:       #f7f7f5;
-  --dash-surface:       #ffffff;
-  --dash-surface-hover: #f1f1ef;
-  --dash-card:          #ffffff;
-  --dash-card-hover:    #f7f7f5;
-  --dash-border:        rgba(55, 53, 47, 0.09);
-  --dash-border-2:      rgba(55, 53, 47, 0.16);
-  --dash-text:          #37352f;
-  --dash-text-muted:    rgba(55, 53, 47, 0.5);
-  --dash-text-soft:     rgba(55, 53, 47, 0.65);
-  --dash-primary:       #7c3aed;
-  --dash-primary-hover: #6d28d9;
-  --dash-primary-bg:    rgba(124, 58, 237, 0.08);
-  --dash-success:       #059669;
-  --dash-success-bg:    rgba(5, 150, 105, 0.08);
-  --dash-warning:       #d97706;
-  --dash-warning-bg:    rgba(217, 119, 6, 0.08);
-  --dash-danger:        #dc2626;
-  --dash-danger-bg:     rgba(220, 38, 38, 0.08);
+  /* Beautiful Light Theme - Soft, clean, premium */
+  --dash-bg: #f8fafc;
+  --dash-surface: #ffffff;
+  --dash-surface-hover: #f1f5f9;
+  --dash-card: #ffffff;
+  --dash-card-hover: #f1f5f9;
+  --dash-text: #0f172a;
+  --dash-text-soft: #475569;
+  --dash-text-muted: #94a3b8;
+  --dash-border: rgba(226, 232, 240, 0.8);
+  --dash-border-2: rgba(203, 213, 225, 0.8);
+  
+  /* Primary Purple Theme - Rich gradients */
+  --dash-primary: #8b5cf6;
+  --dash-primary-hover: #7c3aed;
+  --dash-primary-bg: rgba(139, 92, 246, 0.1);
+  --dash-primary-border: rgba(139, 92, 246, 0.2);
+  --dash-danger: #ef4444;
+  
+  /* Layout */
+  --dash-sidebar-w: 280px;
+  --font-main: 'Inter', system-ui, sans-serif;
 }
 
 .dark {
-  --dash-bg:            #191919;
-  --dash-sidebar:       #202020;
-  --dash-surface:       #202020;
-  --dash-surface-hover: #2f2f2f;
-  --dash-card:          #252525;
-  --dash-card-hover:    #2f2f2f;
-  --dash-border:        rgba(255, 255, 255, 0.09);
-  --dash-border-2:      rgba(255, 255, 255, 0.13);
-  --dash-text:          rgba(255, 255, 255, 0.9);
-  --dash-text-muted:    rgba(255, 255, 255, 0.44);
-  --dash-text-soft:     rgba(255, 255, 255, 0.6);
-  --dash-primary:       #a78bfa;
-  --dash-primary-hover: #8b5cf6;
-  --dash-primary-bg:    rgba(167, 139, 250, 0.12);
-  --dash-success:       #34d399;
-  --dash-success-bg:    rgba(52, 211, 153, 0.12);
-  --dash-warning:       #fbbf24;
-  --dash-warning-bg:    rgba(251, 191, 36, 0.12);
-  --dash-danger:        #f87171;
-  --dash-danger-bg:     rgba(248, 113, 113, 0.12);
+  /* Beautiful Dark Theme - Deep, elegant, modern */
+  --dash-bg: #09090b;
+  --dash-surface: #121214;
+  --dash-surface-hover: #1c1c1f;
+  --dash-card: #121214;
+  --dash-card-hover: #1c1c1f;
+  --dash-text: #f8fafc;
+  --dash-text-soft: #cbd5e1;
+  --dash-text-muted: #64748b;
+  --dash-border: rgba(255, 255, 255, 0.08);
+  --dash-border-2: rgba(255, 255, 255, 0.12);
+  
+  /* Primary */
+  --dash-primary: #a78bfa;
+  --dash-primary-hover: #c4b5fd;
+  --dash-primary-bg: rgba(167, 139, 250, 0.15);
+  --dash-primary-border: rgba(167, 139, 250, 0.3);
+  --dash-danger: #ef4444;
 }
 
-/* Dashboard sidebar scrollbar: hairline, only tinted on hover */
-aside nav::-webkit-scrollbar {
-  width: 3px;
-}
-aside nav::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 3px;
-}
-aside nav:hover::-webkit-scrollbar-thumb {
-  background: var(--dash-border-2);
-}
-
-/* Native system font for body/description text (headings keep Plus Jakarta Sans) */
-.font-native {
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-/* Double Marquee Keyframes for Activity Gallery */
-@keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-marquee-left {
-  display: flex;
-  width: max-content;
-  animation: marquee-left 35s linear infinite;
-}
-
-.animate-marquee-right {
-  display: flex;
-  width: max-content;
-  animation: marquee-right 35s linear infinite;
-}
-
-.marquee-container:hover .animate-marquee-left,
-.marquee-container:hover .animate-marquee-right {
-  animation-play-state: paused;
-}
-
-
-/* ═══════════════════════════════════════════
-   DASHBOARD — Notion-Style Design System
-═══════════════════════════════════════════ */
-
-/* ── Base Card (flat, no shadow, thin border) ── */
+/* ── Base Card (Premium Glass/Shadow) ── */
 .dash-card {
-  background: var(--dash-card);
+  background: var(--dash-surface);
   border: 1px solid var(--dash-border);
-  border-radius: 8px;
-  padding: 20px;
-  transition: background 0.15s ease;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.dash-card-hover:hover {
-  background: var(--dash-card-hover);
-  cursor: pointer;
+.dark .dash-card {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  backdrop-filter: blur(12px);
+  background: rgba(20, 20, 22, 0.7);
+}
+.dash-card:hover {
+  box-shadow: 0 10px 25px -3px rgba(0,0,0,0.08);
+  border-color: var(--dash-border-2);
+}
+.dark .dash-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
 }
 
-/* ── Input (Notion-style) ── */
+/* ── Input ── */
 .dash-input {
-  background: var(--dash-surface);
+  background: var(--dash-bg);
   border: 1px solid var(--dash-border-2);
   color: var(--dash-text);
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
   outline: none;
   font-size: 0.875rem;
   font-family: var(--font-main);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: all 0.2s;
   width: 100%;
 }
 .dash-input:focus {
   border-color: var(--dash-primary);
-  box-shadow: 0 0 0 2px var(--dash-primary-bg);
-}
-.dash-input::placeholder { color: var(--dash-text-muted); }
-.dash-input:disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* ── Select (Notion-style) ── */
-.dash-select {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
   background: var(--dash-surface);
+}
+
+/* ── Select ── */
+.dash-select {
+  background: var(--dash-bg);
   border: 1px solid var(--dash-border-2);
   color: var(--dash-text);
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
   outline: none;
   font-size: 0.875rem;
   font-family: var(--font-main);
-  transition: border-color 0.15s;
+  transition: all 0.2s;
   cursor: pointer;
-  appearance: none;
 }
 .dash-select:focus {
   border-color: var(--dash-primary);
-  box-shadow: 0 0 0 2px var(--dash-primary-bg);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
-/* ── Button (Notion-style — solid, no gradient, no glow) ── */
+/* ── Buttons (Gradient & Glow) ── */
 .dash-btn {
-  background: var(--dash-primary);
+  background: linear-gradient(135deg, var(--dash-primary), #7c3aed);
   color: white;
-  padding: 6px 14px;
-  border-radius: 6px;
+  padding: 10px 18px;
+  border-radius: 10px;
   border: none;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   cursor: pointer;
   font-family: var(--font-main);
-  transition: opacity 0.15s;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  white-space: nowrap;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
-.dash-btn:hover:not(:disabled) { opacity: 0.85; }
-.dash-btn:active:not(:disabled) { opacity: 0.75; }
-.dash-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.dash-btn:hover:not(:disabled) { 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+.dash-btn:active:not(:disabled) { 
+  transform: translateY(0);
+}
 
 .dash-btn-secondary {
-  background: transparent;
+  background: var(--dash-surface);
   color: var(--dash-text);
   border: 1px solid var(--dash-border-2);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
-.dash-btn-secondary:hover:not(:disabled) {
+.dash-btn-secondary:hover:not(:disabled) { 
   background: var(--dash-surface-hover);
-  opacity: 1;
-}
-
-.dash-btn-danger {
-  background: var(--dash-danger);
-  color: white;
+  border-color: var(--dash-text-muted);
 }
 
 /* ── Table (Notion clean table) ── */

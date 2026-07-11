@@ -227,7 +227,7 @@ export default function Sip6Page() {
     setPosyandus(data)
   }
 
-  const [dummySasaran, setDummySasaran] = useState<any[]>([])
+  const [dataSasaran, setDummySasaran] = useState<any[]>([])
   const [editingId, setEditingId] = useState<string | null>(null)
   const [sasaranForm, setSasaranForm] = useState<any>({
     namaIbu: '',
@@ -307,7 +307,7 @@ export default function Sip6Page() {
   }, [selectedAttendanceForModal])
 
   const saveAttendanceDetails = async (sasaranId: string, month: string, details: any) => {
-    const s = dummySasaran.find(item => item.id === sasaranId)
+    const s = dataSasaran.find(item => item.id === sasaranId)
     if (!s) return
 
     const monthsKeys = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt', 'nov', 'des']
@@ -360,7 +360,7 @@ export default function Sip6Page() {
   }
 
   const deleteAttendance = async (sasaranId: string, month: string) => {
-    const s = dummySasaran.find(item => item.id === sasaranId)
+    const s = dataSasaran.find(item => item.id === sasaranId)
     if (!s) return
 
     const monthsKeys = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt', 'nov', 'des']
@@ -1119,7 +1119,7 @@ export default function Sip6Page() {
                         </tr>
                       </thead>
                       <tbody>
-                        {dummySasaran.filter(s => (s as any).type === activeTab)
+                        {dataSasaran.filter(s => (s as any).type === activeTab)
                           .filter(s => {
                             const name = activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaIbu : ((s as any).nama || s.namaIbu);
                             return name.toLowerCase().includes(search.toLowerCase());
@@ -1455,7 +1455,7 @@ export default function Sip6Page() {
                 {(() => {
                   const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][selectedReportForDetail.bulan - 1];
                   const attendees = [
-                    ...dummySasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
+                    ...dataSasaran.filter(s => s.kunjungan.includes(monthStr)).map(s => ({ ...s, isOfficer: false })),
                   ];
 
                   return (

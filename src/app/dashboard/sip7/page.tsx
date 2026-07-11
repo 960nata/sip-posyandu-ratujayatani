@@ -884,15 +884,15 @@ export default function Sip7Page() {
   }
 
   // Dummy Data for SIP 7 (Hasil Kegiatan)
-  const [dummyHasilKegiatan, setDummyHasilKegiatan] = useState<any[]>([])
+  const [dataHasilKegiatan, setDummyHasilKegiatan] = useState<any[]>([])
 
   // Dummy Data for Rekapitulasi Bumil
-  const [dummyRekapBumil, setDummyRekapBumil] = useState([
+  const [dataRekapBumil, setDummyRekapBumil] = useState([
     { id: '1', bulan: 1, tahun: 2026, bumil: 15, busui: 89, datang: { bumil: 12, busui: 80 }, tidakDatang: { bumil: 3, busui: 9 }, bb: { hijau: 10, merah: 5 }, lila: { hijau: 12, merah: 3 }, td: { hijau: 14, merah: 1 }, tbc: 0, ttd: { dpt: 15, tiapHari: 10, tidak: 5 }, pmt: { dpt: 5, tiapHari: 5, tidak: 0 }, kelas: 12, vitA: 80, kb: 5, edukasi: 15, rujuk: { bumil: 1, busui: 0 } }
   ])
 
   // Dummy Data for Rekapitulasi Bayi
-  const [dummyRekapBayi, setDummyRekapBayi] = useState([
+  const [dataRekapBayi, setDummyRekapBayi] = useState([
     { id: '1', bulan: 1, tahun: 2026, bayi: 20, balita: 88, datang: { bayi: 18, balita: 80 }, tidakDatang: { bayi: 2, balita: 8 }, checklist: { lengkap: 15, tidak: 5 }, bb: { naik: 12, tidak: 8 }, tb: { normal: 18, tidak: 2 }, lila: { normal: 19, tidak: 1 }, tbc: 0, asi: 10, mpasi: 8, imunisasi: 18, vitA: 20, cacing: 20, pmt: 10, edukasi: 20, rujuk: { bayi: 0, balita: 1 } }
   ])
 
@@ -1066,7 +1066,7 @@ export default function Sip7Page() {
     }
 
     // Validasi bulan ganda dalam setahun
-    const isDuplicate = dummyHasilKegiatan.some(r => 
+    const isDuplicate = dataHasilKegiatan.some(r => 
       r.bulan === formData7.bulan && 
       r.tahun === formData7.tahun && 
       r.posyanduId === activePosyanduId &&
@@ -1177,7 +1177,7 @@ export default function Sip7Page() {
 
   const getTotals7 = (months: number[]) => {
     const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
-    const filtered = dummyHasilKegiatan.filter(r => 
+    const filtered = dataHasilKegiatan.filter(r => 
       r.tahun === tahunAktif && 
       (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId) &&
       months.includes(r.bulan)
@@ -1317,7 +1317,7 @@ export default function Sip7Page() {
         }
 
         if (newReports.length > 0) {
-          const merged = [...dummyHasilKegiatan];
+          const merged = [...dataHasilKegiatan];
           newReports.forEach(nr => {
             const dupIdx = merged.findIndex(r => r.bulan === nr.bulan && r.tahun === nr.tahun && r.posyanduId === nr.posyanduId);
             if (dupIdx !== -1) {
@@ -1416,7 +1416,7 @@ export default function Sip7Page() {
       ['NO', 'BULAN', 'TAHUN', 'IBU HAMIL JML', 'IBU HAMIL DIPERIKSA', 'IBU HAMIL FE TAB', 'IBU MENYUSUI JML', 'KB KONDOM', 'KB PIL', 'KB IMPLANT', 'KB MOP', 'KB MOW', 'KB IUD', 'KB SUNTIK', 'KB LAIN-LAIN', 'TIMBANG S L', 'TIMBANG S P', 'TIMBANG K L', 'TIMBANG K P', 'TIMBANG D L', 'TIMBANG D P', 'TIMBANG N L', 'TIMBANG N P', 'VIT A L', 'VIT A P', 'PMT L', 'PMT P', 'IMUNISASI TT', 'BCG L', 'BCG P', 'DPT1 L', 'DPT1 P', 'DPT2 L', 'DPT2 P', 'DPT3 L', 'DPT3 P', 'POLIO1 L', 'POLIO1 P', 'POLIO2 L', 'POLIO2 P', 'POLIO3 L', 'POLIO3 P', 'POLIO4 L', 'POLIO4 P', 'CAMPAK L', 'CAMPAK P', 'HEPB1 L', 'HEPB1 P', 'HEPB2 L', 'HEPB2 P', 'HEPB3 L', 'HEPB3 P', 'DIARE JML L', 'DIARE JML P', 'DIARE ORALIT L', 'DIARE ORALIT P'],
     ]
 
-    const filteredSip7 = dummyHasilKegiatan.filter((r: any) => 
+    const filteredSip7 = dataHasilKegiatan.filter((r: any) => 
       r.tahun === tahunAktif && 
       (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
     );
@@ -1498,7 +1498,7 @@ export default function Sip7Page() {
   }
 
   const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyandu;
-  const filteredSip7 = dummyHasilKegiatan.filter((r: any) => 
+  const filteredSip7 = dataHasilKegiatan.filter((r: any) => 
     r.tahun === tahunAktif && 
     (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
   );
@@ -2186,7 +2186,7 @@ export default function Sip7Page() {
                 </div>
                 {/* Mobile: card list */}
                 <div className="md:hidden space-y-3">
-                  {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row) => {
+                  {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row) => {
                     const kb = row.kb || {}
                     const totalKB = (kb.kondom || 0) + (kb.pil || 0) + (kb.implant || 0) + (kb.mop || 0) + (kb.mow || 0) + (kb.iud || 0) + (kb.suntik || 0) + (kb.lainnya || 0)
                     const timbang = row.timbang || {}
@@ -2254,7 +2254,7 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row, index) => {
+                      {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row, index) => {
                         const kb = row.kb || {};
                         const totalKB = (kb.kondom || 0) + (kb.pil || 0) + (kb.implant || 0) + (kb.mop || 0) + (kb.mow || 0) + (kb.iud || 0) + (kb.suntik || 0) + (kb.lainnya || 0);
                         const timbang = row.timbang || {};
@@ -2297,7 +2297,7 @@ export default function Sip7Page() {
                           </Fragment>
                         )
                       })}
-                      {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).length === 0 && (
+                      {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).length === 0 && (
                         <tr>
                           <td colSpan={canEdit ? 8 : 7} className="text-center py-6 text-sm text-[var(--dash-text-soft)]">
                             Belum ada data hasil kegiatan untuk tahun {tahunAktif}.

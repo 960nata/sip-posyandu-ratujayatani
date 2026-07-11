@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 
 // Dummy data for Sasaran Individu
-const dummySasaran = [
+const dataSasaran = [
   { id: '1', nama: 'Anindiya Putri', kategori: 'BAYI_BALITA', jk: 'P', jan: true, feb: true, mar: true, apr: false, mei: true, jun: false, jul: false, agu: false, sep: false, okt: false, nov: false, des: false },
   { id: '2', nama: 'Siti Aminah', kategori: 'IBU_HAMIL', jk: 'P', jan: true, feb: true, mar: true, apr: true, mei: true, jun: false, jul: false, agu: false, sep: false, okt: false, nov: false, des: false },
   { id: '3', nama: 'Budi Santoso', kategori: 'LANSIA', jk: 'L', jan: true, feb: false, mar: true, apr: false, mei: true, jun: false, jul: false, agu: false, sep: false, okt: false, nov: false, des: false },
@@ -18,7 +18,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', '
 
 export default function SasaranIndividuPage() {
   const [search, setSearch] = useState('')
-  const [data, setData] = useState(dummySasaran)
+  const [data, setData] = useState(dataSasaran)
 
   return (
     <div className="space-y-6">

@@ -865,31 +865,57 @@ export default function Home() {
       {/* Section: Galeri Kegiatan Posyandu */}
       <section className="py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+              }
+            }
+          }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
           className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center"
         >
-          <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block">
+          <motion.span 
+            variants={{
+              hidden: { opacity: 0, y: 15 },
+              show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 15 } }
+            }}
+            className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block"
+          >
             Dokumentasi Lapangan
-          </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+          </motion.span>
+          <motion.h2 
+            variants={{
+              hidden: { opacity: 0, y: 25, scale: 0.96 },
+              show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 120, damping: 12 } }
+            }}
+            className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight"
+          >
             Galeri Kegiatan{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
               Posyandu
             </span>
-          </h2>
-          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal">
+          </motion.h2>
+          <motion.p 
+            variants={{
+              hidden: { opacity: 0, y: 15 },
+              show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 14 } }
+            }}
+            className="text-slate-500 mt-4 max-w-2xl mx-auto font-normal"
+          >
             Melihat lebih dekat pelayanan kesehatan, pendidikan, dan pemberdayaan masyarakat yang diselenggarakan oleh kader posyandu di wilayah Lampung Timur.
-          </p>
+          </motion.p>
         </motion.div>
 
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.95, y: 50 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ type: "spring", stiffness: 70, damping: 15, mass: 0.8 }}
           className="marquee-container space-y-6 overflow-hidden py-4"
         >
           {/* First Row: Left Scrolling */}

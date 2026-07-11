@@ -907,15 +907,9 @@ export default function Home() {
                 { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
               ].map((item, idx) => (
-                <motion.div 
+                <div 
                   key={`r1-${idx}`} 
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -8,
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100"
+                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100 group"
                 >
                   <Image
                     src={item.src}
@@ -928,7 +922,7 @@ export default function Home() {
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -948,15 +942,9 @@ export default function Home() {
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
               ].map((item, idx) => (
-                <motion.div 
+                <div 
                   key={`r2-${idx}`} 
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -8,
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100"
+                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100 group"
                 >
                   <Image
                     src={item.src}
@@ -969,7 +957,7 @@ export default function Home() {
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="text-white font-semibold text-sm drop-shadow-sm">{item.alt}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

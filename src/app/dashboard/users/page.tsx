@@ -204,8 +204,8 @@ export default function UsersPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Manajemen User</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">Kelola data pengguna sistem dan hak aksesnya</p>
+          <h1 className="text-2xl font-bold text-[var(--dash-text)]">Manajemen User</h1>
+          <p className="text-[var(--dash-text-soft)] text-sm">Kelola data pengguna sistem dan hak aksesnya</p>
         </div>
         <button
           onClick={handleAdd}
@@ -226,7 +226,7 @@ export default function UsersPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
+            className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-[var(--dash-text)] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
             placeholder="Cari nama atau email..."
           />
         </div>
@@ -235,7 +235,7 @@ export default function UsersPage() {
       {/* Table */}
       <div className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+          <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
             <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
               <tr>
                 <th className="px-6 py-4">Nama</th>
@@ -276,7 +276,7 @@ export default function UsersPage() {
               ) : (
                 filteredUsers.map((user) => (
                   <tr key={user.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white flex items-center gap-2">
+                    <td className="px-6 py-4 font-medium text-[var(--dash-text)] flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-sm">
                         {user.name.charAt(0)}
                       </div>
@@ -342,10 +342,10 @@ export default function UsersPage() {
               <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                    <h2 className="text-xl font-bold text-[var(--dash-text)]">
                       {editId ? 'Edit User' : 'Tambah User Baru'}
                     </h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
+                    <p className="text-sm text-[var(--dash-text-soft)] mt-0.5">
                       Lengkapi data user di bawah ini
                     </p>
                   </div>
@@ -360,7 +360,7 @@ export default function UsersPage() {
 
               <form onSubmit={handleSubmit} className="p-6 space-y-5 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Lengkap</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Lengkap</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Users className="h-5 w-5 text-slate-400" />
@@ -369,7 +369,7 @@ export default function UsersPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Lengkap"
                       required
                     />
@@ -377,7 +377,7 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Email</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Email</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-slate-400" />
@@ -386,7 +386,7 @@ export default function UsersPage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="email@sip.com"
                       required
                     />
@@ -394,7 +394,7 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Password</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Password</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Lock className="h-5 w-5 text-slate-400" />
@@ -403,7 +403,7 @@ export default function UsersPage() {
                       type="password"
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg pl-10 pr-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder={editId ? "Kosongkan jika tidak diubah" : "Password minimal 6 karakter"}
                       required={!editId}
                     />
@@ -411,11 +411,11 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Role</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Role</label>
                   <select 
                     value={formData.role}
                     onChange={(e) => setFormData({...formData, role: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                   >
                     <option value="SUPERADMIN">Super Admin (Kabupaten)</option>
                     <option value="ADMIN_KECAMATAN">Admin Kecamatan</option>
@@ -425,11 +425,11 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Kecamatan</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Kecamatan</label>
                   <select 
                     value={formData.kecamatan}
                     onChange={(e) => setFormData({...formData, kecamatan: e.target.value, desa: ''})}
-                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                     disabled={formData.role === 'SUPERADMIN'}
                   >
                     <option value="">Pilih Kecamatan</option>
@@ -440,11 +440,11 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Desa</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Desa</label>
                   <select 
                     value={formData.desa}
                     onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                     disabled={formData.role === 'SUPERADMIN' || formData.role === 'ADMIN_KECAMATAN' || !formData.kecamatan}
                   >
                     <option value="">Pilih Desa</option>
@@ -455,12 +455,12 @@ export default function UsersPage() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Posyandu</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Posyandu</label>
                   <input
                     type="text"
                     value={formData.posyandu}
                     onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                     placeholder="Nama Posyandu"
                     disabled={formData.role !== 'OPERATOR_POSYANDU'}
                   />
@@ -470,7 +470,7 @@ export default function UsersPage() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
+                    className="px-5 py-2.5 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                   >
                     Batal
                   </button>

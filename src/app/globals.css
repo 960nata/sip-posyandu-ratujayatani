@@ -164,3 +164,395 @@ aside nav:hover::-webkit-scrollbar-thumb {
 .marquee-container:hover .animate-marquee-right {
   animation-play-state: paused;
 }
+
+
+/* ═══════════════════════════════════════════
+   DASHBOARD — Notion-Style Design System
+═══════════════════════════════════════════ */
+
+/* ── Base Card (flat, no shadow, thin border) ── */
+.dash-card {
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  border-radius: 8px;
+  padding: 20px;
+  transition: background 0.15s ease;
+}
+.dash-card-hover:hover {
+  background: var(--dash-card-hover);
+  cursor: pointer;
+}
+
+/* ── Input (Notion-style) ── */
+.dash-input {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border-2);
+  color: var(--dash-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.875rem;
+  font-family: var(--font-main);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+}
+.dash-input:focus {
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 2px var(--dash-primary-bg);
+}
+.dash-input::placeholder { color: var(--dash-text-muted); }
+.dash-input:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Select (Notion-style) ── */
+.dash-select {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border-2);
+  color: var(--dash-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.875rem;
+  font-family: var(--font-main);
+  transition: border-color 0.15s;
+  cursor: pointer;
+  appearance: none;
+}
+.dash-select:focus {
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 2px var(--dash-primary-bg);
+}
+
+/* ── Button (Notion-style — solid, no gradient, no glow) ── */
+.dash-btn {
+  background: var(--dash-primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: opacity 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.dash-btn:hover:not(:disabled) { opacity: 0.85; }
+.dash-btn:active:not(:disabled) { opacity: 0.75; }
+.dash-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.dash-btn-secondary {
+  background: transparent;
+  color: var(--dash-text);
+  border: 1px solid var(--dash-border-2);
+}
+.dash-btn-secondary:hover:not(:disabled) {
+  background: var(--dash-surface-hover);
+  opacity: 1;
+}
+
+.dash-btn-danger {
+  background: var(--dash-danger);
+  color: white;
+}
+
+/* ── Table (Notion clean table) ── */
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.dash-table th {
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dash-text-muted);
+  border-bottom: 1px solid var(--dash-border);
+  white-space: nowrap;
+}
+.dash-table td {
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  color: var(--dash-text-soft);
+  border-bottom: 1px solid var(--dash-border);
+  background: transparent;
+  transition: background-color 0.1s;
+}
+.dash-table tr:last-child td { border-bottom: none; }
+.dash-table tr:hover td { background: var(--dash-surface-hover); }
+
+/* ── Nav Sidebar Item (Notion flat) ── */
+.dash-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--dash-text-soft);
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+.dash-nav-item:hover {
+  background: var(--dash-surface-hover);
+  color: var(--dash-text);
+}
+.dash-nav-item.active {
+  background: var(--dash-primary-bg);
+  color: var(--dash-primary);
+  font-weight: 600;
+}
+.dash-nav-item.active .dash-nav-icon { color: var(--dash-primary); }
+.dash-nav-icon { flex-shrink: 0; }
+
+/* ── Nav Section Label ── */
+.dash-nav-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dash-text-muted);
+  padding: 0 12px;
+  margin: 20px 0 6px;
+}
+
+/* ── Stat Card (Notion flat) ── */
+.dash-stat-card {
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s;
+  text-decoration: none;
+  position: relative;
+}
+.dash-stat-card:hover {
+  background: var(--dash-card-hover);
+}
+
+/* ── Badge (Notion-style) ── */
+.dash-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.dash-badge-success { background: var(--dash-success-bg); color: var(--dash-success); }
+.dash-badge-warning { background: var(--dash-warning-bg); color: var(--dash-warning); }
+.dash-badge-danger  { background: var(--dash-danger-bg); color: var(--dash-danger); }
+.dash-badge-primary { background: var(--dash-primary-bg); color: var(--dash-primary); }
+.dash-badge-purple  { background: var(--dash-purple-bg); color: var(--dash-purple); }
+
+/* ── Scrollbar (theme-aware) ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--dash-border-2); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dash-text-muted); }
+
+/* ── Dashboard Header Search ── */
+.dash-header-search {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--dash-border-2);
+  background: var(--dash-surface-hover);
+  height: 44px;
+  font-size: 0.85rem;
+  color: var(--dash-text);
+}
+.dash-header-search input::placeholder {
+  color: var(--dash-text-muted);
+}
+.dash-header-search input:focus {
+  outline: none;
+}
+
+/* ── Dashboard Popup Panel ── */
+.dash-popup-panel {
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  animation: slideDown 0.15s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Modal Overlay ── */
+.dash-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.dash-modal {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ── Block Editor Layout ── */
+.wp-editor-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1.5rem; align-items: start; }
+@media (max-width: 900px) {
+  .wp-editor-grid { grid-template-columns: 1fr !important; }
+  .wp-editor-grid > *:last-child { position: static !important; }
+}
+
+/* ═══════════════════════════════════════════
+   DASHBOARD — Mobile Responsive Utilities
+═══════════════════════════════════════════ */
+
+/* ── Page Header: title left, actions right, stack on mobile ── */
+.dash-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Toolbar: search + filters row, wraps on mobile ── */
+.dash-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dash-toolbar-search {
+  position: relative;
+}
+
+/* ── Stats grid: 3-4 columns → 2 → 1 on mobile ── */
+.dash-stats-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.dash-stats-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* ── Form 2-column layout for modals ── */
+.dash-form-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* ── Mobile visibility helpers ── */
+.dash-show-mobile { display: none !important; }
+
+/* ── Widget grid layout for editor ── */
+.dash-widget-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* ── Responsive overrides ── */
+@media (max-width: 1100px) {
+  .dash-stats-4 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 768px) {
+  /* Page header stacks */
+  .dash-page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .dash-page-header > *:last-child {
+    width: 100%;
+  }
+
+  /* Toolbar items grow */
+  .dash-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .dash-toolbar > * {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  .dash-toolbar-search {
+    flex: 1 1 100%;
+  }
+  .dash-toolbar .dash-input {
+    width: 100% !important;
+  }
+
+  /* Stats grids */
+  .dash-stats-3 { grid-template-columns: 1fr !important; }
+  .dash-stats-4 { grid-template-columns: 1fr !important; }
+  .dash-widget-grid { grid-template-columns: repeat(3, 1fr) !important; }
+
+  /* Form 2col stacks */
+  .dash-form-2col { grid-template-columns: 1fr !important; }
+
+  /* Mobile visibility */
+  .dash-hide-mobile { display: none !important; }
+  .dash-show-mobile { display: flex !important; }
+
+  /* Table column hiding on mobile */
+  .dash-table .dash-col-hide-sm { display: none !important; }
+
+  /* Modal takes full width on mobile */
+  .dash-overlay { padding: 12px !important; }
+  .dash-modal {
+    max-width: 100% !important;
+    border-radius: 14px !important;
+    padding: 18px !important;
+  }
+
+  /* Scrollable tab/pill bars on mobile */
+  .dash-scroll {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .dash-scroll::-webkit-scrollbar { display: none; }
+  
+  .gal-search-wrap {
+    max-width: none !important;
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-stats-4 { grid-template-columns: 1fr !important; }
+  .dash-stats-3 { grid-template-columns: 1fr !important; }
+  .dash-widget-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+

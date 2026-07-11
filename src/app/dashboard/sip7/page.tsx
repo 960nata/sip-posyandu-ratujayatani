@@ -1509,8 +1509,8 @@ export default function Sip7Page() {
       {!(isPosyandu || (selectedDesa && selectedPosyandu)) && (
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan Bulanan Posyandu</h1>
-            <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (SIP 7) Desa {namaDesa}</p>
+            <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Hasil Kegiatan Bulanan Posyandu</h1>
+            <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (SIP 7) Desa {namaDesa}</p>
           </div>
         </div>
       )}
@@ -1529,10 +1529,10 @@ export default function Sip7Page() {
               </button>
             )}
             <div>
-              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              <h1 className="text-2xl font-bold text-[var(--dash-text)]">
                 {selectedPosyandu || `Posyandu Desa ${namaDesa}`}
               </h1>
-              <p className="text-sm text-slate-500 dark:text-zinc-400">
+              <p className="text-sm text-[var(--dash-text-soft)]">
                 {isPosyandu ? '' : `Detail data untuk ${selectedPosyandu}`}
               </p>
             </div>
@@ -1595,7 +1595,7 @@ export default function Sip7Page() {
                   <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10 space-y-6">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-white">
+                        <h3 className="text-lg font-bold text-[var(--dash-text)]">
                           {editId7 ? 'Edit Data Hasil Kegiatan' : 'Entry Data Hasil Kegiatan Baru'}
                         </h3>
                         <button type="button" onClick={() => setShowForm(false)} className={`text-sm font-medium ${theme.text} hover:${theme.textLight} flex items-center gap-1 transition-colors`}>
@@ -1606,11 +1606,11 @@ export default function Sip7Page() {
                       {/* Periode */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-slate-200/70 dark:border-white/10">
                         <div>
-                          <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Bulan</label>
+                          <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Bulan</label>
                           <select 
                             value={formData7.bulan} 
                             onChange={e => setFormData7(prev => ({ ...prev, bulan: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm"
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm"
                           >
                             {[...Array(12)].map((_, i) => (
                               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -1618,12 +1618,12 @@ export default function Sip7Page() {
                           </select>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tahun</label>
+                          <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Tahun</label>
                           <input 
                             type="number" 
                             value={formData7.tahun} 
                             onChange={e => setFormData7(prev => ({ ...prev, tahun: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm" 
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm" 
                             required 
                           />
                         </div>
@@ -1632,7 +1632,7 @@ export default function Sip7Page() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* 1. Ibu Hamil & Menyusui */}
                         <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
+                          <h4 className="font-semibold text-[var(--dash-text)] flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Heart className="w-4 h-4 text-rose-500" /> 1. Ibu Hamil & Menyusui
                           </h4>
                           <div className="grid grid-cols-1 gap-3">
@@ -1681,7 +1681,7 @@ export default function Sip7Page() {
 
                         {/* 2. Akseptor KB */}
                         <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
+                          <h4 className="font-semibold text-[var(--dash-text)] flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <ClipboardList className="w-4 h-4 text-purple-500" /> 2. Akseptor KB
                           </h4>
                           <div className="grid grid-cols-2 gap-3">
@@ -1771,7 +1771,7 @@ export default function Sip7Page() {
 
                       {/* 3. Penimbangan Balita */}
                       <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
-                        <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
+                        <h4 className="font-semibold text-[var(--dash-text)] flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                           <Baby className="w-4 h-4 text-blue-500" /> 3. Penimbangan Balita
                         </h4>
                         <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
@@ -1906,7 +1906,7 @@ export default function Sip7Page() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* 4. Imunisasi Ibu Hamil & Bayi */}
                         <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
+                          <h4 className="font-semibold text-[var(--dash-text)] flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Syringe className="w-4 h-4 text-violet-500" /> 4. Imunisasi
                           </h4>
                           <div className="space-y-3">
@@ -1921,7 +1921,7 @@ export default function Sip7Page() {
                               />
                             </div>
                             <div className="border-t border-slate-200/50 dark:border-white/10/50 pt-2 mt-2 space-y-2">
-                              <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 block">Imunisasi Bayi (L/P)</span>
+                              <span className="text-xs font-semibold text-[var(--dash-text)] dark:text-slate-200 block">Imunisasi Bayi (L/P)</span>
                               <div className="grid grid-cols-2 gap-2 h-60 overflow-y-auto pr-1">
                                 <div>
                                   <label className="text-[10px] text-slate-500">BCG L</label>
@@ -2037,7 +2037,7 @@ export default function Sip7Page() {
 
                         {/* 5. Balita Diare */}
                         <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#252525]/30 space-y-4">
-                          <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
+                          <h4 className="font-semibold text-[var(--dash-text)] flex items-center gap-2 border-b border-slate-200/50 dark:border-white/10 pb-2">
                             <Activity className="w-4 h-4 text-amber-500" /> 5. Balita Diare
                           </h4>
                           <div className="grid grid-cols-2 gap-3">
@@ -2087,7 +2087,7 @@ export default function Sip7Page() {
 
                       {/* Form buttons */}
                       <div className="flex items-center justify-end gap-3 mt-6">
-                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
                         <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-md transition-all ${theme.shadow} flex items-center gap-2`}>
                           <Save className="w-5 h-5" /> Simpan Data
                         </button>
@@ -2105,24 +2105,24 @@ export default function Sip7Page() {
                     );
                     return (
                       <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10 space-y-4 sticky top-6">
-                        <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <h4 className="font-bold text-[var(--dash-text)] flex items-center gap-2">
                           <BookOpen className="w-5 h-5 text-purple-500" />
                           Referensi SIP 6
                         </h4>
-                        <p className="text-xs text-slate-500 dark:text-zinc-400">
+                        <p className="text-xs text-[var(--dash-text-soft)]">
                           Data Pengunjung untuk Bulan {formData7.bulan} / {formData7.tahun}
                         </p>
                         {matchingSip6 ? (
                           <div className="space-y-3 pt-2">
                             <div className="p-3 bg-slate-50 dark:bg-[#252525] rounded-lg">
                               <span className="text-xs text-slate-400 block font-medium">Ibu Hamil (SIP 6)</span>
-                              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                              <span className="text-lg font-bold text-[var(--dash-text)]">
                                 {(matchingSip6.hamilBaru || 0) + (matchingSip6.hamilLama || 0)} <span className="text-xs font-normal text-slate-500">Orang</span>
                               </span>
                             </div>
                             <div className="p-3 bg-slate-50 dark:bg-[#252525] rounded-lg">
                               <span className="text-xs text-slate-400 block font-medium">Ibu Menyusui (SIP 6)</span>
-                              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                              <span className="text-lg font-bold text-[var(--dash-text)]">
                                 {(matchingSip6.busuiBaru || 0) + (matchingSip6.busuiLama || 0)} <span className="text-xs font-normal text-slate-500">Orang</span>
                               </span>
                             </div>
@@ -2158,18 +2158,18 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Data Hasil Kegiatan</h2>
+                    <h2 className="text-lg font-bold text-[var(--dash-text)]">Data Hasil Kegiatan</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                   <div className="flex flex-wrap gap-2 w-full md:w-auto">
                     <button
                       onClick={exportUnifiedExcel}
-                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-md hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2"
+                      className="bg-white dark:bg-zinc-850 text-[var(--dash-text)] dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-md hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2"
                     >
                       <Download className="w-4 h-4" /> Ekspor Excel (SIP 6 & 7)
                     </button>
                     {canEdit && (
-                      <label className="cursor-pointer bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2">
+                      <label className="cursor-pointer bg-white dark:bg-zinc-850 text-[var(--dash-text)] dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2">
                         <span>Impor CSV</span>
                         <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
                       </label>
@@ -2200,7 +2200,7 @@ export default function Sip7Page() {
                         className="bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors cursor-pointer"
                       >
                         <div className="flex items-center justify-between mb-3">
-                          <p className="text-sm font-bold text-slate-800 dark:text-white">{namaBulan} {row.tahun}</p>
+                          <p className="text-sm font-bold text-[var(--dash-text)]">{namaBulan} {row.tahun}</p>
                           <div className="flex items-center gap-2">
                             <span className={`${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`}>{row.status || 'Tersimpan'}</span>
                             {canEdit && (
@@ -2217,19 +2217,19 @@ export default function Sip7Page() {
                         </div>
                         <div className="grid grid-cols-4 gap-2 text-center">
                           <div>
-                            <p className="text-base font-bold text-slate-800 dark:text-white">{row.bumil?.jml || 0}</p>
+                            <p className="text-base font-bold text-[var(--dash-text)]">{row.bumil?.jml || 0}</p>
                             <p className="text-[10px] text-slate-400">Ibu Hamil</p>
                           </div>
                           <div>
-                            <p className="text-base font-bold text-slate-800 dark:text-white">{row.busui || 0}</p>
+                            <p className="text-base font-bold text-[var(--dash-text)]">{row.busui || 0}</p>
                             <p className="text-[10px] text-slate-400">Menyusui</p>
                           </div>
                           <div>
-                            <p className="text-base font-bold text-slate-800 dark:text-white">{totalKB}</p>
+                            <p className="text-base font-bold text-[var(--dash-text)]">{totalKB}</p>
                             <p className="text-[10px] text-slate-400">Akseptor KB</p>
                           </div>
                           <div>
-                            <p className="text-base font-bold text-slate-800 dark:text-white">{totalS}/{totalD}</p>
+                            <p className="text-base font-bold text-[var(--dash-text)]">{totalS}/{totalD}</p>
                             <p className="text-[10px] text-slate-400">Balita S/D</p>
                           </div>
                         </div>
@@ -2240,7 +2240,7 @@ export default function Sip7Page() {
                 </div>
 
                 <div className="hidden md:block overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                  <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
@@ -2266,8 +2266,8 @@ export default function Sip7Page() {
                             <tr
                               className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
                             >
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{row.bumil?.jml || 0}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{row.busui || 0}</td>
                               <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{totalKB}</td>
@@ -2299,7 +2299,7 @@ export default function Sip7Page() {
                       })}
                       {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).length === 0 && (
                         <tr>
-                          <td colSpan={canEdit ? 8 : 7} className="text-center py-6 text-sm text-slate-500 dark:text-zinc-400">
+                          <td colSpan={canEdit ? 8 : 7} className="text-center py-6 text-sm text-[var(--dash-text-soft)]">
                             Belum ada data hasil kegiatan untuk tahun {tahunAktif}.
                           </td>
                         </tr>
@@ -2310,33 +2310,33 @@ export default function Sip7Page() {
 
                 {/* Perhitungan Semester & Tahunan */}
                 <div className="mt-8 border-t border-slate-200/70 dark:border-white/10 pt-6">
-                  <h3 className="text-base font-bold text-slate-800 dark:text-white mb-4">Ringkasan Hasil Kegiatan ({tahunAktif})</h3>
+                  <h3 className="text-base font-bold text-[var(--dash-text)] mb-4">Ringkasan Hasil Kegiatan ({tahunAktif})</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Semester 1 */}
                     <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
-                      <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 1 (Jan - Jun)</h4>
+                      <h4 className="text-sm font-semibold text-[var(--dash-text-soft)] mb-2">Semester 1 (Jan - Jun)</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals7([1,2,3,4,5,6]).bumil + getTotals7([1,2,3,4,5,6]).busui).toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals7([1,2,3,4,5,6]).kb.toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals7([1,2,3,4,5,6]).timbangD.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals7([1,2,3,4,5,6]).bumil + getTotals7([1,2,3,4,5,6]).busui).toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-semibold text-[var(--dash-text)]">{getTotals7([1,2,3,4,5,6]).kb.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-semibold text-[var(--dash-text)]">{getTotals7([1,2,3,4,5,6]).timbangD.toLocaleString('id-ID')}</span></div>
                       </div>
                     </div>
                     {/* Semester 2 */}
                     <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
-                      <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 2 (Jul - Des)</h4>
+                      <h4 className="text-sm font-semibold text-[var(--dash-text-soft)] mb-2">Semester 2 (Jul - Des)</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals7([7,8,9,10,11,12]).bumil + getTotals7([7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals7([7,8,9,10,11,12]).kb.toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals7([7,8,9,10,11,12]).timbangD.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals7([7,8,9,10,11,12]).bumil + getTotals7([7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-semibold text-[var(--dash-text)]">{getTotals7([7,8,9,10,11,12]).kb.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-semibold text-[var(--dash-text)]">{getTotals7([7,8,9,10,11,12]).timbangD.toLocaleString('id-ID')}</span></div>
                       </div>
                     </div>
                     {/* Tahunan */}
                     <div className={`p-4 rounded-lg border ${theme.borderLight} bg-purple-50/20 dark:bg-purple-950/10`}>
                       <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
-                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-bold text-slate-800 dark:text-white">{getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).kb.toLocaleString('id-ID')}</span></div>
-                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-bold text-slate-800 dark:text-white">{getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).timbangD.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-[var(--dash-text)]">{(getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Akseptor KB (Total):</span><span className="font-bold text-[var(--dash-text)]">{getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).kb.toLocaleString('id-ID')}</span></div>
+                        <div className="flex justify-between"><span>Balita Ditimbang (D):</span><span className="font-bold text-[var(--dash-text)]">{getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).timbangD.toLocaleString('id-ID')}</span></div>
                       </div>
                     </div>
                   </div>
@@ -2349,12 +2349,12 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Ibu Hamil/Nifas/Menyusui</h2>
+                    <h2 className="text-lg font-bold text-[var(--dash-text)]">Rekapitulasi Ibu Hamil/Nifas/Menyusui</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                  <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
@@ -2375,8 +2375,8 @@ export default function Sip7Page() {
                             <tr
                               className={`border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
-                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{index + 1}</td>
-                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-[var(--dash-text)] cursor-pointer">{index + 1}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-[var(--dash-text)] cursor-pointer">{row.bulan}/{row.tahun}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">{row.datang.bumil}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">{row.datang.busui}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 text-rose-600 font-medium cursor-pointer">{row.bb.merah}</td>
@@ -2400,7 +2400,7 @@ export default function Sip7Page() {
                               <tr className="bg-slate-50 dark:bg-[#252525]/50">
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
-                                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                                    <h4 className="font-bold text-[var(--dash-text)] flex items-center gap-2">
                                       <ClipboardList className="w-4 h-4 text-purple-500" />
                                       Detail Rekapitulasi Bumil (Bulan {row.bulan})
                                     </h4>
@@ -2446,12 +2446,12 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Bayi, Balita dan Apras</h2>
+                    <h2 className="text-lg font-bold text-[var(--dash-text)]">Rekapitulasi Bayi, Balita dan Apras</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                  <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
@@ -2472,8 +2472,8 @@ export default function Sip7Page() {
                             <tr
                               className={`border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
-                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                              <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.datang.bayi}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.datang.balita}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.bb.naik}</td>
@@ -2497,7 +2497,7 @@ export default function Sip7Page() {
                               <tr className="bg-slate-50 dark:bg-[#252525]/50">
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
-                                    <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                                    <h4 className="font-bold text-[var(--dash-text)] flex items-center gap-2">
                                       <ClipboardList className="w-4 h-4 text-purple-500" />
                                       Detail Rekapitulasi Bayi (Bulan {row.bulan})
                                     </h4>
@@ -2545,12 +2545,12 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Usia Sekolah dan Remaja</h2>
+                    <h2 className="text-lg font-bold text-[var(--dash-text)]">Rekapitulasi Usia Sekolah dan Remaja</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                  <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
@@ -2567,8 +2567,8 @@ export default function Sip7Page() {
                         const row = getRekapRemaja(report);
                         return (
                           <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                            <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                            <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3">{row.remaja614Datang}</td>
                             <td className="px-4 py-3">{row.remaja1518Datang}</td>
                             <td className="px-4 py-3 text-purple-600 font-medium">{row.imtNormal}</td>
@@ -2605,12 +2605,12 @@ export default function Sip7Page() {
               <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">Rekapitulasi Lansia/Produktif</h2>
+                    <h2 className="text-lg font-bold text-[var(--dash-text)]">Rekapitulasi Lansia/Produktif</h2>
                     <p className="text-sm text-slate-500">Laporan Bulanan Posyandu</p>
                   </div>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                  <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
@@ -2627,8 +2627,8 @@ export default function Sip7Page() {
                         const row = getRekapLansia(report);
                         return (
                           <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                            <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
+                            <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                            <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3 text-rose-600 font-medium">{row.tensiTinggi}</td>
                             <td className="px-4 py-3 text-rose-600 font-medium">{row.gulaDarahTinggi}</td>
                             <td className="px-4 py-3 text-purple-600 font-medium">{row.mandiri}</td>
@@ -2665,9 +2665,9 @@ export default function Sip7Page() {
         // Level 1: Pilih Kecamatan (Khusus Superadmin)
         <div className="space-y-4">
           <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Kecamatan</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Pilih Kecamatan</h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+              <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                 <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
                     <th className="px-6 py-4">Nama Kecamatan</th>
@@ -2677,7 +2677,7 @@ export default function Sip7Page() {
                 <tbody>
                   {regionData.map((kec) => (
                     <tr key={kec.name} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.name}</td>
+                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.name}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedKecamatan(kec.name)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
                       </td>
@@ -2701,9 +2701,9 @@ export default function Sip7Page() {
                 <ArrowLeft className="w-5 h-5" />
               </button>
             )}
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+              <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                 <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
                     <th className="px-6 py-4">Nama Desa</th>
@@ -2713,7 +2713,7 @@ export default function Sip7Page() {
                 <tbody>
                   {myKec?.desas.map((desa) => (
                     <tr key={desa} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa}</td>
+                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedDesa(desa)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
                       </td>
@@ -2738,12 +2738,12 @@ export default function Sip7Page() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Daftar Posyandu di Desa {selectedDesa}</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Daftar Posyandu di Desa {selectedDesa}</h2>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+            <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
@@ -2754,7 +2754,7 @@ export default function Sip7Page() {
               <tbody>
                 {[`Posyandu ${selectedDesa} I`, `Posyandu ${selectedDesa} II`, `Posyandu ${selectedDesa} III`].map((pos) => (
                   <tr key={pos} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{pos}</td>
+                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{pos}</td>
                     <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Aktif</span></td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => setSelectedPosyandu(pos)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Buka Data</button>
@@ -2791,11 +2791,11 @@ export default function Sip7Page() {
               <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-[var(--dash-text)] flex items-center gap-2">
                       <ClipboardList className={`w-5 h-5 ${theme.text}`} />
                       Detail Hasil Kegiatan
                     </h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
+                    <p className="text-sm text-[var(--dash-text-soft)] mt-0.5">
                       Bulan {selectedReportForDetail.bulan} / Tahun {selectedReportForDetail.tahun}
                     </p>
                   </div>
@@ -2812,60 +2812,60 @@ export default function Sip7Page() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Ibu Hamil */}
                   <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
-                    <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-[var(--dash-text)] dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Heart className="w-4 h-4 text-rose-500" /> Ibu Hamil & Menyusui
                     </h5>
                     <div className="text-sm text-slate-600 dark:text-zinc-400 space-y-1">
-                      <div className="flex justify-between"><span>Jumlah Hamil:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.bumil?.jml || 0}</span></div>
-                      <div className="flex justify-between"><span>Diperiksa:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.bumil?.diperiksa || 0}</span></div>
-                      <div className="flex justify-between"><span>FE Tab:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.bumil?.fe || 0}</span></div>
-                      <div className="flex justify-between"><span>Jumlah Menyusui:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.busui || 0}</span></div>
+                      <div className="flex justify-between"><span>Jumlah Hamil:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.bumil?.jml || 0}</span></div>
+                      <div className="flex justify-between"><span>Diperiksa:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.bumil?.diperiksa || 0}</span></div>
+                      <div className="flex justify-between"><span>FE Tab:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.bumil?.fe || 0}</span></div>
+                      <div className="flex justify-between"><span>Jumlah Menyusui:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.busui || 0}</span></div>
                     </div>
                   </div>
 
                   {/* KB */}
                   <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
-                    <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-[var(--dash-text)] dark:text-slate-200 mb-2 flex items-center gap-2">
                       <ClipboardList className="w-4 h-4 text-purple-500" /> Akseptor KB
                     </h5>
                     <div className="text-sm text-slate-600 dark:text-zinc-400 space-y-1">
-                      <div className="flex justify-between"><span>Kondom:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.kondom || 0}</span></div>
-                      <div className="flex justify-between"><span>Pil:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.pil || 0}</span></div>
-                      <div className="flex justify-between"><span>Implant:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.implant || 0}</span></div>
-                      <div className="flex justify-between"><span>MOP:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.mop || 0}</span></div>
-                      <div className="flex justify-between"><span>MOW:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.mow || 0}</span></div>
-                      <div className="flex justify-between"><span>IUD:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.iud || 0}</span></div>
-                      <div className="flex justify-between"><span>Suntik:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.suntik || 0}</span></div>
-                      <div className="flex justify-between"><span>Lain-lain:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.lainnya || 0}</span></div>
+                      <div className="flex justify-between"><span>Kondom:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.kondom || 0}</span></div>
+                      <div className="flex justify-between"><span>Pil:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.pil || 0}</span></div>
+                      <div className="flex justify-between"><span>Implant:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.implant || 0}</span></div>
+                      <div className="flex justify-between"><span>MOP:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.mop || 0}</span></div>
+                      <div className="flex justify-between"><span>MOW:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.mow || 0}</span></div>
+                      <div className="flex justify-between"><span>IUD:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.iud || 0}</span></div>
+                      <div className="flex justify-between"><span>Suntik:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.suntik || 0}</span></div>
+                      <div className="flex justify-between"><span>Lain-lain:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.kb?.lainnya || 0}</span></div>
                     </div>
                   </div>
 
                   {/* Penimbangan */}
                   <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
-                    <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-[var(--dash-text)] dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Baby className="w-4 h-4 text-blue-500" /> Penimbangan Balita
                     </h5>
                     <div className="text-sm text-slate-600 dark:text-zinc-400 space-y-1">
-                      <div className="flex justify-between"><span>S L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.s_l || 0)} / {(selectedReportForDetail.timbang?.s_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>K L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.k_l || 0)} / {(selectedReportForDetail.timbang?.k_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>D L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.d_l || 0)} / {(selectedReportForDetail.timbang?.d_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>N L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.n_l || 0)} / {(selectedReportForDetail.timbang?.n_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>Vit A L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.vitA_l || 0)} / {(selectedReportForDetail.timbang?.vitA_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>PMT L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.timbang?.pmt_l || 0)} / {(selectedReportForDetail.timbang?.pmt_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>S L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.s_l || 0)} / {(selectedReportForDetail.timbang?.s_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>K L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.k_l || 0)} / {(selectedReportForDetail.timbang?.k_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>D L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.d_l || 0)} / {(selectedReportForDetail.timbang?.d_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>N L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.n_l || 0)} / {(selectedReportForDetail.timbang?.n_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>Vit A L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.vitA_l || 0)} / {(selectedReportForDetail.timbang?.vitA_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>PMT L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.timbang?.pmt_l || 0)} / {(selectedReportForDetail.timbang?.pmt_p || 0)}</span></div>
                     </div>
                   </div>
 
                   {/* Imunisasi & Diare */}
                   <div className="bg-slate-50 dark:bg-[#252525]/50 p-4 rounded-lg border border-slate-200 dark:border-white/10">
-                    <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-[var(--dash-text)] dark:text-slate-200 mb-2 flex items-center gap-2">
                       <Syringe className="w-4 h-4 text-violet-500" /> Imunisasi & Diare
                     </h5>
                     <div className="text-sm text-slate-600 dark:text-zinc-400 space-y-1">
-                      <div className="flex justify-between"><span>TT Bumil:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.imTT?.i || 0}</span></div>
-                      <div className="flex justify-between"><span>BCG L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.imBayi?.bcg_l || 0)}/{(selectedReportForDetail.imBayi?.bcg_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>Campak L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.imBayi?.campak_l || 0)}/{(selectedReportForDetail.imBayi?.campak_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>Diare Jml L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.diare?.jml_l || 0)}/{(selectedReportForDetail.diare?.jml_p || 0)}</span></div>
-                      <div className="flex justify-between"><span>Diare Oralit L/P:</span><span className="font-medium text-slate-800 dark:text-white">{(selectedReportForDetail.diare?.oralit_l || 0)}/{(selectedReportForDetail.diare?.oralit_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>TT Bumil:</span><span className="font-medium text-[var(--dash-text)]">{selectedReportForDetail.imTT?.i || 0}</span></div>
+                      <div className="flex justify-between"><span>BCG L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.imBayi?.bcg_l || 0)}/{(selectedReportForDetail.imBayi?.bcg_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>Campak L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.imBayi?.campak_l || 0)}/{(selectedReportForDetail.imBayi?.campak_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>Diare Jml L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.diare?.jml_l || 0)}/{(selectedReportForDetail.diare?.jml_p || 0)}</span></div>
+                      <div className="flex justify-between"><span>Diare Oralit L/P:</span><span className="font-medium text-[var(--dash-text)]">{(selectedReportForDetail.diare?.oralit_l || 0)}/{(selectedReportForDetail.diare?.oralit_p || 0)}</span></div>
                     </div>
                   </div>
                 </div>
@@ -2891,7 +2891,7 @@ export default function Sip7Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10 text-slate-800 dark:text-white"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10 text-[var(--dash-text)]"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
@@ -3181,7 +3181,7 @@ export default function Sip7Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedRekapForEdit(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
+                  className="px-4 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                 >
                   Batal
                 </button>

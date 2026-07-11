@@ -13,7 +13,7 @@ export default function PetugasPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm max-w-xl mx-auto my-12">
         <h1 className="text-2xl font-bold text-red-600 dark:text-red-400">Akses Ditolak</h1>
-        <p className="text-slate-500 dark:text-zinc-400 mt-2 max-w-md">
+        <p className="text-[var(--dash-text-soft)] mt-2 max-w-md">
           Halaman Pengaturan Petugas hanya ditujukan untuk operator Desa atau Posyandu.
         </p>
       </div>
@@ -121,19 +121,19 @@ export default function PetugasPage() {
     <div className="p-6 space-y-6 font-sans">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--dash-text)]">
             Pengaturan Petugas & Absensi
           </h1>
-          <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1 font-light">
+          <p className="text-sm text-[var(--dash-text-soft)] mt-1 font-light">
             Kelola data petugas dan rekap absensi bulanan.
           </p>
         </div>
       </div>
 
       {/* Section 1: Daftar Petugas */}
-      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+      <div className="dash-card">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Daftar Petugas</h2>
+          <h2 className="text-lg font-bold text-[var(--dash-text)]">Daftar Petugas</h2>
           <button 
             onClick={handleOpenAdd}
             className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-md transition-all flex items-center gap-2 text-sm`}
@@ -144,7 +144,7 @@ export default function PetugasPage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+          <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
             <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
               <tr>
                 <th className="px-4 py-3 font-medium">No</th>
@@ -157,8 +157,8 @@ export default function PetugasPage() {
             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
               {petugas.map((p, index) => (
                 <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{index + 1}</td>
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nama}</td>
+                  <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                  <td className="px-4 py-3 font-medium text-[var(--dash-text)]">{p.nama}</td>
                   <td className="px-4 py-3">{p.role}</td>
                   <td className="px-4 py-3">{p.unit}</td>
                   <td className="px-4 py-3 text-right">
@@ -185,16 +185,16 @@ export default function PetugasPage() {
       </div>
 
       {/* Section 2: Absensi Bulanan */}
-      <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+      <div className="dash-card">
         <div className="mb-6">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Absensi Bulanan</h2>
-          <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
+          <h2 className="text-lg font-bold text-[var(--dash-text)]">Absensi Bulanan</h2>
+          <p className="text-sm text-[var(--dash-text-soft)] mt-0.5">
             Klik pada kotak untuk menandai kehadiran petugas setiap bulan.
           </p>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+          <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
             <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
               <tr>
                 <th className="px-4 py-3 font-medium sticky left-0 bg-slate-50 dark:bg-[#202020] z-10">Nama Petugas</th>
@@ -206,7 +206,7 @@ export default function PetugasPage() {
             <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
               {petugas.map((p) => (
                 <tr key={p.id} className="hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white sticky left-0 bg-white dark:bg-[#202020] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
+                  <td className="px-4 py-3 font-medium text-[var(--dash-text)] sticky left-0 bg-white dark:bg-[#202020] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
                     {p.nama}
                   </td>
                   {months.map((_, monthIndex) => {
@@ -256,7 +256,7 @@ export default function PetugasPage() {
               
               <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                  <h2 className="text-xl font-bold text-[var(--dash-text)]">
                     {modalMode === 'add' ? 'Tambah Petugas' : 'Edit Petugas'}
                   </h2>
                   <button
@@ -270,22 +270,22 @@ export default function PetugasPage() {
 
               <div className="p-6 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Nama</label>
+                  <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Nama</label>
                   <input
                     type="text"
                     value={formData.nama}
                     onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 focus:border-purple-500 transition-colors"
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 focus:border-purple-500 transition-colors"
                     placeholder="Nama Petugas"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Peran</label>
+                  <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Peran</label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 ${theme.activeRing} focus:border-purple-500 transition-colors`}
+                    className={`w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:ring-2 ${theme.activeRing} focus:border-purple-500 transition-colors`}
                   >
                     <option value="KADER">KADER</option>
                     <option value="PLKB">PLKB</option>
@@ -294,12 +294,12 @@ export default function PetugasPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Unit/Wilayah</label>
+                  <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Unit/Wilayah</label>
                   <input
                     type="text"
                     value={formData.unit}
                     readOnly
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#202020]/50 text-slate-500 dark:text-zinc-400 cursor-not-allowed"
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#202020]/50 text-[var(--dash-text-soft)] cursor-not-allowed"
                   />
                 </div>
               </div>

@@ -12,10 +12,15 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const desaId = searchParams.get("desaId")
 
+  const countInclude = {
+    users: true,
+    _count: { select: { laporanPengaduans: true, laporanPRs: true, sip6s: true, sip7s: true } },
+  }
+
   if (desaId) {
     const posyandus = await prisma.posyandu.findMany({
       where: { desaId: desaId },
-      include: { users: true }
+      include: countInclude,
     })
     return NextResponse.json(posyandus)
   }
@@ -33,7 +38,7 @@ export async function GET(request: Request) {
 
   const posyandus = await prisma.posyandu.findMany({
     where: { desaId: user.desaId },
-    include: { users: true }
+    include: countInclude,
   })
 
   return NextResponse.json(posyandus)

@@ -164,8 +164,8 @@ export default function ProfilePage() {
       {/* Header - No Icons as requested */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Profil Pengguna</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">Kelola informasi profil dan keamanan akun Anda.</p>
+          <h1 className="text-2xl font-bold text-[var(--dash-text)]">Profil Pengguna</h1>
+          <p className="text-[var(--dash-text-soft)] text-sm">Kelola informasi profil dan keamanan akun Anda.</p>
         </div>
       </div>
 
@@ -174,13 +174,13 @@ export default function ProfilePage() {
           
           {/* Avatar Upload */}
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Foto Profil</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Foto Profil</h2>
             <div className="flex items-center gap-6">
               <div className="relative w-24 h-24 rounded-full bg-slate-100 dark:bg-[#2f2f2f] flex items-center justify-center overflow-hidden border-2 border-dashed border-slate-300 dark:border-zinc-600">
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-slate-400 dark:text-zinc-500 text-xs text-center p-2">Belum ada foto</span>
+                  <span className="text-[var(--dash-text-muted)] text-xs text-center p-2">Belum ada foto</span>
                 )}
                 {isUploading && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -194,7 +194,7 @@ export default function ProfilePage() {
                   <span>{isUploading ? 'Mengompres...' : 'Unggah Foto'}</span>
                   <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} disabled={isUploading} />
                 </label>
-                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-2">
+                <p className="text-xs text-[var(--dash-text-soft)] mt-2">
                   Format gambar akan otomatis dikompres ke **AVIF** untuk menghemat ruang.
                 </p>
               </div>
@@ -205,33 +205,33 @@ export default function ProfilePage() {
 
           {/* Informasi Pribadi - No Icon */}
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Informasi Pribadi</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Informasi Pribadi</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Nama Lengkap</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Nama Lengkap</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Email</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Email</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Peran Akses (Role)</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Peran Akses (Role)</label>
                 <input
                   type="text"
                   value={role || ''}
                   disabled
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#2f2f2f] text-slate-500 dark:text-zinc-400 cursor-not-allowed"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#2f2f2f] text-[var(--dash-text-soft)] cursor-not-allowed"
                 />
               </div>
             </div>
@@ -241,24 +241,24 @@ export default function ProfilePage() {
 
           {/* Keamanan - No Icon */}
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Keamanan</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Keamanan</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Kata Sandi Baru</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Kata Sandi Baru</label>
                 <input
                   type="password"
                   value={formData.newPassword}
                   onChange={(e) => setFormData({...formData, newPassword: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Konfirmasi Kata Sandi</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Konfirmasi Kata Sandi</label>
                 <input
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 />
               </div>
             </div>
@@ -268,24 +268,24 @@ export default function ProfilePage() {
 
           {/* Pengaturan Wilayah & Sistem */}
           <div>
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pengaturan Wilayah & Sistem</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Pengaturan Wilayah & Sistem</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Nama Desa</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Nama Desa</label>
                 <input
                   type="text"
                   value={namaDesa}
                   onChange={(e) => setNamaDesa(e.target.value)}
                   placeholder="Contoh: Adijaya"
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Tahun Aktif</label>
+                <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Tahun Aktif</label>
                 <select
                   value={tahunAktif}
                   onChange={(e) => setTahunAktif(parseInt(e.target.value))}
-                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                  className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 >
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
@@ -295,18 +295,18 @@ export default function ProfilePage() {
               </div>
               {role === 'OPERATOR_DESA' && (
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 dark:text-zinc-300 mb-1">Posyandu Aktif</label>
+                  <label className="block text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300 mb-1">Posyandu Aktif</label>
                   <select
                     value={selectedPosyanduId}
                     onChange={(e) => setSelectedPosyanduId(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                    className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                   >
                     <option value="">-- Pilih Posyandu --</option>
                     {posyandus.map(p => (
                       <option key={p.id} value={p.id}>{p.nama}</option>
                     ))}
                   </select>
-                  <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1.5">
+                  <p className="text-xs text-[var(--dash-text-soft)] mt-1.5">
                     Pilih Posyandu default yang ingin Anda kelola datanya saat ini.
                   </p>
                 </div>

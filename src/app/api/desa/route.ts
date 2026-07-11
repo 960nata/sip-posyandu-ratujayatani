@@ -11,13 +11,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const kecamatanId = searchParams.get("kecamatanId")
 
-  if (kecamatanId) {
-    const desas = await prisma.desa.findMany({
-      where: { kecamatanId: kecamatanId }
-    })
-    return NextResponse.json(desas)
-  }
-
-  const desas = await prisma.desa.findMany()
+  const desas = await prisma.desa.findMany({
+    where: kecamatanId ? { kecamatanId } : undefined,
+    include: { _count: { select: { posyandus: true } } },
+    orderBy: { nama: "asc" },
+  })
   return NextResponse.json(desas)
 }

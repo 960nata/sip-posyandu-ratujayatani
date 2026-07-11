@@ -8,6 +8,9 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  const kecamatans = await prisma.kecamatan.findMany()
+  const kecamatans = await prisma.kecamatan.findMany({
+    include: { _count: { select: { desas: true } } },
+    orderBy: { nama: "asc" },
+  })
   return NextResponse.json(kecamatans)
 }

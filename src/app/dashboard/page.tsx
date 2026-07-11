@@ -285,8 +285,8 @@ export default function DashboardPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4 font-sans">
         <Lock className="w-10 h-10 text-slate-300" />
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Akses Ditolak</h2>
-        <p className="text-slate-500 dark:text-zinc-400 text-sm">Silakan login terlebih dahulu untuk mengakses halaman ini.</p>
+        <h2 className="text-2xl font-bold tracking-tight text-[var(--dash-text)]">Akses Ditolak</h2>
+        <p className="text-[var(--dash-text-soft)] text-sm">Silakan login terlebih dahulu untuk mengakses halaman ini.</p>
       </div>
     )
   }
@@ -301,47 +301,47 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Total Balita</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalBalita ?? 0}</p>
-                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
+                  <p className="text-sm text-[var(--dash-text-soft)]">Total Balita</p>
+                  <p className="text-2xl font-bold text-[var(--dash-text)] mt-1">{healthStats?.sip6?.totalBalita ?? 0}</p>
+                  <p className="text-xs text-[var(--dash-text-muted)] mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
                 </div>
                 <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-lg flex items-center justify-center text-rose-500">
                   <HeartPulse className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Ibu Hamil</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalIguHamil ?? healthStats?.sip6?.totalIbuHamil ?? 0}</p>
-                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
+                  <p className="text-sm text-[var(--dash-text-soft)]">Ibu Hamil</p>
+                  <p className="text-2xl font-bold text-[var(--dash-text)] mt-1">{healthStats?.sip6?.totalIguHamil ?? healthStats?.sip6?.totalIbuHamil ?? 0}</p>
+                  <p className="text-xs text-[var(--dash-text-muted)] mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
                 </div>
                 <div className="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-lg flex items-center justify-center text-pink-500">
                   <Heart className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Lansia & Produktif</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{healthStats?.sip6?.totalLansia ?? 0}</p>
-                  <p className="text-xs text-slate-400 dark:text-zinc-500 mt-1">Hadir terdata</p>
+                  <p className="text-sm text-[var(--dash-text-soft)]">Lansia & Produktif</p>
+                  <p className="text-2xl font-bold text-[var(--dash-text)] mt-1">{healthStats?.sip6?.totalLansia ?? 0}</p>
+                  <p className="text-xs text-[var(--dash-text-muted)] mt-1">Hadir terdata</p>
                 </div>
                 <div className="w-10 h-10 bg-violet-50 dark:bg-violet-900/20 rounded-lg flex items-center justify-center text-violet-500">
                   <Users className="w-6 h-6" />
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Laporan Baru</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">5</p>
+                  <p className="text-sm text-[var(--dash-text-soft)]">Laporan Baru</p>
+                  <p className="text-2xl font-bold text-[var(--dash-text)] mt-1">5</p>
                 </div>
                 <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-lg flex items-center justify-center text-purple-500">
                   <CheckCircle className="w-6 h-6" />
@@ -351,20 +351,20 @@ export default function DashboardPage() {
           </div>
 
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-1">Pusat Pengumpulan Data</h2>
-            <p className="text-sm text-slate-500 dark:text-zinc-400">Pilih modul data yang ingin Anda input hari ini.</p>
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-1">Pusat Pengumpulan Data</h2>
+            <p className="text-sm text-[var(--dash-text-soft)]">Pilih modul data yang ingin Anda input hari ini.</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {dataModules.map((module) => (
-              <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
+              <div key={module.title} className="dash-card hover:transition-colors group">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                     <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                       <module.icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
+                      <h3 className="font-bold text-[var(--dash-text)] group-hover:text-purple-600 transition-colors">
                         {module.title}
                       </h3>
                       <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
@@ -373,7 +373,7 @@ export default function DashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard/${module.slug}`}
-                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-[var(--dash-text)] hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Input Data
@@ -382,19 +382,19 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Riwayat Aktivitas</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Riwayat Aktivitas</h2>
             <div className="space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-slate-50 dark:border-white/10">
                 <div>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">Input Data KES-6</p>
+                  <p className="text-sm font-medium text-[var(--dash-text)]">Input Data KES-6</p>
                   <p className="text-xs text-slate-400 mt-0.5">Hari ini, 10:30</p>
                 </div>
                 <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
               </div>
               <div className="flex justify-between items-center py-3">
                 <div>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">Input Data Sosial</p>
+                  <p className="text-sm font-medium text-[var(--dash-text)]">Input Data Sosial</p>
                   <p className="text-xs text-slate-400 mt-0.5">Kemarin, 14:20</p>
                 </div>
                 <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Berhasil</span>
@@ -421,10 +421,10 @@ export default function DashboardPage() {
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
                 </button>
-                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">
+                <h2 className="text-xl font-bold tracking-tight text-[var(--dash-text)] mt-2">
                   Detail {selectedPosyandu}
                 </h2>
-                <p className="text-sm text-slate-500 dark:text-zinc-400">
+                <p className="text-sm text-[var(--dash-text-soft)]">
                   Memantau data yang diinput oleh posyandu ini.
                 </p>
               </div>
@@ -435,21 +435,21 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
+                <div key={module.title} className="dash-card hover:transition-colors group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
+                        <h3 className="font-bold text-[var(--dash-text)] group-hover:text-purple-600 transition-colors">
                           {module.title}
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
                       </div>
                     </div>
                   </div>
-                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
+                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-[var(--dash-text)] hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
                     <Plus className="w-3.5 h-3.5" />
                     Input / Lihat Data
                   </Link>
@@ -514,32 +514,32 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{desaPosyandus.length || healthStats?.activePosyanduCount || 0}</p>
+              <p className="text-4xl font-bold tracking-tight text-[var(--dash-text)] mt-2">{desaPosyandus.length || healthStats?.activePosyanduCount || 0}</p>
               <p className="text-xs text-slate-400 mt-1">Di wilayah Desa Anda</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Sudah Input Laporan</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.activePosyanduCount ? Math.min(healthStats.activePosyanduCount, 3) : 3} <span className="text-xl text-slate-300">/ {healthStats?.activePosyanduCount ?? 5}</span></p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
               <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
               <p className="text-xs text-slate-400 mt-1">Kehadiran Bulan ini (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
               <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Hadir terdata (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
               <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Balita</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
@@ -549,13 +549,13 @@ export default function DashboardPage() {
           {/* Charts Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Laporan Selesai per Posyandu</h2>
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Laporan Selesai per Posyandu</h2>
               <div className="h-64">
                 <Chart options={desaChartOptions as any} series={desaChartSeries} type="bar" height="100%" />
               </div>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Status Input</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Status Input</h2>
               <div className="h-64 flex items-center justify-center">
                 <Chart options={desaDonutOptions as any} series={desaDonutSeries} type="donut" height="240" />
               </div>
@@ -563,8 +563,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Trends Chart Row */}
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
             <div className="h-80">
               <Chart options={trendChartOptions as any} series={trendChartSeries} type="line" height="100%" />
             </div>
@@ -572,8 +572,8 @@ export default function DashboardPage() {
 
           {/* Monitoring Table & Last Data */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-1">Rekap Posyandu Desa</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-1">Rekap Posyandu Desa</h2>
               <p className="text-xs text-slate-400 mb-4">Pantau dan input data untuk setiap posyandu di wilayah Anda.</p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
@@ -588,18 +588,18 @@ export default function DashboardPage() {
                   <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                     {desaPosyandus.length > 0 ? desaPosyandus.map((pos: any) => (
                       <tr key={pos.id}>
-                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{pos.nama}</td>
+                        <td className="px-4 py-3.5 font-medium text-[var(--dash-text)]">{pos.nama}</td>
                         <td className="px-4 py-3.5">
                           <span className="text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full capitalize">
                             {(pos.strata || '-').toString().toLowerCase()}
                           </span>
                         </td>
-                        <td className="px-4 py-3.5 text-slate-600 dark:text-slate-300">{pos.hariBuka || '-'}</td>
+                        <td className="px-4 py-3.5 text-[var(--dash-text-soft)]">{pos.hariBuka || '-'}</td>
                         <td className="px-4 py-3.5 text-right">
                           <div className="inline-flex items-center gap-3">
                             <button
                               onClick={() => setSelectedPosyandu(pos.nama)}
-                              className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
+                              className="text-[var(--dash-text-soft)] hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
                             >
                               Pantau
                             </button>
@@ -624,8 +624,8 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">5 Data Input Terakhir</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">5 Data Input Terakhir</h2>
               <div className="space-y-4">
                 {[
                   { posyandu: 'Posyandu 1', type: 'Pendidikan', date: '10 Mei 2026', time: '14:20' },
@@ -636,11 +636,11 @@ export default function DashboardPage() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#202020]/50 rounded-lg border border-transparent hover:border-slate-200/70 dark:hover:border-zinc-700 transition-colors">
                     <div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.posyandu}</p>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
+                      <p className="text-sm font-semibold text-[var(--dash-text)]">{item.posyandu}</p>
+                      <p className="text-xs text-[var(--dash-text-soft)] mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs font-medium text-slate-600 dark:text-slate-300">{item.date}</p>
+                      <p className="text-xs font-medium text-[var(--dash-text-soft)]">{item.date}</p>
                       <p className="text-xs text-slate-400 mt-0.5">{item.time}</p>
                     </div>
                   </div>
@@ -669,10 +669,10 @@ export default function DashboardPage() {
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
                 </button>
-                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">
+                <h2 className="text-xl font-bold tracking-tight text-[var(--dash-text)] mt-2">
                   Detail {selectedPosyandu}
                 </h2>
-                <p className="text-sm text-slate-500 dark:text-zinc-400">
+                <p className="text-sm text-[var(--dash-text-soft)]">
                   Desa {selectedDesa} • Wilayah Kecamatan Pekalongan
                 </p>
               </div>
@@ -683,14 +683,14 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
+                <div key={module.title} className="dash-card hover:transition-colors group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
+                        <h3 className="font-bold text-[var(--dash-text)] group-hover:text-purple-600 transition-colors">
                           {module.title}
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
@@ -699,7 +699,7 @@ export default function DashboardPage() {
                   </div>
                   <Link
                     href={`/dashboard/${module.slug}`}
-                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-[var(--dash-text)] hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
@@ -724,16 +724,16 @@ export default function DashboardPage() {
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
                 </button>
-                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">
+                <h2 className="text-xl font-bold tracking-tight text-[var(--dash-text)] mt-2">
                   Daftar Posyandu di Desa {selectedDesa}
                 </h2>
-                <p className="text-sm text-slate-500 dark:text-zinc-400">
+                <p className="text-sm text-[var(--dash-text-soft)]">
                   Memantau progress input data posyandu.
                 </p>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
@@ -747,28 +747,28 @@ export default function DashboardPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                     <tr>
-                      <td className="px-4 py-4 font-medium text-slate-900 dark:text-white">Posyandu Mawar</td>
-                      <td className="px-4 py-4 text-slate-500 dark:text-zinc-400">{selectedDesa}</td>
+                      <td className="px-4 py-4 font-medium text-[var(--dash-text)]">Posyandu Mawar</td>
+                      <td className="px-4 py-4 text-[var(--dash-text-soft)]">{selectedDesa}</td>
                       <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
                       <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
                       <td className="px-4 py-4 text-right">
                         <button
                           onClick={() => setSelectedPosyandu('Posyandu Mawar')}
-                          className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
+                          className="text-[var(--dash-text-soft)] hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
                         >
                           Pantau
                         </button>
                       </td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-4 font-medium text-slate-900 dark:text-white">Posyandu Melati</td>
-                      <td className="px-4 py-4 text-slate-500 dark:text-zinc-400">{selectedDesa}</td>
+                      <td className="px-4 py-4 font-medium text-[var(--dash-text)]">Posyandu Melati</td>
+                      <td className="px-4 py-4 text-[var(--dash-text-soft)]">{selectedDesa}</td>
                       <td className="px-4 py-4"><span className="text-amber-600 text-xs font-medium bg-amber-50 dark:bg-amber-900/30 px-2.5 py-1 rounded-full">Pending</span></td>
                       <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
                       <td className="px-4 py-4 text-right">
                         <button
                           onClick={() => setSelectedPosyandu('Posyandu Melati')}
-                          className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
+                          className="text-[var(--dash-text-soft)] hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
                         >
                           Pantau
                         </button>
@@ -848,27 +848,27 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Total Posyandu</p>
-              <p className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">{healthStats?.activePosyanduCount ?? 60}</p>
+              <p className="text-4xl font-bold tracking-tight text-[var(--dash-text)] mt-2">{healthStats?.activePosyanduCount ?? 60}</p>
               <p className="text-xs text-slate-400 mt-1">Tersebar di semua desa</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Total Pengunjung</p>
               <p className="text-4xl font-bold tracking-tight text-blue-600 mt-2">{healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil) : 0}</p>
               <p className="text-xs text-slate-400 mt-1">Kehadiran (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Lansia & Produktif</p>
               <p className="text-4xl font-bold tracking-tight text-violet-600 mt-2">{healthStats?.sip6?.totalLansia ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Jiwa terpantau (SIP 6)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Ibu Hamil</p>
               <p className="text-4xl font-bold tracking-tight text-pink-600 mt-2">{healthStats?.sip6?.totalIbuHamil ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Diperiksa: {healthStats?.sip7?.bumilDiperiksa ?? 0} (SIP 7)</p>
             </div>
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
+            <div className="dash-card">
               <p className="text-sm font-medium text-slate-400">Balita</p>
               <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
@@ -879,15 +879,15 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Category Chart */}
             <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Laporan Per Kategori</h2>
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Laporan Per Kategori</h2>
               <div className="h-80">
                 <Chart options={categoryChartOptions as any} series={categoryChartSeries} type="bar" height="100%" />
               </div>
             </div>
 
             {/* Donut Chart */}
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Persentase Penyelesaian</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Persentase Penyelesaian</h2>
               <div className="h-80 flex items-center justify-center">
                 <Chart options={donutChartOptions as any} series={donutChartSeries} type="donut" height="320" />
               </div>
@@ -895,8 +895,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Trends Chart Row */}
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Tren Sasaran Bulanan (Balita, Ibu Hamil, Lansia)</h2>
             <div className="h-80">
               <Chart options={trendChartOptions as any} series={trendChartSeries} type="line" height="100%" />
             </div>
@@ -905,8 +905,8 @@ export default function DashboardPage() {
           {/* Two Columns: List Desa & Last 5 Data */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* List Desa */}
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Daftar Desa & Progress</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Daftar Desa & Progress</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left">
                   <thead>
@@ -929,11 +929,11 @@ export default function DashboardPage() {
                       { name: 'Desa Sidodadi', progress: '0/5 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-[#2f2f2f]/50' },
                     ].map((desa) => (
                       <tr key={desa.name}>
-                        <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{desa.name}</td>
-                        <td className="px-4 py-3.5 text-slate-500 dark:text-zinc-400">{desa.progress}</td>
+                        <td className="px-4 py-3.5 font-medium text-[var(--dash-text)]">{desa.name}</td>
+                        <td className="px-4 py-3.5 text-[var(--dash-text-soft)]">{desa.progress}</td>
                         <td className="px-4 py-3.5"><span className={`${desa.color} text-xs font-medium px-2.5 py-1 rounded-full`}>{desa.status}</span></td>
                         <td className="px-4 py-3.5 text-right">
-                          <button onClick={() => setSelectedDesa(desa.name)} className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs">Pantau</button>
+                          <button onClick={() => setSelectedDesa(desa.name)} className="text-[var(--dash-text-soft)] hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs">Pantau</button>
                         </td>
                       </tr>
                     ))}
@@ -943,8 +943,8 @@ export default function DashboardPage() {
             </div>
 
             {/* Last 5 Data */}
-            <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-              <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">5 Data Input Terakhir</h2>
+            <div className="dash-card">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">5 Data Input Terakhir</h2>
               <div className="space-y-4">
                 {[
                   { desa: 'Desa Adijaya', posyandu: 'Posyandu 1', type: 'Pendidikan', date: '10 Mei 2026', time: '14:20' },
@@ -955,11 +955,11 @@ export default function DashboardPage() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-[#202020]/50 rounded-lg border border-transparent hover:border-slate-200/70 dark:hover:border-zinc-700 transition-colors">
                     <div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.desa} <span className="text-xs font-normal text-slate-400">({item.posyandu})</span></p>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
+                      <p className="text-sm font-semibold text-[var(--dash-text)]">{item.desa} <span className="text-xs font-normal text-slate-400">({item.posyandu})</span></p>
+                      <p className="text-xs text-[var(--dash-text-soft)] mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs font-medium text-slate-600 dark:text-slate-300">{item.date}</p>
+                      <p className="text-xs font-medium text-[var(--dash-text-soft)]">{item.date}</p>
                       <p className="text-xs text-slate-400 mt-0.5">{item.time}</p>
                     </div>
                   </div>
@@ -1033,13 +1033,13 @@ export default function DashboardPage() {
         {/* Charts Row 1 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Aktivitas Laporan per Kecamatan</h2>
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Aktivitas Laporan per Kecamatan</h2>
             <div className="h-80">
               <Chart options={kabKecChartOptions as any} series={kabKecChartSeries} type="bar" height="100%" />
             </div>
           </div>
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Status Laporan Global</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Status Laporan Global</h2>
             <div className="h-80 flex items-center justify-center">
               <Chart options={kabDonutOptions as any} series={kabDonutSeries} type="donut" height="320" />
             </div>
@@ -1048,15 +1048,15 @@ export default function DashboardPage() {
 
         {/* Charts Row 2 & Table */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Tren Pengunjung Bulanan</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Tren Pengunjung Bulanan</h2>
             <div className="h-64">
               <Chart options={kabTrendOptions as any} series={kabTrendSeries} type="line" height="100%" />
             </div>
           </div>
 
-          <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-            <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-4">Progress Kecamatan</h2>
+          <div className="dash-card">
+            <h2 className="text-lg font-bold tracking-tight text-[var(--dash-text)] mb-4">Progress Kecamatan</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left">
                 <thead>
@@ -1073,8 +1073,8 @@ export default function DashboardPage() {
                     { name: 'Metro Kibang', progress: '5/7 Desa', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                   ].map((kec) => (
                     <tr key={kec.name}>
-                      <td className="px-4 py-3.5 font-medium text-slate-900 dark:text-white">{kec.name}</td>
-                      <td className="px-4 py-3.5 text-slate-500 dark:text-zinc-400">{kec.progress}</td>
+                      <td className="px-4 py-3.5 font-medium text-[var(--dash-text)]">{kec.name}</td>
+                      <td className="px-4 py-3.5 text-[var(--dash-text-soft)]">{kec.progress}</td>
                       <td className="px-4 py-3.5"><span className={`${kec.color} text-xs font-medium px-2.5 py-1 rounded-full`}>{kec.status}</span></td>
                     </tr>
                   ))}
@@ -1093,14 +1093,14 @@ export default function DashboardPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--dash-text)]">
               Dashboard
             </h1>
             <span className="text-xs font-semibold bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 px-3 py-1 rounded-full">
               {({ SUPERADMIN: 'Super Admin', ADMIN_KABUPATEN: 'Admin Kabupaten', ADMIN_KECAMATAN: 'Admin Kecamatan', OPERATOR_DESA: 'Operator Desa', OPERATOR_POSYANDU: 'Operator Posyandu' } as Record<string, string>)[role] ?? role}
             </span>
           </div>
-          <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1 font-light">
+          <p className="text-sm text-[var(--dash-text-soft)] mt-1 font-light">
             Selamat datang kembali. Berikut adalah ringkasan data wilayah Anda.
           </p>
         </div>

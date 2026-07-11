@@ -631,14 +631,14 @@ export default function Sip6Page() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Data Pengunjung Bulanan Posyandu</h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">Sistem Informasi Posyandu (SIP 6)</p>
+          <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Pengunjung Bulanan Posyandu</h1>
+          <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (SIP 6)</p>
         </div>
         <div className="flex items-center gap-2">
           <select
             value={formData.bulan}
             onChange={(e) => handleChange('bulan', parseInt(e.target.value))}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
             {[...Array(12)].map((_, i) => (
               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -647,7 +647,7 @@ export default function Sip6Page() {
           <select
             value={formData.tahun}
             onChange={(e) => handleChange('tahun', parseInt(e.target.value))}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
             <option value="2026">2026</option>
             <option value="2025">2025</option>
@@ -710,7 +710,7 @@ export default function Sip6Page() {
             className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white">
+              <h2 className="text-lg font-bold text-[var(--dash-text)]">
                 {editingId ? 'Edit Sasaran' :
                   activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Tambah Sasaran Ibu Hamil' :
                     activeTab === 'sasaran_bayi' ? 'Tambah Sasaran Bayi/Balita' :
@@ -725,57 +725,57 @@ export default function Sip6Page() {
               {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? (
                 <>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Ibu</label>
+                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Suami</label>
-                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({ ...sasaranForm, namaSuami: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Suami</label>
+                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({ ...sasaranForm, namaSuami: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   {activeTab !== 'sasaran_bumil' && (
                     <div>
-                      <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Bayi</label>
-                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({ ...sasaranForm, namaBayi: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                      <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Bayi</label>
+                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({ ...sasaranForm, namaBayi: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                     </div>
                   )}
                 </>
               ) : (
                 <>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama</label>
-                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({ ...sasaranForm, nama: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama</label>
+                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({ ...sasaranForm, nama: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Jenis Kelamin</label>
-                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({ ...sasaranForm, jenisKelamin: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Jenis Kelamin</label>
+                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({ ...sasaranForm, jenisKelamin: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
                       <option value="">-- Pilih --</option>
                       <option value="L">Laki-laki</option>
                       <option value="P">Perempuan</option>
                     </select>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal Lahir</label>
-                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({ ...sasaranForm, tanggalLahir: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Tanggal Lahir</label>
+                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({ ...sasaranForm, tanggalLahir: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Ibu</label>
+                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ayah</label>
-                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaAyah: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Ayah</label>
+                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaAyah: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                 </>
               )}
               <div>
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tahun</label>
-                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({ ...sasaranForm, tahun: parseInt(e.target.value) })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
+                <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Tahun</label>
+                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({ ...sasaranForm, tahun: parseInt(e.target.value) })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
               </div>
             </div>
 
           </motion.div>
           <div className="flex items-center justify-end gap-3">
-            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
             <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-md transition-all ${theme.shadow} flex items-center gap-2`}>
               <Save className="w-5 h-5" /> Simpan Sasaran
             </button>
@@ -848,7 +848,7 @@ export default function Sip6Page() {
                 <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h2 className="text-lg font-bold text-slate-800 dark:text-white">
+                      <h2 className="text-lg font-bold text-[var(--dash-text)]">
                         Laporan Pengunjung
                       </h2>
                     </div>
@@ -888,24 +888,24 @@ export default function Sip6Page() {
                           className="w-full text-left bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors"
                         >
                           <div className="flex items-center justify-between mb-3">
-                            <p className="text-sm font-bold text-slate-800 dark:text-white">{namaBulan} {report.tahun}</p>
+                            <p className="text-sm font-bold text-[var(--dash-text)]">{namaBulan} {report.tahun}</p>
                             <span className={`${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`}>{report.status}</span>
                           </div>
                           <div className="grid grid-cols-4 gap-2 text-center">
                             <div>
-                              <p className="text-base font-bold text-slate-800 dark:text-white">{balitaTotal}</p>
+                              <p className="text-base font-bold text-[var(--dash-text)]">{balitaTotal}</p>
                               <p className="text-[10px] text-slate-400">Bayi/Balita</p>
                             </div>
                             <div>
-                              <p className="text-base font-bold text-slate-800 dark:text-white">{bumilBusui}</p>
+                              <p className="text-base font-bold text-[var(--dash-text)]">{bumilBusui}</p>
                               <p className="text-[10px] text-slate-400">Bumil/Busui</p>
                             </div>
                             <div>
-                              <p className="text-base font-bold text-slate-800 dark:text-white">{lansia}</p>
+                              <p className="text-base font-bold text-[var(--dash-text)]">{lansia}</p>
                               <p className="text-[10px] text-slate-400">Lansia</p>
                             </div>
                             <div>
-                              <p className="text-base font-bold text-slate-800 dark:text-white">{petugas}</p>
+                              <p className="text-base font-bold text-[var(--dash-text)]">{petugas}</p>
                               <p className="text-[10px] text-slate-400">Petugas</p>
                             </div>
                           </div>
@@ -919,7 +919,7 @@ export default function Sip6Page() {
                   </div>
 
                   <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                    <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                       <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                         <tr>
                           <th className="px-4 py-3 sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">No</th>
@@ -970,8 +970,8 @@ export default function Sip6Page() {
                               onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
                               className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
                             >
-                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">{index + 1}</td>
-                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-14 z-10 bg-white dark:bg-[#202020]">{report.bulan}/{report.tahun}</td>
+                              <td className="px-4 py-3 font-medium text-[var(--dash-text)] sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">{index + 1}</td>
+                              <td className="px-4 py-3 font-medium text-[var(--dash-text)] sticky left-14 z-10 bg-white dark:bg-[#202020]">{report.bulan}/{report.tahun}</td>
                               <td className="px-4 py-3">{report.bayiBaruL || 0}</td>
                               <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
                               <td className="px-4 py-3">{report.bayiLamaL || 0}</td>
@@ -1029,33 +1029,33 @@ export default function Sip6Page() {
 
                   {/* Perhitungan Semester & Tahunan */}
                   <div className="mt-8 border-t border-slate-200/70 dark:border-white/10 pt-6">
-                    <h3 className="text-base font-bold text-slate-800 dark:text-white mb-4">Ringkasan Total Pengunjung ({tahunAktif})</h3>
+                    <h3 className="text-base font-bold text-[var(--dash-text)] mb-4">Ringkasan Total Pengunjung ({tahunAktif})</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Semester 1 */}
                       <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
-                        <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 1 (Jan - Jun)</h4>
+                        <h4 className="text-sm font-semibold text-[var(--dash-text-soft)] mb-2">Semester 1 (Jan - Jun)</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6]).bayi + getTotals([1, 2, 3, 4, 5, 6]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6]).bumil + getTotals([1, 2, 3, 4, 5, 6]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([1, 2, 3, 4, 5, 6]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals([1, 2, 3, 4, 5, 6]).bayi + getTotals([1, 2, 3, 4, 5, 6]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals([1, 2, 3, 4, 5, 6]).bumil + getTotals([1, 2, 3, 4, 5, 6]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-[var(--dash-text)]">{getTotals([1, 2, 3, 4, 5, 6]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                       {/* Semester 2 */}
                       <div className="p-4 rounded-lg border border-slate-200/70 dark:border-white/10 bg-slate-50/50 dark:bg-[#202020]/50">
-                        <h4 className="text-sm font-semibold text-slate-500 dark:text-zinc-400 mb-2">Semester 2 (Jul - Des)</h4>
+                        <h4 className="text-sm font-semibold text-[var(--dash-text-soft)] mb-2">Semester 2 (Jul - Des)</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7, 8, 9, 10, 11, 12]).bayi + getTotals([7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-slate-800 dark:text-white">{(getTotals([7, 8, 9, 10, 11, 12]).bumil + getTotals([7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-slate-800 dark:text-white">{getTotals([7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals([7, 8, 9, 10, 11, 12]).bayi + getTotals([7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-semibold text-[var(--dash-text)]">{(getTotals([7, 8, 9, 10, 11, 12]).bumil + getTotals([7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-semibold text-[var(--dash-text)]">{getTotals([7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                       {/* Tahunan */}
                       <div className={`p-4 rounded-lg border ${theme.borderLight} bg-purple-50/20 dark:bg-purple-950/10`}>
                         <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
                         <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
-                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bayi + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bumil + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
-                          <div className="flex justify-between"><span>Petugas:</span><span className="font-bold text-slate-800 dark:text-white">{getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Bayi & Balita:</span><span className="font-bold text-[var(--dash-text)]">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bayi + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).balita).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-[var(--dash-text)]">{(getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).bumil + getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).busui).toLocaleString('id-ID')}</span></div>
+                          <div className="flex justify-between"><span>Petugas:</span><span className="font-bold text-[var(--dash-text)]">{getTotals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).petugas.toLocaleString('id-ID')}</span></div>
                         </div>
                       </div>
                     </div>
@@ -1065,7 +1065,7 @@ export default function Sip6Page() {
                 <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                     <div>
-                      <h2 className="text-lg font-bold text-slate-800 dark:text-white">
+                      <h2 className="text-lg font-bold text-[var(--dash-text)]">
                         {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Sasaran Ibu Hamil' :
                           activeTab === 'sasaran_bayi' ? 'Sasaran Bayi/Balita' :
                             activeTab === 'sasaran_remaja' ? 'Sasaran Remaja' :
@@ -1090,13 +1090,13 @@ export default function Sip6Page() {
                       type="text"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-[var(--dash-text)] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                       placeholder="Cari nama sasaran..."
                     />
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                    <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                       <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                         <tr>
                           <th className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Nama Ibu' : 'Nama'}</th>
@@ -1126,7 +1126,7 @@ export default function Sip6Page() {
                           })
                           .map(s => (
                             <tr key={s.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                              <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">
+                              <td className="px-4 py-3 font-medium text-[var(--dash-text)]">
                                 {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaIbu : (s as any).nama || s.namaIbu}
                               </td>
                               {activeTab !== 'sasaran_bumil' && activeTab !== 'sasaran' && (
@@ -1211,14 +1211,14 @@ export default function Sip6Page() {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                   )}
-                  <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">
+                  <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">
                     Daftar Posyandu di Desa {desas.find(d => d.id === selectedDesaId)?.nama}
                   </h2>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Posyandu</th>
@@ -1229,7 +1229,7 @@ export default function Sip6Page() {
                   <tbody>
                     {posyandus.map((p) => (
                       <tr key={p.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                        <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{p.nama}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{p.nama}</td>
                         <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Selesai</span></td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedPosyanduId(p.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Buka Data</button>
@@ -1254,12 +1254,12 @@ export default function Sip6Page() {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                   )}
-                  <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-2">Pilih Desa</h2>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">Silakan pilih desa di {kecamatans.find(k => k.id === selectedKecamatanId)?.nama} untuk melihat data SIP 6</p>
+                  <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Pilih Desa</h2>
+                  <p className="text-sm text-[var(--dash-text-soft)]">Silakan pilih desa di {kecamatans.find(k => k.id === selectedKecamatanId)?.nama} untuk melihat data SIP 6</p>
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Desa</th>
@@ -1269,7 +1269,7 @@ export default function Sip6Page() {
                   <tbody>
                     {desas.map((desa) => (
                       <tr key={desa.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                        <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{desa.nama}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedDesaId(desa.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
                         </td>
@@ -1282,9 +1282,9 @@ export default function Sip6Page() {
           ) : (
             // Level 1: List Kecamatan
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Daftar Kecamatan</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] mb-6">Daftar Kecamatan</h2>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Kecamatan</th>
@@ -1294,7 +1294,7 @@ export default function Sip6Page() {
                   <tbody>
                     {kecamatans.map((kec) => (
                       <tr key={kec.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
-                        <td className="px-6 py-4 font-medium text-slate-800 dark:text-white">{kec.nama}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedKecamatanId(kec.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
                         </td>
@@ -1331,8 +1331,8 @@ export default function Sip6Page() {
               <form onSubmit={handleSubmit}>
                 <div className="p-6 border-b border-slate-200/70 dark:border-white/10 flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">{editId ? 'Edit' : 'Input'} Data Pengunjung Bulanan</h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">Kolom sesuai format resmi SIP 6 — DATA PENGUNJUNG</p>
+                    <h2 className="text-xl font-bold text-[var(--dash-text)]">{editId ? 'Edit' : 'Input'} Data Pengunjung Bulanan</h2>
+                    <p className="text-sm text-[var(--dash-text-soft)] mt-0.5">Kolom sesuai format resmi SIP 6 — DATA PENGUNJUNG</p>
                   </div>
                   <button type="button" onClick={() => setShowForm(false)} className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors">
                     <X className="w-5 h-5" />
@@ -1343,16 +1343,16 @@ export default function Sip6Page() {
                   {/* Periode */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">Bulan</label>
-                      <select value={formData.bulan} onChange={(e) => handleChange('bulan', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
+                      <label className="block text-xs font-semibold text-[var(--dash-text-soft)] uppercase tracking-wider mb-1.5">Bulan</label>
+                      <select value={formData.bulan} onChange={(e) => handleChange('bulan', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
                         {['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'].map((m, i) => (
                           <option key={m} value={i + 1}>{m}</option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1.5">Tahun</label>
-                      <select value={formData.tahun} onChange={(e) => handleChange('tahun', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
+                      <label className="block text-xs font-semibold text-[var(--dash-text-soft)] uppercase tracking-wider mb-1.5">Tahun</label>
+                      <select value={formData.tahun} onChange={(e) => handleChange('tahun', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
                         {[2024, 2025, 2026, 2027].map(t => <option key={t} value={t}>{t}</option>)}
                       </select>
                     </div>
@@ -1373,13 +1373,13 @@ export default function Sip6Page() {
                       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
                         {group.fields.map(([key, label]) => (
                           <div key={key}>
-                            <label className="block text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-1">{label}</label>
+                            <label className="block text-[11px] font-medium text-[var(--dash-text-soft)] mb-1">{label}</label>
                             <input
                               type="number"
                               min={0}
                               value={(formData as any)[key]}
                               onChange={(e) => handleChange(key, parseInt(e.target.value) || 0)}
-                              className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                              className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                             />
                           </div>
                         ))}
@@ -1394,13 +1394,13 @@ export default function Sip6Page() {
                       value={formData.keterangan}
                       onChange={(e) => handleChange('keterangan', e.target.value)}
                       placeholder="Keterangan (opsional)"
-                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
+                      className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm text-[var(--dash-text)] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                     />
                   </div>
                 </div>
 
                 <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
-                  <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+                  <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2.5 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
                   <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-5 rounded-md transition-all text-sm flex items-center gap-2`}>
                     <Save className="w-4 h-4" /> Simpan
                   </button>
@@ -1434,11 +1434,11 @@ export default function Sip6Page() {
               <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-[var(--dash-text)] flex items-center gap-2">
                       <Users className={`w-5 h-5 ${theme.text}`} />
                       Daftar Individu Hadir
                     </h2>
-                    <p className="text-sm text-slate-500 dark:text-zinc-400 mt-0.5">
+                    <p className="text-sm text-[var(--dash-text-soft)] mt-0.5">
                       Bulan {selectedReportForDetail.bulan} / Tahun {selectedReportForDetail.tahun}
                     </p>
                   </div>
@@ -1464,7 +1464,7 @@ export default function Sip6Page() {
                         <span className="text-xs text-slate-500">{attendees.length} Orang</span>
                       </div>
                       <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-white/10">
-                        <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+                        <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                           <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                             <tr>
                               <th className="px-4 py-2.5">No</th>
@@ -1476,8 +1476,8 @@ export default function Sip6Page() {
                           <tbody>
                             {attendees.map((s, idx) => (
                               <tr key={s.id} className="border-b border-slate-200/70 dark:border-white/10/50 hover:bg-white dark:hover:bg-[#2f2f2f] transition-colors">
-                                <td className="px-4 py-2.5 font-medium text-slate-800 dark:text-white">{idx + 1}</td>
-                                <td className="px-4 py-2.5 font-medium text-slate-800 dark:text-white">{(s as any).nama || (s as any).namaIbu}</td>
+                                <td className="px-4 py-2.5 font-medium text-[var(--dash-text)]">{idx + 1}</td>
+                                <td className="px-4 py-2.5 font-medium text-[var(--dash-text)]">{(s as any).nama || (s as any).namaIbu}</td>
                                 <td className="px-4 py-2.5">{(s as any).isOfficer ? (s as any).role : ((s as any).namaSuami ? 'Bumil' : 'Sasaran')}</td>
                                 <td className="px-4 py-2.5">
                                   <span className={`${theme.text} dark:${theme.textDark} font-medium`}>Hadir ✓</span>
@@ -1526,7 +1526,7 @@ export default function Sip6Page() {
               <div className="p-6 border-b border-slate-200/70 dark:border-white/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                    <h3 className="text-lg font-bold text-[var(--dash-text)]">
                       Pencatatan Kehadiran
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -1553,7 +1553,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, bumilDatang: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Bumil Datang</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">Bumil Datang</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1562,7 +1562,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, busuiDatang: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Busui Datang</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">Busui Datang</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1571,7 +1571,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, bbKurang: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-rose-600 focus:ring-rose-500"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 flex flex-col">
                         <span>BB Kurang</span>
                         <span className="text-xs text-rose-500 font-semibold">(Garis Merah)</span>
                       </span>
@@ -1583,7 +1583,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, lilaKek: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-rose-600 focus:ring-rose-500"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 flex flex-col">
                         <span>LILA KEK</span>
                         <span className="text-xs text-rose-500 font-semibold">(Merah)</span>
                       </span>
@@ -1600,7 +1600,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, balitaDatang: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Balita Datang</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">Balita Datang</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1609,7 +1609,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, bbNaik: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">BB Naik</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">BB Naik</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1618,7 +1618,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, asiEksklusif: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">ASI Eksklusif</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">ASI Eksklusif</span>
                     </label>
                   </div>
                 )}
@@ -1632,7 +1632,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, remaja614Datang: e.target.checked, remaja1518Datang: e.target.checked ? false : checklistForm.remaja1518Datang })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">6-14 Th Datang</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">6-14 Th Datang</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1641,7 +1641,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, remaja1518Datang: e.target.checked, remaja614Datang: e.target.checked ? false : checklistForm.remaja614Datang })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">15-18 Th Datang</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">15-18 Th Datang</span>
                     </label>
                     <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-colors">
                       <input
@@ -1650,7 +1650,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, imtNormal: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">IMT Normal</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">IMT Normal</span>
                     </label>
                   </div>
                 )}
@@ -1664,7 +1664,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, tensiTinggi: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-rose-600 focus:ring-rose-500"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 flex flex-col">
                         <span>Tensi Tinggi</span>
                       </span>
                     </label>
@@ -1675,7 +1675,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, gulaDarahTinggi: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-rose-600 focus:ring-rose-500"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200 flex flex-col">
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 flex flex-col">
                         <span>Gula Darah Tinggi</span>
                       </span>
                     </label>
@@ -1686,7 +1686,7 @@ export default function Sip6Page() {
                         onChange={(e) => setChecklistForm({ ...checklistForm, mandiri: e.target.checked })}
                         className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
-                      <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Mandiri</span>
+                      <span className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200">Mandiri</span>
                     </label>
                   </div>
                 )}
@@ -1705,7 +1705,7 @@ export default function Sip6Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedAttendanceForModal(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
+                  className="px-4 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                 >
                   Batal
                 </button>

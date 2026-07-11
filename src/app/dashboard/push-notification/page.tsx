@@ -88,38 +88,38 @@ export default function PushNotificationPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Push Notifikasi</h1>
-        <p className="text-slate-500 dark:text-zinc-400 text-sm">Kirim notifikasi langsung ke aplikasi pengguna</p>
+        <h1 className="text-2xl font-bold text-[var(--dash-text)]">Push Notifikasi</h1>
+        <p className="text-[var(--dash-text-soft)] text-sm">Kirim notifikasi langsung ke aplikasi pengguna</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Form Area */}
         <div className="lg:col-span-1">
           <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10 sticky top-6">
-            <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4 flex items-center gap-2">
               <Send className="w-5 h-5 text-purple-500" />
               Kirim Notifikasi
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Judul Notifikasi</label>
+                <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Judul Notifikasi</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                   placeholder="Contoh: Jadwal Posyandu"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Isi Pesan</label>
+                <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Isi Pesan</label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                   rows={4}
                   placeholder="Tulis pesan notifikasi di sini..."
                   required
@@ -127,11 +127,11 @@ export default function PushNotificationPage() {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Target Penerima</label>
+                <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Target Penerima</label>
                 <select 
                   value={formData.target}
                   onChange={(e) => setFormData({...formData, target: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                 >
                   <option value="SEMUA">Semua Pengguna</option>
                   <option value="KECAMATAN">Per Kecamatan</option>
@@ -142,12 +142,12 @@ export default function PushNotificationPage() {
 
               {formData.target === 'KECAMATAN' && (
                 <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Pilih Kecamatan</label>
+                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Pilih Kecamatan</label>
                   <input
                     type="text"
                     value={formData.kecamatan}
                     onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                     placeholder="Nama Kecamatan"
                     required
                   />
@@ -157,23 +157,23 @@ export default function PushNotificationPage() {
               {formData.target === 'DESA' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Pilih Kecamatan</label>
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Pilih Kecamatan</label>
                     <input
                       type="text"
                       value={formData.kecamatan}
                       onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Kecamatan"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Pilih Desa</label>
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Pilih Desa</label>
                     <input
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
@@ -184,23 +184,23 @@ export default function PushNotificationPage() {
               {formData.target === 'POSYANDU' && (
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Pilih Desa</label>
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Pilih Desa</label>
                     <input
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Pilih Posyandu</label>
+                    <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Pilih Posyandu</label>
                     <input
                       type="text"
                       value={formData.posyandu}
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Posyandu"
                       required
                     />
@@ -247,7 +247,7 @@ export default function PushNotificationPage() {
         <div className="lg:col-span-2">
           <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-              <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+              <h2 className="text-lg font-bold text-[var(--dash-text)] flex items-center gap-2">
                 <Bell className="w-5 h-5 text-purple-500" />
                 Riwayat Notifikasi
               </h2>
@@ -260,7 +260,7 @@ export default function PushNotificationPage() {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-[var(--dash-text)] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                   placeholder="Cari notifikasi..."
                 />
               </div>
@@ -271,7 +271,7 @@ export default function PushNotificationPage() {
                 <div key={notif.id} className="p-4 bg-slate-50 dark:bg-[#2f2f2f]/30 rounded-lg border border-slate-200/70 dark:border-white/10 hover:border-purple-200 dark:hover:border-purple-800 transition-colors group">
                   <div className="flex justify-between gap-4">
                     <div className="space-y-1">
-                      <h3 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2">
+                      <h3 className="font-semibold text-[var(--dash-text)] flex items-center gap-2">
                         {notif.title}
                         <span className="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 px-2 py-0.5 rounded-full font-medium">
                           {notif.status}
@@ -303,7 +303,7 @@ export default function PushNotificationPage() {
               ))}
 
               {filteredHistory.length === 0 && (
-                <div className="text-center py-12 text-slate-500 dark:text-zinc-400">
+                <div className="text-center py-12 text-[var(--dash-text-soft)]">
                   <Bell className="w-12 h-12 mx-auto mb-3 text-slate-300 dark:text-zinc-600" />
                   <p>Tidak ada riwayat notifikasi</p>
                 </div>

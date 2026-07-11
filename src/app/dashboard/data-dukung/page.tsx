@@ -80,7 +80,7 @@ export default function DataDukungPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh]">
         <RefreshCw className="w-8 h-8 text-purple-600 animate-spin mb-2" />
-        <p className="text-slate-500 dark:text-zinc-400 text-sm">Memuat halaman...</p>
+        <p className="text-[var(--dash-text-soft)] text-sm">Memuat halaman...</p>
       </div>
     )
   }
@@ -88,12 +88,12 @@ export default function DataDukungPage() {
   const role = (session?.user as any)?.role
   if (role !== 'SUPERADMIN') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-white dark:bg-[#252525] rounded-lg border border-slate-200/70 dark:border-white/10 max-w-xl mx-auto my-12">
+      <div className="dash-card flex flex-col items-center justify-center min-h-[60vh] text-center max-w-xl mx-auto my-12">
         <div className="w-16 h-16 bg-red-50 dark:bg-red-950/30 rounded-full flex items-center justify-center text-red-600 dark:text-red-400 mb-4">
           <AlertCircle className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Akses Ditolak</h1>
-        <p className="text-slate-500 dark:text-zinc-400 mt-2 max-w-md">
+        <h1 className="text-2xl font-bold text-[var(--dash-text)]">Akses Ditolak</h1>
+        <p className="text-[var(--dash-text-soft)] mt-2 max-w-md">
           Hanya pengguna dengan peran **Superadmin** yang diizinkan untuk melihat galeri data dukung dan media di sistem ini.
         </p>
       </div>
@@ -195,16 +195,16 @@ export default function DataDukungPage() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--dash-text)] flex items-center gap-2">
             <HardDrive className="w-7 h-7 text-purple-600" />
             Galeri Media & Berkas (Superadmin)
           </h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm">
+          <p className="text-[var(--dash-text-soft)] text-sm">
             Manajemen berkas, gambar, dan data dukung yang diunggah dari kegiatan posyandu dan laporan bidang.
           </p>
         </div>
         <div className="flex flex-col items-end">
-          <div className="text-sm font-medium text-slate-700 dark:text-zinc-300">
+          <div className="text-sm font-medium text-[var(--dash-text)] dark:text-zinc-300">
             Total Storage Terpakai: <span className="text-purple-600 font-bold">{formatBytes(totalStorageSize)}</span>
           </div>
           <div className="w-48 h-2 bg-slate-100 dark:bg-[#202020] rounded-full mt-1.5 overflow-hidden">
@@ -224,7 +224,7 @@ export default function DataDukungPage() {
           className={`pb-3 text-sm font-semibold flex items-center gap-2 border-b-2 transition-all ${
             activeTab === 'GAMBAR' 
               ? 'border-purple-600 text-purple-600' 
-              : 'border-transparent text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300'
+              : 'border-transparent text-[var(--dash-text-soft)] hover:text-[var(--dash-text)] dark:hover:text-zinc-300'
           }`}
         >
           <ImageIcon className="w-4 h-4" />
@@ -235,7 +235,7 @@ export default function DataDukungPage() {
           className={`pb-3 text-sm font-semibold flex items-center gap-2 border-b-2 transition-all ${
             activeTab === 'DOKUMEN' 
               ? 'border-purple-600 text-purple-600' 
-              : 'border-transparent text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300'
+              : 'border-transparent text-[var(--dash-text-soft)] hover:text-[var(--dash-text)] dark:hover:text-zinc-300'
           }`}
         >
           <File className="w-4 h-4" />
@@ -253,7 +253,7 @@ export default function DataDukungPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all text-sm"
+            className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2 text-[var(--dash-text)] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all text-sm"
             placeholder="Cari berdasarkan nama, pemohon, NIK, wilayah..."
           />
         </div>
@@ -263,7 +263,7 @@ export default function DataDukungPage() {
           <select
             value={selectedBidang}
             onChange={(e) => setSelectedBidang(e.target.value)}
-            className="bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-md px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none transition-all w-full md:w-auto"
+            className="bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-md px-3 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 focus:outline-none transition-all w-full md:w-auto"
           >
             <option value="ALL">Semua Bidang</option>
             {distinctBidang.map(b => (
@@ -277,15 +277,15 @@ export default function DataDukungPage() {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10">
           <RefreshCw className="w-8 h-8 text-purple-600 animate-spin mb-2" />
-          <p className="text-slate-500 dark:text-zinc-400 text-sm font-medium">Mengambil berkas...</p>
+          <p className="text-[var(--dash-text-soft)] text-sm font-medium">Mengambil berkas...</p>
         </div>
       ) : filteredFiles.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10 text-center px-4">
           <div className="w-16 h-16 bg-slate-50 dark:bg-[#2f2f2f]/50 rounded-full flex items-center justify-center text-slate-400 mb-4">
             <Folder className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Tidak Ada File Ditemukan</h3>
-          <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1 max-w-sm">
+          <h3 className="text-lg font-semibold text-[var(--dash-text)]">Tidak Ada File Ditemukan</h3>
+          <p className="text-sm text-[var(--dash-text-soft)] mt-1 max-w-sm">
             Tidak ada data dukung yang cocok dengan kriteria pencarian atau tab saat ini.
           </p>
         </div>
@@ -337,24 +337,24 @@ export default function DataDukungPage() {
                 {/* Body Info */}
                 <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                   <div className="space-y-1">
-                    <h3 className="text-sm font-bold text-slate-800 dark:text-white line-clamp-2 leading-tight" title={friendlyName}>
+                    <h3 className="text-sm font-bold text-[var(--dash-text)] line-clamp-2 leading-tight" title={friendlyName}>
                       {friendlyName}
                     </h3>
-                    <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-mono truncate" title={file.fileName}>
+                    <p className="text-[11px] text-[var(--dash-text-muted)] font-mono truncate" title={file.fileName}>
                       {file.fileName}
                     </p>
                     <p className="text-xs text-purple-600 dark:text-purple-400 font-medium">
                       {sourceText}
                     </p>
                     {info && (
-                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 italic line-clamp-2 leading-normal">
+                      <p className="text-[11px] text-[var(--dash-text-soft)] italic line-clamp-2 leading-normal">
                         "{info}"
                       </p>
                     )}
                   </div>
 
                   {/* Metadata & Origin */}
-                  <div className="pt-3 border-t border-slate-200/70 dark:border-white/10/50 space-y-1.5 text-[11px] text-slate-500 dark:text-zinc-400">
+                  <div className="pt-3 border-t border-slate-200/70 dark:border-white/10/50 space-y-1.5 text-[11px] text-[var(--dash-text-soft)]">
                     {file.posyandu && (
                       <div className="flex items-start gap-1">
                         <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
@@ -408,7 +408,7 @@ export default function DataDukungPage() {
         /* Document List View */
         <div className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
+            <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10 border-b border-slate-200 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama & Asal Dokumen</th>
@@ -430,13 +430,13 @@ export default function DataDukungPage() {
                             <File className="w-5 h-5" />
                           </div>
                           <div className="min-w-0">
-                            <h4 className="font-bold text-slate-800 dark:text-white leading-tight">
+                            <h4 className="font-bold text-[var(--dash-text)] leading-tight">
                               {friendlyName}
                             </h4>
-                            <p className="text-xs font-mono text-slate-400 dark:text-zinc-500 truncate max-w-xs mt-0.5" title={file.fileName}>
+                            <p className="text-xs font-mono text-[var(--dash-text-muted)] truncate max-w-xs mt-0.5" title={file.fileName}>
                               {file.fileName}
                             </p>
-                            <span className="inline-block bg-slate-100 dark:bg-[#252525] px-2 py-0.5 rounded text-[10px] font-semibold text-slate-600 dark:text-slate-300 mt-1 uppercase">
+                            <span className="inline-block bg-slate-100 dark:bg-[#252525] px-2 py-0.5 rounded text-[10px] font-semibold text-[var(--dash-text-soft)] mt-1 uppercase">
                               {file.kategori}
                             </span>
                           </div>
@@ -448,7 +448,7 @@ export default function DataDukungPage() {
                             {sourceText}
                           </span>
                           {info && (
-                            <p className="text-xs text-slate-400 dark:text-zinc-500 line-clamp-1 italic max-w-xs">
+                            <p className="text-xs text-[var(--dash-text-muted)] line-clamp-1 italic max-w-xs">
                               "{info}"
                             </p>
                           )}
@@ -456,21 +456,21 @@ export default function DataDukungPage() {
                       </td>
                       <td className="px-6 py-4">
                         {file.posyandu ? (
-                          <div className="text-xs space-y-0.5 text-slate-700 dark:text-zinc-300">
+                          <div className="text-xs space-y-0.5 text-[var(--dash-text)] dark:text-zinc-300">
                             <p className="font-semibold">{file.posyandu.nama}</p>
-                            <p className="text-slate-400 dark:text-zinc-500">Desa {file.posyandu.desa.nama}, Kec. {file.posyandu.desa.kecamatan.nama}</p>
+                            <p className="text-[var(--dash-text-muted)]">Desa {file.posyandu.desa.nama}, Kec. {file.posyandu.desa.kecamatan.nama}</p>
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400 dark:text-zinc-500">-</span>
+                          <span className="text-xs text-[var(--dash-text-muted)]">-</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-xs text-slate-700 dark:text-zinc-300">
+                      <td className="px-6 py-4 text-xs text-[var(--dash-text)] dark:text-zinc-300">
                         {file.uploadedBy}
                       </td>
                       <td className="px-6 py-4 text-xs">
-                        <div className="text-slate-700 dark:text-zinc-300">
+                        <div className="text-[var(--dash-text)] dark:text-zinc-300">
                           <p className="font-medium">{formatBytes(file.fileSize)}</p>
-                          <p className="text-slate-400 dark:text-zinc-500 mt-0.5">
+                          <p className="text-[var(--dash-text-muted)] mt-0.5">
                             {new Date(file.uploadedAt).toLocaleDateString('id-ID')}
                           </p>
                         </div>
@@ -554,10 +554,10 @@ export default function DataDukungPage() {
                   <Trash2 className="w-6 h-6" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-white">
+                  <h3 className="text-lg font-bold text-[var(--dash-text)]">
                     Hapus Berkas Permanen?
                   </h3>
-                  <p className="text-sm text-slate-500 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--dash-text-soft)]">
                     Tindakan ini tidak dapat dibatalkan. Berkas akan terhapus secara permanen dari server penyimpanan cloud/lokal dan database.
                   </p>
                 </div>
@@ -566,7 +566,7 @@ export default function DataDukungPage() {
                 <button
                   onClick={() => setDeleteConfirmId(null)}
                   disabled={isDeleting}
-                  className="px-4 py-2 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-zinc-300 rounded-md text-sm font-semibold hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-all disabled:opacity-55"
+                  className="px-4 py-2 border border-slate-200 dark:border-white/10 text-[var(--dash-text)] dark:text-zinc-300 rounded-md text-sm font-semibold hover:bg-slate-50 dark:hover:bg-[#2f2f2f]/50 transition-all disabled:opacity-55"
                 >
                   Batal
                 </button>

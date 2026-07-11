@@ -559,11 +559,11 @@ export default function AnalisaDataPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--dash-text)] flex items-center gap-2">
             <BarChart3 className={`w-6 h-6 ${theme.text}`} />
             Analisa Data Terpadu
           </h1>
-          <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">
+          <p className="text-[var(--dash-text-soft)] text-sm mt-1">
             Ringkasan data laporan dari seluruh bidang dan posyandu.
           </p>
         </div>
@@ -591,9 +591,9 @@ export default function AnalisaDataPage() {
               <stat.icon className="w-8 h-8" />
             </div>
             <div>
-              <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">{stat.name}</p>
+              <p className="text-sm font-medium text-[var(--dash-text-soft)]">{stat.name}</p>
               <div className="flex items-end justify-center gap-2">
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{stat.total}</h3>
+                <h3 className="text-2xl font-bold text-[var(--dash-text)]">{stat.total}</h3>
                 <span className={`text-xs font-medium ${theme.text} mb-1`}>
                   {Math.round((stat.completed / stat.total) * 100)}% TL
                 </span>
@@ -605,7 +605,7 @@ export default function AnalisaDataPage() {
 
       {/* Chart Section */}
       <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Grafik Pelaporan per Bidang</h2>
+        <h2 className="text-lg font-bold text-[var(--dash-text)] mb-6">Grafik Pelaporan per Bidang</h2>
         <div className="h-[400px] w-full">
           <Chart options={chartOptions as any} series={chartSeries} type="bar" height="100%" />
         </div>

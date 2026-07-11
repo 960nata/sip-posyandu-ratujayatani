@@ -110,7 +110,8 @@ model Sip6Bulanan {
   lansiaBaruP Int @default(0)
   lansiaLamaL Int @default(0)
   lansiaLamaP Int @default(0)
-  // WUS/Bumil/Busui
+  // WUS/PUS/Bumil/Busui (kolom 23-26 Excel SIP 6)
+  wus         Int @default(0)
   pus         Int @default(0)
   ibuHamil    Int @default(0)
   ibuMenyusui Int @default(0)

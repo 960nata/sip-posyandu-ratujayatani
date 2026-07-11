@@ -13,7 +13,7 @@ import {
   ArrowRight, Sparkles, Building, BookOpen,
   Shield, ChevronRight, Baby, Syringe,
   Globe, Scale, Target, CheckCircle, Calendar,
-  BarChart2, Zap, ShieldCheck, DollarSign
+  BarChart2, Zap, ShieldCheck, DollarSign, ArrowUpRight
 } from "lucide-react";
 
 export default function TujuanPage() {
@@ -339,30 +339,92 @@ export default function TujuanPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {[
-              "Penyampaian dan penyaluran aspirasi masyarakat kepada pemerintah desa dan jenjang di atasnya secara terstruktur",
-              "Peningkatan kualitas dan percepatan pelayanan Pemerintah Desa/Kelurahan kepada masyarakat",
-              "Penyusunan rencana, pelaksanaan, pengendalian dan pengembangan hasil pembangunan secara partisipatif",
-              "Menumbuhkan, mengembangkan, dan menggerakkan prakarsa, partisipasi, swadaya, serta gotong royong masyarakat",
-              "Peningkatan kesejahteraan keluarga melalui program-program pemberdayaan dan pemenuhan standar layanan minimal",
-              "Peningkatan kualitas sumber daya manusia desa sebagai investasi jangka panjang menuju Indonesia Emas 2045"
-            ].map((text, idx) => (
+              {
+                code: "Fungsi 01",
+                desc: "Penyampaian dan penyaluran aspirasi masyarakat kepada pemerintah desa dan jenjang di atasnya secara terstruktur",
+              },
+              {
+                code: "Fungsi 02",
+                desc: "Peningkatan kualitas dan percepatan pelayanan Pemerintah Desa/Kelurahan kepada masyarakat",
+              },
+              {
+                code: "Fungsi 03",
+                desc: "Penyusunan rencana, pelaksanaan, pengendalian dan pengembangan hasil pembangunan secara partisipatif",
+              },
+              {
+                code: "Fungsi 04",
+                desc: "Menumbuhkan, mengembangkan, dan menggerakkan prakarsa, partisipasi, swadaya, serta gotong royong masyarakat",
+              },
+              {
+                code: "Fungsi 05",
+                desc: "Peningkatan kesejahteraan keluarga melalui program-program pemberdayaan dan pemenuhan standar layanan minimal",
+              },
+              {
+                code: "Fungsi 06",
+                desc: "Peningkatan kualitas sumber daya manusia desa sebagai investasi jangka panjang menuju Indonesia Emas 2045",
+              },
+            ].map((spm, index) => {
+              const isAccent = index % 2 === 1;
+              const isAccentMobile = (index + Math.floor(index / 2)) % 2 === 1;
+              const notchSvg =
+                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M0 0 H7.15 A12 12 0 0 1 18.8 14.7 A32 32 0 0 0 57.3 53.2 A12 12 0 0 1 72 64.85 V72 H0 Z'/%3E%3C/svg%3E\")";
+              const maskStyle = {
+                maskImage: `linear-gradient(#000,#000), linear-gradient(#000,#000), ${notchSvg}`,
+                maskSize: "calc(100% - 71px) 100%, 72px calc(100% - 71px), 72px 72px",
+                maskPosition: "left top, right bottom, right top",
+                maskRepeat: "no-repeat",
+                WebkitMaskImage: `linear-gradient(#000,#000), linear-gradient(#000,#000), ${notchSvg}`,
+                WebkitMaskSize: "calc(100% - 71px) 100%, 72px calc(100% - 71px), 72px 72px",
+                WebkitMaskPosition: "left top, right bottom, right top",
+                WebkitMaskRepeat: "no-repeat",
+              } as React.CSSProperties;
+              return (
                 <motion.div
-                  key={idx}
-                  className="p-5 bg-slate-50 rounded-xl border border-slate-100 flex gap-4"
+                  key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  whileHover={{ y: -5, borderColor: "rgba(16, 185, 129, 0.2)" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -8, scale: 1.015 }}
+                  className="group relative cursor-pointer"
                 >
-                  <div className="flex-shrink-0 w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">
-                    {idx + 1}
+                  {/* Card body with circular corner cutout */}
+                  <div
+                    className={`relative overflow-hidden rounded-[10px] p-5 sm:p-7 min-h-[160px] sm:min-h-[180px] flex flex-col justify-center ${
+                      isAccentMobile ? "bg-purple-400" : "bg-purple-50/70"
+                    } ${isAccent ? "lg:bg-purple-400" : "lg:bg-purple-50/70"}`}
+                    style={maskStyle}
+                  >
+                    {/* Expanding blob fill on hover */}
+                    <div
+                      aria-hidden
+                      className={`absolute -bottom-10 -left-10 w-24 h-24 rounded-full scale-0 group-hover:scale-[9] transition-transform duration-500 ease-out ${
+                        isAccentMobile ? "bg-purple-500" : "bg-purple-200/90"
+                      } ${isAccent ? "lg:bg-purple-500" : "lg:bg-purple-200/90"}`}
+                    />
+
+                    {/* Title */}
+                    <p className="relative text-base sm:text-lg font-extrabold text-slate-900 tracking-tight mb-1.5 sm:mb-2 pr-10 sm:pr-12 transition-transform duration-300 group-hover:-translate-y-1">
+                      {spm.code}
+                    </p>
+
+                    {/* Caption */}
+                    <p className={`relative text-[11px] sm:text-xs leading-relaxed transition-transform duration-300 delay-75 group-hover:-translate-y-1 ${
+                      isAccentMobile ? "text-slate-800/80" : "text-slate-600"
+                    } ${isAccent ? "lg:text-slate-800/80" : "lg:text-slate-600"}`}>
+                      {spm.desc}
+                    </p>
                   </div>
-                  <p className="text-sm text-slate-600 font-light leading-relaxed">{text}</p>
+
+                  {/* Arrow button in the cutout */}
+                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border-2 border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-purple-200/70">
+                    <ArrowUpRight className="w-4 h-4 text-slate-900 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
+                  </div>
                 </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

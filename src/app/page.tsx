@@ -43,8 +43,12 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
       }}
       whileHover={{ y: -6, scale: 1.02 }}
       transition={{ duration: 0.3 }}
-      className="bg-white/[0.04] border border-white/10 rounded-lg p-6 hover:bg-white/[0.08] transition-colors cursor-pointer"
+      className="relative overflow-hidden bg-white/[0.07] backdrop-blur-xl border border-white/15 rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.25)] hover:bg-white/[0.12] hover:border-white/25 transition-colors cursor-pointer"
+      data-scroll-hover
     >
+      {/* Glass highlight */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" aria-hidden />
+      <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-white/[0.06] blur-2xl pointer-events-none" aria-hidden />
       <div className="w-10 h-10 rounded-full bg-purple-400 flex items-center justify-center mb-5">
         <Icon className="w-5 h-5 text-purple-950" />
       </div>
@@ -56,9 +60,30 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
   );
 }
 
+// Fixed star positions so SSR and client render identically
+const STARS = [
+  { top: "8%", left: "6%", size: 2, duration: 2.8, delay: 0 },
+  { top: "18%", left: "22%", size: 1.5, duration: 3.6, delay: 1.2 },
+  { top: "10%", left: "45%", size: 2.5, duration: 3.1, delay: 0.6 },
+  { top: "22%", left: "63%", size: 1.5, duration: 4.2, delay: 2.1 },
+  { top: "12%", left: "82%", size: 2, duration: 2.9, delay: 1.6 },
+  { top: "30%", left: "93%", size: 1.5, duration: 3.8, delay: 0.3 },
+  { top: "42%", left: "12%", size: 2, duration: 3.4, delay: 2.6 },
+  { top: "50%", left: "35%", size: 1.5, duration: 2.7, delay: 0.9 },
+  { top: "45%", left: "55%", size: 2.5, duration: 4.0, delay: 1.9 },
+  { top: "56%", left: "74%", size: 1.5, duration: 3.2, delay: 0.4 },
+  { top: "66%", left: "88%", size: 2, duration: 3.7, delay: 2.4 },
+  { top: "72%", left: "8%", size: 1.5, duration: 3.0, delay: 1.4 },
+  { top: "82%", left: "28%", size: 2, duration: 4.1, delay: 0.7 },
+  { top: "78%", left: "50%", size: 1.5, duration: 2.6, delay: 2.9 },
+  { top: "88%", left: "68%", size: 2, duration: 3.5, delay: 1.1 },
+  { top: "85%", left: "90%", size: 1.5, duration: 3.3, delay: 0.2 },
+];
+
 export default function Home() {
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+  const nebulaRef = useRef<HTMLElement>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -96,6 +121,15 @@ export default function Home() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, 200]); // Parallax effect
 
+  // Section-local parallax for the nebula background layers
+  const { scrollYProgress: nebulaProgress } = useScroll({
+    target: nebulaRef,
+    offset: ["start end", "end start"],
+  });
+  const nebulaHazeY = useTransform(nebulaProgress, [0, 1], [-60, 60]);
+  const nebulaStarsY = useTransform(nebulaProgress, [0, 1], [-25, 25]);
+  const nebulaCloudY = useTransform(nebulaProgress, [0, 1], [45, -45]);
+
   // Intersection Observer for stats count-up
   useEffect(() => {
     const el = statsRef.current;
@@ -106,6 +140,33 @@ export default function Home() {
     );
     observer.observe(el);
     return () => observer.disconnect();
+  }, []);
+
+  // Touch devices: drive card hover states from scroll (center band) and tap.
+  // Cards marked with [data-scroll-hover] get `.is-active`, which the custom
+  // Tailwind hover variant treats the same as a real hover.
+  useEffect(() => {
+    if (window.matchMedia("(hover: hover)").matches) return;
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-scroll-hover]"));
+    if (els.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target.classList.toggle("is-active", entry.isIntersecting);
+        }
+      },
+      { rootMargin: "-38% 0px -38% 0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+    const handlers = els.map((el) => {
+      const toggle = () => el.classList.toggle("is-active");
+      el.addEventListener("click", toggle);
+      return [el, toggle] as const;
+    });
+    return () => {
+      observer.disconnect();
+      handlers.forEach(([el, toggle]) => el.removeEventListener("click", toggle));
+    };
   }, []);
 
   return (
@@ -160,9 +221,14 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-slate-200 mb-8 max-w-4xl mx-auto font-normal leading-relaxed"
+            className="text-base md:text-lg text-slate-200 mb-8 max-w-4xl mx-auto font-normal leading-relaxed"
           >
-            Platform digital terpadu untuk monitoring, pencatatan, dan pelaporan 6 Bidang Standar Pelayanan Minimal (SPM). Mengonsolidasikan data secara real-time dari 1.100+ Posyandu aktif dan 5.500+ kader kesehatan di 264 desa/kelurahan di wilayah Kabupaten Lampung Timur.
+            <span className="md:hidden">
+              Platform digital terpadu untuk monitoring dan pelaporan 6 Bidang SPM dari 1.100+ Posyandu aktif di Kabupaten Lampung Timur.
+            </span>
+            <span className="hidden md:inline">
+              Platform digital terpadu untuk monitoring, pencatatan, dan pelaporan 6 Bidang Standar Pelayanan Minimal (SPM). Mengonsolidasikan data secara real-time dari 1.100+ Posyandu aktif dan 5.500+ kader kesehatan di 264 desa/kelurahan di wilayah Kabupaten Lampung Timur.
+            </span>
           </motion.p>
 
           {/* CTA */}
@@ -234,7 +300,8 @@ export default function Home() {
                 variants={itemVariants}
                 whileHover={{ y: -8, scale: 1.015 }}
                 transition={{ duration: 0.3 }}
-                className="relative h-96 rounded-[10px] overflow-hidden shadow-xl shadow-purple-900/5 group cursor-pointer"
+                className="relative h-72 sm:h-96 rounded-[10px] overflow-hidden shadow-xl shadow-purple-900/5 group cursor-pointer"
+                data-scroll-hover
               >
                 <Image
                   src={card.img}
@@ -345,6 +412,7 @@ export default function Home() {
                   whileHover={{ y: -8, scale: 1.015 }}
                   transition={{ duration: 0.3 }}
                   className="group relative cursor-pointer"
+                  data-scroll-hover
                 >
                   {/* Card body with circular corner cutout */}
                   <div
@@ -386,19 +454,50 @@ export default function Home() {
       </section>
 
       {/* Section: Lampung Timur dalam Angka */}
-      <section className="relative py-20 bg-[#25103c] overflow-hidden">
+      <section ref={nebulaRef} className="relative py-20 bg-[#25103c] overflow-hidden">
         {/* Nebula background */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          {/* Glowing gas clouds */}
-          <div className="absolute -top-32 -left-24 w-[550px] h-[550px] rounded-full bg-purple-600/35 blur-[120px]" />
-          <div className="absolute top-1/3 right-[-140px] w-[500px] h-[500px] rounded-full bg-fuchsia-500/25 blur-[130px]" />
-          <div className="absolute -bottom-40 left-1/3 w-[600px] h-[400px] rounded-full bg-indigo-500/30 blur-[110px]" />
-          <div className="absolute top-10 left-1/2 w-[300px] h-[300px] rounded-full bg-violet-400/20 blur-[90px]" />
-          {/* Star field (two layers for depth) */}
-          <div className="absolute inset-0 opacity-50 bg-[radial-gradient(circle,rgba(255,255,255,0.9)_1px,transparent_1.5px)] [background-size:110px_110px]" />
-          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0.8px,transparent_1.2px)] [background-size:60px_60px] [background-position:30px_45px]" />
+          {/* Thin glowing gas haze (slow parallax) */}
+          <motion.div style={{ y: nebulaHazeY }} className="absolute inset-0">
+            <div className="absolute -top-32 -left-24 w-[550px] h-[550px] rounded-full bg-purple-600/15 blur-[130px]" />
+            <div className="absolute top-1/3 right-[-140px] w-[500px] h-[500px] rounded-full bg-fuchsia-500/10 blur-[140px]" />
+            <div className="absolute -bottom-40 left-1/3 w-[600px] h-[400px] rounded-full bg-indigo-500/12 blur-[120px]" />
+          </motion.div>
+
+          {/* Twinkling stars (subtle parallax) */}
+          <motion.div style={{ y: nebulaStarsY }} className="absolute -inset-y-8 inset-x-0">
+            {STARS.map((star, i) => (
+              <motion.span
+                key={i}
+                className="absolute rounded-full bg-white"
+                style={{ top: star.top, left: star.left, width: star.size, height: star.size }}
+                animate={{ opacity: [0.1, 0.9, 0.1], scale: [1, 1.5, 1] }}
+                transition={{ duration: star.duration, repeat: Infinity, ease: "easeInOut", delay: star.delay }}
+              />
+            ))}
+          </motion.div>
+
+          {/* Drifting soft clouds (counter parallax) */}
+          <motion.div style={{ y: nebulaCloudY }} className="absolute inset-0">
+            <motion.div
+              animate={{ x: [0, 60, 0] }}
+              transition={{ duration: 38, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-8 -left-20 w-[700px] h-[160px] rounded-full bg-white/[0.05] blur-[70px]"
+            />
+            <motion.div
+              animate={{ x: [0, -80, 0] }}
+              transition={{ duration: 46, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-12 right-[-100px] w-[800px] h-[180px] rounded-full bg-purple-300/[0.07] blur-[80px]"
+            />
+            <motion.div
+              animate={{ x: [0, 40, 0] }}
+              transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/4 w-[500px] h-[120px] rounded-full bg-white/[0.04] blur-[60px]"
+            />
+          </motion.div>
+
           {/* Soft vignette so edges stay dark */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#25103c_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,#25103c_100%)]" />
         </div>
 
         <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -609,6 +708,7 @@ export default function Home() {
                 variants={itemVariants}
                 whileHover={{ y: -8, scale: 1.015 }}
                 transition={{ duration: 0.3 }}
+                data-scroll-hover
                 className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden transition-colors duration-500 hover:bg-purple-950 hover:shadow-2xl hover:shadow-purple-950/20"
               >
                 <div className="flex flex-col">
@@ -750,6 +850,7 @@ export default function Home() {
                 >
                   {/* Outer Card with border and shadow */}
                   <div
+                    data-scroll-hover
                     className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-[10px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
                         ? "bg-[#f5f3ff]/95 border-[#ddd6fe] hover:bg-[#f3e8ff]"
@@ -798,7 +899,7 @@ export default function Home() {
                           {step.icon}
                         </motion.div>
                         {/* Step Number & Title (Mockup style) */}
-                        <h3 className={`text-lg md:text-xl font-extrabold tracking-tight whitespace-nowrap ${
+                        <h3 className={`text-base md:text-xl font-extrabold tracking-tight break-words md:whitespace-nowrap ${
                           isGreen ? "text-[#31104a]" : "text-slate-900"
                         }`}>
                           {parseInt(step.num)} {step.title}
@@ -1047,7 +1148,8 @@ export default function Home() {
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.015 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
+              data-scroll-hover
+              className="group bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
             >
               <div className="p-8 pb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block mb-2">
@@ -1065,11 +1167,11 @@ export default function Home() {
                   src="/images/uu_desa_hukum_purple.png"
                   alt="Undang-Undang Desa"
                   fill
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
                 {/* Overlay Tags like mockup */}
-                <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-2 z-10 px-3">
+                <div className="absolute bottom-4 left-0 right-0 flex flex-wrap items-center justify-center gap-2 z-10 px-3">
                   <span className="px-4 py-2 bg-slate-200/70 backdrop-blur-md text-xs font-semibold rounded-full text-slate-900 whitespace-nowrap">
                     LKD Resmi
                   </span>
@@ -1091,7 +1193,8 @@ export default function Home() {
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.015 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
+              data-scroll-hover
+              className="group bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
             >
               <div className="p-8 pb-3">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
@@ -1161,7 +1264,8 @@ export default function Home() {
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.015 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md cursor-pointer"
+              data-scroll-hover
+              className="group bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-between md:row-span-2 h-full hover:shadow-md cursor-pointer"
             >
               <div className="p-8 pb-3 text-left">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
@@ -1181,7 +1285,7 @@ export default function Home() {
                   src="/images/abstrak_purple_wave.png"
                   alt="3D Wave Pattern"
                   fill
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-w-768px) 100vw, 33vw"
                 />
                 {/* Gradient overlay to fade to white as it goes up */}
@@ -1203,7 +1307,8 @@ export default function Home() {
               whileHover={{ y: -8, scale: 1.015 }}
               transition={{ duration: 0.3 }}
               style={{ background: "linear-gradient(135deg, #a855f7 0%, #7c3aed 35%, #6366f1 70%, #31104a 100%)" }}
-              className="rounded-[10px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl cursor-pointer"
+              data-scroll-hover
+              className="group rounded-[10px] text-white overflow-hidden p-8 md:p-10 flex flex-col md:flex-row justify-between items-center md:col-span-2 relative shadow-lg hover:shadow-xl cursor-pointer"
             >
               <div className="flex-1 text-left z-10">
                 <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-lg leading-[1.1]">
@@ -1221,7 +1326,7 @@ export default function Home() {
                   src="/images/permendagri_mockup.avif"
                   alt="Permendagri No 13 2024"
                   fill
-                  className="object-contain transition-transform duration-500 hover:scale-105"
+                  className="object-contain transition-transform duration-500 group-hover:scale-105"
                   sizes="320px"
                 />
               </div>

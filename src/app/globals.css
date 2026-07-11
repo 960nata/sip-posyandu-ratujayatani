@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+/*
+ * Extend hover so `.is-active` (toggled by scroll/tap on touch devices)
+ * triggers the same styles as a real hover. `group-hover:` follows
+ * automatically because Tailwind v4 composes it from this variant.
+ */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  &.is-active {
+    @slot;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

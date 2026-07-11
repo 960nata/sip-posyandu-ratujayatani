@@ -393,10 +393,36 @@ export default function DashboardLayout({
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 px-[10px] py-5 lg:p-6">
+        <main className="flex-1 px-[10px] py-5 lg:p-6 pb-20 lg:pb-6">
           {children}
         </main>
       </div>
+
+      {/* Bottom tab bar — mobile only, quick access for kader di lapangan */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-20 bg-[var(--dash-surface)]/95 backdrop-blur-md border-t border-[var(--dash-border)] pb-[env(safe-area-inset-bottom)]">
+        <div className="grid grid-cols-4">
+          {[
+            { name: 'Beranda', icon: Home, href: '/dashboard' },
+            { name: 'SIP 6', icon: Users, href: '/dashboard/sip6' },
+            { name: 'SIP 7', icon: BookOpen, href: '/dashboard/sip7' },
+            { name: 'Profil', icon: User, href: '/dashboard/setting' },
+          ].map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center gap-0.5 py-2.5 transition-colors ${
+                  isActive ? 'text-[var(--dash-primary)]' : 'text-[var(--dash-text-muted)] active:text-[var(--dash-text)]'
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+                <span className="text-[10px] font-semibold">{item.name}</span>
+              </Link>
+            )
+          })}
+        </div>
+      </nav>
     </div>
   )
 }

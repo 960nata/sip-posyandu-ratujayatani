@@ -1113,12 +1113,60 @@ export default function Sip6Page() {
                     </div>
                   </div>
 
-                  <div className="overflow-x-auto">
+                  {/* Mobile: card list (mega table is unusable on small screens) */}
+                  <div className="md:hidden space-y-3">
+                    {reports.map((report) => {
+                      const balitaTotal =
+                        (report.bayiBaruP || 0) + (report.bayiLamaL || 0) + (report.bayiLamaP || 0) +
+                        (report.balitaBaruL || 0) + (report.balitaBaruP || 0) + (report.balitaLamaL || 0) + (report.balitaLamaP || 0) +
+                        (report.anakBaruL || 0) + (report.anakBaruP || 0) + (report.anakLamaL || 0) + (report.anakLamaP || 0)
+                      const bumilBusui = (report.hamilLama || 0) + (report.busuiBaru || 0) + (report.busuiLama || 0)
+                      const lansia = (report.lansiaL || 0) + (report.lansiaP || 0)
+                      const petugas = (report.kader || 0) + (report.plkb || 0) + (report.medis || 0)
+                      const namaBulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][report.bulan - 1]
+                      return (
+                        <button
+                          key={`m-${report.id}`}
+                          onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
+                          className="w-full text-left bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors"
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-sm font-bold text-slate-800 dark:text-white">{namaBulan} {report.tahun}</p>
+                            <span className={`${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`}>{report.status}</span>
+                          </div>
+                          <div className="grid grid-cols-4 gap-2 text-center">
+                            <div>
+                              <p className="text-base font-bold text-slate-800 dark:text-white">{balitaTotal}</p>
+                              <p className="text-[10px] text-slate-400">Bayi/Balita</p>
+                            </div>
+                            <div>
+                              <p className="text-base font-bold text-slate-800 dark:text-white">{bumilBusui}</p>
+                              <p className="text-[10px] text-slate-400">Bumil/Busui</p>
+                            </div>
+                            <div>
+                              <p className="text-base font-bold text-slate-800 dark:text-white">{lansia}</p>
+                              <p className="text-[10px] text-slate-400">Lansia</p>
+                            </div>
+                            <div>
+                              <p className="text-base font-bold text-slate-800 dark:text-white">{petugas}</p>
+                              <p className="text-[10px] text-slate-400">Petugas</p>
+                            </div>
+                          </div>
+                          <p className="mt-3 text-[11px] text-slate-400 flex items-center gap-1">Ketuk untuk lihat detail lengkap</p>
+                        </button>
+                      )
+                    })}
+                    {reports.length === 0 && (
+                      <p className="text-center text-sm text-slate-400 py-8">Belum ada laporan untuk tahun ini.</p>
+                    )}
+                  </div>
+
+                  <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                       <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                         <tr>
-                          <th className="px-4 py-3">No</th>
-                          <th className="px-4 py-3">Bulan</th>
+                          <th className="px-4 py-3 sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">No</th>
+                          <th className="px-4 py-3 sticky left-14 z-10 bg-white dark:bg-[#202020]">Bulan</th>
                           <th className="px-4 py-3">Bayi Baru (L)</th>
                           <th className="px-4 py-3">Bayi Baru (P)</th>
                           <th className="px-4 py-3">Bayi Lama (L)</th>
@@ -1170,8 +1218,8 @@ export default function Sip6Page() {
                                 onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
                                 className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
                               >
-                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
-                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{report.bulan}/{report.tahun}</td>
+                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-0 z-10 bg-white dark:bg-[#202020] w-14 min-w-14">{index + 1}</td>
+                                <td className="px-4 py-3 font-medium text-slate-800 dark:text-white sticky left-14 z-10 bg-white dark:bg-[#202020]">{report.bulan}/{report.tahun}</td>
 
                                 <td className="px-4 py-3">{Math.floor(dummySasaran.filter(s => s.kunjungan.includes(['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][report.bulan - 1])).length / 2)}</td>
                                 <td className="px-4 py-3">{report.bayiBaruP || 0}</td>
@@ -1498,7 +1546,7 @@ export default function Sip6Page() {
       {/* Modal Detail Pengunjung */}
       <AnimatePresence>
         {isDetailModalOpen && selectedReportForDetail && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1512,7 +1560,7 @@ export default function Sip6Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-200/70 dark:border-white/10"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
 
@@ -1594,7 +1642,7 @@ export default function Sip6Page() {
       {/* Attendance Checklist Details Popup Modal */}
       <AnimatePresence>
         {selectedAttendanceForModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1607,7 +1655,7 @@ export default function Sip6Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-md overflow-hidden border border-slate-200/70 dark:border-white/10"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-md max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               

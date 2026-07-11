@@ -10,6 +10,8 @@ import { useSession } from 'next-auth/react'
 import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import PeriodePicker from '../../components/dashboard/PeriodePicker'
+import FilterWilayah from '../../components/dashboard/FilterWilayah'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -137,6 +139,17 @@ const regionData = [
   }
 ]
 
+// Modul input data — dipakai lintas role (Posyandu, Desa, Kecamatan)
+const DATA_MODULES = [
+  { title: 'Data KES-6', desc: 'Perkembangan anak & balita', icon: HeartPulse, color: 'text-rose-500 bg-rose-50 dark:bg-rose-900/20', slug: 'sip6' },
+  { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
+  { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
+  { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
+  { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
+  { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
+  { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
+]
+
 export default function DashboardPage() {
   const { data: session, status } = useSession()
   const role = (session?.user as any)?.role
@@ -206,22 +219,30 @@ export default function DashboardPage() {
     return kec ? kec.desas : []
   }, [selectedKec])
 
-  const availablePosyandus = useMemo(() => {
-    if (!selectedDesa) return []
-    return [`Posyandu ${selectedDesa} 1`, `Posyandu ${selectedDesa} 2`, `Posyandu ${selectedDesa} 3`]
-  }, [selectedDesa])
-
-  // Handlers
-  const handleKecChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedKec(e.target.value)
-    setSelectedDesa('')
-    setSelectedPosyandu('')
-  }
-
-  const handleDesaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDesa(e.target.value)
-    setSelectedPosyandu('')
-  }
+  // Real posyandu list for the selected desa (kecamatan name -> id -> desa id -> posyandus)
+  const [availablePosyandus, setAvailablePosyandus] = useState<string[]>([])
+  useEffect(() => {
+    if (!selectedKec || !selectedDesa) {
+      setAvailablePosyandus([])
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      try {
+        const kecs = await fetch('/api/kecamatan').then(r => r.json())
+        const kec = Array.isArray(kecs) ? kecs.find((k: any) => k.nama === selectedKec) : null
+        if (!kec) { if (!cancelled) setAvailablePosyandus([]); return }
+        const desas = await fetch(`/api/desa?kecamatanId=${kec.id}`).then(r => r.json())
+        const desa = Array.isArray(desas) ? desas.find((d: any) => d.nama === selectedDesa) : null
+        if (!desa) { if (!cancelled) setAvailablePosyandus([]); return }
+        const pos = await fetch(`/api/posyandu?desaId=${desa.id}`).then(r => r.json())
+        if (!cancelled) setAvailablePosyandus(Array.isArray(pos) ? pos.map((p: any) => p.nama) : [])
+      } catch {
+        if (!cancelled) setAvailablePosyandus([])
+      }
+    })()
+    return () => { cancelled = true }
+  }, [selectedKec, selectedDesa])
 
   // Skeleton Loading State
   if (status === 'loading') {
@@ -257,26 +278,11 @@ export default function DashboardPage() {
     )
   }
 
-  // Dummy data tailored to roles
-  const dummyUsers = [
-    { id: 1, name: 'Budi Santoso', role: 'OPERATOR_DESA', email: 'budi@siplamtim.id', kecamatan: 'Pekalongan', desa: 'Adijaya' },
-    { id: 2, name: 'Siti Aminah', role: 'OPERATOR_POSYANDU', email: 'siti@siplamtim.id', kecamatan: 'Pekalongan', desa: 'Adijaya' },
-    { id: 3, name: 'dr. Andi', role: 'ADMIN_KECAMATAN', email: 'andi@siplamtim.id', kecamatan: 'Pekalongan' },
-  ]
-
   // Render content based on role
   const renderDashboardContent = () => {
     // 1. ROLE POSYANDU (Fungsi: Mengakomodasi SEMUA Kolek Data)
     if (role === 'OPERATOR_POSYANDU') {
-      const dataModules = [
-        { title: 'Data KES-6', desc: 'Perkembangan anak & balita', icon: HeartPulse, color: 'text-rose-500 bg-rose-50 dark:bg-rose-900/20', slug: 'sip6' },
-        { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
-        { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
-        { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
-        { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
-        { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
-      ]
+      const dataModules = DATA_MODULES
 
       return (
         <div className="space-y-6">
@@ -388,15 +394,7 @@ export default function DashboardPage() {
 
     // 2. ROLE DESA (Fungsi: Monitoring & Verifikasi Posyandu)
     if (role === 'OPERATOR_DESA') {
-      const dataModules = [
-        { title: 'Data KES-6', desc: 'Perkembangan anak & balita', icon: HeartPulse, color: 'text-rose-500 bg-rose-50 dark:bg-rose-900/20', slug: 'sip6' },
-        { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
-        { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
-        { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
-        { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
-        { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
-      ]
+      const dataModules = DATA_MODULES
 
       if (selectedPosyandu) {
         return (
@@ -620,15 +618,7 @@ export default function DashboardPage() {
 
     // 3. ROLE KECAMATAN (Fungsi: Monitoring Desa)
     if (role === 'ADMIN_KECAMATAN') {
-      const dataModules = [
-        { title: 'Data KES-6', desc: 'Perkembangan anak & balita', icon: HeartPulse, color: 'text-rose-500 bg-rose-50 dark:bg-rose-900/20', slug: 'sip6' },
-        { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
-        { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
-        { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
-        { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
-        { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
-      ]
+      const dataModules = DATA_MODULES
 
       // Level 3: Detail Posyandu
       if (selectedDesa && selectedPosyandu) {
@@ -1071,7 +1061,7 @@ export default function DashboardPage() {
               Dashboard
             </h1>
             <span className="text-xs font-semibold bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 px-3 py-1 rounded-full">
-              {role}
+              {({ SUPERADMIN: 'Super Admin', ADMIN_KABUPATEN: 'Admin Kabupaten', ADMIN_KECAMATAN: 'Admin Kecamatan', OPERATOR_DESA: 'Operator Desa', OPERATOR_POSYANDU: 'Operator Posyandu' } as Record<string, string>)[role] ?? role}
             </span>
           </div>
           <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1 font-light">
@@ -1081,111 +1071,28 @@ export default function DashboardPage() {
 
         <div className="flex items-center space-x-3">
           <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Periode</span>
-          <select 
-            value={`${selectedBulan}-${selectedTahun}`}
-            onChange={(e) => {
-              const [b, t] = e.target.value.split('-')
-              setSelectedBulan(parseInt(b))
-              setSelectedTahun(parseInt(t))
-            }}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all cursor-pointer"
-          >
-            <option value="12-2026">Desember 2026</option>
-            <option value="11-2026">November 2026</option>
-            <option value="10-2026">Oktober 2026</option>
-            <option value="9-2026">September 2026</option>
-            <option value="8-2026">Agustus 2026</option>
-            <option value="7-2026">Juli 2026</option>
-            <option value="6-2026">Juni 2026</option>
-            <option value="5-2026">Mei 2026</option>
-            <option value="4-2026">April 2026</option>
-            <option value="3-2026">Maret 2026</option>
-            <option value="2-2026">Februari 2026</option>
-            <option value="1-2026">Januari 2026</option>
-            <option value="12-2025">Desember 2025</option>
-            <option value="11-2025">November 2025</option>
-            <option value="10-2025">Oktober 2025</option>
-            <option value="9-2025">September 2025</option>
-            <option value="8-2025">Agustus 2025</option>
-            <option value="7-2025">Juli 2025</option>
-            <option value="6-2025">Juni 2025</option>
-            <option value="5-2025">Mei 2025</option>
-            <option value="4-2025">April 2025</option>
-            <option value="3-2025">Maret 2025</option>
-            <option value="2-2025">Februari 2025</option>
-            <option value="1-2025">Januari 2025</option>
-          </select>
+          <PeriodePicker
+            bulan={selectedBulan}
+            tahun={selectedTahun}
+            onChange={(b, t) => { setSelectedBulan(b); setSelectedTahun(t) }}
+          />
         </div>
       </div>
 
-      {/* DEPENDENT DROPDOWNS (WILAYAH) - Ultra Minimalist */}
+      {/* Filter wilayah berjenjang (Kecamatan -> Desa -> Posyandu) */}
       {(role === 'SUPERADMIN' || role === 'ADMIN_KABUPATEN' || role === 'ADMIN_KECAMATAN') && (
-        <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10">
-          <div className="flex items-center gap-2 mb-4">
-            <MapPin className="w-4 h-4 text-slate-400" />
-            <h2 className="text-sm font-semibold text-slate-700 dark:text-white uppercase tracking-wider">Filter Wilayah</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Dropdown Kecamatan */}
-            {(role === 'SUPERADMIN' || role === 'ADMIN_KABUPATEN') && (
-              <div className="space-y-1">
-                <label className="text-xs font-medium text-slate-400">Kecamatan</label>
-                <div className="relative">
-                  <select
-                    value={selectedKec}
-                    onChange={handleKecChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer"
-                  >
-                    <option value="">Pilih Kecamatan...</option>
-                    {regionData.map(k => (
-                      <option key={k.kode} value={k.name}>{k.name}</option>
-                    ))}
-                  </select>
-                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-                </div>
-              </div>
-            )}
-
-            {/* Dropdown Desa */}
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-400">Desa/Kelurahan</label>
-              <div className="relative">
-                <select
-                  value={selectedDesa}
-                  onChange={handleDesaChange}
-                  disabled={role !== 'ADMIN_KECAMATAN' && !selectedKec}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <option value="">Pilih Desa...</option>
-                  {availableDesas.map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-              </div>
-            </div>
-
-            {/* Dropdown Posyandu */}
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-400">Posyandu</label>
-              <div className="relative">
-                <select
-                  value={selectedPosyandu}
-                  onChange={(e) => setSelectedPosyandu(e.target.value)}
-                  disabled={!selectedDesa}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#202020] border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <option value="">Pilih Posyandu...</option>
-                  {availablePosyandus.map(p => (
-                    <option key={p} value={p}>{p}</option>
-                  ))}
-                </select>
-                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <FilterWilayah
+          showKecamatan={role === 'SUPERADMIN' || role === 'ADMIN_KABUPATEN'}
+          kecamatanList={regionData.map(k => ({ value: k.name, label: k.name }))}
+          desaList={availableDesas}
+          posyanduList={availablePosyandus}
+          selectedKec={selectedKec}
+          selectedDesa={selectedDesa}
+          selectedPosyandu={selectedPosyandu}
+          onKecChange={(v) => { setSelectedKec(v); setSelectedDesa(''); setSelectedPosyandu('') }}
+          onDesaChange={(v) => { setSelectedDesa(v); setSelectedPosyandu('') }}
+          onPosyanduChange={setSelectedPosyandu}
+        />
       )}
 
       {/* Main Content Based on Role */}

@@ -2184,7 +2184,62 @@ export default function Sip7Page() {
                     )}
                   </div>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Mobile: card list */}
+                <div className="md:hidden space-y-3">
+                  {dummyHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row) => {
+                    const kb = row.kb || {}
+                    const totalKB = (kb.kondom || 0) + (kb.pil || 0) + (kb.implant || 0) + (kb.mop || 0) + (kb.mow || 0) + (kb.iud || 0) + (kb.suntik || 0) + (kb.lainnya || 0)
+                    const timbang = row.timbang || {}
+                    const totalS = (timbang.s_l || 0) + (timbang.s_p || 0)
+                    const totalD = (timbang.d_l || 0) + (timbang.d_p || 0)
+                    const namaBulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][row.bulan - 1]
+                    return (
+                      <div
+                        key={`m-${row.id}`}
+                        onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }}
+                        className="bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <p className="text-sm font-bold text-slate-800 dark:text-white">{namaBulan} {row.tahun}</p>
+                          <div className="flex items-center gap-2">
+                            <span className={`${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`}>{row.status || 'Tersimpan'}</span>
+                            {canEdit && (
+                              <span className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                                <button onClick={() => handleEdit(row)} className="p-1.5 rounded-md text-blue-500 active:bg-blue-50 dark:active:bg-blue-900/20" title="Edit Laporan">
+                                  <Edit2 className="w-4 h-4" />
+                                </button>
+                                <button onClick={() => handleDelete(row.id)} className="p-1.5 rounded-md text-rose-500 active:bg-rose-50 dark:active:bg-rose-900/20" title="Hapus Laporan">
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-2 text-center">
+                          <div>
+                            <p className="text-base font-bold text-slate-800 dark:text-white">{row.bumil?.jml || 0}</p>
+                            <p className="text-[10px] text-slate-400">Ibu Hamil</p>
+                          </div>
+                          <div>
+                            <p className="text-base font-bold text-slate-800 dark:text-white">{row.busui || 0}</p>
+                            <p className="text-[10px] text-slate-400">Menyusui</p>
+                          </div>
+                          <div>
+                            <p className="text-base font-bold text-slate-800 dark:text-white">{totalKB}</p>
+                            <p className="text-[10px] text-slate-400">Akseptor KB</p>
+                          </div>
+                          <div>
+                            <p className="text-base font-bold text-slate-800 dark:text-white">{totalS}/{totalD}</p>
+                            <p className="text-[10px] text-slate-400">Balita S/D</p>
+                          </div>
+                        </div>
+                        <p className="mt-3 text-[11px] text-slate-400">Ketuk untuk lihat detail lengkap</p>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
                     <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
@@ -2715,7 +2770,7 @@ export default function Sip7Page() {
       {/* Modal Detail Hasil Kegiatan */}
       <AnimatePresence>
         {isDetailModalOpen && selectedReportForDetail && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -2729,7 +2784,7 @@ export default function Sip7Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-4xl overflow-hidden border border-slate-200/70 dark:border-white/10"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               
@@ -2823,7 +2878,7 @@ export default function Sip7Page() {
       {/* Edit Rekapitulasi Modal */}
       <AnimatePresence>
         {selectedRekapForEdit && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -2836,7 +2891,7 @@ export default function Sip7Page() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200/70 dark:border-white/10 text-slate-800 dark:text-white"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10 text-slate-800 dark:text-white"
             >
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>
               

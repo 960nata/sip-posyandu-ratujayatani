@@ -440,7 +440,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL TAMBAH POSYANDU ===== */}
       <AnimatePresence>
         {isPosyanduModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsPosyanduModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-lg p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
@@ -480,7 +480,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL EDIT POSYANDU ===== */}
       <AnimatePresence>
         {isEditPosyanduModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsEditPosyanduModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-lg p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
@@ -520,7 +520,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL HAPUS POSYANDU ===== */}
       <AnimatePresence>
         {isDeletePosyanduModalOpen && selectedPosyandu && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeletePosyanduModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-md p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center gap-4 mb-4">
@@ -549,7 +549,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL TAMBAH USER ===== */}
       <AnimatePresence>
         {isUserModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsUserModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-lg p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
@@ -584,7 +584,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL EDIT USER ===== */}
       <AnimatePresence>
         {isEditUserModalOpen && selectedUser && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsEditUserModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-lg p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
@@ -628,7 +628,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL HAPUS USER ===== */}
       <AnimatePresence>
         {isDeleteUserModalOpen && selectedUser && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDeleteUserModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-md p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center gap-4 mb-4">
@@ -657,7 +657,7 @@ export default function ManagePosyanduPage() {
       {/* ===== MODAL ASSIGN USERS ===== */}
       <AnimatePresence>
         {isAssignModalOpen && selectedPosyandu && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAssignModalOpen(false)} className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }} className="relative bg-white dark:bg-[#202020] rounded-lg shadow-xl w-full max-w-lg p-6 border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-4">

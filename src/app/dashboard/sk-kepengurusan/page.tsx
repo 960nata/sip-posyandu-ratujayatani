@@ -623,7 +623,7 @@ export default function SKKepengurusanPage() {
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {deleteConfirm && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -635,7 +635,7 @@ export default function SKKepengurusanPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-sm p-6 border border-slate-200/70 dark:border-white/10"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-sm p-6 border border-slate-200/70 dark:border-white/10"
             >
               <div className="text-center">
                 <div className="w-14 h-14 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -682,7 +682,7 @@ export default function SKKepengurusanPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="relative bg-white dark:bg-[#252525] rounded-lg shadow-2xl w-full max-w-3xl overflow-hidden border border-slate-200/70 dark:border-white/10 my-8"
+              className="relative bg-white dark:bg-[#252525] rounded-t-2xl rounded-b-none sm:rounded-lg shadow-2xl w-full max-w-3xl max-h-[92vh] overflow-y-auto border border-slate-200/70 dark:border-white/10 my-8"
             >
               {/* Gradient Top Bar */}
               <div className={`absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r ${theme.bgGradient}`}></div>

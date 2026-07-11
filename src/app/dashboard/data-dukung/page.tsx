@@ -515,12 +515,12 @@ export default function DataDukungPage() {
       {/* Image Preview Modal */}
       <AnimatePresence>
         {previewImage && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full max-h-[85vh] overflow-hidden bg-zinc-900 rounded-lg p-2 flex flex-col items-center shadow-2xl"
+              className="relative max-w-4xl w-full max-h-[85vh] max-h-[92vh] overflow-y-auto bg-zinc-900 rounded-lg p-2 flex flex-col items-center shadow-2xl"
             >
               <button 
                 onClick={() => setPreviewImage(null)}
@@ -542,7 +542,7 @@ export default function DataDukungPage() {
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {deleteConfirmId && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center sm:p-4">
             <motion.div 
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

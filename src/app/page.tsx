@@ -146,7 +146,9 @@ export default function Home() {
   // Cards marked with [data-scroll-hover] get `.is-active`, which the custom
   // Tailwind hover variant treats the same as a real hover.
   useEffect(() => {
-    if (window.matchMedia("(hover: hover)").matches) return;
+    const touchLike =
+      window.matchMedia("(hover: none), (pointer: coarse)").matches || window.innerWidth < 768;
+    if (!touchLike) return;
     const els = Array.from(document.querySelectorAll<HTMLElement>("[data-scroll-hover]"));
     if (els.length === 0) return;
     const observer = new IntersectionObserver(
@@ -709,7 +711,7 @@ export default function Home() {
                 whileHover={{ y: -8, scale: 1.015 }}
                 transition={{ duration: 0.3 }}
                 data-scroll-hover
-                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden transition-colors duration-500 hover:bg-purple-950 hover:shadow-2xl hover:shadow-purple-950/20"
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden shadow-lg shadow-slate-300/40 md:shadow-none transition-all duration-500 hover:bg-purple-950 hover:shadow-2xl hover:shadow-purple-950/20"
               >
                 <div className="flex flex-col">
                   {/* Badge */}

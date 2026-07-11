@@ -3,19 +3,11 @@
 
 /*
  * Extend hover so `.is-active` (toggled by scroll/tap on touch devices)
- * triggers the same styles as a real hover. `group-hover:` follows
- * automatically because Tailwind v4 composes it from this variant.
+ * triggers the same styles as a real hover. group-hover must be overridden
+ * separately — it does not re-compose from the custom hover variant.
  */
-@custom-variant hover {
-  @media (hover: hover) {
-    &:hover {
-      @slot;
-    }
-  }
-  &.is-active {
-    @slot;
-  }
-}
+@custom-variant hover (&:hover, &.is-active);
+@custom-variant group-hover (:where(.group):hover &, :where(.group).is-active &);
 
 :root {
   --background: #ffffff;

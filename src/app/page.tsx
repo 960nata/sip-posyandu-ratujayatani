@@ -890,7 +890,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="marquee-container space-y-6 overflow-hidden py-8"
+          className="marquee-container space-y-6 overflow-hidden py-4"
         >
           {/* First Row: Left Scrolling */}
           <div className="flex overflow-hidden">
@@ -909,27 +909,20 @@ export default function Home() {
               ].map((item, idx) => (
                 <motion.div 
                   key={`r1-${idx}`} 
-                  variants={{
-                    initial: { rotate: (idx % 3 === 0) ? -2.5 : (idx % 3 === 1) ? 2 : -1.5, scale: 0.95 },
-                    hover: { 
-                      rotate: 0, 
-                      scale: 1.06, 
-                      y: -10, 
-                      zIndex: 50,
-                      boxShadow: "0 20px 30px -10px rgba(16, 185, 129, 0.4)",
-                    }
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -8,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                   }}
-                  initial="initial"
-                  whileHover="hover"
-                  transition={{ type: "spring", stiffness: 200, damping: 18 }}
-                  className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden shadow-md cursor-pointer border-2 border-white bg-slate-100"
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100"
                 >
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     sizes="320px"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">
@@ -957,27 +950,20 @@ export default function Home() {
               ].map((item, idx) => (
                 <motion.div 
                   key={`r2-${idx}`} 
-                  variants={{
-                    initial: { rotate: (idx % 3 === 0) ? 2 : (idx % 3 === 1) ? -1.5 : -2.5, scale: 0.95 },
-                    hover: { 
-                      rotate: 0, 
-                      scale: 1.06, 
-                      y: -10, 
-                      zIndex: 50,
-                      boxShadow: "0 20px 30px -10px rgba(16, 185, 129, 0.4)",
-                    }
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -8,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                   }}
-                  initial="initial"
-                  whileHover="hover"
-                  transition={{ type: "spring", stiffness: 200, damping: 18 }}
-                  className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden shadow-md cursor-pointer border-2 border-white bg-slate-100"
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="relative w-80 h-52 flex-shrink-0 rounded-[10px] overflow-hidden shadow-md cursor-pointer bg-slate-100 border border-slate-100"
                 >
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     sizes="320px"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">

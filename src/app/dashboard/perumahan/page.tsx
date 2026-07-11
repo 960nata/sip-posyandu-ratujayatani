@@ -150,15 +150,15 @@ export default function PerumahanPage() {
   const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
-    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
-    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
-    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
   }
 
   const [kecamatans, setKecamatans] = useState<any[]>([])
@@ -699,7 +699,7 @@ export default function PerumahanPage() {
                     setSelectedPosyandu('')
                     setSelectedPosyanduId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -746,7 +746,7 @@ export default function PerumahanPage() {
                 </button>
                 <button
                   onClick={handleExportExcel}
-                  className="bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all flex items-center justify-center gap-2"
+                  className="bg-white dark:bg-zinc-800 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
                   Export Excel
@@ -774,7 +774,7 @@ export default function PerumahanPage() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 placeholder="Cari nama pemohon..."
               />
             </div>
@@ -828,11 +828,11 @@ export default function PerumahanPage() {
                       <td className="px-4 py-3 text-slate-900 dark:text-white font-medium">{report.nama}</td>
                       <td className="px-4 py-3 font-mono">{report.nik}</td>
                       <td className="px-4 py-3">{report.alamat}</td>
-                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fcKK ? '✓' : '-'}</td>
-                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fcKTP ? '✓' : '-'}</td>
-                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.sp ? '✓' : '-'}</td>
-                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.suketPenghasilan ? '✓' : '-'}</td>
-                      <td className="px-2 py-3 text-center font-bold text-emerald-600">{report.fotoRumah ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-purple-600">{report.fcKK ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-purple-600">{report.fcKTP ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-purple-600">{report.sp ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-purple-600">{report.suketPenghasilan ? '✓' : '-'}</td>
+                      <td className="px-2 py-3 text-center font-bold text-purple-600">{report.fotoRumah ? '✓' : '-'}</td>
                       <td className="px-4 py-3 text-center">
                         {report.dataDukungs && report.dataDukungs.length > 0 ? (
                           <a
@@ -850,7 +850,7 @@ export default function PerumahanPage() {
                       </td>
                       <td className="px-3 py-3 text-center">
                         {report.status === 'TL' ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-955 dark:text-emerald-300">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 dark:bg-purple-955 dark:text-purple-300">
                             <CheckCircle className="w-3.5 h-3.5" />
                             {report.keteranganTL || 'Sudah diproses'}
                           </span>
@@ -907,7 +907,7 @@ export default function PerumahanPage() {
                       <button onClick={() => {
                         setSelectedKecamatanId(kec.id)
                         setSelectedKecamatan(kec.nama)
-                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                      }} className="text-purple-600 hover:text-purple-700 font-medium text-xs">Detail</button>
                     </td>
                   </tr>
                 ))}
@@ -926,7 +926,7 @@ export default function PerumahanPage() {
                     setSelectedDesa('')
                     setSelectedDesaId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-955/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-955/50 transition-colors"
+                  className="p-2 bg-purple-50 dark:bg-purple-955/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-955/50 transition-colors"
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -952,7 +952,7 @@ export default function PerumahanPage() {
                       <button onClick={() => {
                         setSelectedPosyanduId(p.id)
                         setSelectedPosyandu(p.nama)
-                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Buka Laporan</button>
+                      }} className="text-purple-600 hover:text-purple-700 font-medium text-xs">Buka Laporan</button>
                     </td>
                   </tr>
                 ))}
@@ -971,7 +971,7 @@ export default function PerumahanPage() {
                     setSelectedKecamatan('')
                     setSelectedKecamatanId('')
                   }}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   title="Kembali ke Daftar Kecamatan"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -997,7 +997,7 @@ export default function PerumahanPage() {
                         setSelectedDesaId(desa.id)
                         setSelectedDesa(desa.nama)
                         setNamaDesa(desa.nama)
-                      }} className="text-emerald-600 hover:text-emerald-700 font-medium text-xs">Detail</button>
+                      }} className="text-purple-600 hover:text-purple-700 font-medium text-xs">Detail</button>
                     </td>
                   </tr>
                 ))}
@@ -1121,23 +1121,23 @@ export default function PerumahanPage() {
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Persyaratan (Checklist)</label>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3 bg-slate-50 dark:bg-zinc-800 p-4 rounded-xl">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.fcKK} onChange={e => setFormData({...formData, fcKK: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.fcKK} onChange={e => setFormData({...formData, fcKK: e.target.checked})} className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">FC KK</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.fcKTP} onChange={e => setFormData({...formData, fcKTP: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.fcKTP} onChange={e => setFormData({...formData, fcKTP: e.target.checked})} className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">FC KTP</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.sp} onChange={e => setFormData({...formData, sp: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.sp} onChange={e => setFormData({...formData, sp: e.target.checked})} className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">SP* (Surat Permohonan)</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={formData.suketPenghasilan} onChange={e => setFormData({...formData, suketPenghasilan: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.suketPenghasilan} onChange={e => setFormData({...formData, suketPenghasilan: e.target.checked})} className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">Suket Penghasilan</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer col-span-2">
-                      <input type="checkbox" checked={formData.fotoRumah} onChange={e => setFormData({...formData, fotoRumah: e.target.checked})} className="rounded text-emerald-600 focus:ring-emerald-500 w-4 h-4" />
+                      <input type="checkbox" checked={formData.fotoRumah} onChange={e => setFormData({...formData, fotoRumah: e.target.checked})} className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4" />
                       <span className="text-sm text-slate-700 dark:text-slate-200">Foto Kondisi Rumah</span>
                     </label>
                   </div>
@@ -1153,7 +1153,7 @@ export default function PerumahanPage() {
                         value="TL" 
                         checked={formData.status === 'TL'} 
                         onChange={() => setFormData({...formData, status: 'TL'})}
-                        className="text-emerald-600 focus:ring-emerald-500"
+                        className="text-purple-600 focus:ring-purple-500"
                       />
                       <span className="text-sm font-medium text-slate-800 dark:text-white">Tindak Lanjut (TL)</span>
                     </label>
@@ -1164,7 +1164,7 @@ export default function PerumahanPage() {
                         value="BTL" 
                         checked={formData.status === 'BTL'} 
                         onChange={() => setFormData({...formData, status: 'BTL'})}
-                        className="text-emerald-600 focus:ring-emerald-500"
+                        className="text-purple-600 focus:ring-purple-500"
                       />
                       <span className="text-sm font-medium text-slate-800 dark:text-white">Belum Tindak Lanjut (BTL)</span>
                     </label>
@@ -1177,14 +1177,14 @@ export default function PerumahanPage() {
                   {uploadedFile ? (
                     <div className="flex items-center justify-between bg-slate-50 dark:bg-zinc-800/50 border border-slate-100 dark:border-zinc-800 rounded-xl px-4 py-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <FileText className="w-8 h-8 text-emerald-600 dark:text-emerald-500 shrink-0" />
+                        <FileText className="w-8 h-8 text-purple-600 dark:text-purple-500 shrink-0" />
                         <div className="min-w-0">
                           <p className="text-sm font-medium text-slate-800 dark:text-white truncate">{uploadedFile.fileName}</p>
                           <a 
                             href={uploadedFile.filePath} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 mt-0.5"
+                            className="text-xs text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1 mt-0.5"
                           >
                             Lihat Berkas
                           </a>
@@ -1199,7 +1199,7 @@ export default function PerumahanPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="relative border-2 border-dashed border-slate-200 dark:border-zinc-800 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-xl p-4 transition-colors">
+                    <div className="relative border-2 border-dashed border-slate-200 dark:border-zinc-800 hover:border-purple-500 dark:hover:border-purple-500 rounded-xl p-4 transition-colors">
                       <input
                         type="file"
                         accept=".pdf,image/*"
@@ -1210,7 +1210,7 @@ export default function PerumahanPage() {
                       <div className="flex flex-col items-center justify-center text-center">
                         {uploading ? (
                           <div className="flex flex-col items-center gap-2">
-                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
                             <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">Mengunggah...</p>
                           </div>
                         ) : (

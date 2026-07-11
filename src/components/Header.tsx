@@ -74,10 +74,10 @@ export default function Header() {
                 className={`text-sm font-medium transition-all ${
                   isActive
                     ? isScrolled
-                      ? "text-emerald-700 drop-shadow-[0_0_5px_rgba(5,150,105,0.5)] font-bold"
+                      ? "text-purple-700 drop-shadow-[0_0_5px_rgba(147,51,234,0.5)] font-bold"
                       : "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] font-bold"
                     : isScrolled
-                    ? "text-slate-600 hover:text-emerald-700 hover:drop-shadow-[0_0_5px_rgba(5,150,105,0.5)]"
+                    ? "text-slate-600 hover:text-purple-700 hover:drop-shadow-[0_0_5px_rgba(147,51,234,0.5)]"
                     : "text-white/80 hover:text-white hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]"
                 }`}
               >
@@ -93,8 +93,8 @@ export default function Header() {
             href={session ? "/dashboard" : "/login"}
             className={`inline-flex items-center justify-center px-5 py-2 rounded-[10px] text-[12px] font-bold tracking-wide transition-all duration-300 transform hover:-translate-y-0.5 gap-2 ${
               isScrolled
-                ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-900/10"
-                : "bg-emerald-600 text-white hover:bg-white hover:text-emerald-600 shadow-lg shadow-black/20"
+                ? "bg-purple-600 text-white hover:bg-purple-700 shadow-md shadow-purple-900/10"
+                : "bg-purple-600 text-white hover:bg-white hover:text-purple-600 shadow-lg shadow-black/20"
             }`}
           >
             {session ? "Masuk Dashboard" : "Masuk"}
@@ -135,8 +135,8 @@ export default function Header() {
                     onClick={() => setIsMenuOpen(false)}
                     className={`text-sm font-medium p-3 rounded-xl transition-all ${
                       isActive
-                        ? "bg-emerald-50 text-emerald-700 font-bold"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-emerald-700"
+                        ? "bg-purple-50 text-purple-700 font-bold"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-purple-700"
                     }`}
                   >
                     {link.label}
@@ -149,7 +149,7 @@ export default function Header() {
               <Link
                 href={session ? "/dashboard" : "/login"}
                 onClick={() => setIsMenuOpen(false)}
-                className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-900/10 gap-2"
+                className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 bg-purple-600 text-white hover:bg-purple-700 shadow-md shadow-purple-900/10 gap-2"
               >
                 {session ? "Masuk Dashboard" : "Masuk"}
                 <ArrowRight className="w-4 h-4" />

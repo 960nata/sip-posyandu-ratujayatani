@@ -66,7 +66,7 @@ const jabatanColor = (val: string) => {
   switch (val) {
     case 'KETUA': return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
     case 'SEKRETARIS': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-    case 'BENDAHARA': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+    case 'BENDAHARA': return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
     case 'KETUA_BIDANG': return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
     case 'KADER': return 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
     default: return 'bg-slate-100 text-slate-600'
@@ -83,22 +83,22 @@ export default function SKKepengurusanPage() {
   const userRole = (session?.user as any)?.role
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
-    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
-    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
-    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
-    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-emerald-900/30',
-    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-emerald-500',
-    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-emerald-600',
-    borderLight: isPosyandu ? 'border-purple-200' : 'border-emerald-200',
-    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-emerald-100',
-    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-emerald-900/50',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    borderT: isPosyandu ? 'border-t-purple-500' : 'border-t-emerald-500',
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
+    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
+    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
+    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
+    borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
+    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-purple-100',
+    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-purple-900/50',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    borderT: isPosyandu ? 'border-t-purple-500' : 'border-t-purple-500',
   }
 
   const [skList, setSkList] = useState<SKData[]>([])
@@ -485,14 +485,14 @@ export default function SKKepengurusanPage() {
                         )}
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
                           sk.tipe === 'SK_DESA'
-                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30'
+                            ? 'bg-purple-50 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400 border-purple-100 dark:border-purple-900/30'
                             : 'bg-purple-50 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400 border-purple-100 dark:border-purple-900/30'
                         }`}>
                           {sk.tipe === 'SK_DESA' ? 'SK Desa' : 'SK Pengelola'}
                         </span>
                         <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                           sk.isActive
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                            ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                             : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                         }`}>
                           {sk.isActive ? (
@@ -817,7 +817,7 @@ export default function SKKepengurusanPage() {
                               onChange={e => setFormSK({ ...formSK, isActive: e.target.checked })}
                               className="sr-only peer"
                             />
-                            <div className="w-10 h-6 bg-slate-200 dark:bg-zinc-700 peer-checked:bg-emerald-500 rounded-full transition-colors"></div>
+                            <div className="w-10 h-6 bg-slate-200 dark:bg-zinc-700 peer-checked:bg-purple-500 rounded-full transition-colors"></div>
                             <div className="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full shadow-sm transition-transform peer-checked:translate-x-4"></div>
                           </div>
                           <span className="text-sm font-medium text-slate-700 dark:text-zinc-300">

@@ -27,7 +27,7 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-slate-900 text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-900 to-slate-900 opacity-90 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-950 to-slate-900 opacity-90 z-0"></div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-sm font-semibold text-emerald-600 uppercase tracking-wide">Tata Kelola</h2>
+              <h2 className="text-sm font-semibold text-purple-600 uppercase tracking-wide">Tata Kelola</h2>
               <p className="text-3xl font-bold text-slate-900 mt-2 mb-6">Kelembagaan yang Kuat & Transparan</p>
               <p className="text-slate-600 mb-6 leading-relaxed">
                 SIP bukan sekadar aplikasi, melainkan sebuah ekosistem tata kelola data yang melibatkan berbagai tingkatan kelembagaan di Kabupaten Lampung Timur. Mulai dari pimpinan daerah hingga kader di tingkat desa, semua terhubung dalam satu rantai data yang valid.
@@ -66,7 +66,7 @@ export default function AboutPage() {
                   { icon: Shield, title: "Kader Lapangan", desc: "Ujung tombak pengumpulan data langsung dari masyarakat." },
                 ].map((item, index) => (
                   <div key={index} className="flex gap-4">
-                    <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
                       <item.icon className="w-5 h-5" />
                     </div>
                     <div>
@@ -79,9 +79,9 @@ export default function AboutPage() {
             </div>
 
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-emerald-100 to-teal-50 rounded-3xl overflow-hidden flex items-center justify-center p-8">
+              <div className="aspect-square bg-gradient-to-br from-purple-100 to-indigo-50 rounded-3xl overflow-hidden flex items-center justify-center p-8">
                 <div className="text-center">
-                  <Heart className="w-24 h-24 text-emerald-500 fill-emerald-500/10 mx-auto mb-4" />
+                  <Heart className="w-24 h-24 text-purple-500 fill-purple-500/10 mx-auto mb-4" />
                   <p className="text-lg font-semibold text-slate-900">SIPANDU Lampung Timur</p>
                   <p className="text-sm text-slate-500">Membangun Negeri dari Data Desa</p>
                 </div>

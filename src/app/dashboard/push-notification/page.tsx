@@ -97,7 +97,7 @@ export default function PushNotificationPage() {
         <div className="lg:col-span-1">
           <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm sticky top-6">
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
-              <Send className="w-5 h-5 text-emerald-500" />
+              <Send className="w-5 h-5 text-purple-500" />
               Kirim Notifikasi
             </h2>
             
@@ -108,7 +108,7 @@ export default function PushNotificationPage() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                   placeholder="Contoh: Jadwal Posyandu"
                   required
                 />
@@ -119,7 +119,7 @@ export default function PushNotificationPage() {
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                   rows={4}
                   placeholder="Tulis pesan notifikasi di sini..."
                   required
@@ -131,7 +131,7 @@ export default function PushNotificationPage() {
                 <select 
                   value={formData.target}
                   onChange={(e) => setFormData({...formData, target: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                 >
                   <option value="SEMUA">Semua Pengguna</option>
                   <option value="KECAMATAN">Per Kecamatan</option>
@@ -147,7 +147,7 @@ export default function PushNotificationPage() {
                     type="text"
                     value={formData.kecamatan}
                     onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                     placeholder="Nama Kecamatan"
                     required
                   />
@@ -162,7 +162,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.kecamatan}
                       onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="Nama Kecamatan"
                       required
                     />
@@ -173,7 +173,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
@@ -189,7 +189,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
@@ -200,7 +200,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.posyandu}
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
                       placeholder="Nama Posyandu"
                       required
                     />
@@ -211,7 +211,7 @@ export default function PushNotificationPage() {
               <button
                 type="submit"
                 disabled={isSending}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
               >
                 {isSending ? (
                   <>
@@ -232,7 +232,7 @@ export default function PushNotificationPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-xl text-sm font-medium flex items-center gap-2"
+                    className="p-3 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-xl text-sm font-medium flex items-center gap-2"
                   >
                     <Check className="w-5 h-5" />
                     Notifikasi berhasil dikirim!
@@ -248,7 +248,7 @@ export default function PushNotificationPage() {
           <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                <Bell className="w-5 h-5 text-emerald-500" />
+                <Bell className="w-5 h-5 text-purple-500" />
                 Riwayat Notifikasi
               </h2>
               
@@ -260,7 +260,7 @@ export default function PushNotificationPage() {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="Cari notifikasi..."
                 />
               </div>
@@ -268,12 +268,12 @@ export default function PushNotificationPage() {
 
             <div className="space-y-4">
               {filteredHistory.map((notif) => (
-                <div key={notif.id} className="p-4 bg-slate-50 dark:bg-zinc-700/30 rounded-xl border border-slate-100 dark:border-zinc-700 hover:border-emerald-200 dark:hover:border-emerald-800 transition-colors group">
+                <div key={notif.id} className="p-4 bg-slate-50 dark:bg-zinc-700/30 rounded-xl border border-slate-100 dark:border-zinc-700 hover:border-purple-200 dark:hover:border-purple-800 transition-colors group">
                   <div className="flex justify-between gap-4">
                     <div className="space-y-1">
                       <h3 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2">
                         {notif.title}
-                        <span className="text-xs bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 px-2 py-0.5 rounded-full font-medium">
+                        <span className="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 px-2 py-0.5 rounded-full font-medium">
                           {notif.status}
                         </span>
                       </h3>

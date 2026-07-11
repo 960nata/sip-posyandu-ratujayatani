@@ -32,7 +32,7 @@ export default function PanduanPage() {
       <Header />
 
       {/* Hero Section (Styled like Tujuan Page) */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/10 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -45,7 +45,7 @@ export default function PanduanPage() {
               Bab VII & VIII Juknis
             </span>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Panduan Administrasi & Pelaporan</h1>
-            <p className="text-base md:text-lg text-emerald-50 font-light max-w-3xl leading-relaxed">
+            <p className="text-base md:text-lg text-purple-50 font-light max-w-3xl leading-relaxed">
               Panduan lengkap tata administrasi, pengelolaan keuangan, pengarsipan, dan alur pelaporan berjenjang Posyandu.
             </p>
           </motion.div>
@@ -59,7 +59,7 @@ export default function PanduanPage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Administrasi Umum
               </span>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Jenis-Jenis Surat Posyandu</h2>
@@ -87,7 +87,7 @@ export default function PanduanPage() {
                   whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05)" }}
                 >
                   <div>
-                    <span className="inline-block px-2.5 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded mb-3">
+                    <span className="inline-block px-2.5 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded mb-3">
                       {item.type}
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -103,7 +103,7 @@ export default function PanduanPage() {
         <section className="py-20 bg-slate-50 border-y border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Pasal 26–27 Permendagri 13/2024
               </span>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Sumber Pendanaan Posyandu</h2>
@@ -129,7 +129,7 @@ export default function PanduanPage() {
                   viewport={{ once: true }}
                   whileHover={{ y: -5 }}
                 >
-                  <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <div>
@@ -140,11 +140,11 @@ export default function PanduanPage() {
               ))}
             </div>
 
-            <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100 flex gap-3 items-start">
-              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="p-4 bg-purple-50 rounded-xl border border-purple-100 flex gap-3 items-start">
+              <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Lightbulb className="w-5 h-5" />
               </div>
-              <p className="text-sm text-emerald-700 font-light leading-relaxed">
+              <p className="text-sm text-purple-700 font-light leading-relaxed">
                 Penganggaran dimaksudkan untuk mendanai program/kegiatan/subkegiatan Posyandu dan insentif kader. Pengurus dan Kader berhak atas insentif sesuai ketentuan perundang-undangan.
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function PanduanPage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Bab VIII Pelaporan
               </span>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Alur Pelaporan Berjenjang</h2>
@@ -173,19 +173,19 @@ export default function PanduanPage() {
                 { role: "Menteri Dalam Negeri", desc: "Melalui Ditjen Bina Pemdes" }
               ].map((step, idx) => (
                 <div key={idx} className="flex flex-col md:flex-row items-center gap-4 w-full">
-                  <div className="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm w-full text-center">
+                  <div className="bg-white p-4 rounded-xl border border-purple-200 shadow-sm w-full text-center">
                     <h3 className="text-sm font-bold text-slate-900 mb-1">{step.role}</h3>
                     <p className="text-xs text-slate-500 font-light">{step.desc}</p>
                   </div>
                   {idx < 4 && (
-                    <div className="text-emerald-500 font-bold rotate-90 md:rotate-0">→</div>
+                    <div className="text-purple-500 font-bold rotate-90 md:rotate-0">→</div>
                   )}
                 </div>
               ))}
             </div>
 
             <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 flex gap-3 items-start max-w-4xl mx-auto">
-              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <Calendar className="w-5 h-5" />
               </div>
               <p className="text-sm text-slate-600 font-light leading-relaxed">
@@ -199,7 +199,7 @@ export default function PanduanPage() {
         <section className="py-20 bg-slate-50 border-y border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Bab IV Juknis & Pasal 9 Permendagri 13/2024
               </span>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Atribut Kelembagaan Posyandu</h2>
@@ -229,7 +229,7 @@ export default function PanduanPage() {
                   viewport={{ once: true }}
                   whileHover={{ y: -5 }}
                 >
-                  <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2">
+                  <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-2">
                     <item.icon className="w-5 h-5" />
                   </div>
                   <h3 className="text-sm font-bold text-slate-900 mb-1">{item.title}</h3>
@@ -244,7 +244,7 @@ export default function PanduanPage() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-left mb-8">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Bab VII C Juknis
               </span>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Tata Cara Pengarsipan</h2>
@@ -270,7 +270,7 @@ export default function PanduanPage() {
                     viewport={{ once: true }}
                     whileHover={{ y: -5 }}
                   >
-                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-3">
+                    <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-3">
                       <item.icon className="w-6 h-6" />
                     </div>
                     <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>

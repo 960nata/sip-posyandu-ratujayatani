@@ -273,7 +273,7 @@ export default function DashboardPage() {
         { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
         { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
         { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20', slug: 'perumahan' },
+        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
         { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
         { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
       ]
@@ -393,7 +393,7 @@ export default function DashboardPage() {
         { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
         { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
         { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20', slug: 'perumahan' },
+        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
         { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
         { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
       ]
@@ -405,7 +405,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -417,7 +417,7 @@ export default function DashboardPage() {
                   Memantau data yang diinput oleh posyandu ini.
                 </p>
               </div>
-              <span className="text-xs font-semibold bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 px-3 py-1 rounded-full">
+              <span className="text-xs font-semibold bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 px-3 py-1 rounded-full">
                 Active
               </span>
             </div>
@@ -431,14 +431,14 @@ export default function DashboardPage() {
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
+                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
                           {module.title}
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
                       </div>
                     </div>
                   </div>
-                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50">
+                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
                   </Link>
@@ -475,7 +475,7 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#059669', '#3b82f6', '#2563eb', '#8b5cf6'],
+        colors: ['#10b981', '#7c3aed', '#3b82f6', '#2563eb', '#8b5cf6'],
         xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
@@ -507,7 +507,7 @@ export default function DashboardPage() {
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Sudah Input Laporan</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.activePosyanduCount ? Math.min(healthStats.activePosyanduCount, 3) : 3} <span className="text-xl text-slate-300">/ {healthStats?.activePosyanduCount ?? 5}</span></p>
+              <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.activePosyanduCount ? Math.min(healthStats.activePosyanduCount, 3) : 3} <span className="text-xl text-slate-300">/ {healthStats?.activePosyanduCount ?? 5}</span></p>
               <p className="text-xs text-slate-400 mt-1">Bulan ini</p>
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
@@ -527,7 +527,7 @@ export default function DashboardPage() {
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Balita</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
+              <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
             </div>
           </div>
@@ -572,8 +572,8 @@ export default function DashboardPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                     {[
-                      { name: 'Posyandu Mawar', kes6: 'Selesai', sosial: 'Selesai', kes6Color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30', sosialColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
-                      { name: 'Posyandu Melati', kes6: 'Pending', sosial: 'Selesai', kes6Color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30', sosialColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+                      { name: 'Posyandu Mawar', kes6: 'Selesai', sosial: 'Selesai', kes6Color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30', sosialColor: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
+                      { name: 'Posyandu Melati', kes6: 'Pending', sosial: 'Selesai', kes6Color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30', sosialColor: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Posyandu Kenanga', kes6: 'Pending', sosial: 'Pending', kes6Color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30', sosialColor: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                     ].map((pos) => (
                       <tr key={pos.name}>
@@ -581,7 +581,7 @@ export default function DashboardPage() {
                         <td className="px-4 py-3.5"><span className={`${pos.kes6Color} text-xs font-medium px-2.5 py-1 rounded-full`}>{pos.kes6}</span></td>
                         <td className="px-4 py-3.5"><span className={`${pos.sosialColor} text-xs font-medium px-2.5 py-1 rounded-full`}>{pos.sosial}</span></td>
                         <td className="px-4 py-3.5 text-right">
-                          <button onClick={() => setSelectedPosyandu(pos.name)} className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium text-xs">Pantau</button>
+                          <button onClick={() => setSelectedPosyandu(pos.name)} className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs">Pantau</button>
                         </td>
                       </tr>
                     ))}
@@ -603,7 +603,7 @@ export default function DashboardPage() {
                   <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-zinc-700 transition-colors">
                     <div>
                       <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.posyandu}</p>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-emerald-600">{item.type}</span></p>
+                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-medium text-slate-600 dark:text-slate-300">{item.date}</p>
@@ -625,7 +625,7 @@ export default function DashboardPage() {
         { title: 'Data KES-7', desc: 'Ibu hamil & nifas', icon: Heart, color: 'text-pink-500 bg-pink-50 dark:bg-pink-900/20', slug: 'sip7' },
         { title: 'Data Pendidikan', desc: 'Sarana & prasarana', icon: BookOpen, color: 'text-blue-500 bg-blue-50 dark:bg-blue-900/20', slug: 'pendidikan' },
         { title: 'Data Pekerjaan Umum', desc: 'Infrastruktur umum', icon: Building, color: 'text-amber-500 bg-amber-50 dark:bg-amber-900/20', slug: 'pekerjaan-umum' },
-        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20', slug: 'perumahan' },
+        { title: 'Data Perumahan', desc: 'Kondisi rumah & sanitasi', icon: Home, color: 'text-purple-500 bg-purple-50 dark:bg-purple-900/20', slug: 'perumahan' },
         { title: 'Data Trantib', desc: 'Keamanan & ketertiban', icon: Shield, color: 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/20', slug: 'trantib' },
         { title: 'Data Sosial', desc: 'Kesejahteraan warga', icon: Users, color: 'text-violet-500 bg-violet-50 dark:bg-violet-900/20', slug: 'sosial' },
       ]
@@ -638,7 +638,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -650,7 +650,7 @@ export default function DashboardPage() {
                   Desa {selectedDesa} • Wilayah Kecamatan Pekalongan
                 </p>
               </div>
-              <span className="text-xs font-semibold bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 px-3 py-1 rounded-full">
+              <span className="text-xs font-semibold bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 px-3 py-1 rounded-full">
                 Active
               </span>
             </div>
@@ -664,7 +664,7 @@ export default function DashboardPage() {
                         <module.icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
+                        <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-purple-600 transition-colors">
                           {module.title}
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">{module.desc}</p>
@@ -673,7 +673,7 @@ export default function DashboardPage() {
                   </div>
                   <Link
                     href={`/dashboard/${module.slug}`}
-                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-slate-700 dark:text-white hover:text-emerald-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-emerald-100 dark:hover:border-emerald-900/50"
+                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-zinc-800 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
@@ -693,7 +693,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-[10px] hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Desa"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -723,12 +723,12 @@ export default function DashboardPage() {
                     <tr>
                       <td className="px-4 py-4 font-medium text-slate-900 dark:text-white">Posyandu Mawar</td>
                       <td className="px-4 py-4 text-slate-500 dark:text-zinc-400">{selectedDesa}</td>
-                      <td className="px-4 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
-                      <td className="px-4 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
+                      <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
+                      <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
                       <td className="px-4 py-4 text-right">
                         <button
                           onClick={() => setSelectedPosyandu('Posyandu Mawar')}
-                          className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium text-xs"
+                          className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
                         >
                           Pantau
                         </button>
@@ -738,11 +738,11 @@ export default function DashboardPage() {
                       <td className="px-4 py-4 font-medium text-slate-900 dark:text-white">Posyandu Melati</td>
                       <td className="px-4 py-4 text-slate-500 dark:text-zinc-400">{selectedDesa}</td>
                       <td className="px-4 py-4"><span className="text-amber-600 text-xs font-medium bg-amber-50 dark:bg-amber-900/30 px-2.5 py-1 rounded-full">Pending</span></td>
-                      <td className="px-4 py-4"><span className="text-emerald-600 text-xs font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
+                      <td className="px-4 py-4"><span className="text-purple-600 text-xs font-medium bg-purple-50 dark:bg-purple-900/30 px-2.5 py-1 rounded-full">Selesai</span></td>
                       <td className="px-4 py-4 text-right">
                         <button
                           onClick={() => setSelectedPosyandu('Posyandu Melati')}
-                          className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium text-xs"
+                          className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs"
                         >
                           Pantau
                         </button>
@@ -797,7 +797,7 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#059669', '#3b82f6', '#2563eb', '#8b5cf6'],
+        colors: ['#10b981', '#7c3aed', '#3b82f6', '#2563eb', '#8b5cf6'],
         xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
@@ -844,7 +844,7 @@ export default function DashboardPage() {
             </div>
             <div className="bg-white dark:bg-[#111827] p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <p className="text-sm font-medium text-slate-400">Balita</p>
-              <p className="text-4xl font-bold tracking-tight text-emerald-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
+              <p className="text-4xl font-bold tracking-tight text-purple-600 mt-2">{healthStats?.sip6?.totalBalita ?? 0}</p>
               <p className="text-xs text-slate-400 mt-1">Ditimbang: {healthStats?.sip7?.balitaD ?? 0} (SIP 7)</p>
             </div>
           </div>
@@ -893,13 +893,13 @@ export default function DashboardPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                     {[
-                      { name: 'Desa Adijaya', progress: '5/5 Posyandu', status: 'Selesai', color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+                      { name: 'Desa Adijaya', progress: '5/5 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Desa Adirejo', progress: '3/5 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                       { name: 'Desa Ganti Warno', progress: '0/4 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-zinc-700/50' },
-                      { name: 'Desa Gantimulyo', progress: '4/4 Posyandu', status: 'Selesai', color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+                      { name: 'Desa Gantimulyo', progress: '4/4 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Desa Gondangrejo', progress: '2/5 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                       { name: 'Desa Jojog', progress: '1/4 Posyandu', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
-                      { name: 'Desa Kalibening', progress: '3/3 Posyandu', status: 'Selesai', color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+                      { name: 'Desa Kalibening', progress: '3/3 Posyandu', status: 'Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                       { name: 'Desa Sidodadi', progress: '0/5 Posyandu', status: 'Belum', color: 'text-slate-600 bg-slate-50 dark:bg-zinc-700/50' },
                     ].map((desa) => (
                       <tr key={desa.name}>
@@ -907,7 +907,7 @@ export default function DashboardPage() {
                         <td className="px-4 py-3.5 text-slate-500 dark:text-zinc-400">{desa.progress}</td>
                         <td className="px-4 py-3.5"><span className={`${desa.color} text-xs font-medium px-2.5 py-1 rounded-full`}>{desa.status}</span></td>
                         <td className="px-4 py-3.5 text-right">
-                          <button onClick={() => setSelectedDesa(desa.name)} className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium text-xs">Pantau</button>
+                          <button onClick={() => setSelectedDesa(desa.name)} className="text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-xs">Pantau</button>
                         </td>
                       </tr>
                     ))}
@@ -930,7 +930,7 @@ export default function DashboardPage() {
                   <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-800/50 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-zinc-700 transition-colors">
                     <div>
                       <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.desa} <span className="text-xs font-normal text-slate-400">({item.posyandu})</span></p>
-                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-emerald-600">{item.type}</span></p>
+                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Menginput data <span className="font-medium text-purple-600">{item.type}</span></p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-medium text-slate-600 dark:text-slate-300">{item.date}</p>
@@ -991,9 +991,9 @@ export default function DashboardPage() {
         {/* Summary Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[
-            { label: 'Total Posyandu', value: healthStats?.activePosyanduCount ? String(healthStats.activePosyanduCount) : '240', desc: 'Di 24 Kecamatan', color: 'text-emerald-600' },
+            { label: 'Total Posyandu', value: healthStats?.activePosyanduCount ? String(healthStats.activePosyanduCount) : '240', desc: 'Di 24 Kecamatan', color: 'text-purple-600' },
             { label: 'Total Pengunjung', value: healthStats ? (healthStats.sip6.totalBalita + healthStats.sip6.totalLansia + healthStats.sip6.totalIbuHamil * 10).toLocaleString('id-ID') : '12.400', desc: 'Bulan ini', color: 'text-blue-600' },
-            { label: 'Laporan Selesai', value: '1.450', desc: 'Bulan ini', color: 'text-teal-600' },
+            { label: 'Laporan Selesai', value: '1.450', desc: 'Bulan ini', color: 'text-indigo-600' },
             { label: 'Total User', value: '350', desc: 'Semua level', color: 'text-violet-600' },
           ].map((stat) => (
             <div key={stat.label} className="bg-white dark:bg-[#111827] p-4 md:p-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
@@ -1042,7 +1042,7 @@ export default function DashboardPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
                   {[
-                    { name: 'Pekalongan', progress: '10/12 Desa', status: 'Hampir Selesai', color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+                    { name: 'Pekalongan', progress: '10/12 Desa', status: 'Hampir Selesai', color: 'text-purple-600 bg-purple-50 dark:bg-purple-900/30' },
                     { name: 'Batanghari', progress: '8/15 Desa', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                     { name: 'Metro Kibang', progress: '5/7 Desa', status: 'Proses', color: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30' },
                   ].map((kec) => (
@@ -1070,7 +1070,7 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Dashboard
             </h1>
-            <span className="text-xs font-semibold bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 px-3 py-1 rounded-full">
+            <span className="text-xs font-semibold bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 px-3 py-1 rounded-full">
               {role}
             </span>
           </div>
@@ -1088,7 +1088,7 @@ export default function DashboardPage() {
               setSelectedBulan(parseInt(b))
               setSelectedTahun(parseInt(t))
             }}
-            className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all cursor-pointer shadow-sm"
+            className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all cursor-pointer shadow-sm"
           >
             <option value="12-2026">Desember 2026</option>
             <option value="11-2026">November 2026</option>
@@ -1135,7 +1135,7 @@ export default function DashboardPage() {
                   <select
                     value={selectedKec}
                     onChange={handleKecChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer"
                   >
                     <option value="">Pilih Kecamatan...</option>
                     {regionData.map(k => (
@@ -1155,7 +1155,7 @@ export default function DashboardPage() {
                   value={selectedDesa}
                   onChange={handleDesaChange}
                   disabled={role !== 'ADMIN_KECAMATAN' && !selectedKec}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option value="">Pilih Desa...</option>
                   {availableDesas.map(d => (
@@ -1174,7 +1174,7 @@ export default function DashboardPage() {
                   value={selectedPosyandu}
                   onChange={(e) => setSelectedPosyandu(e.target.value)}
                   disabled={!selectedDesa}
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-xl text-sm font-medium text-slate-700 dark:text-white focus:outline-none appearance-none transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option value="">Pilih Posyandu...</option>
                   {availablePosyandus.map(p => (

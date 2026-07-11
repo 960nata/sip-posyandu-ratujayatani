@@ -45,13 +45,13 @@ function StatCard({ target, suffix, label, icon: Icon, visible, delay }: { targe
       transition={{ duration: 0.3 }}
       className="bg-white/[0.04] border border-white/10 rounded-lg p-6 hover:bg-white/[0.08] transition-colors cursor-pointer"
     >
-      <div className="w-10 h-10 rounded-full bg-emerald-400 flex items-center justify-center mb-5">
-        <Icon className="w-5 h-5 text-emerald-950" />
+      <div className="w-10 h-10 rounded-full bg-purple-400 flex items-center justify-center mb-5">
+        <Icon className="w-5 h-5 text-purple-950" />
       </div>
       <p className="text-3xl font-extrabold text-white mb-1 tracking-tight">
         {formatted}{suffix}
       </p>
-      <p className="text-sm text-emerald-100/60 font-normal">{label}</p>
+      <p className="text-sm text-purple-100/60 font-normal">{label}</p>
     </motion.div>
   );
 }
@@ -174,7 +174,7 @@ export default function Home() {
           >
             <Link
               href="/login"
-              className="group w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-[10px] shadow-lg shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              className="group w-full sm:w-auto px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 rounded-[10px] shadow-lg shadow-purple-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
               Mulai Sekarang
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -197,7 +197,7 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
-              Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">Hadir?</span>
+              Mengapa Sistem Informasi Posyandu <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-600">Hadir?</span>
             </h2>
             <p className="inline-flex items-center px-5 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-slate-500 font-normal">
               Tata kelola data terintegrasi untuk pengambilan keputusan yang cepat dan tepat.
@@ -234,7 +234,7 @@ export default function Home() {
                 variants={itemVariants}
                 whileHover={{ y: -8, scale: 1.015 }}
                 transition={{ duration: 0.3 }}
-                className="relative h-96 rounded-[10px] overflow-hidden shadow-xl shadow-emerald-900/5 group cursor-pointer"
+                className="relative h-96 rounded-[10px] overflow-hidden shadow-xl shadow-purple-900/5 group cursor-pointer"
               >
                 <Image
                   src={card.img}
@@ -273,7 +273,7 @@ export default function Home() {
           >
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               Cakupan Pelayanan{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-600">
                 Posyandu
               </span>
             </h2>
@@ -349,16 +349,16 @@ export default function Home() {
                   {/* Card body with circular corner cutout */}
                   <div
                     className={`relative overflow-hidden rounded-[10px] p-4 sm:p-7 min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
-                      isAccentMobile ? "bg-emerald-400" : "bg-emerald-50/70"
-                    } ${isAccent ? "lg:bg-emerald-400" : "lg:bg-emerald-50/70"}`}
+                      isAccentMobile ? "bg-purple-400" : "bg-purple-50/70"
+                    } ${isAccent ? "lg:bg-purple-400" : "lg:bg-purple-50/70"}`}
                     style={maskStyle}
                   >
                     {/* Expanding blob fill on hover */}
                     <div
                       aria-hidden
                       className={`absolute -bottom-10 -left-10 w-24 h-24 rounded-full scale-0 group-hover:scale-[9] transition-transform duration-500 ease-out ${
-                        isAccentMobile ? "bg-emerald-500" : "bg-emerald-200/90"
-                      } ${isAccent ? "lg:bg-emerald-500" : "lg:bg-emerald-200/90"}`}
+                        isAccentMobile ? "bg-purple-500" : "bg-purple-200/90"
+                      } ${isAccent ? "lg:bg-purple-500" : "lg:bg-purple-200/90"}`}
                     />
 
                     {/* Title */}
@@ -375,7 +375,7 @@ export default function Home() {
                   </div>
 
                   {/* Arrow button in the cutout */}
-                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border-2 border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-emerald-200/70">
+                  <div className="absolute top-0.5 right-0.5 w-[43px] h-[43px] rounded-full border-2 border-slate-300 bg-white flex items-center justify-center transition-all duration-300 group-hover:bg-slate-900 group-hover:border-slate-900 group-hover:scale-110 group-hover:ring-4 group-hover:ring-purple-200/70">
                     <ArrowUpRight className="w-4 h-4 text-slate-900 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
                   </div>
                 </motion.div>
@@ -386,7 +386,7 @@ export default function Home() {
       </section>
 
       {/* Section: Lampung Timur dalam Angka */}
-      <section className="py-20 bg-[#12291b] overflow-hidden">
+      <section className="py-20 bg-[#25103c] overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <motion.div 
@@ -396,13 +396,13 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-3 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-400 mb-3 block">
               Data Publik
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
               Kabupaten Lampung Timur dalam Angka
             </h2>
-            <p className="text-emerald-100/60 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
+            <p className="text-purple-100/60 mt-4 max-w-3xl mx-auto font-normal leading-relaxed text-base">
               Visualisasi skala operasional dan sebaran cakupan pelayanan Posyandu di seluruh wilayah Kabupaten Lampung Timur. Seluruh data dikonsolidasikan secara digital melalui pangkalan data terintegrasi Sistem Informasi Posyandu (SIPANDU).
             </p>
           </motion.div>
@@ -441,8 +441,8 @@ export default function Home() {
             className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12"
           >
             <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-purple-600 mb-3 bg-purple-50 px-3 py-1 rounded-full border border-purple-100">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
                 Tata Kelola
               </span>
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -476,15 +476,15 @@ export default function Home() {
                         { label: "Posyandu Desa", val: "1.100+ Pos", isBadge: false }
                       ].map((item, i) => (
                         <div key={i} className="flex justify-between items-center gap-2">
-                          <span className="text-[10px] opacity-80 font-medium transition-colors duration-500 text-white group-hover:text-emerald-950">
+                          <span className="text-[10px] opacity-80 font-medium transition-colors duration-500 text-white group-hover:text-purple-950">
                             {item.label}
                           </span>
                           {item.isBadge ? (
-                            <span className="px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wide transition-all duration-500 bg-emerald-800 text-emerald-300 group-hover:bg-emerald-950/20 group-hover:text-emerald-900">
+                            <span className="px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wide transition-all duration-500 bg-purple-800 text-purple-300 group-hover:bg-purple-950/20 group-hover:text-purple-900">
                               {item.val}
                             </span>
                           ) : (
-                            <span className="text-[9px] font-semibold transition-colors duration-500 text-emerald-300 group-hover:text-emerald-900">
+                            <span className="text-[9px] font-semibold transition-colors duration-500 text-purple-300 group-hover:text-purple-900">
                               {item.val}
                             </span>
                           )}
@@ -492,7 +492,7 @@ export default function Home() {
                       ))}
                     </div>
                     <div className="w-1/3 h-full flex flex-col justify-end items-end">
-                      <svg className="w-full h-12 stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-900" viewBox="0 0 60 30" fill="none" strokeWidth="2" strokeLinecap="round">
+                      <svg className="w-full h-12 stroke-current transition-colors duration-500 text-purple-400 group-hover:text-purple-900" viewBox="0 0 60 30" fill="none" strokeWidth="2" strokeLinecap="round">
                         <path d="M5 25 Q 15 15, 25 20 T 45 5 T 55 10" />
                         <circle cx="45" cy="5" r="3" className="fill-current" />
                       </svg>
@@ -512,21 +512,21 @@ export default function Home() {
                         "Ditinjau"
                       ].map((txt, i) => (
                         <div key={i} className="flex items-center gap-1.5">
-                          <svg className="w-3.5 h-3.5 shrink-0 stroke-current text-emerald-400 group-hover:text-emerald-900" fill="none" viewBox="0 0 24 24" strokeWidth="3">
+                          <svg className="w-3.5 h-3.5 shrink-0 stroke-current text-purple-400 group-hover:text-purple-900" fill="none" viewBox="0 0 24 24" strokeWidth="3">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                           </svg>
-                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-emerald-950">
+                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-purple-950">
                             {txt}
                           </span>
                         </div>
                       ))}
                     </div>
-                    <div className="flex items-end justify-around gap-1 h-24 w-1/2 bg-emerald-950/40 rounded-xl p-2 transition-colors duration-500 group-hover:bg-white/50">
+                    <div className="flex items-end justify-around gap-1 h-24 w-1/2 bg-purple-950/40 rounded-xl p-2 transition-colors duration-500 group-hover:bg-white/50">
                       {[30, 60, 45, 90, 75].map((h, i) => (
                         <div
                           key={i}
                           style={{ height: `${h}%` }}
-                          className="w-2 rounded-t-sm transition-colors duration-500 bg-emerald-400 group-hover:bg-emerald-950"
+                          className="w-2 rounded-t-sm transition-colors duration-500 bg-purple-400 group-hover:bg-purple-950"
                         ></div>
                       ))}
                     </div>
@@ -538,25 +538,25 @@ export default function Home() {
                 title: "Integrasi Jaringan Layanan Lintas Sektor Desa",
                 mockup: (
                   <div className="relative w-full h-full flex items-center justify-center p-4">
-                    <svg className="absolute inset-0 w-full h-full stroke-current transition-colors duration-500 text-emerald-800/80 group-hover:text-emerald-900/40" viewBox="0 0 160 120" fill="none">
+                    <svg className="absolute inset-0 w-full h-full stroke-current transition-colors duration-500 text-purple-800/80 group-hover:text-purple-900/40" viewBox="0 0 160 120" fill="none">
                       <line x1="80" y1="60" x2="30" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="130" y2="30" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="30" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
                       <line x1="80" y1="60" x2="130" y2="90" strokeWidth="1.5" strokeDasharray="3 3" />
                     </svg>
-                    <div className="absolute w-9 h-9 rounded-full flex items-center justify-center text-[9px] font-black transition-all duration-500 bg-emerald-400 text-emerald-950 group-hover:bg-emerald-950 group-hover:text-white shadow-md">
+                    <div className="absolute w-9 h-9 rounded-full flex items-center justify-center text-[9px] font-black transition-all duration-500 bg-purple-400 text-purple-950 group-hover:bg-purple-950 group-hover:text-white shadow-md">
                       SIP
                     </div>
-                    <div className="absolute top-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
+                    <div className="absolute top-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-purple-800/60 group-hover:bg-purple-950/20 text-purple-100 group-hover:text-purple-900">
                       KIA
                     </div>
-                    <div className="absolute top-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
+                    <div className="absolute top-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-purple-800/60 group-hover:bg-purple-950/20 text-purple-100 group-hover:text-purple-900">
                       PAUD
                     </div>
-                    <div className="absolute bottom-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
+                    <div className="absolute bottom-4 left-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-purple-800/60 group-hover:bg-purple-950/20 text-purple-100 group-hover:text-purple-900">
                       Sosial
                     </div>
-                    <div className="absolute bottom-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-emerald-800/60 group-hover:bg-emerald-950/20 text-emerald-100 group-hover:text-emerald-900">
+                    <div className="absolute bottom-4 right-3 px-1.5 py-0.5 rounded text-[8px] font-semibold transition-all duration-500 bg-purple-800/60 group-hover:bg-purple-950/20 text-purple-100 group-hover:text-purple-900">
                       PU
                     </div>
                   </div>
@@ -574,15 +574,15 @@ export default function Home() {
                         "Permendagri 13/2024"
                       ].map((txt, i) => (
                         <div key={i} className="flex items-center gap-1.5">
-                          <div className="w-1.5 h-1.5 rounded-full transition-colors duration-500 bg-emerald-400 group-hover:bg-emerald-950"></div>
-                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-emerald-950">
+                          <div className="w-1.5 h-1.5 rounded-full transition-colors duration-500 bg-purple-400 group-hover:bg-purple-950"></div>
+                          <span className="text-[9px] font-semibold transition-colors duration-500 text-white group-hover:text-purple-950">
                             {txt}
                           </span>
                         </div>
                       ))}
                     </div>
                     <div className="w-1/3 h-full flex items-center justify-center">
-                      <svg className="w-12 h-12 fill-none stroke-current transition-colors duration-500 text-emerald-400 group-hover:text-emerald-900" viewBox="0 0 24 24" strokeWidth="1.5">
+                      <svg className="w-12 h-12 fill-none stroke-current transition-colors duration-500 text-purple-400 group-hover:text-purple-900" viewBox="0 0 24 24" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17M12 5l-8 3h16l-8-3zM4 8l3 8h-6l3-8zM20 8l3 8h-6l3-8zM9 20h6" />
                       </svg>
                     </div>
@@ -595,11 +595,11 @@ export default function Home() {
                 variants={itemVariants}
                 whileHover={{ y: -8, scale: 1.015 }}
                 transition={{ duration: 0.3 }}
-                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden transition-colors duration-500 hover:bg-emerald-950 hover:shadow-2xl hover:shadow-emerald-950/20"
+                className="group relative pt-6 px-6 pb-0 bg-slate-50/60 rounded-[10px] flex flex-col justify-between min-h-[320px] cursor-pointer border border-slate-100/50 overflow-hidden transition-colors duration-500 hover:bg-purple-950 hover:shadow-2xl hover:shadow-purple-950/20"
               >
                 <div className="flex flex-col">
                   {/* Badge */}
-                  <span className="inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 transition-colors duration-500 group-hover:bg-white/20 group-hover:text-white">
+                  <span className="inline-flex self-start px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-800 transition-colors duration-500 group-hover:bg-white/20 group-hover:text-white">
                     {feature.badge}
                   </span>
 
@@ -610,7 +610,7 @@ export default function Home() {
                 </div>
 
                 {/* Mockup Image/Graphic */}
-                <div className="mt-6 w-full h-40 rounded-t-2xl rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#0c311e] text-white group-hover:bg-[#d9f99d] group-hover:text-emerald-950 shadow-inner">
+                <div className="mt-6 w-full h-40 rounded-t-2xl rounded-b-none transition-all duration-500 flex flex-col justify-between overflow-hidden bg-[#31104a] text-white group-hover:bg-[#f3e8ff] group-hover:text-purple-950 shadow-inner">
                   {feature.mockup}
                 </div>
               </motion.div>
@@ -630,8 +630,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-purple-600 mb-3 bg-purple-50 px-3 py-1 rounded-full border border-purple-100">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
               Struktur Kelembagaan
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -645,7 +645,7 @@ export default function Home() {
           {/* Timeline Wrapper (Flex Column matching the mockup layout) */}
           <div className="relative flex flex-col space-y-16 lg:space-y-0 max-w-[1100px] mx-auto mt-12">
             {/* Mobile Vertical Connecting Line */}
-            <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-emerald-300/40 lg:hidden pointer-events-none" />
+            <div className="absolute left-8 top-12 bottom-12 w-0.5 border-l-2 border-dashed border-purple-300/40 lg:hidden pointer-events-none" />
 
             {[
               {
@@ -656,7 +656,7 @@ export default function Home() {
                 role: "Mendagri",
                 theme: "green",
                 icon: (
-                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 transition-colors duration-500 text-purple-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" />
                     <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
                   </svg>
@@ -683,7 +683,7 @@ export default function Home() {
                 role: "Bupati",
                 theme: "green",
                 icon: (
-                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 transition-colors duration-500 text-purple-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   </svg>
                 )
@@ -709,7 +709,7 @@ export default function Home() {
                 role: "Kader Desa",
                 theme: "green",
                 icon: (
-                  <svg className="w-4 h-4 transition-colors duration-500 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 transition-colors duration-500 text-purple-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11v11a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
                 )
@@ -738,7 +738,7 @@ export default function Home() {
                   <div
                     className={`group relative z-10 flex items-stretch w-full p-2.5 rounded-[10px] border-2 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
                       isGreen
-                        ? "bg-[#f4fbe9]/95 border-[#e6f4d3] hover:bg-[#ebf8d9]"
+                        ? "bg-[#f5f3ff]/95 border-[#ddd6fe] hover:bg-[#f3e8ff]"
                         : "bg-white border-slate-100 hover:bg-slate-50/50"
                     }`}
                   >
@@ -753,7 +753,7 @@ export default function Home() {
                       }}
                       className={`origin-top flex items-center justify-center py-4 px-2.5 w-10 rounded-[10px] transition-colors duration-500 shrink-0 select-none ${
                         isGreen
-                          ? "bg-[#0a2f1c] text-[#d9f99d]"
+                          ? "bg-[#31104a] text-[#f3e8ff]"
                           : "bg-slate-900 text-slate-300"
                       }`}
                     >
@@ -777,7 +777,7 @@ export default function Home() {
                           }}
                           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12 ${
                             isGreen
-                              ? "bg-[#d8f3b8] text-[#0a2f1c]"
+                              ? "bg-[#e0e7ff] text-[#31104a]"
                               : "bg-slate-100 text-slate-700"
                           }`}
                         >
@@ -785,7 +785,7 @@ export default function Home() {
                         </motion.div>
                         {/* Step Number & Title (Mockup style) */}
                         <h3 className={`text-lg md:text-xl font-extrabold tracking-tight whitespace-nowrap ${
-                          isGreen ? "text-[#0a2f1c]" : "text-slate-900"
+                          isGreen ? "text-[#31104a]" : "text-slate-900"
                         }`}>
                           {parseInt(step.num)} {step.title}
                         </h3>
@@ -793,14 +793,14 @@ export default function Home() {
 
                       {/* Subtitle / Department */}
                       <span className={`text-[10px] font-bold uppercase tracking-wider mb-2 block ${
-                        isGreen ? "text-emerald-700" : "text-slate-500"
+                        isGreen ? "text-purple-700" : "text-slate-500"
                       }`}>
                         {step.subtitle}
                       </span>
 
                       {/* Description Paragraph */}
                       <p className={`text-xs md:text-sm font-normal leading-relaxed ${
-                        isGreen ? "text-emerald-950/80" : "text-slate-600"
+                        isGreen ? "text-purple-950/80" : "text-slate-600"
                       }`}>
                         {step.desc}
                       </p>
@@ -836,10 +836,10 @@ export default function Home() {
                       <div className="hidden lg:block absolute left-[90%] top-[75px] w-[428px] h-[160px] pointer-events-none z-0">
                         <svg className="w-full h-full" fill="none" viewBox="0 0 428 160">
                           <defs>
-                            <marker id={`arrow-emerald-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                              <path d="M 1.5 2 L 5 7 L 8.5 2" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                            <marker id={`arrow-purple-${idx}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                              <path d="M 1.5 2 L 5 7 L 8.5 2" stroke="#7c3aed" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </marker>
-                            <mask id={`reveal-emerald-${idx}`}>
+                            <mask id={`reveal-purple-${idx}`}>
                               <motion.path
                                 d="M 0,30 H 369 Q 385,30 385,46 V 144"
                                 stroke="#fff" strokeWidth="14" strokeLinecap="round" fill="none"
@@ -850,7 +850,7 @@ export default function Home() {
                               />
                             </mask>
                           </defs>
-                          <path d="M 0,30 H 369 Q 385,30 385,46 V 144" stroke="#a7f3d0" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" markerEnd={`url(#arrow-emerald-${idx})`} mask={`url(#reveal-emerald-${idx})`} />
+                          <path d="M 0,30 H 369 Q 385,30 385,46 V 144" stroke="#ddd6fe" strokeWidth="1.5" strokeDasharray="3 5" strokeLinecap="round" markerEnd={`url(#arrow-purple-${idx})`} mask={`url(#reveal-purple-${idx})`} />
                         </svg>
                       </div>
                     )
@@ -884,7 +884,7 @@ export default function Home() {
               hidden: { opacity: 0, y: 15 },
               show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 15 } }
             }}
-            className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-3 block"
+            className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-3 block"
           >
             Dokumentasi Lapangan
           </motion.span>
@@ -896,7 +896,7 @@ export default function Home() {
             className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight"
           >
             Galeri Kegiatan{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-teal-600">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-600">
               Posyandu
             </span>
           </motion.h2>
@@ -1009,7 +1009,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Landasan Hukum
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
@@ -1036,7 +1036,7 @@ export default function Home() {
               className="bg-white rounded-[10px] border border-slate-100/80 shadow-sm overflow-hidden flex flex-col justify-start hover:shadow-md cursor-pointer"
             >
               <div className="p-8 pb-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 block mb-2">
                   Regulasi Dasar
                 </span>
                 <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -1123,14 +1123,14 @@ export default function Home() {
                 </div>
                 {/* Kecamatan */}
                 <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2" title="Pemerintah Kecamatan">
-                  <div className="w-9 h-9 rounded-full border border-teal-300 bg-gradient-to-tr from-teal-600 to-emerald-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
-                    <Building className="w-4 h-4 text-teal-50" />
+                  <div className="w-9 h-9 rounded-full border border-indigo-300 bg-gradient-to-tr from-indigo-600 to-purple-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <Building className="w-4 h-4 text-indigo-50" />
                   </div>
                 </div>
                 {/* Desa */}
                 <div className="absolute bottom-[22px] right-[27%]" title="Pemerintah Desa">
-                  <div className="w-9 h-9 rounded-full border border-emerald-300 bg-gradient-to-tr from-emerald-600 to-green-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
-                    <HomeIcon className="w-4 h-4 text-emerald-50" />
+                  <div className="w-9 h-9 rounded-full border border-purple-300 bg-gradient-to-tr from-purple-600 to-green-400 shadow-sm flex items-center justify-center text-white relative hover:scale-110 transition-transform duration-300">
+                    <HomeIcon className="w-4 h-4 text-purple-50" />
                   </div>
                 </div>
                 {/* Kader */}

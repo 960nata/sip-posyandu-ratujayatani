@@ -34,9 +34,9 @@ export default function DataDukungPage() {
       </div>
 
       {/* Upload Zone */}
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border-2 border-dashed border-emerald-300 dark:border-emerald-700 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all cursor-pointer group">
+      <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border-2 border-dashed border-purple-300 dark:border-purple-700 hover:border-purple-500 dark:hover:border-purple-500 transition-all cursor-pointer group">
         <div className="flex flex-col items-center justify-center py-6">
-          <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
+          <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center text-purple-600 dark:text-purple-400 mb-4 group-hover:scale-110 transition-transform">
             <Upload className="w-8 h-8" />
           </div>
           <p className="text-lg font-semibold text-slate-800 dark:text-white mb-1">Klik atau seret file ke sini untuk upload</p>
@@ -54,7 +54,7 @@ export default function DataDukungPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+            className="block w-full bg-slate-50 dark:bg-zinc-700/50 border border-slate-200 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
             placeholder="Cari nama file..."
           />
         </div>
@@ -85,7 +85,7 @@ export default function DataDukungPage() {
                 <tr key={file.id} className="border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
                   <td className="px-6 py-4 font-medium text-slate-800 dark:text-white flex items-center gap-3">
                     {file.type.startsWith('image/') ? (
-                      <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                      <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400">
                         <ImageIcon className="w-5 h-5" />
                       </div>
                     ) : (
@@ -107,7 +107,7 @@ export default function DataDukungPage() {
                   <td className="px-6 py-4">{file.date}</td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button className="p-1.5 text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
+                      <button className="p-1.5 text-slate-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
                         <Download className="w-4 h-4" />
                       </button>
                       <button className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors">

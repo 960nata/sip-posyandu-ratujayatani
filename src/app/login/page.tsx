@@ -41,17 +41,17 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#eaf7f0] flex items-center justify-center p-4 md:p-8 font-sans selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-[#f5f3ff] flex items-center justify-center p-4 md:p-8 font-sans selection:bg-purple-500/30">
       {/* Container Card */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="w-full max-w-md md:max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[550px] md:min-h-[600px] border border-emerald-900/5"
+        className="w-full max-w-md md:max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[550px] md:min-h-[600px] border border-purple-900/5"
       >
         {/* Left Panel: 3D Illustration (Desktop Only) */}
-        <div className="hidden md:flex md:w-1/2 bg-[#e6f4ed] relative overflow-hidden select-none">
-          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-100/30 to-transparent pointer-events-none z-10" />
+        <div className="hidden md:flex md:w-1/2 bg-[#ede9fe] relative overflow-hidden select-none">
+          <div className="absolute inset-0 bg-gradient-to-tr from-purple-100/30 to-transparent pointer-events-none z-10" />
           <Image
             src="/images/posyandu_login.png"
             alt="Posyandu Officer Illustration"
@@ -65,7 +65,7 @@ export default function LoginPage() {
         <div className="w-full md:w-1/2 bg-white px-6 py-10 md:px-16 md:py-14 flex flex-col justify-between">
           {/* Logo / Header */}
           <div className="flex items-center gap-3 mb-8 md:mb-0">
-            <div className="w-9 h-9 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 p-1.5">
+            <div className="w-9 h-9 bg-purple-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 p-1.5">
               <Image src="/images/logo/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
             </div>
             <div className="flex flex-col">
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm font-light"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm font-light"
                   placeholder="Masukkan email Anda"
                   required
                 />
@@ -105,7 +105,7 @@ export default function LoginPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 pr-10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm font-light"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3.5 pr-10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm font-light"
                     placeholder="Masukkan password Anda"
                     required
                   />
@@ -138,7 +138,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-3.5 px-4 rounded-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-emerald-500/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none text-sm mt-2"
+                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3.5 px-4 rounded-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg shadow-purple-500/20 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none text-sm mt-2"
               >
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin text-white" />
@@ -157,7 +157,7 @@ export default function LoginPage() {
               <span className="text-slate-600 font-medium hover:underline cursor-pointer">Kebijakan Privasi</span> SIPANDU.
             </p>
             <div className="pt-1">
-              <Link href="/" className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold transition-colors hover:underline">
+              <Link href="/" className="text-xs text-purple-600 hover:text-purple-700 font-semibold transition-colors hover:underline">
                 Kembali ke Beranda
               </Link>
             </div>

@@ -32,7 +32,7 @@ export default function CreditsPage() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-4 inline-flex items-center justify-center space-x-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/30"
             >
-              <Sparkles className="w-4 h-4 text-emerald-300 fill-emerald-300" />
+              <Sparkles className="w-4 h-4 text-purple-300 fill-purple-300" />
               <span className="text-xs font-semibold text-white uppercase tracking-wide">
                 Powered By
               </span>
@@ -61,7 +61,7 @@ export default function CreditsPage() {
               href="https://hadinata.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg flex flex-col items-center text-center hover:bg-white/20 transition-all hover:border-emerald-300/50 max-w-sm w-full group"
+              className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg flex flex-col items-center text-center hover:bg-white/20 transition-all hover:border-purple-300/50 max-w-sm w-full group"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -76,10 +76,10 @@ export default function CreditsPage() {
                   className="object-cover transition-transform group-hover:scale-110"
                 />
               </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors mb-1">
+              <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors mb-1">
                 Hadinata.dev
               </h3>
-              <p className="text-xs text-emerald-300 font-semibold mb-2">Individu / Developer</p>
+              <p className="text-xs text-purple-300 font-semibold mb-2">Individu / Developer</p>
               <p className="text-sm text-white/70 font-light leading-relaxed">
                 Pengembangan sistem inti dan arsitektur aplikasi Sistem Informasi Posyandu.
               </p>
@@ -90,7 +90,7 @@ export default function CreditsPage() {
               href="https://vortalabs.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg flex flex-col items-center text-center hover:bg-white/20 transition-all hover:border-emerald-300/50 max-w-sm w-full group"
+              className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg flex flex-col items-center text-center hover:bg-white/20 transition-all hover:border-purple-300/50 max-w-sm w-full group"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
@@ -105,10 +105,10 @@ export default function CreditsPage() {
                   className="object-cover transition-transform group-hover:scale-110"
                 />
               </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors mb-1">
+              <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors mb-1">
                 vortalabs.com
               </h3>
-              <p className="text-xs text-emerald-300 font-semibold mb-2">Agency / Team</p>
+              <p className="text-xs text-purple-300 font-semibold mb-2">Agency / Team</p>
               <p className="text-sm text-white/70 font-light leading-relaxed">
                 Desain UI/UX dan optimalisasi performa untuk pengalaman pengguna yang premium.
               </p>

@@ -50,7 +50,7 @@ export default function KelembagaanPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/10 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -63,7 +63,7 @@ export default function KelembagaanPage() {
               Kelembagaan SIPANDU
             </span>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Tentang Sistem Informasi Posyandu</h1>
-            <p className="text-base md:text-lg text-emerald-50 font-light max-w-3xl leading-relaxed">
+            <p className="text-base md:text-lg text-purple-50 font-light max-w-3xl leading-relaxed">
               Ekosistem tata kelola data yang melibatkan berbagai tingkatan kelembagaan — dari pimpinan daerah hingga kader di tingkat desa.
             </p>
           </motion.div>
@@ -80,7 +80,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Struktur Kelembagaan
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Tata Kelola Posyandu</h2>
@@ -99,7 +99,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
             >
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
                 <Crown className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Tim Pembina</h3>
@@ -117,7 +117,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
             >
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
                 <Briefcase className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Pengurus Posyandu</h3>
@@ -135,7 +135,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
             >
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+              <div className="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
                 <UserCheck className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Kader Posyandu</h3>
@@ -157,7 +157,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Bab III Juknis Posyandu
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Susunan Kepengurusan Posyandu</h2>
@@ -170,7 +170,7 @@ export default function KelembagaanPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-emerald-600 text-white">
+                  <tr className="bg-purple-600 text-white">
                     <th className="py-4 px-6 text-sm font-semibold">Jabatan</th>
                     <th className="py-4 px-6 text-sm font-semibold">Kedudukan</th>
                     <th className="py-4 px-6 text-sm font-semibold">Tugas Utama</th>
@@ -185,7 +185,7 @@ export default function KelembagaanPage() {
                     { jabatan: "Ketua Bidang", kedudukan: "Desa/Kelurahan", tugas: "Mengkoordinir kader sesuai 6 bidang SPM: Pendidikan, Kesehatan, PU, Perumahan, Trantibum, Sosial", catatan: "Sesuai kebutuhan" },
                     { jabatan: "Kader", kedudukan: "Desa/Kelurahan", tugas: "Melaksanakan pelayanan langsung, pendataan, dan pelaporan ke pengurus", catatan: "Hanya 1 bidang layanan" }
                   ].map((row, idx) => (
-                    <tr key={idx} className="hover:bg-emerald-50/50 transition-colors">
+                    <tr key={idx} className="hover:bg-purple-50/50 transition-colors">
                       <td className="py-4 px-6 text-sm font-medium text-slate-900">{row.jabatan}</td>
                       <td className="py-4 px-6 text-sm text-slate-600">{row.kedudukan}</td>
                       <td className="py-4 px-6 text-sm text-slate-600 leading-relaxed">{row.tugas}</td>
@@ -209,7 +209,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Bab III & Pasal 10-11 Permendagri 13/2024
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Kriteria & Tugas Pengurus dan Kader</h2>
@@ -225,7 +225,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
                   <ClipboardList className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">📋 Kriteria Pengurus Posyandu</h3>
@@ -240,7 +240,7 @@ export default function KelembagaanPage() {
                   "Sehat jasmani dan rohani"
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-sm text-slate-600 font-light">
-                    <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -256,7 +256,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
                   <Briefcase className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">✅ Tugas Pengurus Posyandu</h3>
@@ -269,7 +269,7 @@ export default function KelembagaanPage() {
                   "Menyiapkan bahan penyusunan laporan pelayanan kepada Kepala Desa"
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-sm text-slate-600 font-light">
-                    <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -285,7 +285,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
                   <UserCheck className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">🦸 Tugas Kader Posyandu</h3>
@@ -299,7 +299,7 @@ export default function KelembagaanPage() {
                   "Mengompilasi kegiatan sebagai bahan laporan kepada pengurus"
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-sm text-slate-600 font-light">
-                    <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -315,7 +315,7 @@ export default function KelembagaanPage() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center">
                   <Scale className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">🚫 Alasan Pemberhentian Pengurus</h3>
@@ -330,7 +330,7 @@ export default function KelembagaanPage() {
                   "Menjadi pengurus partai politik"
                 ].map((item, idx) => (
                   <li key={idx} className="flex gap-3 items-start text-sm text-slate-600 font-light">
-                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -350,7 +350,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Apresiasi Kader
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Sistem Penghargaan Kader Posyandu</h2>
@@ -375,7 +375,7 @@ export default function KelembagaanPage() {
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -385,16 +385,16 @@ export default function KelembagaanPage() {
           </div>
 
           <motion.div
-            className="max-w-4xl mx-auto bg-emerald-50 border border-emerald-100 p-6 rounded-2xl flex gap-4 items-start"
+            className="max-w-4xl mx-auto bg-purple-50 border border-purple-100 p-6 rounded-2xl flex gap-4 items-start"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
               <FileText className="w-5 h-5" />
             </div>
-            <p className="text-sm text-emerald-800 font-light leading-relaxed">
+            <p className="text-sm text-purple-800 font-light leading-relaxed">
               Pemberian penghargaan diatur dengan peraturan perundang-undangan yang ditetapkan Pemerintah Daerah bersama Tim Pembina Posyandu, difasilitasi oleh Direktorat Jenderal Bina Pemerintah Desa Kemendagri.
             </p>
           </motion.div>
@@ -411,7 +411,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Bab V Juknis Tata Kelola
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Tim Pembina Posyandu</h2>
@@ -437,7 +437,7 @@ export default function KelembagaanPage() {
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 mb-2">{item.title}</h3>
@@ -458,7 +458,7 @@ export default function KelembagaanPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+            <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
               Regulasi
             </span>
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Landasan Hukum Kelembagaan</h2>
@@ -480,7 +480,7 @@ export default function KelembagaanPage() {
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
                 viewport={{ once: true }}
               >
-                <div className="flex-shrink-0 w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-sm">
+                <div className="flex-shrink-0 w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">
                   {item.num}
                 </div>
                 <p className="text-sm text-slate-600 font-light leading-relaxed">{item.text}</p>

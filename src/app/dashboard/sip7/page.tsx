@@ -140,23 +140,23 @@ export default function Sip7Page() {
   const canEdit = role === 'OPERATOR_DESA' || role === 'SUPERADMIN'
 
   const theme = {
-    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-emerald-500 to-teal-600',
-    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-emerald-600 hover:to-teal-700',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-emerald-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-emerald-500/10',
-    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
-    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
-    textLight: isPosyandu ? 'text-purple-700' : 'text-emerald-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-emerald-500',
-    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-emerald-600',
-    borderLight: isPosyandu ? 'border-purple-200' : 'border-emerald-200',
-    hoverLight: isPosyandu ? 'hover:bg-purple-50' : 'hover:bg-emerald-50',
-    shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
-    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-emerald-900/30',
-    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
+    bgGradient: isPosyandu ? 'from-purple-500 to-indigo-600' : 'from-purple-500 to-indigo-600',
+    hoverGradient: isPosyandu ? 'hover:from-purple-600 hover:to-indigo-700' : 'hover:from-purple-600 hover:to-indigo-700',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
+    textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
+    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
+    hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
+    borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
+    hoverLight: isPosyandu ? 'hover:bg-purple-50' : 'hover:bg-purple-50',
+    shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
+    bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
   }
 
   const [mounted, setMounted] = useState(false)
@@ -1522,7 +1522,7 @@ export default function Sip7Page() {
             {!isPosyandu && (
               <button
                 onClick={() => setSelectedPosyandu('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                 title="Kembali ke Daftar Posyandu"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -1610,7 +1610,7 @@ export default function Sip7Page() {
                           <select 
                             value={formData7.bulan} 
                             onChange={e => setFormData7(prev => ({ ...prev, bulan: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                           >
                             {[...Array(12)].map((_, i) => (
                               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -1623,7 +1623,7 @@ export default function Sip7Page() {
                             type="number" 
                             value={formData7.tahun} 
                             onChange={e => setFormData7(prev => ({ ...prev, tahun: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm" 
+                            className="block w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
                             required 
                           />
                         </div>
@@ -1682,7 +1682,7 @@ export default function Sip7Page() {
                         {/* 2. Akseptor KB */}
                         <div className="p-4 rounded-xl border border-slate-100 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-900/30 space-y-4">
                           <h4 className="font-semibold text-slate-800 dark:text-white flex items-center gap-2 border-b border-slate-200/50 dark:border-zinc-700 pb-2">
-                            <ClipboardList className="w-4 h-4 text-emerald-500" /> 2. Akseptor KB
+                            <ClipboardList className="w-4 h-4 text-purple-500" /> 2. Akseptor KB
                           </h4>
                           <div className="grid grid-cols-2 gap-3">
                             <div>
@@ -2106,7 +2106,7 @@ export default function Sip7Page() {
                     return (
                       <div className="bg-white dark:bg-zinc-800 p-6 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4 sticky top-6">
                         <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                          <BookOpen className="w-5 h-5 text-emerald-500" />
+                          <BookOpen className="w-5 h-5 text-purple-500" />
                           Referensi SIP 6
                         </h4>
                         <p className="text-xs text-slate-500 dark:text-zinc-400">
@@ -2276,7 +2276,7 @@ export default function Sip7Page() {
                       </div>
                     </div>
                     {/* Tahunan */}
-                    <div className={`p-4 rounded-xl border ${theme.borderLight} bg-emerald-50/20 dark:bg-emerald-950/10`}>
+                    <div className={`p-4 rounded-xl border ${theme.borderLight} bg-purple-50/20 dark:bg-purple-950/10`}>
                       <h4 className={`text-sm font-semibold ${theme.text} dark:${theme.textDark} mb-2`}>Total Tahunan</h4>
                       <div className="space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 font-medium">
                         <div className="flex justify-between"><span>Ibu Hamil & Menyusui:</span><span className="font-bold text-slate-800 dark:text-white">{(getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).bumil + getTotals7([1,2,3,4,5,6,7,8,9,10,11,12]).busui).toLocaleString('id-ID')}</span></div>
@@ -2318,7 +2318,7 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
+                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{index + 1}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white cursor-pointer">{row.bulan}/{row.tahun}</td>
@@ -2327,7 +2327,7 @@ export default function Sip7Page() {
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 text-rose-600 font-medium cursor-pointer">{row.bb.merah}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 text-rose-600 font-medium cursor-pointer">{row.lila.merah}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 cursor-pointer">
-                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-purple-600 bg-purple-50 dark:bg-purple-900/20 dark:text-purple-400'}`}>
                                   {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
                                 </span>
                               </td>
@@ -2346,7 +2346,7 @@ export default function Sip7Page() {
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
                                     <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                                      <ClipboardList className="w-4 h-4 text-emerald-500" />
+                                      <ClipboardList className="w-4 h-4 text-purple-500" />
                                       Detail Rekapitulasi Bumil (Bulan {row.bulan})
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -2415,7 +2415,7 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-emerald-50/50 dark:bg-emerald-900/10' : ''}`}
+                              className={`border-b border-slate-100 dark:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition-colors cursor-pointer ${expandedRow === row.id ? 'bg-purple-50/50 dark:bg-purple-900/10' : ''}`}
                             >
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{index + 1}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
@@ -2424,7 +2424,7 @@ export default function Sip7Page() {
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.bb.naik}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">{row.asi}</td>
                               <td onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)} className="px-4 py-3">
-                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-purple-600 bg-purple-50 dark:bg-purple-900/20 dark:text-purple-400'}`}>
                                   {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
                                 </span>
                               </td>
@@ -2443,7 +2443,7 @@ export default function Sip7Page() {
                                 <td colSpan={8} className="px-4 py-4">
                                   <div className="space-y-4">
                                     <h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                                      <ClipboardList className="w-4 h-4 text-emerald-500" />
+                                      <ClipboardList className="w-4 h-4 text-purple-500" />
                                       Detail Rekapitulasi Bayi (Bulan {row.bulan})
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -2516,9 +2516,9 @@ export default function Sip7Page() {
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3">{row.remaja614Datang}</td>
                             <td className="px-4 py-3">{row.remaja1518Datang}</td>
-                            <td className="px-4 py-3 text-emerald-600 font-medium">{row.imtNormal}</td>
+                            <td className="px-4 py-3 text-purple-600 font-medium">{row.imtNormal}</td>
                             <td className="px-4 py-3">
-                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-purple-600 bg-purple-50 dark:bg-purple-900/20 dark:text-purple-400'}`}>
                                 {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
                               </span>
                             </td>
@@ -2576,9 +2576,9 @@ export default function Sip7Page() {
                             <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{row.bulan}/{row.tahun}</td>
                             <td className="px-4 py-3 text-rose-600 font-medium">{row.tensiTinggi}</td>
                             <td className="px-4 py-3 text-rose-600 font-medium">{row.gulaDarahTinggi}</td>
-                            <td className="px-4 py-3 text-emerald-600 font-medium">{row.mandiri}</td>
+                            <td className="px-4 py-3 text-purple-600 font-medium">{row.mandiri}</td>
                             <td className="px-4 py-3">
-                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'}`}>
+                              <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${row.isEdited ? 'text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400' : 'text-purple-600 bg-purple-50 dark:bg-purple-900/20 dark:text-purple-400'}`}>
                                 {row.isEdited ? 'Diedit Manual' : 'Otomatis'}
                               </span>
                             </td>
@@ -2640,7 +2640,7 @@ export default function Sip7Page() {
             {role === 'SUPERADMIN' && (
               <button
                 onClick={() => setSelectedKecamatan('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors mb-2`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
                 title="Kembali ke Daftar Kecamatan"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -2677,7 +2677,7 @@ export default function Sip7Page() {
               {role !== 'OPERATOR_DESA' && (
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-emerald-900/50 transition-colors`}
+                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -2771,7 +2771,7 @@ export default function Sip7Page() {
                   {/* KB */}
                   <div className="bg-slate-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-slate-200 dark:border-zinc-700">
                     <h5 className="font-semibold text-slate-700 dark:text-slate-200 mb-2 flex items-center gap-2">
-                      <ClipboardList className="w-4 h-4 text-emerald-500" /> Akseptor KB
+                      <ClipboardList className="w-4 h-4 text-purple-500" /> Akseptor KB
                     </h5>
                     <div className="text-sm text-slate-600 dark:text-zinc-400 space-y-1">
                       <div className="flex justify-between"><span>Kondom:</span><span className="font-medium text-slate-800 dark:text-white">{selectedReportForDetail.kb?.kondom || 0}</span></div>

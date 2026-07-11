@@ -78,15 +78,15 @@ export default function DashboardLayout({
 
   const isPosyandu = role === 'OPERATOR_POSYANDU'
   const theme = {
-    text: isPosyandu ? 'text-purple-600' : 'text-emerald-600',
-    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-emerald-400',
-    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-emerald-50',
-    bgDark: isPosyandu ? 'dark:bg-purple-900/20' : 'dark:bg-emerald-900/20',
-    focusRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-emerald-500',
-    gradient: isPosyandu ? 'from-purple-400 to-indigo-500' : 'from-emerald-400 to-teal-500',
-    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-emerald-500/20',
-    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-emerald-100',
-    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-emerald-900/50',
+    text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
+    textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
+    bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
+    bgDark: isPosyandu ? 'dark:bg-purple-900/20' : 'dark:bg-purple-900/20',
+    focusRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    gradient: isPosyandu ? 'from-purple-400 to-indigo-500' : 'from-purple-400 to-indigo-500',
+    shadow: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
+    iconBg: isPosyandu ? 'bg-purple-100' : 'bg-purple-100',
+    iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-purple-900/50',
   }
 
   // Effect to handle dark mode persistence
@@ -310,7 +310,7 @@ export default function DashboardLayout({
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 className="flex items-center space-x-2 p-1.5 rounded-[10px] hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none"
               >
-                <div className={`w-8 h-8 ${isPosyandu ? 'bg-purple-600' : 'bg-emerald-600'} rounded-full flex items-center justify-center text-white font-semibold text-sm`}>
+                <div className={`w-8 h-8 ${isPosyandu ? 'bg-purple-600' : 'bg-purple-600'} rounded-full flex items-center justify-center text-white font-semibold text-sm`}>
                   {session?.user?.name?.[0] || 'U'}
                 </div>
                 <span className="hidden md:inline text-sm font-semibold text-slate-800 dark:text-white">{session?.user?.name || 'User'}</span>

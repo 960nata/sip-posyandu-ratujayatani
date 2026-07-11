@@ -161,7 +161,7 @@ export default function LayananPage() {
     {
       title: "Perumahan Rakyat",
       icon: Home,
-      color: "text-emerald-600 bg-emerald-50",
+      color: "text-purple-600 bg-purple-50",
       steps: [
         "Warga datang ke Posyandu menuju meja Pelayanan SPM Perumahan Rakyat untuk mengajukan identifikasi atau rehabilitasi rumah",
         "Kader mendata pemohon — dokumen: KTP, KK, Surat Pernyataan belum pernah menerima Bantuan, Surat keterangan penghasilan, Foto copy surat tanah, Foto kondisi rumah (3 sisi)",
@@ -241,7 +241,7 @@ export default function LayananPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/10 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -254,7 +254,7 @@ export default function LayananPage() {
               Panduan Layanan
             </span>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Layanan Komprehensif Posyandu</h1>
-            <p className="text-base md:text-lg text-emerald-50 font-light max-w-3xl leading-relaxed">
+            <p className="text-base md:text-lg text-purple-50 font-light max-w-3xl leading-relaxed">
               Kami menghadirkan berbagai program kesehatan terpadu untuk mendukung tumbuh kembang anak dan kesehatan keluarga di Lampung Timur.
             </p>
           </motion.div>
@@ -284,7 +284,7 @@ export default function LayananPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {service.details.map((detail, idx) => (
                       <div key={idx} className="flex items-start gap-2">
-                        <div className="w-5 h-5 mt-0.5 text-emerald-500 flex-shrink-0">
+                        <div className="w-5 h-5 mt-0.5 text-purple-500 flex-shrink-0">
                           <ChevronRight className="w-4 h-4" />
                         </div>
                         <span className="text-xs text-slate-600">{detail}</span>
@@ -299,7 +299,7 @@ export default function LayananPage() {
           {/* SOP Section with Tabs */}
           <div className="mt-24">
             <div className="text-center mb-12">
-              <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 mb-2 block">
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-600 mb-2 block">
                 Permendagri 13/2024
               </span>
               <h2 className="text-3xl font-bold text-slate-900 mb-2">SOP 6 Bidang Pelayanan Posyandu</h2>
@@ -316,7 +316,7 @@ export default function LayananPage() {
                   onClick={() => setActiveTab(idx)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-[10px] text-sm font-medium transition-all ${
                     activeTab === idx
-                      ? "bg-emerald-600 text-white shadow-md shadow-emerald-900/10"
+                      ? "bg-purple-600 text-white shadow-md shadow-purple-900/10"
                       : "bg-slate-50 text-slate-600 hover:bg-slate-100"
                   }`}
                 >
@@ -338,13 +338,13 @@ export default function LayananPage() {
                 {/* Left: Steps */}
                 <div className="lg:col-span-7">
                   <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <ClipboardList className="w-5 h-5 text-emerald-500" />
+                    <ClipboardList className="w-5 h-5 text-purple-500" />
                     Langkah-langkah Prosedur
                   </h3>
                   <div className="space-y-4">
                     {sops[activeTab].steps.map((step, idx) => (
                       <div key={idx} className="flex gap-4">
-                        <div className="flex-shrink-0 w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
+                        <div className="flex-shrink-0 w-6 h-6 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
                           {idx + 1}
                         </div>
                         <p className="text-sm text-slate-600 font-light leading-relaxed">{step}</p>
@@ -356,24 +356,24 @@ export default function LayananPage() {
                 {/* Right: Info, Docs, Coverage */}
                 <div className="lg:col-span-5 space-y-6">
                   {/* Time limit */}
-                  <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-emerald-600" />
+                  <div className="p-4 bg-purple-50 rounded-xl border border-purple-100 flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-purple-600" />
                     <div>
-                      <p className="text-xs text-emerald-600 font-bold uppercase">Batas Waktu</p>
-                      <p className="text-sm text-emerald-700 font-medium">{sops[activeTab].time}</p>
+                      <p className="text-xs text-purple-600 font-bold uppercase">Batas Waktu</p>
+                      <p className="text-sm text-purple-700 font-medium">{sops[activeTab].time}</p>
                     </div>
                   </div>
 
                   {/* Documents */}
                   <div>
                     <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-emerald-500" />
+                      <FileText className="w-4 h-4 text-purple-500" />
                       Dokumen yang Diperlukan
                     </h3>
                     <ul className="space-y-2">
                       {sops[activeTab].docs.map((doc, idx) => (
                         <li key={idx} className="text-xs text-slate-500 font-light flex items-center gap-2">
-                          <div className="w-1 h-1 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                          <div className="w-1 h-1 bg-purple-500 rounded-full flex-shrink-0"></div>
                           {doc}
                         </li>
                       ))}
@@ -383,7 +383,7 @@ export default function LayananPage() {
                   {/* Coverage */}
                   <div>
                     <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
-                      <Target className="w-4 h-4 text-emerald-500" />
+                      <Target className="w-4 h-4 text-purple-500" />
                       Cakupan Layanan
                     </h3>
                     <div className="flex flex-wrap gap-2">

@@ -2670,7 +2670,8 @@ export default function Sip7Page() {
               <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                 <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
-                    <th className="px-6 py-4">Nama Kecamatan</th>
+                    <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Kecamatan</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
                   </tr>
                 </thead>
@@ -2706,7 +2707,8 @@ export default function Sip7Page() {
               <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                 <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
-                    <th className="px-6 py-4">Nama Desa</th>
+                    <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Desa</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
                   </tr>
                 </thead>
@@ -2746,7 +2748,8 @@ export default function Sip7Page() {
             <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
-                  <th className="px-6 py-4">Nama Posyandu</th>
+                  <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>

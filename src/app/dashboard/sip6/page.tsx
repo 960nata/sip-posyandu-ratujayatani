@@ -1221,14 +1221,16 @@ export default function Sip6Page() {
                 <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
+                      <th className="px-6 py-4 w-12 text-center">No.</th>
                       <th className="px-6 py-4">Nama Posyandu</th>
                       <th className="px-6 py-4">Status</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {posyandus.map((p) => (
+                    {posyandus.map((p, idx) => (
                       <tr key={p.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                        <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
                         <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{p.nama}</td>
                         <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Selesai</span></td>
                         <td className="px-6 py-4 text-right">
@@ -1262,13 +1264,15 @@ export default function Sip6Page() {
                 <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
+                      <th className="px-6 py-4 w-12 text-center">No.</th>
                       <th className="px-6 py-4">Nama Desa</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {desas.map((desa) => (
+                    {desas.map((desa, idx) => (
                       <tr key={desa.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                        <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
                         <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedDesaId(desa.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
@@ -1287,13 +1291,15 @@ export default function Sip6Page() {
                 <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                   <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
+                      <th className="px-6 py-4 w-12 text-center">No.</th>
                       <th className="px-6 py-4">Nama Kecamatan</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {kecamatans.map((kec) => (
+                    {kecamatans.map((kec, idx) => (
                       <tr key={kec.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                        <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
                         <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedKecamatanId(kec.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>

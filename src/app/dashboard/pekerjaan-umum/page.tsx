@@ -896,14 +896,16 @@ export default function PekerjaanUmumPage() {
             <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
-                  <th className="px-6 py-4">Nama Kecamatan</th>
+                  <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Kecamatan</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {kecamatans.map((kec) => (
+                {kecamatans.map((kec, idx) => (
                   <tr key={kec.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
+                    <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => {
                         setSelectedKecamatanId(kec.id)
@@ -941,14 +943,16 @@ export default function PekerjaanUmumPage() {
             <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
-                  <th className="px-6 py-4">Nama Posyandu</th>
+                  <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {posyandus.map(p => (
+                {posyandus.map((p, idx) => (
                   <tr key={p.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{p.nama}</td>
+                    <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{p.nama}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => {
                         setSelectedPosyanduId(p.id)
@@ -985,14 +989,16 @@ export default function PekerjaanUmumPage() {
             <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
               <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
-                  <th className="px-6 py-4">Nama Desa</th>
+                  <th className="px-6 py-4 w-12 text-center">No.</th>
+                      <th className="px-6 py-4">Nama Desa</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {desas.map((desa) => (
+                {desas.map((desa, idx) => (
                   <tr key={desa.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
-                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
+                    <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
+                        <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
                     <td className="px-6 py-4 text-right">
                       <button onClick={() => {
                         setSelectedDesaId(desa.id)
@@ -1074,7 +1080,7 @@ export default function PekerjaanUmumPage() {
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
                       className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     >
-                      {posyandus.map(p => (
+                      {posyandus.map((p, idx) => (
                         <option key={p.id} value={p.nama}>{p.nama}</option>
                       ))}
                     </select>

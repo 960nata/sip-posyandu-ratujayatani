@@ -108,7 +108,7 @@ export default function PushNotificationPage() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                   placeholder="Contoh: Jadwal Posyandu"
                   required
                 />
@@ -119,7 +119,7 @@ export default function PushNotificationPage() {
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                   rows={4}
                   placeholder="Tulis pesan notifikasi di sini..."
                   required
@@ -131,7 +131,7 @@ export default function PushNotificationPage() {
                 <select 
                   value={formData.target}
                   onChange={(e) => setFormData({...formData, target: e.target.value})}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                 >
                   <option value="SEMUA">Semua Pengguna</option>
                   <option value="KECAMATAN">Per Kecamatan</option>
@@ -147,7 +147,7 @@ export default function PushNotificationPage() {
                     type="text"
                     value={formData.kecamatan}
                     onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                    className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                    className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                     placeholder="Nama Kecamatan"
                     required
                   />
@@ -162,7 +162,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.kecamatan}
                       onChange={(e) => setFormData({...formData, kecamatan: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Kecamatan"
                       required
                     />
@@ -173,7 +173,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
@@ -189,7 +189,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.desa}
                       onChange={(e) => setFormData({...formData, desa: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Desa"
                       required
                     />
@@ -200,7 +200,7 @@ export default function PushNotificationPage() {
                       type="text"
                       value={formData.posyandu}
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-transparent focus:border-purple-500 dark:focus:border-purple-500 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400/10 transition-all"
                       placeholder="Nama Posyandu"
                       required
                     />
@@ -211,7 +211,7 @@ export default function PushNotificationPage() {
               <button
                 type="submit"
                 disabled={isSending}
-                className={`w-full bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`w-full bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-4 rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all shadow-none flex items-center justify-center gap-2 ${isSending ? 'opacity-75 cursor-not-allowed' : ''}`}
               >
                 {isSending ? (
                   <>
@@ -260,7 +260,7 @@ export default function PushNotificationPage() {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                   placeholder="Cari notifikasi..."
                 />
               </div>

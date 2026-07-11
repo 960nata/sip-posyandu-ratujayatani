@@ -338,7 +338,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {dataModules.map((module) => (
-              <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+              <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                     <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
@@ -354,7 +354,7 @@ export default function DashboardPage() {
                 </div>
                 <Link
                   href={`/dashboard/${module.slug}`}
-                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                  className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Input Data
@@ -405,7 +405,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -424,7 +424,7 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
@@ -438,7 +438,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
+                  <Link href={`/dashboard/${module.slug}?posyandu=${selectedPosyandu}`} className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50">
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
                   </Link>
@@ -456,7 +456,7 @@ export default function DashboardPage() {
         dataLabels: { enabled: false },
         xaxis: { categories: ['Posyandu Mawar', 'Posyandu Melati', 'Posyandu Kenanga', 'Posyandu Kamboja', 'Posyandu Flamboyan'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
-        fill: { colors: ['#10b981'] },
+        fill: { colors: ['#7c3aed'] },
         tooltip: { theme: 'dark' }
       }
       const desaChartSeries = [{ name: 'Laporan Selesai', data: [7, 5, 3, 6, 4] }]
@@ -464,7 +464,7 @@ export default function DashboardPage() {
       const desaDonutOptions = {
         chart: { type: 'donut', background: 'transparent' },
         labels: ['Selesai', 'Pending'],
-        colors: ['#10b981', '#f59e0b'],
+        colors: ['#7c3aed', '#f59e0b'],
         legend: { position: 'bottom', labels: { colors: '#94a3b8' } },
         plotOptions: { pie: { donut: { size: '65%' } } },
         tooltip: { theme: 'dark' },
@@ -475,7 +475,7 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#7c3aed', '#3b82f6', '#2563eb', '#8b5cf6'],
+        colors: ['#7c3aed', '#a78bfa', '#8b5cf6', '#6d28d9', '#c4b5fd'],
         xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
@@ -638,7 +638,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedPosyandu('')}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -657,7 +657,7 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {dataModules.map((module) => (
-                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:shadow-lg hover:shadow-slate-100/50 dark:hover:shadow-none transition-all group">
+                <div key={module.title} className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200/70 dark:border-white/10 hover:transition-colors group">
                   <div className="flex items-start justify-between">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center transition-transform group-hover:scale-105`}>
@@ -673,7 +673,7 @@ export default function DashboardPage() {
                   </div>
                   <Link
                     href={`/dashboard/${module.slug}`}
-                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-[10px] transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
+                    className="mt-5 w-full py-2.5 bg-slate-50 dark:bg-[#202020] hover:bg-purple-50 dark:hover:bg-purple-900/20 text-slate-700 dark:text-white hover:text-purple-600 text-xs font-medium rounded-md transition-colors flex items-center justify-center gap-1 border border-transparent hover:border-purple-100 dark:hover:border-purple-900/50"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Lihat Data
@@ -693,7 +693,7 @@ export default function DashboardPage() {
               <div>
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Desa"
                 >
                   <ChevronDown className="w-5 h-5 rotate-90" />
@@ -763,7 +763,7 @@ export default function DashboardPage() {
         stroke: { show: true, width: 2, colors: ['transparent'] },
         xaxis: { categories: ['Pendidikan', 'Pekerjaan Umum', 'Perumahan', 'Trantib', 'Sosial', 'Kesehatan'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { title: { text: 'Jumlah Laporan', style: { color: '#94a3b8' } }, labels: { style: { colors: '#94a3b8' } } },
-        fill: { opacity: 1, colors: ['#10b981'] },
+        fill: { opacity: 1, colors: ['#7c3aed'] },
         tooltip: { theme: 'dark', y: { formatter: (val: any) => `${val} Laporan` } },
         theme: { mode: 'light' }
       }
@@ -797,7 +797,7 @@ export default function DashboardPage() {
       const trendChartOptions = {
         chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
         stroke: { curve: 'smooth', width: 3 },
-        colors: ['#10b981', '#7c3aed', '#3b82f6', '#2563eb', '#8b5cf6'],
+        colors: ['#7c3aed', '#a78bfa', '#8b5cf6', '#6d28d9', '#c4b5fd'],
         xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], labels: { style: { colors: '#94a3b8' } } },
         yaxis: { labels: { style: { colors: '#94a3b8' } } },
         tooltip: { theme: 'dark' },
@@ -953,7 +953,7 @@ export default function DashboardPage() {
       dataLabels: { enabled: false },
       xaxis: { categories: ['Pekalongan', 'Batanghari', 'Metro Kibang', 'Sekampung', 'Jabung'], labels: { style: { colors: '#94a3b8' } } },
       yaxis: { labels: { style: { colors: '#94a3b8' } } },
-      fill: { opacity: 1, colors: ['#10b981'] },
+      fill: { opacity: 1, colors: ['#7c3aed'] },
       tooltip: { theme: 'dark' }
     }
     const kabKecChartSeries = [{ name: 'Laporan Selesai', data: [130, 110, 90, 115, 70] }]
@@ -961,7 +961,7 @@ export default function DashboardPage() {
     const kabTrendOptions = {
       chart: { type: 'line', toolbar: { show: false }, background: 'transparent' },
       stroke: { curve: 'smooth', width: 3 },
-      colors: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6'],
+      colors: ['#7c3aed', '#38bdf8', '#f59e0b', '#a78bfa'],
       xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei'], labels: { style: { colors: '#94a3b8' } } },
       yaxis: { labels: { style: { colors: '#94a3b8' } } },
       tooltip: { theme: 'dark' },
@@ -1088,7 +1088,7 @@ export default function DashboardPage() {
               setSelectedBulan(parseInt(b))
               setSelectedTahun(parseInt(t))
             }}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all cursor-pointer"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all cursor-pointer"
           >
             <option value="12-2026">Desember 2026</option>
             <option value="11-2026">November 2026</option>

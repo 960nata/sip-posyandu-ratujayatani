@@ -144,11 +144,11 @@ export default function Sip7Page() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
     bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
     hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
     borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
@@ -156,7 +156,7 @@ export default function Sip7Page() {
     shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
     textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
     bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
-    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
   }
 
   const [mounted, setMounted] = useState(false)
@@ -1522,7 +1522,7 @@ export default function Sip7Page() {
             {!isPosyandu && (
               <button
                 onClick={() => setSelectedPosyandu('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                 title="Kembali ke Daftar Posyandu"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -1543,7 +1543,7 @@ export default function Sip7Page() {
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               <button
                 onClick={() => { setActiveTab('hasil_kegiatan'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'hasil_kegiatan'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'hasil_kegiatan'
                     ? `${theme.bgSolid} text-white ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
@@ -1552,7 +1552,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_bumil'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bumil'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'rekap_bumil'
                     ? `${theme.bgSolid} text-white ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
@@ -1561,7 +1561,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_bayi'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_bayi'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'rekap_bayi'
                     ? `${theme.bgSolid} text-white ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
@@ -1570,7 +1570,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_remaja'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_remaja'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'rekap_remaja'
                     ? `${theme.bgSolid} text-white ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
@@ -1579,7 +1579,7 @@ export default function Sip7Page() {
               </button>
               <button
                 onClick={() => { setActiveTab('rekap_lansia'); setShowForm(false); }}
-                className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'rekap_lansia'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'rekap_lansia'
                     ? `${theme.bgSolid} text-white ${theme.shadow}`
                     : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                   }`}
@@ -1610,7 +1610,7 @@ export default function Sip7Page() {
                           <select 
                             value={formData7.bulan} 
                             onChange={e => setFormData7(prev => ({ ...prev, bulan: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm"
                           >
                             {[...Array(12)].map((_, i) => (
                               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -1623,7 +1623,7 @@ export default function Sip7Page() {
                             type="number" 
                             value={formData7.tahun} 
                             onChange={e => setFormData7(prev => ({ ...prev, tahun: parseInt(e.target.value) }))} 
-                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" 
+                            className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 text-sm" 
                             required 
                           />
                         </div>
@@ -2087,8 +2087,8 @@ export default function Sip7Page() {
 
                       {/* Form buttons */}
                       <div className="flex items-center justify-end gap-3 mt-6">
-                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all">Batal</button>
-                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all ${theme.shadow} flex items-center gap-2`}>
+                        <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+                        <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-md transition-all ${theme.shadow} flex items-center gap-2`}>
                           <Save className="w-5 h-5" /> Simpan Data
                         </button>
                       </div>
@@ -2136,7 +2136,7 @@ export default function Sip7Page() {
                                 }));
                                 alert("Data referensi SIP 6 diterapkan!");
                               }}
-                              className={`w-full py-2 px-4 rounded-[10px] text-xs font-semibold text-white ${theme.bgSolid} ${theme.hoverSolid} transition-all`}
+                              className={`w-full py-2 px-4 rounded-md text-xs font-semibold text-white ${theme.bgSolid} ${theme.hoverSolid} transition-all`}
                             >
                               Terapkan Referensi
                             </button>
@@ -2164,7 +2164,7 @@ export default function Sip7Page() {
                   <div className="flex flex-wrap gap-2 w-full md:w-auto">
                     <button
                       onClick={exportUnifiedExcel}
-                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2"
+                      className="bg-white dark:bg-zinc-850 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-md hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-all text-sm flex items-center justify-center gap-2"
                     >
                       <Download className="w-4 h-4" /> Ekspor Excel (SIP 6 & 7)
                     </button>
@@ -2177,7 +2177,7 @@ export default function Sip7Page() {
                     {canEdit && (
                       <button
                         onClick={handleAdd}
-                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
+                        className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm`}
                       >
                         <Plus className="w-4 h-4" /> Tambah Data
                       </button>
@@ -2186,7 +2186,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2300,7 +2300,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2397,7 +2397,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2496,7 +2496,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2556,7 +2556,7 @@ export default function Sip7Page() {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                    <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                    <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                       <tr>
                         <th className="px-4 py-3">No</th>
                         <th className="px-4 py-3">Bulan/Tahun</th>
@@ -2613,7 +2613,7 @@ export default function Sip7Page() {
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Kecamatan</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
                     <th className="px-6 py-4">Nama Kecamatan</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
@@ -2640,7 +2640,7 @@ export default function Sip7Page() {
             {role === 'SUPERADMIN' && (
               <button
                 onClick={() => setSelectedKecamatan('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
                 title="Kembali ke Daftar Kecamatan"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -2649,7 +2649,7 @@ export default function Sip7Page() {
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-4">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr>
                     <th className="px-6 py-4">Nama Desa</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
@@ -2677,7 +2677,7 @@ export default function Sip7Page() {
               {role !== 'OPERATOR_DESA' && (
                 <button
                   onClick={() => setSelectedDesa('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
+                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -2689,7 +2689,7 @@ export default function Sip7Page() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4">Status</th>
@@ -2746,7 +2746,7 @@ export default function Sip7Page() {
                   </div>
                   <button
                     onClick={() => setIsDetailModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -2853,7 +2853,7 @@ export default function Sip7Page() {
                   <button
                     type="button"
                     onClick={() => setSelectedRekapForEdit(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -3126,14 +3126,14 @@ export default function Sip7Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedRekapForEdit(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveRekap}
-                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow}`}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-md bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow}`}
                 >
                   Simpan
                 </button>

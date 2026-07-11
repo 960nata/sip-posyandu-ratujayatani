@@ -12,6 +12,27 @@ import {
   UserCheck, Activity, FileText, HardDrive
 } from 'lucide-react'
 
+// Global ApexCharts defaults — calm minimal look for every dashboard chart.
+// Runs at module load (before any chart mounts); per-chart options still win.
+if (typeof window !== 'undefined') {
+  ;(window as any).Apex = {
+    chart: {
+      fontFamily: 'inherit',
+      toolbar: { show: false },
+      zoom: { enabled: false },
+      foreColor: 'rgba(120, 120, 130, 0.85)',
+    },
+    grid: {
+      borderColor: 'rgba(120, 120, 130, 0.15)',
+      strokeDashArray: 4,
+    },
+    stroke: { curve: 'smooth', width: 2.5 },
+    dataLabels: { enabled: false },
+    legend: { fontSize: '12px', markers: { size: 5 } },
+    tooltip: { theme: 'dark' },
+  }
+}
+
 const menuGroups = [
   {
     title: 'Menu Utama',

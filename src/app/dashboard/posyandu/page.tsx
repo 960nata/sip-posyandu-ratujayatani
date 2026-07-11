@@ -41,11 +41,11 @@ export default function AnalisaDataPage() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
     bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
     hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
     borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
@@ -53,8 +53,8 @@ export default function AnalisaDataPage() {
     shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
     textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
     bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
-    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
-    chartColor: isPosyandu ? '#8b5cf6' : '#10b981', // Purple vs Emerald
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
+    chartColor: '#7c3aed',
   }
 
   const chartSeries = [
@@ -570,7 +570,7 @@ export default function AnalisaDataPage() {
         <button 
           onClick={handleExportExcel}
           disabled={isExporting}
-          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-5 rounded-[10px] ${theme.hoverGradient} transition-all ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
+          className={`flex items-center gap-2 bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2 px-4 rounded-md ${theme.hoverGradient} transition-all ${theme.shadow} disabled:opacity-70 disabled:cursor-not-allowed`}
         >
           <Download className="w-5 h-5" />
           {isExporting ? 'Memproses...' : 'Export Excel (Semua Bidang)'}

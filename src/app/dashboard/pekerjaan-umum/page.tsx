@@ -152,11 +152,11 @@ export default function PekerjaanUmumPage() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
   }
 
   const [kecamatans, setKecamatans] = useState<any[]>([])
@@ -705,7 +705,7 @@ export default function PekerjaanUmumPage() {
                     setSelectedPosyandu('')
                     setSelectedPosyanduId('')
                   }}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -722,7 +722,7 @@ export default function PekerjaanUmumPage() {
               <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10">
                 <button
                   onClick={() => handleTahunChange(2025)}
-                  className={`px-4 py-2 rounded-[10px] font-semibold text-sm transition-all ${
+                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
                     selectedTahun === 2025
                       ? 'bg-white dark:bg-[#2f2f2f] text-slate-800 dark:text-white'
                       : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
@@ -732,7 +732,7 @@ export default function PekerjaanUmumPage() {
                 </button>
                 <button
                   onClick={() => handleTahunChange(2026)}
-                  className={`px-4 py-2 rounded-[10px] font-semibold text-sm transition-all ${
+                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
                     selectedTahun === 2026
                       ? 'bg-white dark:bg-[#2f2f2f] text-slate-800 dark:text-white'
                       : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
@@ -745,14 +745,14 @@ export default function PekerjaanUmumPage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleExportCSV}
-                  className="bg-white dark:bg-[#202020] text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
+                  className="bg-white dark:bg-[#202020] text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-md hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <FileText className="w-5 h-5" />
                   Export CSV
                 </button>
                 <button
                   onClick={handleExportExcel}
-                  className="bg-white dark:bg-[#202020] text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
+                  className="bg-white dark:bg-[#202020] text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
                   Export Excel
@@ -760,7 +760,7 @@ export default function PekerjaanUmumPage() {
                 {canEdit && (
                   <button
                     onClick={handleAdd}
-                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-[10px] ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center justify-center gap-2`}
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-md ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center justify-center gap-2`}
                   >
                     <Plus className="w-5 h-5" />
                     Tambah Laporan
@@ -780,7 +780,7 @@ export default function PekerjaanUmumPage() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                 placeholder="Cari nama pemohon atau keluhan..."
               />
             </div>
@@ -790,7 +790,7 @@ export default function PekerjaanUmumPage() {
           <div className="bg-white dark:bg-[#202020] rounded-lg border border-slate-200 dark:border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                   <tr className="border-b border-slate-200 dark:border-white/10">
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-white/10 text-center">No</th>
                     <th rowSpan={2} className="px-4 py-3 border-r border-slate-200 dark:border-white/10 text-center">Tanggal</th>
@@ -840,7 +840,7 @@ export default function PekerjaanUmumPage() {
                             href={report.dataDukungs[0].filePath}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[10px] text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 hover:bg-indigo-100 transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 hover:bg-indigo-100 transition-colors"
                           >
                             <FileText className="w-3.5 h-3.5" />
                             PDF/Berkas
@@ -894,7 +894,7 @@ export default function PekerjaanUmumPage() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Kecamatan</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
@@ -927,7 +927,7 @@ export default function PekerjaanUmumPage() {
                     setSelectedDesa('')
                     setSelectedDesaId('')
                   }}
-                  className="p-2 bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-955/50 transition-colors"
+                  className="p-2 bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-955/50 transition-colors"
                   title="Kembali ke Daftar Desa"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -939,7 +939,7 @@ export default function PekerjaanUmumPage() {
           
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
@@ -972,7 +972,7 @@ export default function PekerjaanUmumPage() {
                     setSelectedKecamatan('')
                     setSelectedKecamatanId('')
                   }}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-[10px] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   title="Kembali ke Daftar Kecamatan"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -983,7 +983,7 @@ export default function PekerjaanUmumPage() {
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Desa</th>
                   <th className="px-6 py-4 text-right">Aksi</th>
@@ -1040,7 +1040,7 @@ export default function PekerjaanUmumPage() {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1054,7 +1054,7 @@ export default function PekerjaanUmumPage() {
                     type="date"
                     value={formData.tanggal}
                     onChange={(e) => setFormData({...formData, tanggal: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     required
                   />
                 </div>
@@ -1072,7 +1072,7 @@ export default function PekerjaanUmumPage() {
                     <select
                       value={formData.posyandu}
                       onChange={(e) => setFormData({...formData, posyandu: e.target.value})}
-                      className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                      className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     >
                       {posyandus.map(p => (
                         <option key={p.id} value={p.nama}>{p.nama}</option>
@@ -1087,7 +1087,7 @@ export default function PekerjaanUmumPage() {
                     type="text"
                     value={formData.nama}
                     onChange={(e) => setFormData({...formData, nama: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     placeholder="Nama Lengkap"
                     required
                   />
@@ -1100,7 +1100,7 @@ export default function PekerjaanUmumPage() {
                     maxLength={16}
                     value={formData.nik}
                     onChange={(e) => setFormData({...formData, nik: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     placeholder="NIK Pemohon"
                     required
                   />
@@ -1112,7 +1112,7 @@ export default function PekerjaanUmumPage() {
                     type="text"
                     value={formData.noSuratRT}
                     onChange={(e) => setFormData({...formData, noSuratRT: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     placeholder="Contoh: 01/SP.01/25"
                     required
                   />
@@ -1124,7 +1124,7 @@ export default function PekerjaanUmumPage() {
                     type="text"
                     value={formData.lokasi}
                     onChange={(e) => setFormData({...formData, lokasi: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     placeholder="Contoh: wilayah RT 20"
                     required
                   />
@@ -1136,7 +1136,7 @@ export default function PekerjaanUmumPage() {
                     type="text"
                     value={formData.alamat}
                     onChange={(e) => setFormData({...formData, alamat: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     placeholder="Alamat Lengkap (RT/RW/Dusun)"
                     required
                   />
@@ -1147,7 +1147,7 @@ export default function PekerjaanUmumPage() {
                   <textarea
                     value={formData.keluhan}
                     onChange={(e) => setFormData({...formData, keluhan: e.target.value})}
-                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                    className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                     rows={3}
                     placeholder="Isi keluhan infrastruktur..."
                     required
@@ -1164,7 +1164,7 @@ export default function PekerjaanUmumPage() {
                         value="TL" 
                         checked={formData.status === 'TL'} 
                         onChange={() => setFormData({...formData, status: 'TL'})}
-                        className="text-purple-600 focus:ring-purple-500"
+                        className="text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-800 dark:text-white">Tindak Lanjut (TL)</span>
                     </label>
@@ -1175,7 +1175,7 @@ export default function PekerjaanUmumPage() {
                         value="BTL" 
                         checked={formData.status === 'BTL'} 
                         onChange={() => setFormData({...formData, status: 'BTL'})}
-                        className="text-purple-600 focus:ring-purple-500"
+                        className="text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-800 dark:text-white">Belum Tindak Lanjut (BTL)</span>
                     </label>
@@ -1187,7 +1187,7 @@ export default function PekerjaanUmumPage() {
                       type="text"
                       value={formData.keterangan}
                       onChange={(e) => setFormData({...formData, keterangan: e.target.value})}
-                      className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-4 ${theme.focusRing} transition-all`}
+                      className={`block w-full bg-slate-50 dark:bg-[#202020] border border-transparent ${theme.focusBorder} dark:${theme.focusBorder} rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 ${theme.focusRing} transition-all`}
                       placeholder="Contoh: sudah di tindak lanjuti penggunaan Dana Desa"
                       required
                     />
@@ -1216,7 +1216,7 @@ export default function PekerjaanUmumPage() {
                       <button
                         type="button"
                         onClick={() => setUploadedFile(null)}
-                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-[10px] hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
+                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
                       >
                         <X className="w-5 h-5" />
                       </button>
@@ -1256,13 +1256,13 @@ export default function PekerjaanUmumPage() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all"
+                    className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
-                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-6 rounded-[10px] ${theme.hoverGradient} transition-all ${theme.shadow}`}
+                    className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2 px-4 rounded-md ${theme.hoverGradient} transition-all ${theme.shadow}`}
                   >
                     {editId ? 'Simpan Perubahan' : 'Simpan'}
                   </button>

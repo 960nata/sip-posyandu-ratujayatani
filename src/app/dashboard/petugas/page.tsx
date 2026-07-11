@@ -14,11 +14,11 @@ export default function PetugasPage() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
     bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
     hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
     borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
@@ -26,7 +26,7 @@ export default function PetugasPage() {
     shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
     textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
     bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
-    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
   }
 
   const [petugas, setPetugas] = useState([
@@ -123,7 +123,7 @@ export default function PetugasPage() {
           <h2 className="text-lg font-bold text-slate-900 dark:text-white">Daftar Petugas</h2>
           <button 
             onClick={handleOpenAdd}
-            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-[10px] transition-all flex items-center gap-2 text-sm`}
+            className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-medium py-2 px-4 rounded-md transition-all flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah Petugas
@@ -132,7 +132,7 @@ export default function PetugasPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-700 dark:text-slate-200">
+            <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
               <tr>
                 <th className="px-4 py-3 font-medium">No</th>
                 <th className="px-4 py-3 font-medium">Nama</th>
@@ -182,7 +182,7 @@ export default function PetugasPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-700 dark:text-slate-200">
+            <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
               <tr>
                 <th className="px-4 py-3 font-medium sticky left-0 bg-slate-50 dark:bg-[#202020] z-10">Nama Petugas</th>
                 {months.map((month) => (
@@ -202,7 +202,7 @@ export default function PetugasPage() {
                       <td key={monthIndex} className="px-3 py-3 text-center min-w-[60px]">
                         <button
                           onClick={() => toggleAttendance(p.id, monthIndex)}
-                              className={`w-6 h-6 rounded-[10px] flex items-center justify-center transition-all border mx-auto ${
+                              className={`w-6 h-6 rounded-md flex items-center justify-center transition-all border mx-auto ${
                                 isPresent
                                   ? `${theme.bgLight} border-purple-200 ${theme.text} dark:${theme.textDark} dark:border-purple-800`
                                   : 'bg-slate-50 border-slate-200 text-slate-300 dark:bg-[#202020] dark:border-white/10 dark:text-zinc-600 hover:border-purple-300 dark:hover:border-purple-700'
@@ -248,7 +248,7 @@ export default function PetugasPage() {
                   </h2>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -262,7 +262,7 @@ export default function PetugasPage() {
                     type="text"
                     value={formData.nama}
                     onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
-                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors"
+                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 focus:border-purple-500 transition-colors"
                     placeholder="Nama Petugas"
                   />
                 </div>
@@ -294,13 +294,13 @@ export default function PetugasPage() {
               <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors"
+                  className="px-4 py-2 rounded-md text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors"
                 >
                   Batal
                 </button>
                 <button
                   onClick={handleSave}
-                  className={`px-4 py-2 rounded-[10px] text-sm font-medium text-white ${theme.bgSolid} ${theme.hoverSolid} transition-colors flex items-center gap-2`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium text-white ${theme.bgSolid} ${theme.hoverSolid} transition-colors flex items-center gap-2`}
                 >
                   <Save className="w-4 h-4" />
                   Simpan

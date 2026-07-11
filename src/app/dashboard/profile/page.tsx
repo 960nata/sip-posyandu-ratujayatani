@@ -61,7 +61,7 @@ export default function ProfilePage() {
                 />
                 <button 
                   onClick={() => document.getElementById('avatar-input')?.click()}
-                  className="absolute bottom-1 right-1 w-8 h-8 bg-purple-500 rounded-[10px] flex items-center justify-center text-white hover:bg-purple-600 transition-colors shadow-lg"
+                  className="absolute bottom-1 right-1 w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center text-white hover:bg-purple-600 transition-colors shadow-lg"
                 >
                   <Camera className="w-4 h-4" />
                 </button>
@@ -106,7 +106,7 @@ export default function ProfilePage() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                   placeholder="Masukkan nama lengkap"
                 />
               </div>
@@ -136,7 +136,7 @@ export default function ProfilePage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -146,7 +146,7 @@ export default function ProfilePage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -154,10 +154,10 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex justify-end gap-3">
-            <button className="px-5 py-2.5 bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-zinc-300 font-medium rounded-[10px] hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors text-sm">
+            <button className="px-5 py-2.5 bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-zinc-300 font-medium rounded-md hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors text-sm">
               Batal
             </button>
-            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--dash-primary)] hover:bg-[var(--dash-primary-hover)] text-white font-semibold rounded-[10px] transition-all shadow-lg shadow-purple-500/20 text-sm">
+            <button className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--dash-primary)] hover:bg-[var(--dash-primary-hover)] text-white font-semibold rounded-md transition-all shadow-none text-sm">
               <Save className="w-4 h-4" />
               Simpan Perubahan
             </button>

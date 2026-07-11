@@ -81,6 +81,18 @@ body {
   --dash-danger-bg:     rgba(248, 113, 113, 0.12);
 }
 
+/* Dashboard sidebar scrollbar: hairline, only tinted on hover */
+aside nav::-webkit-scrollbar {
+  width: 3px;
+}
+aside nav::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+aside nav:hover::-webkit-scrollbar-thumb {
+  background: var(--dash-border-2);
+}
+
 /* Native system font for body/description text (headings keep Plus Jakarta Sans) */
 .font-native {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,

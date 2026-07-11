@@ -276,14 +276,14 @@ export default function ManagePosyanduPage() {
         <div className="flex gap-2">
           <button
             onClick={() => setIsUserModalOpen(true)}
-            className="bg-white dark:bg-[#202020] text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-[10px] hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
+            className="bg-white dark:bg-[#202020] text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
           >
             <UserPlus className="w-5 h-5" />
             Buat Akun
           </button>
           <button
             onClick={() => setIsPosyanduModalOpen(true)}
-            className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-4 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2"
+            className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-4 rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all shadow-none flex items-center justify-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Tambah Posyandu
@@ -316,7 +316,7 @@ export default function ManagePosyanduPage() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="block w-full bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+          className="block w-full bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
           placeholder={activeTab === 'posyandu' ? "Cari nama posyandu..." : "Cari nama atau email..."}
         />
       </div>
@@ -328,7 +328,7 @@ export default function ManagePosyanduPage() {
             <div className="p-6 text-center text-slate-500">Memuat data...</div>
           ) : activeTab === 'posyandu' ? (
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama Posyandu</th>
                   <th className="px-6 py-4">Hari Buka</th>
@@ -369,14 +369,14 @@ export default function ManagePosyanduPage() {
                         </button>
                         <button
                           onClick={() => handleOpenEditPosyandu(p)}
-                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-[10px] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20"
                           title="Edit Posyandu"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => { setSelectedPosyandu(p); setIsDeletePosyanduModalOpen(true); }}
-                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-[10px] hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-md hover:bg-rose-50 dark:hover:bg-rose-900/20"
                           title="Hapus Posyandu"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -389,7 +389,7 @@ export default function ManagePosyanduPage() {
             </table>
           ) : (
             <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-              <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+              <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                 <tr>
                   <th className="px-6 py-4">Nama</th>
                   <th className="px-6 py-4">Email</th>
@@ -415,14 +415,14 @@ export default function ManagePosyanduPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenEditUser(u)}
-                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-[10px] hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                          className="text-blue-500 hover:text-blue-600 transition-colors p-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20"
                           title="Edit User"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => { setSelectedUser(u); setIsDeleteUserModalOpen(true); }}
-                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-[10px] hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          className="text-rose-500 hover:text-rose-600 transition-colors p-1 rounded-md hover:bg-rose-50 dark:hover:bg-rose-900/20"
                           title="Hapus User"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -450,15 +450,15 @@ export default function ManagePosyanduPage() {
               <form onSubmit={handleCreatePosyandu} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Posyandu</label>
-                  <input type="text" value={posyanduForm.nama} onChange={e => setPosyanduForm({...posyanduForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="Contoh: Posyandu Adirejo IV" required />
+                  <input type="text" value={posyanduForm.nama} onChange={e => setPosyanduForm({...posyanduForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="Contoh: Posyandu Adirejo IV" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Hari Buka</label>
-                  <input type="text" value={posyanduForm.hariBuka} onChange={e => setPosyanduForm({...posyanduForm, hariBuka: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="Contoh: Senin" required />
+                  <input type="text" value={posyanduForm.hariBuka} onChange={e => setPosyanduForm({...posyanduForm, hariBuka: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="Contoh: Senin" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Strata</label>
-                  <select value={posyanduForm.strata} onChange={e => setPosyanduForm({...posyanduForm, strata: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
+                  <select value={posyanduForm.strata} onChange={e => setPosyanduForm({...posyanduForm, strata: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all">
                     <option value="PRATAMA">PRATAMA</option>
                     <option value="MADYA">MADYA</option>
                     <option value="PURNAMA">PURNAMA</option>
@@ -466,8 +466,8 @@ export default function ManagePosyanduPage() {
                   </select>
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2 px-4 rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all shadow-none disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan & Kelola User'}
                   </button>
                 </div>
@@ -490,15 +490,15 @@ export default function ManagePosyanduPage() {
               <form onSubmit={handleEditPosyandu} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Posyandu</label>
-                  <input type="text" value={editPosyanduForm.nama} onChange={e => setEditPosyanduForm({...editPosyanduForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required />
+                  <input type="text" value={editPosyanduForm.nama} onChange={e => setEditPosyanduForm({...editPosyanduForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Hari Buka</label>
-                  <input type="text" value={editPosyanduForm.hariBuka} onChange={e => setEditPosyanduForm({...editPosyanduForm, hariBuka: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required />
+                  <input type="text" value={editPosyanduForm.hariBuka} onChange={e => setEditPosyanduForm({...editPosyanduForm, hariBuka: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Strata</label>
-                  <select value={editPosyanduForm.strata} onChange={e => setEditPosyanduForm({...editPosyanduForm, strata: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
+                  <select value={editPosyanduForm.strata} onChange={e => setEditPosyanduForm({...editPosyanduForm, strata: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all">
                     <option value="PRATAMA">PRATAMA</option>
                     <option value="MADYA">MADYA</option>
                     <option value="PURNAMA">PURNAMA</option>
@@ -506,8 +506,8 @@ export default function ManagePosyanduPage() {
                   </select>
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsEditPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsEditPosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2 px-4 rounded-md hover:from-blue-600 hover:to-indigo-700 transition-all shadow-none disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                   </button>
                 </div>
@@ -536,8 +536,8 @@ export default function ManagePosyanduPage() {
                 Semua data SIP 6, SIP 7, laporan, dan relasi yang terhubung ke <b>{selectedPosyandu.nama}</b> akan ikut dihapus secara permanen.
               </p>
               <div className="flex items-center justify-end gap-3">
-                <button onClick={() => setIsDeletePosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                <button onClick={handleDeletePosyandu} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-[10px] transition-all disabled:opacity-60">
+                <button onClick={() => setIsDeletePosyanduModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                <button onClick={handleDeletePosyandu} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2 px-4 rounded-md transition-all disabled:opacity-60">
                   {actionLoading ? 'Menghapus...' : 'Ya, Hapus'}
                 </button>
               </div>
@@ -559,19 +559,19 @@ export default function ManagePosyanduPage() {
               <form onSubmit={handleCreateUser} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Lengkap</label>
-                  <input type="text" value={userForm.nama} onChange={e => setUserForm({...userForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="Nama Lengkap" required />
+                  <input type="text" value={userForm.nama} onChange={e => setUserForm({...userForm, nama: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="Nama Lengkap" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Email</label>
-                  <input type="email" value={userForm.email} onChange={e => setUserForm({...userForm, email: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="email@contoh.com" required />
+                  <input type="email" value={userForm.email} onChange={e => setUserForm({...userForm, email: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="email@contoh.com" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Password</label>
-                  <input type="password" value={userForm.password} onChange={e => setUserForm({...userForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="Minimal 6 karakter" required />
+                  <input type="password" value={userForm.password} onChange={e => setUserForm({...userForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="Minimal 6 karakter" required />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2 px-4 rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all shadow-none disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Buat Akun'}
                   </button>
                 </div>
@@ -594,15 +594,15 @@ export default function ManagePosyanduPage() {
               <form onSubmit={handleEditUser} className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Lengkap</label>
-                  <input type="text" value={editUserForm.name} onChange={e => setEditUserForm({...editUserForm, name: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required />
+                  <input type="text" value={editUserForm.name} onChange={e => setEditUserForm({...editUserForm, name: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Email</label>
-                  <input type="email" value={editUserForm.email} onChange={e => setEditUserForm({...editUserForm, email: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" required />
+                  <input type="email" value={editUserForm.email} onChange={e => setEditUserForm({...editUserForm, email: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" required />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Role</label>
-                  <select value={editUserForm.role} onChange={e => setEditUserForm({...editUserForm, role: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all">
+                  <select value={editUserForm.role} onChange={e => setEditUserForm({...editUserForm, role: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all">
                     <option value="OPERATOR_POSYANDU">OPERATOR_POSYANDU</option>
                     <option value="OPERATOR_DESA">OPERATOR_DESA</option>
                     <option value="ADMIN_KECAMATAN">ADMIN_KECAMATAN</option>
@@ -611,11 +611,11 @@ export default function ManagePosyanduPage() {
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Password Baru <span className="text-slate-400 font-normal">(kosongkan jika tidak ingin ubah)</span></label>
-                  <input type="password" value={editUserForm.password} onChange={e => setEditUserForm({...editUserForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all" placeholder="Kosongkan jika tidak diubah" />
+                  <input type="password" value={editUserForm.password} onChange={e => setEditUserForm({...editUserForm, password: e.target.value})} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all" placeholder="Kosongkan jika tidak diubah" />
                 </div>
                 <div className="flex items-center justify-end gap-3 mt-6">
-                  <button type="button" onClick={() => setIsEditUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg shadow-blue-500/20 disabled:opacity-60">
+                  <button type="button" onClick={() => setIsEditUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                  <button type="submit" disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2 px-4 rounded-md hover:from-blue-600 hover:to-indigo-700 transition-all shadow-none disabled:opacity-60">
                     {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                   </button>
                 </div>
@@ -644,8 +644,8 @@ export default function ManagePosyanduPage() {
                 Akun <b>{selectedUser.name || selectedUser.nama}</b> ({selectedUser.email}) akan dihapus secara permanen.
               </p>
               <div className="flex items-center justify-end gap-3">
-                <button onClick={() => setIsDeleteUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                <button onClick={handleDeleteUser} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2.5 px-6 rounded-[10px] transition-all disabled:opacity-60">
+                <button onClick={() => setIsDeleteUserModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                <button onClick={handleDeleteUser} disabled={actionLoading} className="bg-rose-500 hover:bg-rose-600 text-white font-semibold py-2 px-4 rounded-md transition-all disabled:opacity-60">
                   {actionLoading ? 'Menghapus...' : 'Ya, Hapus'}
                 </button>
               </div>
@@ -675,7 +675,7 @@ export default function ManagePosyanduPage() {
                         type="checkbox"
                         checked={selectedUsers.includes(user.id)}
                         onChange={() => toggleUserSelection(user.id)}
-                        className="rounded text-purple-500 focus:ring-purple-500 w-5 h-5"
+                        className="rounded text-purple-500 focus:ring-purple-500/25 focus:border-purple-400 w-5 h-5"
                       />
                       <div>
                         <p className="text-sm font-semibold text-slate-800 dark:text-white">{user.name || user.nama}</p>
@@ -689,8 +689,8 @@ export default function ManagePosyanduPage() {
                 ))}
               </div>
               <div className="flex items-center justify-end gap-3 mt-6">
-                <button type="button" onClick={() => setIsAssignModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-[10px] transition-all">Batal</button>
-                <button onClick={handleAssignUsers} disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2.5 px-6 rounded-[10px] hover:from-purple-600 hover:to-indigo-700 transition-all shadow-lg shadow-purple-500/20 disabled:opacity-60">
+                <button type="button" onClick={() => setIsAssignModalOpen(false)} className="px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md transition-all">Batal</button>
+                <button onClick={handleAssignUsers} disabled={actionLoading} className="bg-[var(--dash-primary)] text-white font-semibold py-2 px-4 rounded-md hover:from-purple-600 hover:to-indigo-700 transition-all shadow-none disabled:opacity-60">
                   {actionLoading ? 'Menyimpan...' : 'Simpan Perubahan'}
                 </button>
               </div>

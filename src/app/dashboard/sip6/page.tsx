@@ -20,11 +20,11 @@ export default function Sip6Page() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
     textLight: isPosyandu ? 'text-purple-700' : 'text-purple-700',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
     bgSolid: isPosyandu ? 'bg-purple-500' : 'bg-purple-500',
     hoverSolid: isPosyandu ? 'hover:bg-purple-600' : 'hover:bg-purple-600',
     borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
@@ -32,7 +32,7 @@ export default function Sip6Page() {
     shadowSolid: isPosyandu ? 'shadow-purple-500/20' : 'shadow-purple-500/20',
     textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
     bgDarkLight: isPosyandu ? 'dark:bg-purple-900/30' : 'dark:bg-purple-900/30',
-    focusRingSolid: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    focusRingSolid: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
   }
 
   const [showForm, setShowForm] = useState(false)
@@ -886,7 +886,7 @@ export default function Sip6Page() {
           <select
             value={formData.bulan}
             onChange={(e) => handleChange('bulan', parseInt(e.target.value))}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
             {[...Array(12)].map((_, i) => (
               <option key={i + 1} value={i + 1}>Bulan {i + 1}</option>
@@ -895,7 +895,7 @@ export default function Sip6Page() {
           <select
             value={formData.tahun}
             onChange={(e) => handleChange('tahun', parseInt(e.target.value))}
-            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
             <option value="2026">2026</option>
             <option value="2025">2025</option>
@@ -974,16 +974,16 @@ export default function Sip6Page() {
                 <>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+                    <input type="text" value={sasaranForm.namaIbu} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Suami</label>
-                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({ ...sasaranForm, namaSuami: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <input type="text" value={sasaranForm.namaSuami} onChange={e => setSasaranForm({ ...sasaranForm, namaSuami: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   {activeTab !== 'sasaran_bumil' && (
                     <div>
                       <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Bayi</label>
-                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({ ...sasaranForm, namaBayi: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                      <input type="text" value={sasaranForm.namaBayi} onChange={e => setSasaranForm({ ...sasaranForm, namaBayi: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                     </div>
                   )}
                 </>
@@ -991,11 +991,11 @@ export default function Sip6Page() {
                 <>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama</label>
-                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({ ...sasaranForm, nama: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+                    <input type="text" value={(sasaranForm as any).nama || ''} onChange={e => setSasaranForm({ ...sasaranForm, nama: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Jenis Kelamin</label>
-                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({ ...sasaranForm, jenisKelamin: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <select value={(sasaranForm as any).jenisKelamin || ''} onChange={e => setSasaranForm({ ...sasaranForm, jenisKelamin: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
                       <option value="">-- Pilih --</option>
                       <option value="L">Laki-laki</option>
                       <option value="P">Perempuan</option>
@@ -1003,28 +1003,28 @@ export default function Sip6Page() {
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tanggal Lahir</label>
-                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({ ...sasaranForm, tanggalLahir: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <input type="date" value={(sasaranForm as any).tanggalLahir || ''} onChange={e => setSasaranForm({ ...sasaranForm, tanggalLahir: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Nama Ayah</label>
-                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaAyah: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <input type="text" value={(sasaranForm as any).namaAyah || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaAyah: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                 </>
               )}
               <div>
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-200 block mb-1.5">Tahun</label>
-                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({ ...sasaranForm, tahun: parseInt(e.target.value) })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required />
+                <input type="number" value={sasaranForm.tahun} onChange={e => setSasaranForm({ ...sasaranForm, tahun: parseInt(e.target.value) })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" required />
               </div>
             </div>
 
           </motion.div>
           <div className="flex items-center justify-end gap-3">
-            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all">Batal</button>
-            <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-[10px] transition-all ${theme.shadow} flex items-center gap-2`}>
+            <button type="button" onClick={() => setShowFormSasaran(false)} className="px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all">Batal</button>
+            <button type="submit" className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-3 px-8 rounded-md transition-all ${theme.shadow} flex items-center gap-2`}>
               <Save className="w-5 h-5" /> Simpan Sasaran
             </button>
           </div>
@@ -1037,7 +1037,7 @@ export default function Sip6Page() {
               {!isPosyandu && (
                 <button
                   onClick={() => setSelectedPosyanduId('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
+                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -1047,7 +1047,7 @@ export default function Sip6Page() {
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <button
                   onClick={() => setActiveTab('pengunjung')}
-                  className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'pengunjung'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'pengunjung'
                       ? `${theme.bgSolid} text-white ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
@@ -1056,7 +1056,7 @@ export default function Sip6Page() {
                 </button>
                 <button
                   onClick={() => setActiveTab('sasaran_bumil')}
-                  className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'sasaran_bumil' || activeTab === 'sasaran'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'sasaran_bumil' || activeTab === 'sasaran'
                       ? `${theme.bgSolid} text-white ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
@@ -1065,7 +1065,7 @@ export default function Sip6Page() {
                 </button>
                 <button
                   onClick={() => setActiveTab('sasaran_bayi')}
-                  className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'sasaran_bayi'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'sasaran_bayi'
                       ? `${theme.bgSolid} text-white ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
@@ -1074,7 +1074,7 @@ export default function Sip6Page() {
                 </button>
                 <button
                   onClick={() => setActiveTab('sasaran_remaja')}
-                  className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'sasaran_remaja'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'sasaran_remaja'
                       ? `${theme.bgSolid} text-white ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
@@ -1083,7 +1083,7 @@ export default function Sip6Page() {
                 </button>
                 <button
                   onClick={() => setActiveTab('sasaran_lansia')}
-                  className={`px-4 py-2 text-sm font-medium rounded-[10px] transition-all whitespace-nowrap ${activeTab === 'sasaran_lansia'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${activeTab === 'sasaran_lansia'
                       ? `${theme.bgSolid} text-white ${theme.shadow}`
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
@@ -1101,7 +1101,7 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm`}>
+                      <button onClick={exportUnifiedExcel} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm`}>
                         Ekspor Excel (SIP 6 & 7)
                       </button>
                       {canEdit && (
@@ -1115,7 +1115,7 @@ export default function Sip6Page() {
 
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                      <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                      <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                         <tr>
                           <th className="px-4 py-3">No</th>
                           <th className="px-4 py-3">Bulan</th>
@@ -1262,7 +1262,7 @@ export default function Sip6Page() {
                     </div>
                     <button
                       onClick={() => setShowFormSasaran(true)}
-                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-[10px] transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
+                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
                     >
                       <Plus className="w-4 h-4" /> Tambah Sasaran
                     </button>
@@ -1277,14 +1277,14 @@ export default function Sip6Page() {
                       type="text"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                      className="block w-full bg-slate-50 dark:bg-[#2f2f2f]/50 border border-slate-200 dark:border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400 transition-all"
                       placeholder="Cari nama sasaran..."
                     />
                   </div>
 
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                      <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                      <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                         <tr>
                           <th className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Nama Ibu' : 'Nama'}</th>
                           {activeTab !== 'sasaran_bumil' && activeTab !== 'sasaran' && (
@@ -1330,7 +1330,7 @@ export default function Sip6Page() {
                                 <td key={m} className="px-2 py-3 text-center">
                                   <button
                                     onClick={() => handleChecklistClick(s, m)}
-                                    className={`w-5 h-5 mx-auto rounded-[10px] flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
+                                    className={`w-5 h-5 mx-auto rounded-md flex items-center justify-center transition-colors ${s.kunjungan.includes(m)
                                         ? `${theme.bgSolid} text-white`
                                         : 'bg-slate-100 dark:bg-[#2f2f2f] hover:bg-slate-200 dark:hover:bg-zinc-600 text-transparent'
                                       }`}
@@ -1392,7 +1392,7 @@ export default function Sip6Page() {
                   {role !== 'OPERATOR_DESA' && (
                     <button
                       onClick={() => setSelectedDesaId('')}
-                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
+                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                       title="Kembali ke Daftar Desa"
                     >
                       <ArrowLeft className="w-5 h-5" />
@@ -1406,7 +1406,7 @@ export default function Sip6Page() {
 
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                  <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                  <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Posyandu</th>
                       <th className="px-6 py-4">Status</th>
@@ -1435,7 +1435,7 @@ export default function Sip6Page() {
                   {role !== 'ADMIN_KECAMATAN' && (
                     <button
                       onClick={() => setSelectedKecamatanId('')}
-                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-[10px] ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
+                      className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                       title="Kembali ke Daftar Kecamatan"
                     >
                       <ArrowLeft className="w-5 h-5" />
@@ -1447,7 +1447,7 @@ export default function Sip6Page() {
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                  <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                  <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Desa</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
@@ -1472,7 +1472,7 @@ export default function Sip6Page() {
               <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-6">Daftar Kecamatan</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                  <thead className="text-xs uppercase bg-slate-50 dark:bg-[#2f2f2f]/50 text-slate-700 dark:text-slate-200">
+                  <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                     <tr>
                       <th className="px-6 py-4">Nama Kecamatan</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
@@ -1529,7 +1529,7 @@ export default function Sip6Page() {
                   </div>
                   <button
                     onClick={() => setIsDetailModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1553,7 +1553,7 @@ export default function Sip6Page() {
                       </div>
                       <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-white/10">
                         <table className="w-full text-sm text-left text-slate-500 dark:text-zinc-400">
-                          <thead className="text-xs uppercase bg-slate-100 dark:bg-[#2f2f2f]/70 text-slate-700 dark:text-slate-200">
+                          <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                             <tr>
                               <th className="px-4 py-2.5">No</th>
                               <th className="px-4 py-2.5">Nama</th>
@@ -1624,7 +1624,7 @@ export default function Sip6Page() {
                   <button
                     type="button"
                     onClick={() => setSelectedAttendanceForModal(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1639,7 +1639,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.bumilDatang}
                         onChange={(e) => setChecklistForm({ ...checklistForm, bumilDatang: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Bumil Datang</span>
                     </label>
@@ -1648,7 +1648,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.busuiDatang}
                         onChange={(e) => setChecklistForm({ ...checklistForm, busuiDatang: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Busui Datang</span>
                     </label>
@@ -1686,7 +1686,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.balitaDatang}
                         onChange={(e) => setChecklistForm({ ...checklistForm, balitaDatang: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Balita Datang</span>
                     </label>
@@ -1695,7 +1695,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.bbNaik}
                         onChange={(e) => setChecklistForm({ ...checklistForm, bbNaik: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">BB Naik</span>
                     </label>
@@ -1704,7 +1704,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.asiEksklusif}
                         onChange={(e) => setChecklistForm({ ...checklistForm, asiEksklusif: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">ASI Eksklusif</span>
                     </label>
@@ -1718,7 +1718,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.remaja614Datang}
                         onChange={(e) => setChecklistForm({ ...checklistForm, remaja614Datang: e.target.checked, remaja1518Datang: e.target.checked ? false : checklistForm.remaja1518Datang })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">6-14 Th Datang</span>
                     </label>
@@ -1727,7 +1727,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.remaja1518Datang}
                         onChange={(e) => setChecklistForm({ ...checklistForm, remaja1518Datang: e.target.checked, remaja614Datang: e.target.checked ? false : checklistForm.remaja614Datang })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">15-18 Th Datang</span>
                     </label>
@@ -1736,7 +1736,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.imtNormal}
                         onChange={(e) => setChecklistForm({ ...checklistForm, imtNormal: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">IMT Normal</span>
                     </label>
@@ -1772,7 +1772,7 @@ export default function Sip6Page() {
                         type="checkbox"
                         checked={checklistForm.mandiri}
                         onChange={(e) => setChecklistForm({ ...checklistForm, mandiri: e.target.checked })}
-                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500"
+                        className="w-5 h-5 rounded border-slate-300 dark:border-white/10 text-purple-600 focus:ring-purple-500/25 focus:border-purple-400"
                       />
                       <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Mandiri</span>
                     </label>
@@ -1793,14 +1793,14 @@ export default function Sip6Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedAttendanceForModal(null)}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-[10px] transition-all"
+                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#2f2f2f] rounded-md transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="button"
                   onClick={() => saveAttendanceDetails(selectedAttendanceForModal.sasaran.id, selectedAttendanceForModal.month, checklistForm)}
-                  className={`px-5 py-2 text-sm font-semibold text-white rounded-[10px] bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow}`}
+                  className={`px-5 py-2 text-sm font-semibold text-white rounded-md bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow}`}
                 >
                   Simpan
                 </button>

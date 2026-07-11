@@ -87,7 +87,7 @@ export default function SKKepengurusanPage() {
     hoverGradient: 'hover:opacity-90',
     shadow: 'shadow-none',
     focusBorder: isPosyandu ? 'focus:border-purple-500' : 'focus:border-purple-500',
-    focusRing: isPosyandu ? 'focus:ring-purple-500/10' : 'focus:ring-purple-500/10',
+    focusRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400/10' : 'focus:ring-purple-500/25 focus:border-purple-400/10',
     text: isPosyandu ? 'text-purple-600' : 'text-purple-600',
     textDark: isPosyandu ? 'dark:text-purple-400' : 'dark:text-purple-400',
     bgLight: isPosyandu ? 'bg-purple-50' : 'bg-purple-50',
@@ -97,7 +97,7 @@ export default function SKKepengurusanPage() {
     borderLight: isPosyandu ? 'border-purple-200' : 'border-purple-200',
     iconBg: isPosyandu ? 'bg-purple-100' : 'bg-purple-100',
     iconBgDark: isPosyandu ? 'dark:bg-purple-900/50' : 'dark:bg-purple-900/50',
-    activeRing: isPosyandu ? 'focus:ring-purple-500' : 'focus:ring-purple-500',
+    activeRing: isPosyandu ? 'focus:ring-purple-500/25 focus:border-purple-400' : 'focus:ring-purple-500/25 focus:border-purple-400',
     borderT: isPosyandu ? 'border-t-purple-500' : 'border-t-purple-500',
   }
 
@@ -343,7 +343,7 @@ export default function SKKepengurusanPage() {
         {((session?.user as any)?.role === 'OPERATOR_POSYANDU' || (session?.user as any)?.role === 'OPERATOR_DESA') && (
           <button
             onClick={handleOpenAdd}
-            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2.5 px-5 rounded-[10px] transition-all ${theme.shadow} flex items-center gap-2 text-sm`}
+            className={`bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} text-white font-medium py-2 px-4 rounded-md transition-all ${theme.shadow} flex items-center gap-2 text-sm`}
           >
             <Plus className="w-4 h-4" />
             Tambah SK Baru
@@ -390,7 +390,7 @@ export default function SKKepengurusanPage() {
           {(isPosyandu || userRole === 'OPERATOR_DESA') && (
             <button
               onClick={handleOpenAdd}
-              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2.5 px-6 rounded-[10px] transition-all ${theme.shadow} inline-flex items-center gap-2 text-sm`}
+              className={`bg-gradient-to-r ${theme.bgGradient} text-white font-medium py-2 px-4 rounded-md transition-all ${theme.shadow} inline-flex items-center gap-2 text-sm`}
             >
               <Plus className="w-4 h-4" />
               Buat SK Pertama
@@ -525,7 +525,7 @@ export default function SKKepengurusanPage() {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={() => setExpandedId(expandedId === sk.id ? null : sk.id)}
-                      className={`flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
                         expandedId === sk.id
                           ? `${theme.bgLight} ${theme.bgDarkLight} ${theme.text} ${theme.textDark}`
                           : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-zinc-400'
@@ -539,13 +539,13 @@ export default function SKKepengurusanPage() {
                       <>
                         <button
                           onClick={() => handleOpenEdit(sk)}
-                          className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-[10px] transition-colors"
+                          className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => setDeleteConfirm(sk.id)}
-                          className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-[10px] transition-colors"
+                          className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-md transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -573,7 +573,7 @@ export default function SKKepengurusanPage() {
                         </h4>
                         <div className="overflow-x-auto rounded-lg border border-slate-200/70 dark:border-white/10">
                           <table className="w-full text-sm text-left">
-                            <thead className="text-xs uppercase bg-slate-50 dark:bg-[#202020]/50 text-slate-600 dark:text-slate-300">
+                            <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
                               <tr>
                                 <th className="px-4 py-3 font-medium">No</th>
                                 <th className="px-4 py-3 font-medium">Nama</th>
@@ -648,13 +648,13 @@ export default function SKKepengurusanPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setDeleteConfirm(null)}
-                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
+                    className="flex-1 px-4 py-2.5 rounded-md text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
                   >
                     Batal
                   </button>
                   <button
                     onClick={() => handleDelete(deleteConfirm)}
-                    className="flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors"
+                    className="flex-1 px-4 py-2.5 rounded-md text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 transition-colors"
                   >
                     Ya, Hapus
                   </button>
@@ -705,7 +705,7 @@ export default function SKKepengurusanPage() {
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="w-9 h-9 flex items-center justify-center rounded-[10px] bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-md bg-slate-50 dark:bg-[#202020] text-slate-400 hover:text-slate-500 dark:hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -957,14 +957,14 @@ export default function SKKepengurusanPage() {
               <div className="p-6 border-t border-slate-200/70 dark:border-white/10 flex justify-end gap-3">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-[10px] text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
+                  className="px-5 py-2.5 rounded-md text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-[#2f2f2f] transition-colors border border-slate-200 dark:border-white/10"
                 >
                   Batal
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className={`px-5 py-2.5 rounded-[10px] text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`px-5 py-2.5 rounded-md text-sm font-medium text-white bg-gradient-to-r ${theme.bgGradient} ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {saving ? (
                     <>

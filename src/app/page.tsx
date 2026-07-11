@@ -885,7 +885,13 @@ export default function Home() {
           </p>
         </motion.div>
 
-        <div className="marquee-container space-y-6 overflow-hidden py-2">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="marquee-container space-y-6 overflow-hidden py-2"
+        >
           {/* First Row: Left Scrolling */}
           <div className="flex overflow-hidden">
             <div className="animate-marquee-left flex gap-6">
@@ -901,7 +907,7 @@ export default function Home() {
                 { src: "/images/hero/hero4.avif", alt: "Kader Aktif Posyandu" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 2.jpg", alt: "Integrasi Pelayanan SPM" },
               ].map((item, idx) => (
-                <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                <div key={`r1-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 cursor-pointer">
                   <Image
                     src={item.src}
                     alt={item.alt}
@@ -933,7 +939,7 @@ export default function Home() {
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 3.jpg", alt: "Pelayanan Posyandu Prima" },
                 { src: "/images/tujuan/PHOTO-2026-05-11-21-46-03 4.jpg", alt: "Pemberdayaan Masyarakat" },
               ].map((item, idx) => (
-                <div key={`r2-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
+                <div key={`r2-${idx}`} className="relative w-80 h-52 flex-shrink-0 rounded-2xl overflow-hidden group shadow-sm hover:shadow-lg hover:-translate-y-2 transition-all duration-300 cursor-pointer">
                   <Image
                     src={item.src}
                     alt={item.alt}
@@ -949,7 +955,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Section: Landasan Hukum */}

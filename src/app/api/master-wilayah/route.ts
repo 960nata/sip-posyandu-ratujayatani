@@ -22,6 +22,11 @@ export async function GET(request: Request) {
           include: {
             posyandus: {
               orderBy: { nama: "asc" },
+              include: {
+                _count: {
+                  select: { sip6s: true, sip7s: true }
+                }
+              }
             }
           }
         }

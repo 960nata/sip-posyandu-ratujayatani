@@ -72,6 +72,10 @@ export function MasterWilayahView() {
         {data.map((kec) => {
           const isKecExpanded = expandedKec[kec.id]
           const totalPosyandu = kec.desas.reduce((acc: number, curr: any) => acc + curr.posyandus.length, 0)
+          const kecTotalInput = kec.desas.reduce((acc: number, d: any) => acc + d.posyandus.reduce((a: number, p: any) => a + (p._count?.sip6s || 0) + (p._count?.sip7s || 0), 0), 0);
+          let kecStatus = { label: '🔴 Pasif', bg: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' };
+          if (kecTotalInput > 0 && kecTotalInput < 20) kecStatus = { label: '🟡 Kurang Aktif', bg: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' };
+          if (kecTotalInput >= 20) kecStatus = { label: '🟢 Aktif', bg: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' };
           
           return (
             <div key={kec.id} className="border-b border-[var(--dash-border)] last:border-0">
@@ -86,7 +90,12 @@ export function MasterWilayahView() {
                     {globalKecIndex++}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[var(--dash-text)]">Kecamatan {kec.nama}</h3>
+                    <h3 className="font-semibold text-[var(--dash-text)] flex items-center gap-2">
+                      Kecamatan {kec.nama}
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${kecStatus.bg}`}>
+                        {kecStatus.label} ({kecTotalInput} Input)
+                      </span>
+                    </h3>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-xs">
@@ -106,6 +115,11 @@ export function MasterWilayahView() {
                     <div className="p-4 text-center text-sm text-[var(--dash-text-muted)]">Belum ada desa</div>
                   ) : kec.desas.map((desa: any, desaIdx: number) => {
                     const isDesaExpanded = expandedDesa[desa.id]
+                    const desaTotalInput = desa.posyandus.reduce((acc: number, p: any) => acc + (p._count?.sip6s || 0) + (p._count?.sip7s || 0), 0);
+                    let desaStatus = { label: '🔴 Pasif', bg: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' };
+                    if (desaTotalInput > 0 && desaTotalInput < 10) desaStatus = { label: '🟡 Kurang Aktif', bg: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' };
+                    if (desaTotalInput >= 10) desaStatus = { label: '🟢 Aktif', bg: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' };
+                    
                     return (
                       <div key={desa.id} className="border-b border-[var(--dash-border-2)] last:border-0">
                         <div 
@@ -115,7 +129,12 @@ export function MasterWilayahView() {
                           <div className="flex items-center gap-2">
                             {isDesaExpanded ? <ChevronDown className="w-4 h-4 text-blue-500" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
                             <span className="text-sm font-medium text-[var(--dash-text-soft)]">{desaIdx + 1}.</span>
-                            <h4 className="text-sm font-semibold text-[var(--dash-text)]">Desa {desa.nama}</h4>
+                            <h4 className="text-sm font-semibold text-[var(--dash-text)] flex items-center gap-2">
+                              Desa {desa.nama}
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${desaStatus.bg}`}>
+                                {desaStatus.label} ({desaTotalInput})
+                              </span>
+                            </h4>
                           </div>
                           <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md">
                             {desa.posyandus.length} Posyandu
@@ -127,7 +146,13 @@ export function MasterWilayahView() {
                           <div className="bg-slate-50/50 dark:bg-black/10 py-2">
                             {desa.posyandus.length === 0 ? (
                               <div className="pl-20 py-2 text-xs text-[var(--dash-text-muted)]">Belum ada posyandu</div>
-                            ) : desa.posyandus.map((pos: any, posIdx: number) => (
+                            ) : desa.posyandus.map((pos: any, posIdx: number) => {
+                              const totalInput = (pos._count?.sip6s || 0) + (pos._count?.sip7s || 0);
+                              let pStatus = { label: '🔴 Belum Melapor', bg: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400' };
+                              if (totalInput > 0 && totalInput < 5) pStatus = { label: '🟡 Kurang Aktif', bg: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' };
+                              if (totalInput >= 5) pStatus = { label: '🟢 Rutin Melapor', bg: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' };
+                              
+                              return (
                               <div key={pos.id} className="flex items-center justify-between p-2.5 pl-20 hover:bg-slate-100 dark:hover:bg-white/5 group">
                                 <div className="flex items-center gap-3">
                                   <span className="text-xs text-slate-400">{posIdx + 1}.</span>
@@ -142,7 +167,15 @@ export function MasterWilayahView() {
                                         {pos.status || 'AKTIF'}
                                       </span>
                                     </div>
-                                    <div className="text-xs text-[var(--dash-text-muted)]">Strata: {pos.strata} • Buka: {pos.hariBuka}</div>
+                                    <div className="text-xs text-[var(--dash-text-muted)] flex items-center gap-2 mt-0.5">
+                                      <span>Strata: {pos.strata}</span>
+                                      <span>•</span>
+                                      <span>Buka: {pos.hariBuka}</span>
+                                      <span>•</span>
+                                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${pStatus.bg}`}>
+                                        {pStatus.label} ({totalInput})
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="pr-4">
@@ -171,7 +204,7 @@ export function MasterWilayahView() {
                                   </button>
                                 </div>
                               </div>
-                            ))}
+                            )})}
                           </div>
                         )}
                       </div>

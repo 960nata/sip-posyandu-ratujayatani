@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { User, Lock, Camera, Save } from 'lucide-react'
 
@@ -11,6 +11,17 @@ export default function ProfilePage() {
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [dbAvatar, setDbAvatar] = useState<string | null>(null)
+
+  // Ambil avatar langsung dari database
+  useEffect(() => {
+    fetch('/api/users/avatar')
+      .then(res => res.json())
+      .then(data => {
+        if (data.avatarUrl) setDbAvatar(data.avatarUrl)
+      })
+      .catch(() => {})
+  }, [])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -47,8 +58,8 @@ export default function ProfilePage() {
             
             <div className="relative flex flex-col items-center mt-8">
               <div className="relative w-28 h-28 bg-white dark:bg-[#202020] rounded-full flex items-center justify-center text-purple-500 text-4xl font-bold mb-4 shadow-xl border-4 border-white dark:border-zinc-900 overflow-hidden">
-                {imagePreview || (session?.user as any)?.image ? (
-                  <img src={imagePreview || (session?.user as any)?.image} alt="Profile" className="w-full h-full object-cover" />
+                {imagePreview || dbAvatar ? (
+                  <img src={imagePreview || dbAvatar || ''} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   name?.[0] || 'U'
                 )}

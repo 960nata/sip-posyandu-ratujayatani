@@ -53,3 +53,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
+
+// GET: Ambil avatar URL terbaru dari database (bukan dari session JWT)
+export async function GET() {
+  const session = await auth()
+  if (!session || !session.user?.email) {
+    return NextResponse.json({ avatarUrl: null })
+  }
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { image: true }
+    })
+    return NextResponse.json({ avatarUrl: user?.image || null })
+  } catch {
+    return NextResponse.json({ avatarUrl: null })
+  }
+}

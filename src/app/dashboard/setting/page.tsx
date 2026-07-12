@@ -72,72 +72,34 @@ export default function ProfilePage() {
 
     setIsUploading(true)
 
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      const img = new Image()
-      img.onload = () => {
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-        
-        // Use original dimensions or limit to max width/height
-        const MAX_WIDTH = 500
-        const MAX_HEIGHT = 500
-        let width = img.width
-        let height = img.height
+    // Langsung preview dari file asli
+    const previewUrl = URL.createObjectURL(file)
+    setAvatarUrl(previewUrl)
 
-        if (width > height) {
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width
-            width = MAX_WIDTH
-          }
-        } else {
-          if (height > MAX_HEIGHT) {
-            width *= MAX_HEIGHT / height
-            height = MAX_HEIGHT
-          }
-        }
+    // Upload langsung tanpa konversi AVIF (banyak browser gak support encode AVIF)
+    const formData = new FormData()
+    formData.append('file', file, file.name)
 
-        canvas.width = width
-        canvas.height = height
-        ctx?.drawImage(img, 0, 0, width, height)
-        
-        // Convert to AVIF
-        canvas.toBlob((blob) => {
-          if (blob) {
-            // Create a preview URL
-            setAvatarUrl(URL.createObjectURL(blob))
-            
-            // Actual upload to server
-            const formData = new FormData()
-            formData.append('file', blob, 'avatar.avif')
-            
-            fetch('/api/users/avatar', {
-              method: 'POST',
-              body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                setAvatarUrl(data.avatarUrl)
-                alert('Foto profil berhasil diunggah!')
-              } else {
-                alert('Gagal mengunggah: ' + data.error)
-              }
-              setIsUploading(false)
-            })
-            .catch(err => {
-              console.error(err)
-              alert('Terjadi kesalahan saat mengunggah!')
-              setIsUploading(false)
-            })
-          } else {
-            setIsUploading(false)
-          }
-        }, 'image/avif', 0.8)
+    try {
+      const res = await fetch('/api/users/avatar', {
+        method: 'POST',
+        body: formData
+      })
+      const data = await res.json()
+      if (data.success && data.avatarUrl) {
+        setAvatarUrl(data.avatarUrl)
+        alert('Foto profil berhasil diunggah!')
+      } else {
+        alert('Gagal mengunggah: ' + (data.error || 'Unknown error'))
+        setAvatarUrl(null)
       }
-      img.src = event.target?.result as string
+    } catch (err) {
+      console.error(err)
+      alert('Terjadi kesalahan saat mengunggah!')
+      setAvatarUrl(null)
+    } finally {
+      setIsUploading(false)
     }
-    reader.readAsDataURL(file)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -196,11 +158,11 @@ export default function ProfilePage() {
               <div>
                 <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors text-sm">
                   <Camera className="w-4 h-4" />
-                  <span>{isUploading ? 'Mengompres...' : 'Unggah Foto'}</span>
+                  <span>{isUploading ? 'Mengunggah...' : 'Unggah Foto'}</span>
                   <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} disabled={isUploading} />
                 </label>
                 <p className="text-xs text-[var(--dash-text-soft)] mt-2">
-                  Format gambar akan otomatis dikompres ke **AVIF** untuk menghemat ruang.
+                  Format gambar akan otomatis dikompres. Maks 10 MB (JPG/PNG/WEBP).
                 </p>
               </div>
             </div>

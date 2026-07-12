@@ -66,12 +66,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = (user as any).id
         token.role = (user as any).role
         token.picture = (user as any).image
         token.kecamatanId = (user as any).kecamatanId
         token.kecamatanNama = (user as any).kecamatanNama
         token.desaId = (user as any).desaId
         token.posyanduId = (user as any).posyanduId
+      }
+      // Selalu ambil foto terbaru dari database agar update avatar langsung terlihat
+      if (token.email) {
+        try {
+          const freshUser = await prisma.user.findUnique({
+            where: { email: token.email as string },
+            select: { image: true }
+          })
+          if (freshUser) {
+            token.picture = freshUser.image
+          }
+        } catch (_) {
+          // Jangan crash kalau DB error, pakai data lama
+        }
       }
       return token
     },

@@ -13,6 +13,9 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
+  const { searchParams } = new URL(request.url)
+  const tahun = parseInt(searchParams.get("tahun") || "") || new Date().getFullYear()
+
   try {
     const data = await prisma.kecamatan.findMany({
       orderBy: { nama: "asc" },
@@ -23,8 +26,13 @@ export async function GET(request: Request) {
             posyandus: {
               orderBy: { nama: "asc" },
               include: {
-                _count: {
-                  select: { sip6s: true, sip7s: true }
+                sip6s: {
+                  where: { tahun },
+                  select: { id: true }
+                },
+                sip7s: {
+                  where: { tahun },
+                  select: { id: true }
                 }
               }
             }
@@ -32,7 +40,27 @@ export async function GET(request: Request) {
         }
       }
     })
-    return NextResponse.json(data)
+
+    const formatted = data.map(kec => ({
+      ...kec,
+      desas: kec.desas.map(desa => ({
+        ...desa,
+        posyandus: desa.posyandus.map(pos => ({
+          id: pos.id,
+          nama: pos.nama,
+          hariBuka: pos.hariBuka,
+          strata: pos.strata,
+          status: pos.status,
+          desaId: pos.desaId,
+          _count: {
+            sip6s: pos.sip6s.length,
+            sip7s: pos.sip7s.length
+          }
+        }))
+      }))
+    }))
+
+    return NextResponse.json(formatted)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }

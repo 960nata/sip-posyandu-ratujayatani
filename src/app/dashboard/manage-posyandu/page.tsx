@@ -15,7 +15,8 @@ export function MasterWilayahView() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch('/api/master-wilayah')
+      const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
+      const res = await fetch(`/api/master-wilayah?tahun=${savedTahun}`)
       const json = await res.json()
       if (res.ok && Array.isArray(json)) {
         setData(json)

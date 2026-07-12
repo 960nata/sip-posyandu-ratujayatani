@@ -2676,8 +2676,9 @@ export default function Sip7Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  {regionData.map((kec) => (
+                  {regionData.map((kec, idx) => (
                     <tr key={kec.name} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                      <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
                       <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.name}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedKecamatan(kec.name)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
@@ -2713,8 +2714,9 @@ export default function Sip7Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  {myKec?.desas.map((desa) => (
+                  {myKec?.desas.map((desa, idx) => (
                     <tr key={desa} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                      <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
                       <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa}</td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => setSelectedDesa(desa)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
@@ -2755,8 +2757,9 @@ export default function Sip7Page() {
                 </tr>
               </thead>
               <tbody>
-                {[`Posyandu ${selectedDesa} I`, `Posyandu ${selectedDesa} II`, `Posyandu ${selectedDesa} III`].map((pos) => (
+                {[`Posyandu ${selectedDesa} I`, `Posyandu ${selectedDesa} II`, `Posyandu ${selectedDesa} III`].map((pos, idx) => (
                   <tr key={pos} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                    <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
                     <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{pos}</td>
                     <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Aktif</span></td>
                     <td className="px-6 py-4 text-right">

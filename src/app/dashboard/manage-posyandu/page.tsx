@@ -24,7 +24,7 @@ export function MasterWilayahView() {
         setData([])
       }
     } catch (e) {
-      console.error(e); alert("Gagal mengambil data: " + e.message)
+      console.error(e); alert("Gagal mengambil data: " + (e as Error).message)
     } finally {
       setLoading(false)
     }
@@ -57,7 +57,7 @@ export function MasterWilayahView() {
         })))
       }
     } catch (e) {
-      console.error(e); alert("Gagal mengambil data: " + e.message)
+      console.error(e); alert("Gagal mengambil data: " + (e as Error).message)
     } finally {
       setActionLoading(null)
     }

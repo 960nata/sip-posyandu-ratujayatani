@@ -17,9 +17,14 @@ export function MasterWilayahView() {
     try {
       const res = await fetch('/api/master-wilayah')
       const json = await res.json()
-      setData(Array.isArray(json) ? json : [])
+      if (res.ok && Array.isArray(json)) {
+        setData(json)
+      } else {
+        alert("Error fetching data: " + JSON.stringify(json))
+        setData([])
+      }
     } catch (e) {
-      console.error(e)
+      console.error(e); alert("Gagal mengambil data: " + e.message)
     } finally {
       setLoading(false)
     }
@@ -52,7 +57,7 @@ export function MasterWilayahView() {
         })))
       }
     } catch (e) {
-      console.error(e)
+      console.error(e); alert("Gagal mengambil data: " + e.message)
     } finally {
       setActionLoading(null)
     }

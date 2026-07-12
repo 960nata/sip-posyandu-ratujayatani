@@ -946,7 +946,7 @@ export default function SosialPage() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-[var(--dash-text)] ">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${selectedKecamatan}` : ''}</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] ">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${selectedKecamatan}` : ''}</h2>
             </div>
           </div>
           <div className="overflow-x-auto">

@@ -1246,8 +1246,8 @@ export default function Sip6Page() {
             // Level 2: List Desa
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
-                <div>
-                  {role !== 'ADMIN_KECAMATAN' && (
+            <div className="flex items-center gap-3">
+              {role !== 'ADMIN_KECAMATAN' && (
                     <button
                       onClick={() => setSelectedKecamatanId('')}
                       className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
@@ -1256,8 +1256,7 @@ export default function Sip6Page() {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                   )}
-                  <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Pilih Desa</h2>
-                  <p className="text-sm text-[var(--dash-text-soft)]">Silakan pilih desa di {kecamatans.find(k => k.id === selectedKecamatanId)?.nama} untuk melihat data SIP 6</p>
+              <h2 className="text-lg font-bold text-[var(--dash-text)]">Pilih Desa {role !== 'ADMIN_KECAMATAN' ? `di Kec. ${kecamatans.find(k => k.id === selectedKecamatanId)?.nama}` : ''}</h2>
                 </div>
               </div>
               <div className="overflow-x-auto">

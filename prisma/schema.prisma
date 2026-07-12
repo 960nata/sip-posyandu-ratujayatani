@@ -406,6 +406,26 @@ model Notification {
   createdAt DateTime @default(now())
 }
 
+// Log akses aplikasi berbasis IP (untuk peta sebaran akses di dashboard).
+// Lokasi diisi via geolokasi IP saat akses; IP privat/lokal disimpan tanpa koordinat.
+model AccessLog {
+  id        String   @id @default(cuid())
+  ip        String
+  city      String?
+  region    String?
+  country   String?
+  lat       Float?
+  lng       Float?
+  userId    String?
+  userName  String?
+  role      String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([ip])
+  @@index([createdAt])
+}
+
 model AbsensiPetugas {
   id         String   @id @default(cuid())
   userId     String

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import AnalyticsClient from "@/components/analytics/AnalyticsClient";
+import AccessMap from "@/components/analytics/AccessMap";
 
 export const metadata = {
   title: "Analisis & Peta Akses",
@@ -23,7 +23,7 @@ export default async function AnalyticsPage() {
         </p>
       </div>
 
-      <AnalyticsClient />
+      <AccessMap />
     </div>
   );
 }

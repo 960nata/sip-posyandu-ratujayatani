@@ -413,12 +413,12 @@ export default function Home() {
                   variants={itemVariants}
                   whileHover={{ y: -8, scale: 1.015 }}
                   transition={{ duration: 0.3 }}
-                  className="group relative cursor-pointer h-full"
+                  className="group relative cursor-pointer flex flex-col h-full"
                   data-scroll-hover
                 >
                   {/* Card body with circular corner cutout */}
                   <div
-                    className={`relative overflow-hidden rounded-[10px] p-4 sm:p-7 h-full min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
+                    className={`relative overflow-hidden rounded-[10px] p-4 sm:p-7 flex-1 min-h-[150px] sm:min-h-[170px] flex flex-col justify-center ${
                       isAccentMobile ? "bg-purple-400" : "bg-purple-50/70"
                     } ${isAccent ? "lg:bg-purple-400" : "lg:bg-purple-50/70"}`}
                     style={maskStyle}

@@ -630,9 +630,20 @@ export default function Sip6Page() {
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Pengunjung Bulanan Posyandu</h1>
-          <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (SIP 6)</p>
+        <div className="flex items-center gap-3">
+          {!showFormSasaran && !isPosyandu && selectedDesaId && selectedPosyanduId && (
+            <button
+              onClick={() => setSelectedPosyanduId('')}
+              className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
+              title="Kembali ke Daftar Posyandu"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          )}
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Pengunjung Bulanan Posyandu</h1>
+            <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (SIP 6)</p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <select
@@ -786,15 +797,7 @@ export default function Sip6Page() {
           {(isPosyandu || (selectedDesaId && selectedPosyanduId)) ? (
             // Level 3: Detail Posyandu
             <div className="space-y-6">
-              {!isPosyandu && (
-                <button
-                  onClick={() => setSelectedPosyanduId('')}
-                  className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
-                  title="Kembali ke Daftar Posyandu"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
+              {/* Tombol kembali dipindah ke samping kiri judul header */}
               {/* Tabs */}
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <button

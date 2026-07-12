@@ -22,7 +22,20 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    domains: ["images.unsplash.com", "mrazsardinjrphncgnhu.supabase.co"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "mrazsardinjrphncgnhu.supabase.co",
+      }
+    ],
   },
   async headers() {
     return [

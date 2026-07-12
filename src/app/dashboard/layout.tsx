@@ -137,14 +137,19 @@ export default function DashboardLayout({
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme === 'dark') {
       setDarkMode(true)
+      document.documentElement.classList.add("dark")
       document.documentElement.setAttribute("data-theme", "dark")
     } else if (savedTheme === 'light') {
       setDarkMode(false)
+      document.documentElement.classList.remove("dark")
       document.documentElement.removeAttribute("data-theme")
     } else {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       setDarkMode(prefersDark)
-      if (prefersDark) document.documentElement.setAttribute("data-theme", "dark")
+      if (prefersDark) {
+        document.documentElement.classList.add("dark")
+        document.documentElement.setAttribute("data-theme", "dark")
+      }
     }
   }, [])
 
@@ -153,8 +158,10 @@ export default function DashboardLayout({
     setDarkMode(newDark)
     localStorage.setItem('theme', newDark ? 'dark' : 'light')
     if (newDark) {
+      document.documentElement.classList.add("dark")
       document.documentElement.setAttribute("data-theme", "dark")
     } else {
+      document.documentElement.classList.remove("dark")
       document.documentElement.removeAttribute("data-theme")
     }
   }

@@ -195,7 +195,7 @@ export default function DashboardLayout({
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "4px 6px 18px" }}>
           <div style={{ width: "42px", height: "42px", borderRadius: "13px", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 8px 20px -8px var(--dash-primary)" }}>
-             <Image src="/images/logo/logo.png" alt="Logo" width={24} height={24} style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }} />
+             <img src="/images/logo/logo.png" alt="Logo" width={24} height={24} style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }} />
           </div>
           <div style={{ lineHeight: 1.15 }}>
             <div style={{ fontSize: "0.92rem", fontWeight: 800, color: "var(--dash-text)", letterSpacing: "-0.01em" }}>SIPANDU</div>

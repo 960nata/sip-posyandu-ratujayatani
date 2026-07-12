@@ -59,8 +59,8 @@ export async function uploadFile(opts: UploadOpts): Promise<UploadResult> {
     if (!supabaseUrl || !key) {
       return { error: 'Konfigurasi Supabase (SUPABASE_URL / KEY) belum lengkap di environment.', status: 500 }
     }
-    // Gambar → bucket GAMBAR, dokumen → bucket FILE
-    const bucket = isImageFile(contentType, ext) ? 'GAMBAR' : 'FILE'
+    // Taruh semua di bucket GAMBAR agar tidak perlu buat bucket baru (atau bisa buat bucket BERKAS)
+    const bucket = 'GAMBAR'
     const uploadUrl = `${supabaseUrl}/storage/v1/object/${bucket}/${filename}`
     try {
       const res = await fetch(uploadUrl, {

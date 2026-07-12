@@ -42,7 +42,7 @@ export default function DashboardPage() {
   const isKecamatan = role === 'ADMIN_KECAMATAN'
   const isOperasional = role === 'OPERATOR_DESA' || role === 'OPERATOR_POSYANDU'
 
-  const [tahun, setTahun] = useState(2026)
+  const [tahun, setTahun] = useState(2025)
   const [bulan, setBulan] = useState<number | ''>('') // '' = semua bulan (tren tahunan)
 
   const [healthStats, setHealthStats] = useState<any>(null)
@@ -52,7 +52,7 @@ export default function DashboardPage() {
   const [summary, setSummary] = useState<Record<string, { total: number; selesai: number }> | null>(null)
 
   useEffect(() => {
-    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2026
+    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025
     setTahun(savedTahun)
   }, [])
 

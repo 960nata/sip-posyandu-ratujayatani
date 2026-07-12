@@ -173,7 +173,7 @@ export default function SosialPage() {
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
 
-  const [selectedTahun, setSelectedTahun] = useState(2026)
+  const [selectedTahun, setSelectedTahun] = useState(2025)
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -185,7 +185,7 @@ export default function SosialPage() {
 
   useEffect(() => {
     setMounted(true)
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
     setSelectedTahun(parseInt(savedTahun))
 
     const fetchKecamatans = async () => {

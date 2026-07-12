@@ -171,7 +171,7 @@ export default function PekerjaanUmumPage() {
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
 
-  const [selectedTahun, setSelectedTahun] = useState(2026)
+  const [selectedTahun, setSelectedTahun] = useState(2025)
   const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [search, setSearch] = useState('')
@@ -183,7 +183,7 @@ export default function PekerjaanUmumPage() {
 
   useEffect(() => {
     setMounted(true)
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
     setSelectedTahun(parseInt(savedTahun))
 
     const fetchKecamatans = async () => {

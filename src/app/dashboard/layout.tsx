@@ -174,6 +174,7 @@ export default function DashboardLayout({
   const roleLabel = ROLE_LABELS[role] ?? role ?? '—'
   const userName = session?.user?.name || 'User'
   const userInitials = userName.charAt(0).toUpperCase()
+  const userImage = (session?.user as any)?.image as string | undefined
   
   const navItemBase: React.CSSProperties = {
     display: "flex", alignItems: "center", gap: "13px",
@@ -186,7 +187,7 @@ export default function DashboardLayout({
       
       {/* ══ SIDEBAR ══ */}
       <aside className={`dash-sidebar${sideOpen ? " open" : ""}`} style={{
-        width: "264px", backgroundColor: "var(--dash-sidebar)", flexShrink: 0,
+        width: "288px", backgroundColor: "var(--dash-sidebar)", flexShrink: 0,
         borderRight: "1px solid var(--dash-border)", display: "flex", flexDirection: "column",
         gap: "4px", padding: "22px 18px",
         overflowY: "auto", height: "100vh",
@@ -243,8 +244,8 @@ export default function DashboardLayout({
         {/* Profile card */}
         <div style={{ marginTop: "8px", borderTop: "1px solid var(--dash-border)", paddingTop: "14px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "11px", padding: "12px", borderRadius: "14px", background: "var(--dash-surface-hover)", border: "1px solid var(--dash-border)" }}>
-            <div style={{ width: "40px", height: "40px", borderRadius: "12px", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: "1rem", flexShrink: 0, boxShadow: "0 6px 14px -6px var(--dash-primary)" }}>
-              {userInitials}
+            <div style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: "1rem", flexShrink: 0, boxShadow: "0 6px 14px -6px var(--dash-primary)" }}>
+              {userImage ? <img src={userImage} alt={userName} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : userInitials}
             </div>
             <div style={{ lineHeight: 1.25, minWidth: 0, flex: 1 }}>
               <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "var(--dash-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{userName}</div>
@@ -262,7 +263,7 @@ export default function DashboardLayout({
         
         {/* ══ TOP HEADER ══ */}
         <header ref={headerRef} style={{
-          position: "sticky", top: 0, zIndex: 200,
+          position: "sticky", top: 0, zIndex: 40,
           borderBottom: "1px solid var(--dash-border)",
           backgroundColor: "var(--dash-surface)",
           backdropFilter: "saturate(1.4) blur(8px)",
@@ -291,17 +292,17 @@ export default function DashboardLayout({
             )}
           </button>
 
-          {/* Profile avatar — icon only */}
-          <button onClick={() => { setProfileOpen(v => !v); setNotificationOpen(false); }} title={userName} aria-haspopup="true" aria-expanded={profileOpen} style={{ width: "40px", height: "40px", borderRadius: "10px", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", border: "none", color: "#fff", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            {userInitials}
+          {/* Profile avatar — foto bulat, fallback inisial */}
+          <button onClick={() => { setProfileOpen(v => !v); setNotificationOpen(false); }} title={userName} aria-haspopup="true" aria-expanded={profileOpen} style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", padding: 0, background: userImage ? "var(--dash-surface-hover)" : "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", border: "1px solid var(--dash-border)", color: "#fff", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            {userImage ? <img src={userImage} alt={userName} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : userInitials}
           </button>
 
           {/* Profile popup */}
           {profileOpen && (
             <div className="dash-popup-panel" style={{ position: "absolute", right: "20px", top: "66px", zIndex: 210, width: "220px", background: "var(--dash-card)", border: "1px solid var(--dash-border)", borderRadius: "16px", padding: "8px", boxShadow: "0 24px 48px -24px rgba(0,0,0,0.4)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 10px 12px" }}>
-                <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: "0.82rem", flexShrink: 0 }}>
-                  {userInitials}
+                <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", background: "linear-gradient(135deg, var(--dash-primary), var(--dash-success))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: "0.82rem", flexShrink: 0 }}>
+                  {userImage ? <img src={userImage} alt={userName} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : userInitials}
                 </div>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontSize: "0.84rem", fontWeight: 700, color: "var(--dash-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{userName}</div>

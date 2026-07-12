@@ -171,7 +171,7 @@ export default function Sip7Page() {
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
 
-  const [tahunAktif, setTahunAktif] = useState(2026)
+  const [tahunAktif, setTahunAktif] = useState(2025)
   const [namaDesa, setNamaDesa] = useState('Adijaya')
 
   const userKecamatanNama = (session?.user as any)?.kecamatanNama
@@ -981,7 +981,7 @@ export default function Sip7Page() {
     
     // Load config from settings
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
     setFormData7(prev => ({ ...prev, tahun: parseInt(savedTahun) }))
@@ -1539,6 +1539,23 @@ export default function Sip7Page() {
           </div>
 
           <div className="space-y-6">
+            {/* Year tabs — pindah tahun agar data 2025 & 2026 keduanya bisa dilihat */}
+            <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10 w-fit">
+              {[2025, 2026].map(y => (
+                <button
+                  key={y}
+                  onClick={() => { setTahunAktif(y); localStorage.setItem('sip_tahun_aktif', String(y)); setFormData7(prev => ({ ...prev, tahun: y })); }}
+                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
+                    tahunAktif === y
+                      ? 'bg-white dark:bg-[#2f2f2f] text-[var(--dash-text)] shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
+                  }`}
+                >
+                  {y}
+                </button>
+              ))}
+            </div>
+
             {/* Tabs */}
             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
               <button

@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   
   const [namaDesa, setNamaDesa] = useState('')
-  const [tahunAktif, setTahunAktif] = useState(2026)
+  const [tahunAktif, setTahunAktif] = useState(2025)
   const [posyandus, setPosyandus] = useState<any[]>([])
   const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
 
@@ -35,7 +35,7 @@ export default function ProfilePage() {
       }))
     }
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
   }, [session])

@@ -14,7 +14,7 @@ export default function LaporanPage() {
   const isKecamatan = role === 'ADMIN_KECAMATAN'
   const isDesa = role === 'OPERATOR_DESA' || role === 'OPERATOR_POSYANDU'
 
-  const [tahun, setTahun] = useState(2026)
+  const [tahun, setTahun] = useState(2025)
   const [kecamatans, setKecamatans] = useState<any[]>([])
   const [desas, setDesas] = useState<any[]>([])
   const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
@@ -24,7 +24,7 @@ export default function LaporanPage() {
   const [notice, setNotice] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
 
   useEffect(() => {
-    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '2026')
+    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '2025')
     setTahun(savedTahun)
     fetch('/api/kecamatan').then(r => r.json()).then(setKecamatans).catch(() => {})
     if (isKecamatan && userKecamatanId) setSelectedKecamatanId(userKecamatanId)

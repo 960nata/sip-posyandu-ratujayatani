@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
-import * as fs from "fs/promises"
 import * as path from "path"
 import { BidangEnum } from "@prisma/client"
+import { uploadFile, isAllowedUpload } from "@/lib/storage"
 
 export async function GET(request: Request) {
   const session = await auth()
@@ -68,14 +68,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  // Check if running on Vercel and storage is local (Read-Only Filesystem)
-  const storageType = process.env.STORAGE_TYPE || 'local'
-  if (process.env.VERCEL && storageType === 'local') {
-    return NextResponse.json({ 
-      error: "Upload berkas belum didukung di Vercel karena sistem file bersifat Read-Only. Silakan gunakan lingkungan lokal (localhost) untuk mengetes fitur ini!" 
-    }, { status: 500 })
-  }
-
   try {
     const formData = await request.formData()
     const file = formData.get('file') as Blob | null
@@ -101,66 +93,26 @@ export async function POST(request: Request) {
     // Get file extension from original name
     const originalName = (file as any).name || 'document.pdf'
     const ext = path.extname(originalName) || '.pdf'
+    const contentType = file.type || 'application/octet-stream'
+
+    // Terima gambar (JPG/PNG/…) & dokumen (PDF/DOC/XLS/…)
+    if (!isAllowedUpload(contentType, ext)) {
+      return NextResponse.json({ error: "Jenis berkas tidak didukung. Unggah gambar atau PDF/dokumen." }, { status: 400 })
+    }
+    // Batas ukuran 15 MB
+    if (file.size > 15 * 1024 * 1024) {
+      return NextResponse.json({ error: "Ukuran berkas maksimal 15 MB." }, { status: 400 })
+    }
 
     // Create unique filename
     const filename = `data-dukung-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`
-    
-    let fileUrl = ''
+    const buffer = Buffer.from(await file.arrayBuffer())
 
-    if (storageType === 'supabase') {
-      const supabaseUrl = process.env.SUPABASE_URL
-      const supabaseKey = process.env.SUPABASE_ANON_KEY
-      const bucketName = process.env.SUPABASE_BUCKET || 'sip-posyandu'
-
-      if (!supabaseUrl || !supabaseKey) {
-        return NextResponse.json({ 
-          error: "Supabase URL dan Anon Key harus dikonfigurasi di .env untuk menggunakan penyimpanan Supabase" 
-        }, { status: 500 })
-      }
-
-      // Determine bucket based on file type
-      const fileType = file.type || ''
-      const isImage = fileType.startsWith("image/") || [".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif", ".heic"].includes(ext.toLowerCase())
-      const finalBucket = isImage ? "GAMBAR" : "FILE"
-
-      // Convert Blob to ArrayBuffer
-      const arrayBuffer = await file.arrayBuffer()
-
-      // Upload to Supabase Storage via REST API
-      const uploadUrl = `${supabaseUrl}/storage/v1/object/${finalBucket}/${filename}`
-      const response = await fetch(uploadUrl, {
-        method: 'POST',
-        headers: {
-          'apikey': supabaseKey,
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Content-Type': file.type || 'application/octet-stream'
-        },
-        body: arrayBuffer
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error("Supabase Storage upload error details:", errorText)
-        return NextResponse.json({ error: `Gagal upload ke Supabase (${finalBucket}): ${errorText}` }, { status: response.status })
-      }
-
-      fileUrl = `${supabaseUrl}/storage/v1/object/public/${finalBucket}/${filename}`
-    } else {
-      // Convert Blob to Buffer
-      const buffer = Buffer.from(await file.arrayBuffer())
-
-      const publicDir = path.join(process.cwd(), 'public')
-      const uploadDir = path.join(publicDir, 'uploads', 'data-dukung')
-
-      // Ensure directory exists
-      await fs.mkdir(uploadDir, { recursive: true })
-
-      // Save file
-      const filePath = path.join(uploadDir, filename)
-      await fs.writeFile(filePath, buffer)
-
-      fileUrl = `/uploads/data-dukung/${filename}`
+    const result = await uploadFile({ buffer, filename, contentType, ext, localDir: 'data-dukung' })
+    if (result.error || !result.url) {
+      return NextResponse.json({ error: result.error || 'Gagal mengunggah berkas' }, { status: result.status || 500 })
     }
+    const fileUrl = result.url
 
     const uploadedBy = session.user.name || session.user.email || "OPERATOR"
 
@@ -213,36 +165,28 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "File tidak ditemukan" }, { status: 404 })
     }
 
-    const storageType = process.env.STORAGE_TYPE || 'local'
-
-    if (storageType === 'supabase' && file.filePath.startsWith('http')) {
+    // Hapus objek: berbasis URL berkas (Supabase bila http, lokal bila /uploads).
+    if (file.filePath.startsWith('http')) {
       const supabaseUrl = process.env.SUPABASE_URL
-      const supabaseKey = process.env.SUPABASE_ANON_KEY
-
+      const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
       if (supabaseUrl && supabaseKey) {
         try {
           const urlObj = new URL(file.filePath)
           const pathParts = urlObj.pathname.split('/')
           const bucketName = pathParts[5]
           const fileName = pathParts.slice(6).join('/')
-
-          const deleteUrl = `${supabaseUrl}/storage/v1/object/${bucketName}/${fileName}`
-          
-          await fetch(deleteUrl, {
+          await fetch(`${supabaseUrl}/storage/v1/object/${bucketName}/${fileName}`, {
             method: 'DELETE',
-            headers: {
-              'apikey': supabaseKey,
-              'Authorization': `Bearer ${supabaseKey}`
-            }
+            headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` }
           })
         } catch (err) {
           console.error("Failed to delete object from Supabase Storage:", err)
         }
       }
-    } else {
+    } else if (!process.env.VERCEL) {
       try {
-        const absolutePath = path.join(process.cwd(), 'public', file.filePath)
-        await fs.unlink(absolutePath)
+        const fs = await import('fs/promises')
+        await fs.unlink(path.join(process.cwd(), 'public', file.filePath))
       } catch (err) {
         console.error("Failed to delete local file:", err)
       }

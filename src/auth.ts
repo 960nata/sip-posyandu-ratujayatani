@@ -52,6 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: user.id,
           name: user.nama,
           email: user.email,
+          image: user.image,
           role: user.role,
           kecamatanId: user.kecamatanId,
           kecamatanNama: kecamatanNama,
@@ -65,6 +66,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.role = (user as any).role
+        token.picture = (user as any).image
         token.kecamatanId = (user as any).kecamatanId
         token.kecamatanNama = (user as any).kecamatanNama
         token.desaId = (user as any).desaId
@@ -77,6 +79,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         ...session,
         user: {
           ...session.user,
+          image: (token as any).picture,
           role: (token as any).role,
           kecamatanId: (token as any).kecamatanId,
           kecamatanNama: (token as any).kecamatanNama,

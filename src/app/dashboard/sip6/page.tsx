@@ -40,7 +40,7 @@ export default function Sip6Page() {
   const [mounted, setMounted] = useState(false)
   const [search, setSearch] = useState('')
 
-  const [tahunAktif, setTahunAktif] = useState(2026)
+  const [tahunAktif, setTahunAktif] = useState(2025)
   const [namaDesa, setNamaDesa] = useState('Adijaya')
 
   const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
@@ -48,6 +48,7 @@ export default function Sip6Page() {
   const [selectedPosyanduId, setSelectedPosyanduId] = useState('')
 
   const [kecamatans, setKecamatans] = useState<any[]>([])
+  const [kecStatus, setKecStatus] = useState<Record<string, 'AKTIF' | 'KURANG_AKTIF' | 'PASIF'>>({})
   const [desas, setDesas] = useState<any[]>([])
   const [posyandus, setPosyandus] = useState<any[]>([])
 
@@ -56,7 +57,7 @@ export default function Sip6Page() {
     fetchKecamatans()
 
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2026'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
     setFormData(prev => ({ ...prev, tahun: parseInt(savedTahun) }))
@@ -67,6 +68,21 @@ export default function Sip6Page() {
     const data = await res.json()
     setKecamatans(data)
   }
+
+  // Status keaktifan per kecamatan (dari endpoint pemantauan, ikut tahun aktif)
+  useEffect(() => {
+    if (!tahunAktif) return
+    fetch(`/api/dashboard/monitor?tahun=${tahunAktif}`)
+      .then(r => r.json())
+      .then(d => {
+        if (d?.level === 'kecamatan' && Array.isArray(d.children)) {
+          const m: Record<string, 'AKTIF' | 'KURANG_AKTIF' | 'PASIF'> = {}
+          for (const c of d.children) m[c.id] = c.status
+          setKecStatus(m)
+        }
+      })
+      .catch(() => {})
+  }, [tahunAktif])
 
   const fetchReports = async (posyanduId: string) => {
     if (!posyanduId) return
@@ -798,6 +814,22 @@ export default function Sip6Page() {
             // Level 3: Detail Posyandu
             <div className="space-y-6">
               {/* Tombol kembali dipindah ke samping kiri judul header */}
+              {/* Year tabs — pindah tahun agar data 2025 & 2026 keduanya bisa dilihat */}
+              <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10 w-fit">
+                {[2025, 2026].map(y => (
+                  <button
+                    key={y}
+                    onClick={() => { setTahunAktif(y); localStorage.setItem('sip_tahun_aktif', String(y)); setFormData(prev => ({ ...prev, tahun: y })); }}
+                    className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
+                      tahunAktif === y
+                        ? 'bg-white dark:bg-[#2f2f2f] text-[var(--dash-text)] shadow-sm'
+                        : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
+                    }`}
+                  >
+                    {y}
+                  </button>
+                ))}
+              </div>
               {/* Tabs */}
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <button
@@ -875,7 +907,7 @@ export default function Sip6Page() {
 
                   {/* Mobile: card list (mega table is unusable on small screens) */}
                   <div className="md:hidden space-y-3">
-                    {reports.map((report) => {
+                    {reports.filter(r => r.tahun === tahunAktif).map((report) => {
                       const balitaTotal =
                         (report.bayiBaruL || 0) + (report.bayiBaruP || 0) + (report.bayiLamaL || 0) + (report.bayiLamaP || 0) +
                         (report.balitaBaruL || 0) + (report.balitaBaruP || 0) + (report.balitaLamaL || 0) + (report.balitaLamaP || 0) +
@@ -916,8 +948,8 @@ export default function Sip6Page() {
                         </button>
                       )
                     })}
-                    {reports.length === 0 && (
-                      <p className="text-center text-sm text-slate-400 py-8">Belum ada laporan untuk tahun ini.</p>
+                    {reports.filter(r => r.tahun === tahunAktif).length === 0 && (
+                      <p className="text-center text-sm text-slate-400 py-8">Belum ada laporan untuk tahun {tahunAktif}.</p>
                     )}
                   </div>
 
@@ -967,7 +999,7 @@ export default function Sip6Page() {
                         </tr>
                       </thead>
                       <tbody>
-                        {reports.map((report, index) => (
+                        {reports.filter(r => r.tahun === tahunAktif).map((report, index) => (
                           <Fragment key={report.id}>
                             <tr
                               onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
@@ -1293,19 +1325,38 @@ export default function Sip6Page() {
                     <tr>
                       <th className="px-6 py-4 w-12 text-center">No.</th>
                       <th className="px-6 py-4">Nama Kecamatan</th>
+                      <th className="px-6 py-4">Status</th>
                       <th className="px-6 py-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {kecamatans.map((kec, idx) => (
+                    {kecamatans.map((kec, idx) => {
+                      const st = kecStatus[kec.id]
+                      const stStyle: Record<string, { dot: string; label: string; cls: string }> = {
+                        AKTIF: { dot: '🟢', label: 'Aktif', cls: 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-900/25' },
+                        KURANG_AKTIF: { dot: '🟡', label: 'Kurang Aktif', cls: 'text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-900/25' },
+                        PASIF: { dot: '🔴', label: 'Pasif', cls: 'text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-900/25' },
+                      }
+                      const s = st ? stStyle[st] : null
+                      return (
                       <tr key={kec.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                         <td className="px-6 py-4 text-center text-slate-500">{idx + 1}</td>
                         <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
+                        <td className="px-6 py-4">
+                          {s ? (
+                            <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${s.cls}`}>
+                              <span aria-hidden>{s.dot}</span>{s.label}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-slate-400">—</span>
+                          )}
+                        </td>
                         <td className="px-6 py-4 text-right">
                           <button onClick={() => setSelectedKecamatanId(kec.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Detail</button>
                         </td>
                       </tr>
-                    ))}
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>

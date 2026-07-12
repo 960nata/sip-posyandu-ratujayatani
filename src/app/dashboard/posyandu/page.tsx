@@ -41,14 +41,14 @@ export default function AnalisaDataPage() {
     : role === 'ADMIN_KECAMATAN' ? 'Kecamatan Anda'
     : role === 'OPERATOR_DESA' ? 'Desa Anda' : 'Posyandu Anda'
 
-  const [tahun, setTahun] = useState(2026)
+  const [tahun, setTahun] = useState(2025)
   const [crumbs, setCrumbs] = useState<Crumb[]>([])
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [isExporting, setIsExporting] = useState(false)
 
   useEffect(() => {
-    setTahun(parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2026)
+    setTahun(parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025)
   }, [])
 
   const fetchMonitor = useCallback(async (path: Crumb[], th: number) => {

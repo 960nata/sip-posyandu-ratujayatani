@@ -1201,8 +1201,8 @@ export default function Sip6Page() {
             // Level 3: List Posyandu
             <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
               <div className="flex items-center justify-between mb-6">
-                <div>
-                  {role !== 'OPERATOR_DESA' && (
+            <div className="flex items-center gap-3">
+              {role !== 'OPERATOR_DESA' && (
                     <button
                       onClick={() => setSelectedDesaId('')}
                       className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
@@ -1211,9 +1211,7 @@ export default function Sip6Page() {
                       <ArrowLeft className="w-5 h-5" />
                     </button>
                   )}
-                  <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">
-                    Daftar Posyandu di Desa {desas.find(d => d.id === selectedDesaId)?.nama}
-                  </h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)]">Daftar Posyandu di Desa {desas.find(d => d.id === selectedDesaId)?.nama}</h2>
                 </div>
               </div>
 

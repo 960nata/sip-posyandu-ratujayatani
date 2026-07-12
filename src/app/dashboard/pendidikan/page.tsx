@@ -689,9 +689,23 @@ export default function PendidikanPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         {!isPosyandu && (
-          <div>
-            <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Hasil Kegiatan Pendidikan</h1>
+          <div className="flex items-center gap-3">
+            {(selectedDesa && selectedPosyandu) && (
+              <button 
+                onClick={() => {
+                  setSelectedPosyandu('')
+                  setSelectedPosyanduId('')
+                }}
+                className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+                title="Kembali ke Daftar Posyandu"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            )}
+            <div>
+              <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Hasil Kegiatan Pendidikan</h1>
             <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (Pendidikan) - Desa {namaDesa}</p>
+          </div>
           </div>
         )}
       </div>
@@ -700,21 +714,6 @@ export default function PendidikanPage() {
         // Level 3: Detail Posyandu (Laporan)
         <div className="space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              {!isPosyandu && (
-                <button 
-                  onClick={() => {
-                    setSelectedPosyandu('')
-                    setSelectedPosyanduId('')
-                  }}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
-                  title="Kembali ke Daftar Posyandu"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
-            </div>
-            
             <div className="flex items-center gap-4">
               {/* Year tabs */}
               <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10">

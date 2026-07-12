@@ -660,8 +660,7 @@ export default function SosialPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         {!isPosyandu && (
           <div>
-            <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Hasil Kegiatan Sosial</h1>
-            <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (Sosial) - Desa {namaDesa}</p>
+                        <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (Sosial) - Desa {namaDesa}</p>
           </div>
         )}
       </div>
@@ -677,17 +676,13 @@ export default function SosialPage() {
                     setSelectedPosyandu('')
                     setSelectedPosyanduId('')
                   }}
-                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors mb-2"
+                  className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   title="Kembali ke Daftar Posyandu"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h1 className="text-2xl font-bold text-[var(--dash-text)]">Laporan Sosial</h1>
-              <p className="text-[var(--dash-text-soft)] text-sm">
-                {isPosyandu ? 'Pengaduan & Aspirasi Bidang Sosial' : `Pengaduan & Aspirasi Bidang Sosial - ${selectedPosyandu}`}
-              </p>
-            </div>
+                                        </div>
             
             <div className="flex items-center gap-4">
               {/* Year tabs */}

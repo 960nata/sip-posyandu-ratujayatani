@@ -35,14 +35,18 @@ interface UploadOpts {
 }
 
 function supabaseKey(): string | undefined {
-  return process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
+  return process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+}
+
+function getSupabaseUrl(): string | undefined {
+  return process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
 }
 
 /** Apakah kita harus memakai Supabase (bukan filesystem lokal)? */
 export function useSupabaseStorage(): boolean {
-  if (process.env.STORAGE_TYPE === 'supabase') return true
+  if (process.env.STORAGE_TYPE?.toLowerCase() === 'supabase') return true
   // Di Vercel filesystem read-only → wajib Supabase bila kreds tersedia
-  if (process.env.VERCEL && process.env.SUPABASE_URL && supabaseKey()) return true
+  if (process.env.VERCEL && getSupabaseUrl() && supabaseKey()) return true
   return false
 }
 
@@ -50,7 +54,7 @@ export async function uploadFile(opts: UploadOpts): Promise<UploadResult> {
   const { buffer, filename, contentType, ext, localDir } = opts
 
   if (useSupabaseStorage()) {
-    const supabaseUrl = process.env.SUPABASE_URL
+    const supabaseUrl = getSupabaseUrl()
     const key = supabaseKey()
     if (!supabaseUrl || !key) {
       return { error: 'Konfigurasi Supabase (SUPABASE_URL / KEY) belum lengkap di environment.', status: 500 }

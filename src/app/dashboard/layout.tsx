@@ -8,7 +8,7 @@ import { signOut, useSession } from 'next-auth/react'
 import {
   Menu, X, Bell, User, LogOut, BookOpen, Building,
   Home, Shield, Users, Sun, Moon, ChevronDown,
-  UserCheck, Activity, FileText, HardDrive
+  UserCheck, Activity, FileText, HardDrive, MapPin
 } from 'lucide-react'
 
 // Global ApexCharts defaults
@@ -41,6 +41,7 @@ const menuGroups = [
       { name: 'Analisa Data', icon: Activity, href: '/dashboard/posyandu' },
       { name: 'Manajemen Posyandu', icon: Building, href: '/dashboard/manage-posyandu', roles: ['SUPERADMIN', 'OPERATOR_DESA'] },
       { name: 'Manajemen User', icon: Users, href: '/dashboard/users', roles: ['SUPERADMIN'] },
+      { name: 'Analisis & Peta', icon: MapPin, href: '/dashboard/analytics', roles: ['SUPERADMIN', 'ADMIN_KECAMATAN'] },
       { name: 'Push Notifikasi', icon: Bell, href: '/dashboard/push-notification', roles: ['SUPERADMIN'] },
       { name: 'Galeri Media', icon: HardDrive, href: '/dashboard/data-dukung', roles: ['SUPERADMIN'] },
     ]

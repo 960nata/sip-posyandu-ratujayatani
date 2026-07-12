@@ -921,7 +921,7 @@ export default function PerumahanPage() {
         // Level 2: List Posyandu
         <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
           <div className="flex items-center justify-between mb-6">
-            <div>
+            <div className="flex items-center gap-3">
               {role !== 'OPERATOR_DESA' && (
                 <button 
                   onClick={() => {
@@ -934,7 +934,7 @@ export default function PerumahanPage() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Daftar Posyandu di Desa {selectedDesa}</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] ">Daftar Posyandu di Desa {selectedDesa}</h2>
             </div>
           </div>
           
@@ -981,7 +981,7 @@ export default function PerumahanPage() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${selectedKecamatan}` : ''}</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] ">Daftar Desa {role === 'SUPERADMIN' ? `di Kec. ${selectedKecamatan}` : ''}</h2>
             </div>
           </div>
           <div className="overflow-x-auto">

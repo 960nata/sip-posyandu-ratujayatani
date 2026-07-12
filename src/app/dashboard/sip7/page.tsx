@@ -2694,16 +2694,18 @@ export default function Sip7Page() {
         // Level 2: Pilih Desa
         <div className="space-y-4">
           <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
+            <div className="flex items-center gap-3 mb-4">
             {role === 'SUPERADMIN' && (
               <button
                 onClick={() => setSelectedKecamatan('')}
-                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors mb-2`}
+                className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                 title="Kembali ke Daftar Kecamatan"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
             )}
-            <h2 className="text-lg font-bold text-[var(--dash-text)] mb-4">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
+            <h2 className="text-lg font-bold text-[var(--dash-text)]">Pilih Desa {role === 'SUPERADMIN' ? `di Kec. ${currentKecName}` : ''}</h2>
+          </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-[var(--dash-text-soft)]">
                 <thead className="text-[11px] uppercase tracking-wider bg-transparent text-slate-500 dark:text-white/50 border-b border-slate-200/70 dark:border-white/10">
@@ -2732,7 +2734,7 @@ export default function Sip7Page() {
         // Level 3: List Posyandu
         <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
           <div className="flex items-center justify-between mb-6">
-            <div>
+            <div className="flex items-center gap-3">
               {role !== 'OPERATOR_DESA' && (
                 <button
                   onClick={() => setSelectedDesa('')}
@@ -2742,7 +2744,7 @@ export default function Sip7Page() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-              <h2 className="text-lg font-bold text-[var(--dash-text)] mt-2">Daftar Posyandu di Desa {selectedDesa}</h2>
+              <h2 className="text-lg font-bold text-[var(--dash-text)] ">Daftar Posyandu di Desa {selectedDesa}</h2>
             </div>
           </div>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+// Image import removed - using native img tags
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import {
@@ -194,8 +194,8 @@ export default function DashboardLayout({
       }}>
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "4px 6px 18px" }}>
-          <div style={{ width: "42px", height: "42px", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", flexShrink: 0 }}>
-             <img src="/images/posyandu_login.png" alt="Logo Posyandu" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          <div style={{ width: "42px", height: "42px", borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "#fff", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
+             <img src="/images/logo/logo.png" alt="Logo Posyandu" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
           <div style={{ lineHeight: 1.15 }}>
             <div style={{ fontSize: "0.92rem", fontWeight: 800, color: "var(--dash-text)", letterSpacing: "-0.01em" }}>SIPANDU</div>

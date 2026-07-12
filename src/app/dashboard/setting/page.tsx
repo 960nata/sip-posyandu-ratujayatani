@@ -33,6 +33,11 @@ export default function ProfilePage() {
         name: session.user?.name || '',
         email: session.user?.email || ''
       }))
+      // Load existing avatar from session
+      const existingImage = (session.user as any)?.image
+      if (existingImage && !avatarUrl) {
+        setAvatarUrl(existingImage)
+      }
     }
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
     const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'

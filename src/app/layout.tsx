@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     siteName: "SIPANDU",
     title: SITE_TITLE,
     description: DESCRIPTION,
-    images: [{ url: "/images/logo/logo.png", width: 512, height: 512, alt: "Logo SIPANDU" }],
+    images: [{ url: "/images/posyandu_login.png", width: 512, height: 512, alt: "Logo SIPANDU" }],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: DESCRIPTION,
-    images: ["/images/logo/logo.png"],
+    images: ["/images/posyandu_login.png"],
   },
   robots: {
     index: true,
@@ -67,7 +67,7 @@ const jsonLd = {
   "@type": "GovernmentOrganization",
   name: "SIPANDU — Sistem Informasi Posyandu",
   url: SITE_URL,
-  logo: `${SITE_URL}/images/logo/logo.png`,
+  logo: `${SITE_URL}/images/posyandu_login.png`,
   description: DESCRIPTION,
   areaServed: {
     "@type": "AdministrativeArea",

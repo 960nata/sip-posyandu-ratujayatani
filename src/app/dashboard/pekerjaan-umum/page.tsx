@@ -688,7 +688,8 @@ export default function PekerjaanUmumPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         {!isPosyandu && (
           <div>
-                        <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (Pekerjaan Umum) - Desa {namaDesa}</p>
+            <h1 className="text-2xl font-bold text-[var(--dash-text)]">Data Hasil Kegiatan Pekerjaan Umum</h1>
+            <p className="text-[var(--dash-text-soft)] text-sm">Sistem Informasi Posyandu (Pekerjaan Umum) - Desa {namaDesa}</p>
           </div>
         )}
       </div>
@@ -710,7 +711,7 @@ export default function PekerjaanUmumPage() {
                   <ArrowLeft className="w-5 h-5" />
                 </button>
               )}
-                                        </div>
+            </div>
             
             <div className="flex items-center gap-4">
               {/* Year tabs */}
@@ -964,7 +965,7 @@ export default function PekerjaanUmumPage() {
         // Level 1: List Desa
         <div className="bg-white dark:bg-[#202020] p-6 rounded-lg border border-slate-200 dark:border-white/10">
           <div className="flex items-center justify-between mb-6">
-            <div>
+            <div className="flex items-center gap-3">
               {role === 'SUPERADMIN' && (
                 <button 
                   onClick={() => {

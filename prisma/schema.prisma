@@ -477,3 +477,29 @@ enum JabatanSKEnum {
   KETUA_BIDANG
   KADER
 }
+
+// ============================================================
+// PANDUAN / TUTORIAL — video YouTube, dikelola Superadmin.
+// Ditampilkan ke pengguna sesuai target (per role atau SEMUA).
+// ============================================================
+model Tutorial {
+  id         String             @id @default(cuid())
+  judul      String
+  deskripsi  String?
+  youtubeUrl String
+  target     TutorialTargetEnum @default(SEMUA)
+  urutan     Int                @default(0)
+  createdBy  String?
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  @@index([target])
+}
+
+enum TutorialTargetEnum {
+  SEMUA
+  SUPERADMIN
+  ADMIN_KECAMATAN
+  OPERATOR_DESA
+  OPERATOR_POSYANDU
+}

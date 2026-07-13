@@ -8,7 +8,8 @@ import { signOut, useSession } from 'next-auth/react'
 import {
   Menu, X, Bell, User, LogOut, BookOpen, Building,
   Home, Shield, Users, Sun, Moon, ChevronDown,
-  UserCheck, Activity, FileText, HardDrive, MapPin
+  UserCheck, Activity, FileText, HardDrive, MapPin,
+  GraduationCap, PlayCircle
 } from 'lucide-react'
 
 // Global ApexCharts defaults
@@ -44,6 +45,8 @@ const menuGroups = [
       { name: 'Analisis & Peta', icon: MapPin, href: '/dashboard/analytics', roles: ['SUPERADMIN', 'ADMIN_KECAMATAN'] },
       { name: 'Push Notifikasi', icon: Bell, href: '/dashboard/push-notification', roles: ['SUPERADMIN'] },
       { name: 'Galeri Media', icon: HardDrive, href: '/dashboard/data-dukung', roles: ['SUPERADMIN'] },
+      { name: 'Kelola Panduan', icon: GraduationCap, href: '/dashboard/kelola-panduan', roles: ['SUPERADMIN'] },
+      { name: 'Panduan Pengguna', icon: PlayCircle, href: '/dashboard/panduan' },
     ]
   },
   {
@@ -80,6 +83,8 @@ const CRUMBS: Record<string, string> = {
   '/dashboard/users': 'Manajemen User',
   '/dashboard/push-notification': 'Push Notifikasi',
   '/dashboard/data-dukung': 'Galeri Media',
+  '/dashboard/kelola-panduan': 'Kelola Panduan',
+  '/dashboard/panduan': 'Panduan Pengguna',
   '/dashboard/sip6': 'Data Pengunjung (SIP 6)',
   '/dashboard/sip6/sasaran': 'Sasaran Individu (SIP 6)',
   '/dashboard/sip7': 'Hasil Kegiatan (SIP 7)',

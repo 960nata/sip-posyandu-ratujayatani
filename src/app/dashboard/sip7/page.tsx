@@ -2254,7 +2254,8 @@ export default function Sip7Page() {
                 </div>
                 {/* Mobile: card list */}
                 <div className="md:hidden space-y-3">
-                  {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row) => {
+                  {monthsList.map((row) => {
+                    const isAuto = row.id.startsWith('auto-')
                     const kb = row.kb || {}
                     const totalKB = (kb.kondom || 0) + (kb.pil || 0) + (kb.implant || 0) + (kb.mop || 0) + (kb.mow || 0) + (kb.iud || 0) + (kb.suntik || 0) + (kb.lainnya || 0)
                     const timbang = row.timbang || {}
@@ -2264,21 +2265,33 @@ export default function Sip7Page() {
                     return (
                       <div
                         key={`m-${row.id}`}
-                        onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }}
-                        className="bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors cursor-pointer"
+                        onClick={() => {
+                          if (!isAuto) {
+                            setSelectedReportForDetail(row);
+                            setIsDetailModalOpen(true);
+                          }
+                        }}
+                        className={`bg-white dark:bg-[#252525] border border-slate-200/70 dark:border-white/10 rounded-lg p-4 active:bg-slate-50 dark:active:bg-[#2f2f2f] transition-colors ${!isAuto ? 'cursor-pointer' : ''}`}
                       >
                         <div className="flex items-center justify-between mb-3">
                           <p className="text-sm font-bold text-[var(--dash-text)]">{namaBulan} {row.tahun}</p>
                           <div className="flex items-center gap-2">
-                            <span className={`${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`}>{row.status || 'Tersimpan'}</span>
+                            <span className={isAuto
+                              ? "text-slate-500 bg-slate-100 dark:bg-zinc-800 dark:text-zinc-400 text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                              : `${theme.text} text-[10px] font-semibold ${theme.bgLight} px-2 py-0.5 rounded-full`
+                            }>
+                              {isAuto ? 'Belum Melapor' : (row.status || 'Tersimpan')}
+                            </span>
                             {canEdit && (
                               <span className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                                <button onClick={() => handleEdit(row)} className="p-1.5 rounded-md text-blue-500 active:bg-blue-50 dark:active:bg-blue-900/20" title="Edit Laporan">
-                                  <Edit2 className="w-4 h-4" />
+                                <button onClick={() => handleEdit(row)} className="p-1.5 rounded-md text-blue-500 active:bg-blue-50 dark:active:bg-blue-900/20" title={isAuto ? "Tambah Laporan" : "Edit Laporan"}>
+                                  {isAuto ? <Plus className="w-4 h-4" /> : <Edit2 className="w-4 h-4" />}
                                 </button>
-                                <button onClick={() => handleDelete(row.id)} className="p-1.5 rounded-md text-rose-500 active:bg-rose-50 dark:active:bg-rose-900/20" title="Hapus Laporan">
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
+                                {!isAuto && (
+                                  <button onClick={() => handleDelete(row.id)} className="p-1.5 rounded-md text-rose-500 active:bg-rose-50 dark:active:bg-rose-900/20" title="Hapus Laporan">
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                )}
                               </span>
                             )}
                           </div>
@@ -2301,7 +2314,7 @@ export default function Sip7Page() {
                             <p className="text-[10px] text-slate-400">Balita S/D</p>
                           </div>
                         </div>
-                        <p className="mt-3 text-[11px] text-slate-400">Ketuk untuk lihat detail lengkap</p>
+                        {!isAuto && <p className="mt-3 text-[11px] text-slate-400">Ketuk untuk lihat detail lengkap</p>}
                       </div>
                     )
                   })}
@@ -2322,7 +2335,8 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).map((row, index) => {
+                      {monthsList.map((row, index) => {
+                        const isAuto = row.id.startsWith('auto-');
                         const kb = row.kb || {};
                         const totalKB = (kb.kondom || 0) + (kb.pil || 0) + (kb.implant || 0) + (kb.mop || 0) + (kb.mow || 0) + (kb.iud || 0) + (kb.suntik || 0) + (kb.lainnya || 0);
                         const timbang = row.timbang || {};
@@ -2332,46 +2346,48 @@ export default function Sip7Page() {
                         return (
                           <Fragment key={row.id}>
                             <tr
-                              className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors cursor-pointer"
+                              className={`border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors ${!isAuto ? 'cursor-pointer' : ''}`}
                             >
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{row.bumil?.jml || 0}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{row.busui || 0}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{totalKB}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3">{totalS}/{totalD}</td>
-                              <td onClick={() => { setSelectedReportForDetail(row); setIsDetailModalOpen(true); }} className="px-4 py-3"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{row.status || 'Tersimpan'}</span></td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{index + 1}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3 font-medium text-[var(--dash-text)]">{row.bulan}/{row.tahun}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3">{row.bumil?.jml || 0}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3">{row.busui || 0}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3">{totalKB}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3">{totalS}/{totalD}</td>
+                              <td onClick={() => { if (!isAuto) { setSelectedReportForDetail(row); setIsDetailModalOpen(true); } }} className="px-4 py-3">
+                                <span className={isAuto
+                                  ? "text-slate-500 bg-slate-100 dark:bg-zinc-800 dark:text-zinc-400 text-xs font-medium px-2.5 py-1 rounded-full"
+                                  : `${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`
+                                }>
+                                  {isAuto ? 'Belum Melapor' : (row.status || 'Tersimpan')}
+                                </span>
+                              </td>
                               {canEdit && (
                                 <td className="px-4 py-3 text-right">
                                   <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                                     <button 
                                       onClick={() => handleEdit(row)}
                                       className="text-blue-500 hover:text-blue-600 transition-colors"
-                                      title="Edit Laporan"
+                                      title={isAuto ? "Tambah Laporan" : "Edit Laporan"}
                                     >
-                                      <Edit2 className="w-4 h-4" />
+                                      {isAuto ? <Plus className="w-4 h-4" /> : <Edit2 className="w-4 h-4" />}
                                     </button>
-                                    <button 
-                                      onClick={() => handleDelete(row.id)}
-                                      className="text-rose-500 hover:text-rose-600 transition-colors"
-                                      title="Hapus Laporan"
-                                    >
-                                      <Trash2 className="w-4 h-4" />
-                                    </button>
+                                    {!isAuto && (
+                                      <button 
+                                        onClick={() => handleDelete(row.id)}
+                                        className="text-rose-500 hover:text-rose-600 transition-colors"
+                                        title="Hapus Laporan"
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </button>
+                                    )}
                                   </div>
                                 </td>
                               )}
                             </tr>
                           </Fragment>
-                        )
+                        );
                       })}
-                      {dataHasilKegiatan.filter(r => r.tahun === tahunAktif && (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)).length === 0 && (
-                        <tr>
-                          <td colSpan={canEdit ? 8 : 7} className="text-center py-6 text-sm text-[var(--dash-text-soft)]">
-                            Belum ada data hasil kegiatan untuk tahun {tahunAktif}.
-                          </td>
-                        </tr>
-                      )}
                     </tbody>
                   </table>
                 </div>

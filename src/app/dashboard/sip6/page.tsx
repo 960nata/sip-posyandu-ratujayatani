@@ -529,13 +529,107 @@ export default function Sip6Page() {
     setShowForm(true)
   }
 
+  const activePosyanduIdForCalculations = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
+  const monthsList = Array.from({ length: 12 }, (_, i) => {
+    const m = i + 1;
+    const existing = reports.find(r => r.tahun === tahunAktif && r.bulan === m);
+    if (existing) return existing;
+
+    const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'][m - 1];
+    const visitors = dataSasaran.filter(s => s.kunjungan.includes(monthStr));
+
+    const getAgeInMonths = (birthDateStr: string | Date) => {
+      if (!birthDateStr) return 0;
+      const birthDate = new Date(birthDateStr);
+      if (isNaN(birthDate.getTime())) return 0;
+      const targetDate = new Date(tahunAktif, m - 1, 15);
+      const diffYears = targetDate.getFullYear() - birthDate.getFullYear();
+      const diffMonths = targetDate.getMonth() - birthDate.getMonth();
+      return diffYears * 12 + diffMonths;
+    };
+
+    let bayiLamaL = 0;
+    let bayiLamaP = 0;
+    let balitaLamaL = 0;
+    let balitaLamaP = 0;
+    let anakLamaL = 0;
+    let anakLamaP = 0;
+    let prodLamaL = 0;
+    let prodLamaP = 0;
+    let lansiaLamaL = 0;
+    let lansiaLamaP = 0;
+    let ibuHamil = 0;
+
+    visitors.forEach(s => {
+      if (s.kategori === 'IBU_HAMIL') {
+        ibuHamil++;
+      } else if (s.kategori === 'BAYI_BALITA') {
+        const age = getAgeInMonths(s.tanggalLahir);
+        if (age <= 12) {
+          if (s.jenisKelamin === 'L') bayiLamaL++;
+          else bayiLamaP++;
+        } else if (age <= 60) {
+          if (s.jenisKelamin === 'L') balitaLamaL++;
+          else balitaLamaP++;
+        } else {
+          if (s.jenisKelamin === 'L') anakLamaL++;
+          else anakLamaP++;
+        }
+      } else if (s.kategori === 'REMAJA') {
+        if (s.jenisKelamin === 'L') prodLamaL++;
+        else prodLamaP++;
+      } else if (s.kategori === 'LANSIA') {
+        if (s.jenisKelamin === 'L') lansiaLamaL++;
+        else lansiaLamaP++;
+      }
+    });
+
+    return {
+      id: `auto-${m}`,
+      posyanduId: activePosyanduIdForCalculations,
+      tahun: tahunAktif,
+      bulan: m,
+      bayiBaruL: 0,
+      bayiBaruP: 0,
+      bayiLamaL,
+      bayiLamaP,
+      balitaBaruL: 0,
+      balitaBaruP: 0,
+      balitaLamaL,
+      balitaLamaP,
+      anakBaruL: 0,
+      anakBaruP: 0,
+      anakLamaL,
+      anakLamaP,
+      prodBaruL: 0,
+      prodBaruP: 0,
+      prodLamaL,
+      prodLamaP,
+      lansiaBaruL: 0,
+      lansiaBaruP: 0,
+      lansiaLamaL,
+      lansiaLamaP,
+      wus: 0,
+      pus: 0,
+      ibuHamil,
+      ibuMenyusui: 0,
+      kaderL: 0,
+      kaderP: 0,
+      plkbL: 0,
+      plkbP: 0,
+      medisL: 0,
+      medisP: 0,
+      lahirL: 0,
+      lahirP: 0,
+      meninggalL: 0,
+      meninggalP: 0,
+      keterangan: '',
+      status: 'Otomatis'
+    };
+  });
+
   const getTotals = (months: number[]) => {
-    const activePosyanduId = isPosyandu ? (session?.user as any)?.posyanduId : selectedPosyanduId;
-    const filtered = reports.filter(r =>
-      r.tahun === tahunAktif &&
-      r.posyanduId === activePosyanduId &&
-      months.includes(r.bulan)
-    );
+    const filtered = monthsList.filter(r => months.includes(r.bulan));
 
     return {
       bayi: filtered.reduce((sum, r) => sum + (r.bayiBaruL || 0) + (r.bayiBaruP || 0) + (r.bayiLamaL || 0) + (r.bayiLamaP || 0), 0),
@@ -543,8 +637,8 @@ export default function Sip6Page() {
       bumil: filtered.reduce((sum, r) => sum + (r.ibuHamil || 0), 0),
       busui: filtered.reduce((sum, r) => sum + (r.ibuMenyusui || 0), 0),
       petugas: filtered.reduce((sum, r) => sum + (r.kaderL || 0) + (r.kaderP || 0) + (r.plkbL || 0) + (r.plkbP || 0) + (r.medisL || 0) + (r.medisP || 0), 0),
-    }
-  }
+    };
+  };
 
   // Import workbook resmi (.xlsx format REKAP DESA) — diparse & disimpan di server
   const [isImporting, setIsImporting] = useState(false)
@@ -742,7 +836,7 @@ export default function Sip6Page() {
                   activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Tambah Sasaran Ibu Hamil' :
                     activeTab === 'sasaran_bayi' ? 'Tambah Sasaran Bayi/Balita' :
                       activeTab === 'sasaran_remaja' ? 'Tambah Sasaran Remaja' :
-                        activeTab === 'sasaran_lansia' ? 'Tambah Sasaran Lansia' : 'Tambah Sasaran'}
+                        activeTab === 'sasaran_lansia' ? 'Tambah Sasaran Lansia/Produktif' : 'Tambah Sasaran'}
               </h2>
               <button type="button" onClick={() => setShowFormSasaran(false)} className={`text-sm font-medium ${theme.text} hover:${theme.textLight} flex items-center gap-1 transition-colors`}>
                 <ArrowLeft className="w-4 h-4" /> Kembali
@@ -786,7 +880,7 @@ export default function Sip6Page() {
                   </div>
                   <div>
                     <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Ibu</label>
-                    <input type="text" value={(sasaranForm as any).namaIbuOrtu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbuOrtu: e.target.value } as any)} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
+                    <input type="text" value={sasaranForm.namaIbu || ''} onChange={e => setSasaranForm({ ...sasaranForm, namaIbu: e.target.value })} className="block w-full bg-slate-50 dark:bg-[#252525] border border-slate-200 dark:border-white/10 rounded-lg px-4 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Nama Ayah</label>
@@ -875,7 +969,7 @@ export default function Sip6Page() {
                       : 'bg-slate-100 dark:bg-[#202020] text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-[#2f2f2f]'
                     }`}
                 >
-                  Sasaran Lansia
+                  Sasaran Lansia/Produktif
                 </button>
               </div>
 
@@ -907,7 +1001,7 @@ export default function Sip6Page() {
 
                   {/* Mobile: card list (mega table is unusable on small screens) */}
                   <div className="md:hidden space-y-3">
-                    {reports.filter(r => r.tahun === tahunAktif).map((report) => {
+                    {monthsList.map((report) => {
                       const balitaTotal =
                         (report.bayiBaruL || 0) + (report.bayiBaruP || 0) + (report.bayiLamaL || 0) + (report.bayiLamaP || 0) +
                         (report.balitaBaruL || 0) + (report.balitaBaruP || 0) + (report.balitaLamaL || 0) + (report.balitaLamaP || 0) +
@@ -948,9 +1042,6 @@ export default function Sip6Page() {
                         </button>
                       )
                     })}
-                    {reports.filter(r => r.tahun === tahunAktif).length === 0 && (
-                      <p className="text-center text-sm text-slate-400 py-8">Belum ada laporan untuk tahun {tahunAktif}.</p>
-                    )}
                   </div>
 
                   <div className="hidden md:block overflow-x-auto">
@@ -999,7 +1090,7 @@ export default function Sip6Page() {
                         </tr>
                       </thead>
                       <tbody>
-                        {reports.filter(r => r.tahun === tahunAktif).map((report, index) => (
+                        {monthsList.map((report, index) => (
                           <Fragment key={report.id}>
                             <tr
                               onClick={() => { setSelectedReportForDetail(report); setIsDetailModalOpen(true); }}
@@ -1049,9 +1140,11 @@ export default function Sip6Page() {
                                     <button onClick={() => handleEdit(report)} className="text-blue-500 hover:text-blue-600 transition-colors" title="Edit">
                                       <Edit2 className="w-4 h-4" />
                                     </button>
-                                    <button onClick={() => handleDelete(report.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
-                                      <Trash2 className="w-4 h-4" />
-                                    </button>
+                                    {!report.id.startsWith('auto-') && (
+                                      <button onClick={() => handleDelete(report.id)} className="text-rose-500 hover:text-rose-600 transition-colors" title="Hapus">
+                                        <Trash2 className="w-4 h-4" />
+                                      </button>
+                                    )}
                                   </div>
                                 )}
                               </td>
@@ -1104,7 +1197,7 @@ export default function Sip6Page() {
                         {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Sasaran Ibu Hamil' :
                           activeTab === 'sasaran_bayi' ? 'Sasaran Bayi/Balita' :
                             activeTab === 'sasaran_remaja' ? 'Sasaran Remaja' :
-                              activeTab === 'sasaran_lansia' ? 'Sasaran Lansia' : 'Sasaran'}
+                              activeTab === 'sasaran_lansia' ? 'Sasaran Lansia/Produktif' : 'Sasaran'}
                       </h2>
                       <p className="text-sm text-slate-500">Kunjungan Bulanan</p>
                     </div>
@@ -1168,7 +1261,7 @@ export default function Sip6Page() {
                                   <td className="px-4 py-3">{(s as any).tanggalLahir || '-'}</td>
                                 </>
                               )}
-                              <td className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaSuami : (s as any).namaIbuOrtu || '-'}</td>
+                              <td className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaSuami : (s as any).namaIbu || '-'}</td>
                               {activeTab !== 'sasaran_bumil' && (
                                 <td className="px-4 py-3">{activeTab === 'sasaran' ? s.namaBayi : (s as any).namaAyah || '-'}</td>
                               )}

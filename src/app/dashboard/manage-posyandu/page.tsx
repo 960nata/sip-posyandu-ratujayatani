@@ -115,24 +115,24 @@ export function MasterWilayahView() {
             <div key={kec.id} className="border-b border-[var(--dash-border)] last:border-0">
               {/* Kecamatan Row */}
               <div 
-                className="flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-white/5 cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-colors gap-3"
                 onClick={() => toggleKec(kec.id)}
               >
-                <div className="flex items-center gap-3">
-                  {isKecExpanded ? <ChevronDown className="w-5 h-5 text-purple-500" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
-                  <div className="w-8 h-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-700 dark:text-purple-400 font-bold text-sm">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  {isKecExpanded ? <ChevronDown className="w-5 h-5 text-purple-500 shrink-0" /> : <ChevronRight className="w-5 h-5 text-slate-400 shrink-0" />}
+                  <div className="w-8 h-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-700 dark:text-purple-400 font-bold text-sm shrink-0">
                     {globalKecIndex++}
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-[var(--dash-text)] flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                    <h3 className="font-semibold text-[var(--dash-text)] text-sm sm:text-base">
                       Kecamatan {kec.nama}
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${kecStatus.bg}`}>
-                        {kecStatus.label} ({kecTotalInput} Input)
-                      </span>
                     </h3>
+                    <span className={`self-start sm:self-auto text-[10px] px-2 py-0.5 rounded-full font-medium ${kecStatus.bg}`}>
+                      {kecStatus.label} ({kecTotalInput} Input)
+                    </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-2 pl-8 sm:pl-0 text-xs">
                   <span className="bg-white dark:bg-black/20 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 border border-[var(--dash-border-2)]">
                     {kec.desas.length} Desa
                   </span>
@@ -157,20 +157,22 @@ export function MasterWilayahView() {
                     return (
                       <div key={desa.id} className="border-b border-[var(--dash-border-2)] last:border-0">
                         <div 
-                          className="flex items-center justify-between p-3 pl-12 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+                          className="flex flex-col sm:flex-row sm:items-center justify-between p-3 pl-12 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors gap-2"
                           onClick={() => toggleDesa(desa.id)}
                         >
-                          <div className="flex items-center gap-2">
-                            {isDesaExpanded ? <ChevronDown className="w-4 h-4 text-blue-500" /> : <ChevronRight className="w-4 h-4 text-slate-400" />}
+                          <div className="flex items-center gap-2 w-full sm:w-auto">
+                            {isDesaExpanded ? <ChevronDown className="w-4 h-4 text-blue-500 shrink-0" /> : <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />}
                             <span className="text-sm font-medium text-[var(--dash-text-soft)]">{desaIdx + 1}.</span>
-                            <h4 className="text-sm font-semibold text-[var(--dash-text)] flex items-center gap-2">
-                              Desa {desa.nama}
-                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${desaStatus.bg}`}>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                              <h4 className="text-sm font-semibold text-[var(--dash-text)]">
+                                Desa {desa.nama}
+                              </h4>
+                              <span className={`self-start sm:self-auto text-[10px] px-1.5 py-0.5 rounded-full font-medium ${desaStatus.bg}`}>
                                 {desaStatus.label} ({desaTotalInput})
                               </span>
-                            </h4>
+                            </div>
                           </div>
-                          <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md">
+                          <span className="self-start sm:self-auto text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded-md ml-6 sm:ml-0">
                             {desa.posyandus.length} Posyandu
                           </span>
                         </div>
@@ -187,13 +189,13 @@ export function MasterWilayahView() {
                               if (totalInput >= 5) pStatus = { label: '🟢 Rutin Melapor', bg: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' };
                               
                               return (
-                              <div key={pos.id} className="flex items-center justify-between p-2.5 pl-20 hover:bg-slate-100 dark:hover:bg-white/5 group">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-xs text-slate-400">{posIdx + 1}.</span>
+                              <div key={pos.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 pl-20 hover:bg-slate-100 dark:hover:bg-white/5 group gap-3">
+                                <div className="flex items-start gap-3 w-full sm:w-auto">
+                                  <span className="text-xs text-slate-400 mt-1">{posIdx + 1}.</span>
                                   <div>
-                                    <div className="text-sm font-medium text-[var(--dash-text)] flex items-center gap-2">
-                                      {pos.nama}
-                                      <span className={`text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider ${
+                                    <div className="text-sm font-medium text-[var(--dash-text)] flex flex-col sm:flex-row sm:items-center gap-1.5">
+                                      <span>{pos.nama}</span>
+                                      <span className={`self-start sm:self-auto text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider ${
                                         pos.status === 'AKTIF' 
                                           ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
                                           : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400'
@@ -201,18 +203,18 @@ export function MasterWilayahView() {
                                         {pos.status || 'AKTIF'}
                                       </span>
                                     </div>
-                                    <div className="text-xs text-[var(--dash-text-muted)] flex items-center gap-2 mt-0.5">
+                                    <div className="text-xs text-[var(--dash-text-muted)] flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mt-1 sm:mt-0.5">
                                       <span>Strata: {pos.strata}</span>
-                                      <span>•</span>
+                                      <span className="hidden sm:inline">•</span>
                                       <span>Buka: {pos.hariBuka}</span>
-                                      <span>•</span>
-                                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${pStatus.bg}`}>
+                                      <span className="hidden sm:inline">•</span>
+                                      <span className={`self-start sm:self-auto text-[10px] px-1.5 py-0.5 rounded-full font-medium ${pStatus.bg}`}>
                                         {pStatus.label} ({totalInput})
                                       </span>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="pr-4">
+                                <div className="self-start sm:self-auto pl-6 sm:pl-0 pr-4">
                                   <button
                                     onClick={() => toggleStatus(pos.id, pos.status || 'AKTIF')}
                                     disabled={actionLoading === pos.id}
@@ -238,7 +240,8 @@ export function MasterWilayahView() {
                                   </button>
                                 </div>
                               </div>
-                            )})}
+                              )
+                            })}
                           </div>
                         )}
                       </div>

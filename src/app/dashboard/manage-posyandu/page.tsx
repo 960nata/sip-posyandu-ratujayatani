@@ -1,4 +1,5 @@
 'use client'
+import { getTahunList } from '@/lib/tahun'
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -85,7 +86,7 @@ export function MasterWilayahView() {
           <p className="text-sm text-[var(--dash-text-soft)]">Hierarki Kabupaten Lampung Timur — Tahun {tahun}</p>
         </div>
         <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-lg self-start sm:self-auto">
-          {[2024, 2025, 2026, 2027].map((y) => (
+          {getTahunList().map((y) => (
             <button
               key={y}
               onClick={() => changeTahun(y)}

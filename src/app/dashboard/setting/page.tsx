@@ -1,4 +1,5 @@
 'use client'
+import { getTahunList } from '@/lib/tahun'
 
 import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
@@ -258,10 +259,7 @@ export default function ProfilePage() {
                   onChange={(e) => setTahunAktif(parseInt(e.target.value))}
                   className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#202020] text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
                 >
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                  <option value="2027">2027</option>
+                  {getTahunList().map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
               {role === 'OPERATOR_DESA' && (

@@ -374,6 +374,26 @@ export default function DashboardLayout({
         .dash-nav-soft:hover { background: var(--dash-surface-hover); color: var(--dash-text) !important; }
         .dash-header-btn:hover { background: var(--dash-card-hover); }
         .dash-menu-item:hover { background: var(--dash-surface-hover); }
+
+        /* ── Mobile: sidebar jadi off-canvas (geser), tombol hamburger muncul ── */
+        @media (max-width: 900px) {
+          .dash-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            max-width: 86vw;
+            z-index: 300;
+            transform: translateX(-100%);
+            box-shadow: 0 0 48px rgba(0, 0, 0, 0.25);
+          }
+          .dash-sidebar.open {
+            transform: translateX(0);
+          }
+          .dash-mob-toggle {
+            display: flex !important;
+          }
+        }
       `}</style>
     </div>
   )

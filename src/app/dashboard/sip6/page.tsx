@@ -1,4 +1,5 @@
 'use client'
+import { getTahunList } from '@/lib/tahun'
 
 import { useState, useEffect, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -676,8 +677,7 @@ export default function Sip6Page() {
             onChange={(e) => handleChange('tahun', parseInt(e.target.value))}
             className="bg-white dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
-            <option value="2026">2026</option>
-            <option value="2025">2025</option>
+            {getTahunList().map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
       </div>
@@ -1410,7 +1410,7 @@ export default function Sip6Page() {
                     <div>
                       <label className="block text-xs font-semibold text-[var(--dash-text-soft)] uppercase tracking-wider mb-1.5">Tahun</label>
                       <select value={formData.tahun} onChange={(e) => handleChange('tahun', parseInt(e.target.value))} className="block w-full bg-slate-50 dark:bg-[#202020] border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2.5 text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400">
-                        {[2024, 2025, 2026, 2027].map(t => <option key={t} value={t}>{t}</option>)}
+                        {getTahunList().map(t => <option key={t} value={t}>{t}</option>)}
                       </select>
                     </div>
                   </div>

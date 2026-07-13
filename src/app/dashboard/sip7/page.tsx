@@ -1,4 +1,5 @@
 'use client'
+import { getTahunList } from '@/lib/tahun'
 
 import { useState, useEffect, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -1575,7 +1576,7 @@ export default function Sip7Page() {
           <div className="space-y-6">
             {/* Year tabs — pindah tahun agar data 2025 & 2026 keduanya bisa dilihat */}
             <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10 w-fit">
-              {[2025, 2026].map(y => (
+              {getTahunList().map(y => (
                 <button
                   key={y}
                   onClick={() => { setTahunAktif(y); localStorage.setItem('sip_tahun_aktif', String(y)); setFormData7(prev => ({ ...prev, tahun: y })); }}

@@ -1,4 +1,5 @@
 'use client'
+import { getTahunList } from '@/lib/tahun'
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
@@ -154,7 +155,7 @@ export default function AnalisaDataPage() {
             onChange={e => setTahun(parseInt(e.target.value))}
             className="bg-white dark:bg-[#202020] border border-[var(--dash-border)] rounded-lg px-3 py-2 text-sm font-medium text-[var(--dash-text)] focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-400"
           >
-            {[2024, 2025, 2026, 2027].map(t => <option key={t} value={t}>{t}</option>)}
+            {getTahunList().map(t => <option key={t} value={t}>{t}</option>)}
           </select>
           <button
             onClick={handleExportExcel}

@@ -1538,6 +1538,17 @@ export default function Sip7Page() {
     (isPosyandu || r.posyanduId === activePosyanduId || !activePosyanduId)
   );
 
+  const monthsList = Array.from({ length: 12 }, (_, i) => {
+    const m = i + 1;
+    const existing = filteredSip7.find(r => r.bulan === m);
+    return existing || { 
+      id: `auto-${m}`, 
+      posyanduId: activePosyanduId, 
+      tahun: tahunAktif, 
+      bulan: m 
+    };
+  });
+
   return (
     <div className="space-y-6">
       {/* Header Section */}
@@ -2420,7 +2431,7 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                      {monthsList.map((report, index) => {
                         const row = getRekapBumil(report);
                         return (
                           <Fragment key={row.id}>
@@ -2517,7 +2528,7 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                      {monthsList.map((report, index) => {
                         const row = getRekapBayi(report);
                         return (
                           <Fragment key={row.id}>
@@ -2615,7 +2626,7 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                      {monthsList.map((report, index) => {
                         const row = getRekapRemaja(report);
                         return (
                           <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
@@ -2641,11 +2652,6 @@ export default function Sip7Page() {
                           </tr>
                         );
                       })}
-                      {filteredSip7.length === 0 && (
-                        <tr>
-                          <td colSpan={7} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Remaja</td>
-                        </tr>
-                      )}
                     </tbody>
                   </table>
                 </div>
@@ -2675,7 +2681,7 @@ export default function Sip7Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredSip7.sort((a,b) => a.bulan - b.bulan).map((report, index) => {
+                      {monthsList.map((report, index) => {
                         const row = getRekapLansia(report);
                         return (
                           <tr key={row.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
@@ -2701,11 +2707,6 @@ export default function Sip7Page() {
                           </tr>
                         );
                       })}
-                      {filteredSip7.length === 0 && (
-                        <tr>
-                          <td colSpan={7} className="text-center py-4 text-sm text-slate-500">Belum ada data untuk Rekapitulasi Lansia</td>
-                        </tr>
-                      )}
                     </tbody>
                   </table>
                 </div>

@@ -5,7 +5,7 @@ import { useState, useEffect, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Users, Save, ArrowLeft, Heart,
-  Baby, UserCircle, UserPlus, Shield, Activity, Edit2, Trash2, Plus, HardHat, X, Search
+  Baby, UserCircle, UserPlus, Shield, Activity, Edit2, Trash2, Plus, HardHat, X, Search, Download, Upload
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 
@@ -982,18 +982,20 @@ export default function Sip6Page() {
                       </h2>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={exportUnifiedExcel} disabled={isExporting} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm disabled:opacity-50`}>
-                        {isExporting ? 'Menyiapkan…' : 'Ekspor Excel Desa'}
+                      <button onClick={exportUnifiedExcel} disabled={isExporting} className={`bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm disabled:opacity-50 flex items-center gap-2`}>
+                        <Download className="w-4 h-4" />
+                        <span className="hidden md:inline">{isExporting ? 'Menyiapkan…' : 'Ekspor Excel Desa'}</span>
                       </button>
                       {canEdit && (
-                        <label className={`cursor-pointer bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-lg ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm flex items-center justify-center ${isImporting ? 'opacity-50 pointer-events-none' : ''}`}>
-                          <span>{isImporting ? 'Mengimpor…' : 'Impor Excel'}</span>
+                        <label className={`cursor-pointer bg-white dark:bg-[#202020] ${theme.text} dark:${theme.textDark} border ${theme.borderLight} dark:border-purple-800 font-semibold py-2.5 px-4 rounded-lg ${theme.hoverLight} dark:hover:bg-purple-900/20 transition-all text-sm flex items-center justify-center gap-2 ${isImporting ? 'opacity-50 pointer-events-none' : ''}`}>
+                          <Upload className="w-4 h-4" />
+                          <span className="hidden md:inline">{isImporting ? 'Mengimpor…' : 'Impor Excel'}</span>
                           <input type="file" accept=".xlsx,.xls" className="hidden" onChange={handleImportExcel} />
                         </label>
                       )}
                       {(canEdit || isPosyandu) && (
                         <button onClick={handleAdd} className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all text-sm flex items-center gap-2`}>
-                          <Plus className="w-4 h-4" /> Input Bulanan
+                          <Plus className="w-4 h-4" /> <span className="hidden md:inline">Input Bulanan</span>
                         </button>
                       )}
                     </div>
@@ -1203,9 +1205,9 @@ export default function Sip6Page() {
                     </div>
                     <button
                       onClick={() => setShowFormSasaran(true)}
-                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm w-full md:w-auto`}
+                      className={`${theme.bgSolid} ${theme.hoverSolid} text-white font-semibold py-2.5 px-4 rounded-md transition-all ${theme.shadow} flex items-center justify-center gap-2 text-sm w-auto`}
                     >
-                      <Plus className="w-4 h-4" /> Tambah Sasaran
+                      <Plus className="w-4 h-4" /> <span className="hidden md:inline">Tambah Sasaran</span>
                     </button>
                   </div>
 

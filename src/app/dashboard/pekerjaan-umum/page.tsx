@@ -1,5 +1,5 @@
 'use client'
-
+import { getTahunList } from '@/lib/tahun'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -715,26 +715,19 @@ export default function PekerjaanUmumPage() {
             <div className="flex items-center gap-4">
               {/* Year tabs */}
               <div className="flex bg-slate-100 dark:bg-[#202020] p-1 rounded-lg border border-slate-200 dark:border-white/10">
+                {getTahunList().map(y => (
                 <button
-                  onClick={() => handleTahunChange(2025)}
+                  key={y}
+                  onClick={() => handleTahunChange(y)}
                   className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
-                    selectedTahun === 2025
+                    selectedTahun === y
                       ? 'bg-white dark:bg-[#2f2f2f] text-[var(--dash-text)]'
                       : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
                   }`}
                 >
-                  2025
+                  {y}
                 </button>
-                <button
-                  onClick={() => handleTahunChange(2026)}
-                  className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
-                    selectedTahun === 2026
-                      ? 'bg-white dark:bg-[#2f2f2f] text-[var(--dash-text)]'
-                      : 'text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white'
-                  }`}
-                >
-                  2026
-                </button>
+              ))}
               </div>
 
               <div className="flex gap-2">
@@ -743,14 +736,14 @@ export default function PekerjaanUmumPage() {
                   className="bg-white dark:bg-[#202020] text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-white/10 font-semibold py-2.5 px-4 rounded-md hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <FileText className="w-5 h-5" />
-                  Export CSV
+                  <span className="hidden sm:inline">Export CSV</span>
                 </button>
                 <button
                   onClick={handleExportExcel}
                   className="bg-white dark:bg-[#202020] text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-800 font-semibold py-2.5 px-4 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
-                  Export Excel
+                  <span className="hidden sm:inline">Export Excel</span>
                 </button>
                 {canEdit && (
                   <button
@@ -758,7 +751,7 @@ export default function PekerjaanUmumPage() {
                     className={`bg-gradient-to-r ${theme.bgGradient} text-white font-semibold py-2.5 px-4 rounded-md ${theme.hoverGradient} transition-all ${theme.shadow} flex items-center justify-center gap-2`}
                   >
                     <Plus className="w-5 h-5" />
-                    Tambah Laporan
+                    <span className="hidden sm:inline">Tambah Laporan</span>
                   </button>
                 )}
               </div>

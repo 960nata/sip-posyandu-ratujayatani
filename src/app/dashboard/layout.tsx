@@ -190,14 +190,41 @@ export default function DashboardLayout({
   };
 
   return (
-    <div style={{ height: "100vh", overflow: "hidden", backgroundColor: "var(--dash-bg)", color: "var(--dash-text)", display: "flex", fontFamily: "var(--font-main)", WebkitFontSmoothing: "antialiased" }}>
+    <div style={{ height: "100vh", overflow: "hidden", backgroundColor: "var(--dash-bg)", color: "var(--dash-text)", display: "flex", fontFamily: "var(--font-main)", WebkitFontSmoothing: "antialiased", position: "relative" }}>
       
+      {/* Background ambient glow blobs */}
+      <div style={{
+        position: "absolute",
+        top: "-10%",
+        left: "-10%",
+        width: "45%",
+        height: "45%",
+        background: "radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0) 70%)",
+        borderRadius: "50%",
+        filter: "blur(60px)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      <div style={{
+        position: "absolute",
+        bottom: "-10%",
+        right: "-10%",
+        width: "45%",
+        height: "45%",
+        background: "radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, rgba(236, 72, 153, 0) 70%)",
+        borderRadius: "50%",
+        filter: "blur(60px)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+
       {/* ══ SIDEBAR ══ */}
       <aside className={`dash-sidebar${sideOpen ? " open" : ""}`} style={{
         width: "288px", backgroundColor: "var(--dash-sidebar)", flexShrink: 0,
-        borderRight: "1px solid var(--dash-border)", display: "flex", flexDirection: "column",
+        backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        borderRight: "1px solid var(--dash-sidebar-border)", display: "flex", flexDirection: "column",
         gap: "4px", padding: "22px 18px",
-        overflowY: "auto", height: "100vh",
+        overflowY: "auto", height: "100vh", zIndex: 10,
       }}>
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "4px 6px 18px" }}>
@@ -266,14 +293,15 @@ export default function DashboardLayout({
       </aside>
 
       {/* ══ MAIN AREA ══ */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, zIndex: 1, position: "relative" }}>
         
         {/* ══ TOP HEADER ══ */}
         <header ref={headerRef} style={{
           position: "sticky", top: 0, zIndex: 40,
           borderBottom: "1px solid var(--dash-border)",
-          backgroundColor: "var(--dash-surface)",
-          backdropFilter: "saturate(1.4) blur(8px)",
+          backgroundColor: "var(--dash-sidebar)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           padding: "12px 20px",
           display: "flex", alignItems: "center", gap: "10px",
           flexShrink: 0,

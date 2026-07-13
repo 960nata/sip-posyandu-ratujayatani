@@ -33,6 +33,8 @@
   /* Layout */
   --dash-sidebar-w: 280px;
   --font-main: 'Inter', system-ui, sans-serif;
+  --dash-sidebar: rgba(255, 255, 255, 0.45);
+  --dash-sidebar-border: rgba(226, 232, 240, 0.6);
 }
 
 .dark {
@@ -54,6 +56,8 @@
   --dash-primary-bg: rgba(167, 139, 250, 0.15);
   --dash-primary-border: rgba(167, 139, 250, 0.3);
   --dash-danger: #ef4444;
+  --dash-sidebar: rgba(10, 10, 12, 0.7);
+  --dash-sidebar-border: rgba(255, 255, 255, 0.06);
 }
 
 /* ── Base Card (Premium Glass/Shadow) ── */

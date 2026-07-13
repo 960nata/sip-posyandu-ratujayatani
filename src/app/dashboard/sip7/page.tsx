@@ -166,10 +166,15 @@ export default function Sip7Page() {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
   const [selectedReportForDetail, setSelectedReportForDetail] = useState<any>(null)
 
-  // Level Selection States
+  // Level Selection States (nama untuk tampilan, ID untuk fetch data asli)
   const [selectedKecamatan, setSelectedKecamatan] = useState('')
   const [selectedDesa, setSelectedDesa] = useState('')
   const [selectedPosyandu, setSelectedPosyandu] = useState('')
+  const [selectedKecamatanId, setSelectedKecamatanId] = useState('')
+  const [selectedDesaId, setSelectedDesaId] = useState('')
+  const [kecamatans, setKecamatans] = useState<any[]>([])
+  const [desas, setDesas] = useState<any[]>([])
+  const [posyandus, setPosyandus] = useState<any[]>([])
 
   const [tahunAktif, setTahunAktif] = useState(2025)
   const [namaDesa, setNamaDesa] = useState('Adijaya')
@@ -1009,6 +1014,35 @@ export default function Sip7Page() {
       setSip6Reports([])
     }
   }, [selectedPosyandu, isPosyandu, session])
+
+  // ── Drill-down wilayah pakai data ASLI (ID), sama seperti SIP 6 ──
+  const fetchKecamatans7 = async () => {
+    const res = await fetch('/api/kecamatan'); const d = await res.json(); if (Array.isArray(d)) setKecamatans(d)
+  }
+  const fetchDesas7 = async (kecId: string) => {
+    const res = await fetch(`/api/desa?kecamatanId=${kecId}`); const d = await res.json(); if (Array.isArray(d)) setDesas(d)
+  }
+  const fetchPosyandus7 = async (desaId: string) => {
+    const res = await fetch(`/api/posyandu?desaId=${desaId}`); const d = await res.json(); if (Array.isArray(d)) setPosyandus(d)
+  }
+
+  useEffect(() => { fetchKecamatans7() }, [])
+
+  // Auto-scope untuk role non-superadmin
+  useEffect(() => {
+    if (role === 'ADMIN_KECAMATAN') {
+      const kid = (session?.user as any)?.kecamatanId
+      if (kid) setSelectedKecamatanId(kid)
+    } else if (role === 'OPERATOR_DESA') {
+      const kid = (session?.user as any)?.kecamatanId
+      const did = (session?.user as any)?.desaId
+      if (kid) setSelectedKecamatanId(kid)
+      if (did) setSelectedDesaId(did)
+    }
+  }, [role, session])
+
+  useEffect(() => { if (selectedKecamatanId) fetchDesas7(selectedKecamatanId) }, [selectedKecamatanId])
+  useEffect(() => { if (selectedDesaId) fetchPosyandus7(selectedDesaId) }, [selectedDesaId])
 
   const handleEdit = (report: any) => {
     const flat = mapNestedToFlatForm(report)
@@ -2693,12 +2727,12 @@ export default function Sip7Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  {regionData.map((kec, idx) => (
-                    <tr key={kec.name} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                  {kecamatans.map((kec, idx) => (
+                    <tr key={kec.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                       <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
-                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.name}</td>
+                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{kec.nama}</td>
                       <td className="px-6 py-4 text-right">
-                        <button onClick={() => setSelectedKecamatan(kec.name)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
+                        <button onClick={() => { setSelectedKecamatan(kec.nama); setSelectedKecamatanId(kec.id); }} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
                       </td>
                     </tr>
                   ))}
@@ -2714,7 +2748,7 @@ export default function Sip7Page() {
             <div className="flex items-center gap-3 mb-4">
             {role === 'SUPERADMIN' && (
               <button
-                onClick={() => setSelectedKecamatan('')}
+                onClick={() => { setSelectedKecamatan(''); setSelectedKecamatanId(''); setDesas([]); }}
                 className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                 title="Kembali ke Daftar Kecamatan"
               >
@@ -2733,12 +2767,12 @@ export default function Sip7Page() {
                   </tr>
                 </thead>
                 <tbody>
-                  {myKec?.desas.map((desa, idx) => (
-                    <tr key={desa} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                  {desas.map((desa, idx) => (
+                    <tr key={desa.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                       <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
-                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa}</td>
+                      <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
                       <td className="px-6 py-4 text-right">
-                        <button onClick={() => setSelectedDesa(desa)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
+                        <button onClick={() => { setSelectedDesa(desa.nama); setSelectedDesaId(desa.id); }} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
                       </td>
                     </tr>
                   ))}
@@ -2754,7 +2788,7 @@ export default function Sip7Page() {
             <div className="flex items-center gap-3">
               {role !== 'OPERATOR_DESA' && (
                 <button
-                  onClick={() => setSelectedDesa('')}
+                  onClick={() => { setSelectedDesa(''); setSelectedDesaId(''); setPosyandus([]); }}
                   className={`p-2 ${theme.bgLight} ${theme.bgDarkLight} ${theme.text} dark:${theme.textDark} rounded-md ${theme.hoverLight} dark:hover:bg-purple-900/50 transition-colors`}
                   title="Kembali ke Daftar Desa"
                 >
@@ -2776,13 +2810,16 @@ export default function Sip7Page() {
                 </tr>
               </thead>
               <tbody>
-                {[`Posyandu ${selectedDesa} I`, `Posyandu ${selectedDesa} II`, `Posyandu ${selectedDesa} III`].map((pos, idx) => (
-                  <tr key={pos} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
+                {posyandus.length === 0 && (
+                  <tr><td colSpan={4} className="px-6 py-8 text-center text-[var(--dash-text-muted)]">Belum ada posyandu di desa ini.</td></tr>
+                )}
+                {posyandus.map((pos, idx) => (
+                  <tr key={pos.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                     <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
-                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{pos}</td>
-                    <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>Aktif</span></td>
+                    <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{pos.nama}</td>
+                    <td className="px-6 py-4"><span className={`${theme.text} text-xs font-medium ${theme.bgLight} px-2.5 py-1 rounded-full`}>{(pos._count?.sip7s || 0) > 0 ? '🟢 Ada data' : '🔴 Kosong'}</span></td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => setSelectedPosyandu(pos)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Buka Data</button>
+                      <button onClick={() => setSelectedPosyandu(pos.id)} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Buka Data</button>
                     </td>
                   </tr>
                 ))}

@@ -87,7 +87,9 @@ export async function uploadFile(opts: UploadOpts): Promise<UploadResult> {
         }
         return { error: `Gagal upload ke Supabase (${bucket}): ${detail}`, status: res.status }
       }
-      return { url: `${supabaseUrl}/storage/v1/object/public/${bucket}/${filename}` }
+      // URL proxy internal: bucket tetap privat, berkas tampil hanya untuk
+      // pengguna login via /api/files (jangan pakai URL /object/public — bucket tidak publik)
+      return { url: `/api/files/${bucket}/${filename}` }
     } catch (e) {
       return { error: `Gagal menghubungi Supabase Storage: ${(e as Error).message}`, status: 502 }
     }

@@ -12,11 +12,12 @@ export function MasterWilayahView() {
   const [expandedKec, setExpandedKec] = useState<Record<string, boolean>>({})
   const [expandedDesa, setExpandedDesa] = useState<Record<string, boolean>>({})
   const [actionLoading, setActionLoading] = useState<string | null>(null)
+  const [tahun, setTahun] = useState<number>(2025)
 
-  const fetchData = async () => {
+  const fetchData = async (yr: number) => {
+    setLoading(true)
     try {
-      const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
-      const res = await fetch(`/api/master-wilayah?tahun=${savedTahun}`)
+      const res = await fetch(`/api/master-wilayah?tahun=${yr}`)
       const json = await res.json()
       if (res.ok && Array.isArray(json)) {
         setData(json)
@@ -31,9 +32,20 @@ export function MasterWilayahView() {
     }
   }
 
+  // Ambil tahun aktif tersimpan saat mount (hindari mismatch SSR)
   useEffect(() => {
-    fetchData()
+    const saved = parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025
+    setTahun(saved)
   }, [])
+
+  useEffect(() => {
+    fetchData(tahun)
+  }, [tahun])
+
+  const changeTahun = (yr: number) => {
+    setTahun(yr)
+    localStorage.setItem('sip_tahun_aktif', String(yr))
+  }
 
   const toggleKec = (id: string) => setExpandedKec(prev => ({ ...prev, [id]: !prev[id] }))
   const toggleDesa = (id: string) => setExpandedDesa(prev => ({ ...prev, [id]: !prev[id] }))
@@ -64,18 +76,33 @@ export function MasterWilayahView() {
     }
   }
 
-  if (loading) return <div className="p-8 text-center text-[var(--dash-text-muted)] flex justify-center"><Loader2 className="w-6 h-6 animate-spin" /></div>
-
   let globalKecIndex = 1
   return (
     <div className="space-y-4">
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-[var(--dash-text)]">Master Data Wilayah & Posyandu</h2>
-        <p className="text-sm text-[var(--dash-text-soft)]">Hierarki Kabupaten Lampung Timur</p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 className="text-xl font-bold text-[var(--dash-text)]">Master Data Wilayah & Posyandu</h2>
+          <p className="text-sm text-[var(--dash-text-soft)]">Hierarki Kabupaten Lampung Timur — Tahun {tahun}</p>
+        </div>
+        <div className="flex items-center gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-lg self-start sm:self-auto">
+          {[2024, 2025, 2026, 2027].map((y) => (
+            <button
+              key={y}
+              onClick={() => changeTahun(y)}
+              className={`px-3 py-1.5 text-sm font-semibold rounded-md transition-colors ${tahun === y ? 'bg-white dark:bg-[#2f2f2f] text-purple-600 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-200'}`}
+            >
+              {y}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="dash-card p-0 overflow-hidden">
-        {data.map((kec) => {
+        {loading ? (
+          <div className="p-12 flex justify-center text-[var(--dash-text-muted)]"><Loader2 className="w-6 h-6 animate-spin text-purple-500" /></div>
+        ) : data.length === 0 ? (
+          <div className="p-12 text-center text-sm text-[var(--dash-text-muted)]">Tidak ada data untuk tahun {tahun}.</div>
+        ) : data.map((kec) => {
           const isKecExpanded = expandedKec[kec.id]
           const totalPosyandu = kec.desas.reduce((acc: number, curr: any) => acc + curr.posyandus.length, 0)
           const kecTotalInput = kec.desas.reduce((acc: number, d: any) => acc + d.posyandus.reduce((a: number, p: any) => a + (p._count?.sip6s || 0) + (p._count?.sip7s || 0), 0), 0);

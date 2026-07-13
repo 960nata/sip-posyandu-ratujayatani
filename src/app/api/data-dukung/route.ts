@@ -3,7 +3,8 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import * as path from "path"
 import { BidangEnum } from "@prisma/client"
-import { uploadFile, isAllowedUpload } from "@/lib/storage"
+import { uploadFile, isAllowedUpload, isImageFile } from "@/lib/storage"
+import { compressToAvif, canConvertToAvif } from "@/lib/image"
 
 export async function GET(request: Request) {
   const session = await auth()
@@ -104,11 +105,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Ukuran berkas maksimal 15 MB." }, { status: 400 })
     }
 
-    // Create unique filename
-    const filename = `data-dukung-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`
-    const buffer = Buffer.from(await file.arrayBuffer())
+    let buffer: Buffer = Buffer.from(await file.arrayBuffer())
+    let finalExt = ext
+    let finalType = contentType
 
-    const result = await uploadFile({ buffer, filename, contentType, ext, localDir: 'data-dukung' })
+    // Foto data dukung dikompres ke AVIF (max 1600px); PDF/dokumen tetap asli
+    if (isImageFile(contentType, ext) && canConvertToAvif(contentType, ext)) {
+      const avif = await compressToAvif(buffer, 1600, 55)
+      if (avif) {
+        buffer = avif.buffer
+        finalExt = avif.ext
+        finalType = avif.contentType
+      }
+    }
+
+    // Create unique filename
+    const filename = `data-dukung-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${finalExt}`
+
+    const result = await uploadFile({ buffer, filename, contentType: finalType, ext: finalExt, localDir: 'data-dukung' })
     if (result.error || !result.url) {
       return NextResponse.json({ error: result.error || 'Gagal mengunggah berkas' }, { status: result.status || 500 })
     }
@@ -123,8 +137,8 @@ export async function POST(request: Request) {
         kategori,
         fileName: originalName,
         filePath: fileUrl,
-        fileSize: file.size,
-        mimeType: file.type || 'application/pdf',
+        fileSize: buffer.length,
+        mimeType: finalType,
         posyanduId: posyanduId || null,
         uploadedBy,
       }

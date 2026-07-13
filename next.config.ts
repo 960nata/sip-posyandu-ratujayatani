@@ -21,7 +21,14 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  compress: true,
+  // Tree-shake pustaka besar → bundle client lebih kecil & load lebih cepat
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion"],
+  },
   images: {
+    // Sajikan gambar dalam format modern (lebih ringan) bila browser mendukung
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",

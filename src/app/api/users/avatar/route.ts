@@ -3,6 +3,7 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import * as path from "path"
 import { uploadFile, isImageFile } from "@/lib/storage"
+import { compressToAvif, canConvertToAvif } from "@/lib/image"
 
 export async function POST(request: Request) {
   const session = await auth()
@@ -34,10 +35,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Ukuran gambar maksimal 10 MB." }, { status: 400 })
     }
 
-    const filename = `avatar-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`
-    const buffer = Buffer.from(await file.arrayBuffer())
+    let buffer: Buffer = Buffer.from(await file.arrayBuffer())
+    let finalExt = ext
+    let finalType = contentType
 
-    const result = await uploadFile({ buffer, filename, contentType, ext, localDir: 'avatars' })
+    // Kompres ke AVIF (avatar max 512px) — hemat >90% dibanding PNG mentah
+    if (canConvertToAvif(contentType, ext)) {
+      const avif = await compressToAvif(buffer, 512, 60)
+      if (avif) {
+        buffer = avif.buffer
+        finalExt = avif.ext
+        finalType = avif.contentType
+      }
+    }
+
+    const filename = `avatar-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${finalExt}`
+    const result = await uploadFile({ buffer, filename, contentType: finalType, ext: finalExt, localDir: 'avatars' })
     if (result.error || !result.url) {
       return NextResponse.json({ error: result.error || 'Gagal mengunggah avatar' }, { status: result.status || 500 })
     }

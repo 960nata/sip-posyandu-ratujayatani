@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sipandu.lampungtimurkab.go.id";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [

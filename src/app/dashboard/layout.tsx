@@ -406,14 +406,19 @@ export default function DashboardLayout({
         /* ── Mobile: sidebar jadi off-canvas (geser), tombol hamburger muncul ── */
         @media (max-width: 900px) {
           .dash-sidebar {
-            position: fixed;
+            position: fixed !important;
             top: 0;
             left: 0;
             height: 100vh;
             max-width: 86vw;
-            z-index: 300;
+            /* Di ATAS overlay blur (z-290) — kalahkan inline zIndex:10 */
+            z-index: 400 !important;
             transform: translateX(-100%);
             box-shadow: 0 0 48px rgba(0, 0, 0, 0.25);
+            /* Solid + tanpa blur agar overlay tak menembus sidebar */
+            background: var(--dash-sidebar-solid) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
           }
           .dash-sidebar.open {
             transform: translateX(0);

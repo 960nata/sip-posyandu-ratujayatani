@@ -175,6 +175,7 @@ export default function Sip7Page() {
   const [selectedDesaId, setSelectedDesaId] = useState('')
   const [kecamatans, setKecamatans] = useState<any[]>([])
   const [desas, setDesas] = useState<any[]>([])
+  const [desaStatus, setDesaStatus] = useState<Record<string, 'AKTIF' | 'KURANG_AKTIF' | 'PASIF'>>({})
   const [posyandus, setPosyandus] = useState<any[]>([])
 
   const [tahunAktif, setTahunAktif] = useState(2025)
@@ -1043,6 +1044,21 @@ export default function Sip7Page() {
   }, [role, session])
 
   useEffect(() => { if (selectedKecamatanId) fetchDesas7(selectedKecamatanId) }, [selectedKecamatanId])
+
+  // Status keaktifan per desa (untuk kolom Status di tabel Pilih Desa)
+  useEffect(() => {
+    if (!selectedKecamatanId || !tahunAktif) { setDesaStatus({}); return }
+    fetch(`/api/dashboard/monitor?tahun=${tahunAktif}&kecamatanId=${selectedKecamatanId}`)
+      .then(r => r.json())
+      .then(d => {
+        if (d?.level === 'desa' && Array.isArray(d.children)) {
+          const m: Record<string, 'AKTIF' | 'KURANG_AKTIF' | 'PASIF'> = {}
+          for (const c of d.children) m[c.id] = c.status
+          setDesaStatus(m)
+        }
+      })
+      .catch(() => {})
+  }, [selectedKecamatanId, tahunAktif])
   useEffect(() => { if (selectedDesaId) fetchPosyandus7(selectedDesaId) }, [selectedDesaId])
 
   const handleEdit = (report: any) => {
@@ -2786,19 +2802,38 @@ export default function Sip7Page() {
                   <tr>
                     <th className="px-6 py-4 w-12 text-center">No.</th>
                       <th className="px-6 py-4">Nama Desa</th>
+                    <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {desas.map((desa, idx) => (
+                  {desas.map((desa, idx) => {
+                    const st = desaStatus[desa.id]
+                    const stStyle: Record<string, { dot: string; label: string; cls: string }> = {
+                      AKTIF: { dot: '🟢', label: 'Aktif', cls: 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-900/25' },
+                      KURANG_AKTIF: { dot: '🟡', label: 'Kurang Aktif', cls: 'text-amber-700 bg-amber-50 dark:text-amber-400 dark:bg-amber-900/25' },
+                      PASIF: { dot: '🔴', label: 'Pasif', cls: 'text-rose-700 bg-rose-50 dark:text-rose-400 dark:bg-rose-900/25' },
+                    }
+                    const s = st ? stStyle[st] : null
+                    return (
                     <tr key={desa.id} className="border-b border-slate-200/70 dark:border-white/10 hover:bg-slate-50/50 dark:hover:bg-[#2f2f2f]/20 transition-colors">
                       <td className="px-6 py-4 text-center text-[var(--dash-text-muted)]">{idx + 1}</td>
                       <td className="px-6 py-4 font-medium text-[var(--dash-text)]">{desa.nama}</td>
+                      <td className="px-6 py-4">
+                        {s ? (
+                          <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${s.cls}`}>
+                            <span aria-hidden>{s.dot}</span>{s.label}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-slate-400">—</span>
+                        )}
+                      </td>
                       <td className="px-6 py-4 text-right">
                         <button onClick={() => { setSelectedDesa(desa.nama); setSelectedDesaId(desa.id); }} className={`${theme.text} hover:${theme.textLight} font-medium text-xs`}>Pilih</button>
                       </td>
                     </tr>
-                  ))}
+                    )
+                  })}
                 </tbody>
               </table>
             </div>

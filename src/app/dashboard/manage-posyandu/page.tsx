@@ -35,7 +35,7 @@ export function MasterWilayahView() {
 
   // Ambil tahun aktif tersimpan saat mount (hindari mismatch SSR)
   useEffect(() => {
-    const saved = parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025
+    const saved = parseInt(localStorage.getItem('sip_tahun_aktif_v2') || '') || 2025
     setTahun(saved)
   }, [])
 
@@ -45,7 +45,7 @@ export function MasterWilayahView() {
 
   const changeTahun = (yr: number) => {
     setTahun(yr)
-    localStorage.setItem('sip_tahun_aktif', String(yr))
+    localStorage.setItem('sip_tahun_aktif_v2', String(yr))
   }
 
   const toggleKec = (id: string) => setExpandedKec(prev => ({ ...prev, [id]: !prev[id] }))

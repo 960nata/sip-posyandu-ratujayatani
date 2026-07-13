@@ -53,7 +53,7 @@ export default function DashboardPage() {
   const [summary, setSummary] = useState<Record<string, { total: number; selesai: number }> | null>(null)
 
   useEffect(() => {
-    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025
+    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif_v2') || '') || 2025
     setTahun(savedTahun)
   }, [])
 

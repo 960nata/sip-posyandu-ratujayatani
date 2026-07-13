@@ -185,7 +185,7 @@ export default function PerumahanPage() {
 
   useEffect(() => {
     setMounted(true)
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif_v2') || '2025'
     setSelectedTahun(parseInt(savedTahun))
 
     const fetchKecamatans = async () => {
@@ -326,7 +326,7 @@ export default function PerumahanPage() {
 
   const handleTahunChange = (year: number) => {
     setSelectedTahun(year)
-    localStorage.setItem('sip_tahun_aktif', year.toString())
+    localStorage.setItem('sip_tahun_aktif_v2', year.toString())
   }
   
   const initialForm = { tanggal: '', nama: '', nik: '', alamat: '', status: 'TL', fcKK: false, fcKTP: false, sp: false, suketPenghasilan: false, fotoRumah: false, posyandu: 'Segar', keteranganTL: '', keteranganBTL: '' }

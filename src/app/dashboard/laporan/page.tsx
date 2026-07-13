@@ -25,7 +25,7 @@ export default function LaporanPage() {
   const [notice, setNotice] = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
 
   useEffect(() => {
-    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif') || '2025')
+    const savedTahun = parseInt(localStorage.getItem('sip_tahun_aktif_v2') || '2025')
     setTahun(savedTahun)
     fetch('/api/kecamatan').then(r => r.json()).then(setKecamatans).catch(() => {})
     if (isKecamatan && userKecamatanId) setSelectedKecamatanId(userKecamatanId)

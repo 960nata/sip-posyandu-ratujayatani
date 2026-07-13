@@ -45,7 +45,7 @@ export default function ProfilePage() {
         .catch(() => {})
     }
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif_v2') || '2025'
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
   }, [session])
@@ -110,7 +110,7 @@ export default function ProfilePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     localStorage.setItem('sip_nama_desa', namaDesa)
-    localStorage.setItem('sip_tahun_aktif', tahunAktif.toString())
+    localStorage.setItem('sip_tahun_aktif_v2', tahunAktif.toString())
     
     if (role === 'OPERATOR_DESA' && selectedPosyanduId) {
       const activePos = posyandus.find(p => p.id === selectedPosyanduId)

@@ -49,7 +49,7 @@ export default function AnalisaDataPage() {
   const [isExporting, setIsExporting] = useState(false)
 
   useEffect(() => {
-    setTahun(parseInt(localStorage.getItem('sip_tahun_aktif') || '') || 2025)
+    setTahun(parseInt(localStorage.getItem('sip_tahun_aktif_v2') || '') || 2025)
   }, [])
 
   const fetchMonitor = useCallback(async (path: Crumb[], th: number) => {

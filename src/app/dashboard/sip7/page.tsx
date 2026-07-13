@@ -987,7 +987,7 @@ export default function Sip7Page() {
     
     // Load config from settings
     const savedDesa = localStorage.getItem('sip_nama_desa') || 'Adijaya'
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif_v2') || '2025'
     setNamaDesa(savedDesa)
     setTahunAktif(parseInt(savedTahun))
     setFormData7(prev => ({ ...prev, tahun: parseInt(savedTahun) }))
@@ -1579,7 +1579,7 @@ export default function Sip7Page() {
               {getTahunList().map(y => (
                 <button
                   key={y}
-                  onClick={() => { setTahunAktif(y); localStorage.setItem('sip_tahun_aktif', String(y)); setFormData7(prev => ({ ...prev, tahun: y })); }}
+                  onClick={() => { setTahunAktif(y); localStorage.setItem('sip_tahun_aktif_v2', String(y)); setFormData7(prev => ({ ...prev, tahun: y })); }}
                   className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
                     tahunAktif === y
                       ? 'bg-white dark:bg-[#2f2f2f] text-[var(--dash-text)] shadow-sm'

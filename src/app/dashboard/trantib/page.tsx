@@ -184,7 +184,7 @@ export default function TrantibPage() {
 
   useEffect(() => {
     setMounted(true)
-    const savedTahun = localStorage.getItem('sip_tahun_aktif') || '2025'
+    const savedTahun = localStorage.getItem('sip_tahun_aktif_v2') || '2025'
     setSelectedTahun(parseInt(savedTahun))
 
     const fetchKecamatans = async () => {
@@ -321,7 +321,7 @@ export default function TrantibPage() {
 
   const handleTahunChange = (year: number) => {
     setSelectedTahun(year)
-    localStorage.setItem('sip_tahun_aktif', year.toString())
+    localStorage.setItem('sip_tahun_aktif_v2', year.toString())
   }
   
   const initialForm = { tanggal: '', nik: '', nama: '', alamat: '', hal: '', keteranganTL: '', keteranganBTL: '', status: 'TL', posyandu: 'Segar' }

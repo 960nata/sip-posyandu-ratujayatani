@@ -1258,7 +1258,7 @@ export default function Sip6Page() {
                               {activeTab !== 'sasaran_bumil' && activeTab !== 'sasaran' && (
                                 <>
                                   <td className="px-4 py-3">{(s as any).jenisKelamin || '-'}</td>
-                                  <td className="px-4 py-3">{(s as any).tanggalLahir || '-'}</td>
+                                   <td className="px-4 py-3">{(s as any).tanggalLahir ? String((s as any).tanggalLahir).split('T')[0] : '-'}</td>
                                 </>
                               )}
                               <td className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? s.namaSuami : (s as any).namaIbu || '-'}</td>
@@ -1283,7 +1283,10 @@ export default function Sip6Page() {
                                   <button
                                     onClick={() => {
                                       setEditingId(s.id);
-                                      setSasaranForm(s as any);
+                                      setSasaranForm({
+                                        ...s,
+                                        tanggalLahir: s.tanggalLahir ? String(s.tanggalLahir).split('T')[0] : ''
+                                      } as any);
                                       setShowFormSasaran(true);
                                     }}
                                     className="text-blue-500 hover:text-blue-600 transition-colors"

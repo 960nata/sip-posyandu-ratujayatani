@@ -1142,10 +1142,8 @@ export default function Sip6Page() {
                             </>
                           )}
                           <th className="px-4 py-3">{activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? 'Nama Suami' : 'Nama Ibu'}</th>
-                          {activeTab === 'sasaran_bumil' || activeTab === 'sasaran' ? (
+                          {activeTab !== 'sasaran_bumil' && (
                             <th className="px-4 py-3">{activeTab === 'sasaran' ? 'Nama Bayi' : 'Nama Ayah'}</th>
-                          ) : (
-                            <th className="px-4 py-3">Nama Ayah</th>
                           )}
                           {['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'].map(m => (
                             <th key={m} className="px-2 py-3 text-center">{m}</th>

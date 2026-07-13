@@ -1549,6 +1549,11 @@ export default function Sip7Page() {
     };
   });
 
+  const selectedPosyanduObj = posyandus.find(p => p.id === selectedPosyandu);
+  const selectedPosyanduName = isPosyandu 
+    ? ((session?.user as any)?.posyanduNama || 'Posyandu Anda')
+    : (selectedPosyanduObj ? selectedPosyanduObj.nama : selectedPosyandu);
+
   return (
     <div className="space-y-6">
       {/* Header Section */}
@@ -1576,10 +1581,10 @@ export default function Sip7Page() {
             )}
             <div>
               <h1 className="text-2xl font-bold text-[var(--dash-text)]">
-                {selectedPosyandu || `Posyandu Desa ${namaDesa}`}
+                {selectedPosyanduName || `Posyandu Desa ${namaDesa}`}
               </h1>
               <p className="text-sm text-[var(--dash-text-soft)]">
-                {isPosyandu ? '' : `Detail data untuk ${selectedPosyandu}`}
+                {isPosyandu ? '' : `Detail data untuk ${selectedPosyanduName}`}
               </p>
             </div>
           </div>

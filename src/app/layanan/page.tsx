@@ -227,7 +227,7 @@ export default function LayananPage() {
       ],
       coverage: [
         "Disabilitas & inklusi sosial",
-        "Lansia terlantar",
+      "Lansia terlantar",
         "Tuna sosial & gelandangan",
         "Bantuan sosial fakir miskin",
         "Kesetaraan gender & edukasi"
@@ -236,25 +236,38 @@ export default function LayananPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white text-slate-800 font-sans antialiased">
+    <div className="relative min-h-screen bg-white text-slate-800 antialiased">
       {/* Header */}
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
-        <div className="absolute inset-0 bg-black/10 z-0"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="relative min-h-[400px] flex items-center pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-slate-900 text-white">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/images/hero/hero3.avif"
+            alt="Hero Background"
+            fill
+            className="object-cover opacity-40 scale-105"
+            priority
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-950/80 via-indigo-950/70 to-slate-950 z-10"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
           <motion.div
-            className="text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-widest mb-4">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-widest mb-6">
               Panduan Layanan
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Layanan Komprehensif Posyandu</h1>
-            <p className="text-base md:text-lg text-purple-50 font-light max-w-3xl leading-relaxed">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 text-white leading-tight">
+              Layanan Komprehensif Posyandu
+            </h1>
+            <p className="text-base md:text-lg text-slate-200 max-w-3xl mx-auto font-normal leading-relaxed">
               Kami menghadirkan berbagai program kesehatan terpadu untuk mendukung tumbuh kembang anak dan kesehatan keluarga di Lampung Timur.
             </p>
           </motion.div>

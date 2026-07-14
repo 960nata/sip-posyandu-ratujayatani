@@ -55,7 +55,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { id, posyanduId, tanggal, nama, nik, alamat, fcKK, fcKTP, sp, suketPenghasilan, fotoRumah, status, keteranganTL, keteranganBTL, dataDukungId } = body
+    const { id, posyanduId, tanggal, nama, nik, alamat, fcKK, fcKTP, sp, suketPenghasilan, fotoRumah, status, keteranganTL, keteranganBTL, dataDukungIds } = body
 
     if (!posyanduId || !tanggal || !nama) {
       return NextResponse.json({ error: "posyanduId, tanggal, and nama are required" }, { status: 400 })
@@ -83,8 +83,8 @@ export async function POST(request: Request) {
         where: { id },
         data: {
           ...data,
-          dataDukungs: dataDukungId !== undefined ? {
-            set: dataDukungId ? [{ id: dataDukungId }] : []
+          dataDukungs: Array.isArray(dataDukungIds) ? {
+            set: dataDukungIds.map((did: string) => ({ id: did }))
           } : undefined,
         },
         include: {
@@ -96,8 +96,8 @@ export async function POST(request: Request) {
       const report = await prisma.laporanPR.create({
         data: {
           ...data,
-          dataDukungs: dataDukungId ? {
-            connect: { id: dataDukungId }
+          dataDukungs: Array.isArray(dataDukungIds) && dataDukungIds.length ? {
+            connect: dataDukungIds.map((did: string) => ({ id: did }))
           } : undefined,
         },
         include: {

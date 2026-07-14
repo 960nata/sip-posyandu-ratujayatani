@@ -1,4 +1,5 @@
 'use client'
+import DataDukungUpload, { DataDukungItem } from '@/components/dashboard/DataDukungUpload'
 import { getTahunList } from '@/lib/tahun'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -178,8 +179,7 @@ export default function PekerjaanUmumPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [reports, setReports] = useState<any[]>([])
   const [namaDesa, setNamaDesa] = useState('Tulusrejo')
-  const [uploadedFile, setUploadedFile] = useState<{ id: string; fileName: string; filePath: string } | null>(null)
-  const [uploading, setUploading] = useState(false)
+  const [uploadedFiles, setUploadedFiles] = useState<DataDukungItem[]>([])
 
   useEffect(() => {
     setMounted(true)
@@ -364,11 +364,7 @@ export default function PekerjaanUmumPage() {
       keterangan: report.keterangan || '',
       posyandu: report.posyandu || 'Segar'
     })
-    if (report.dataDukungs && report.dataDukungs.length > 0) {
-      setUploadedFile(report.dataDukungs[0])
-    } else {
-      setUploadedFile(null)
-    }
+    setUploadedFiles(report.dataDukungs || [])
     setEditId(report.id)
     setIsModalOpen(true)
   }
@@ -392,39 +388,6 @@ export default function PekerjaanUmumPage() {
     }
   }
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-    const file = files[0]
-
-    setUploading(true)
-    const fData = new FormData()
-    fData.append('file', file)
-    fData.append('bidang', 'PU')
-    if (selectedPosyanduId) {
-      fData.append('posyanduId', selectedPosyanduId)
-    }
-
-    try {
-      const res = await fetch('/api/data-dukung', {
-        method: 'POST',
-        body: fData,
-      })
-
-      if (res.ok) {
-        const result = await res.json()
-        setUploadedFile(result.dataDukung)
-      } else {
-        const err = await res.json()
-        alert('Gagal mengunggah berkas: ' + (err.error || 'Terjadi kesalahan'))
-      }
-    } catch (err) {
-      console.error(err)
-      alert('Gagal mengunggah berkas ke server')
-    } finally {
-      setUploading(false)
-    }
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -453,14 +416,14 @@ export default function PekerjaanUmumPage() {
           noSuratRT: formData.noSuratRT,
           keterangan: formData.keterangan,
           status: formData.status,
-          dataDukungId: uploadedFile?.id || null
+          dataDukungIds: uploadedFiles.map(f => f.id)
         })
       })
 
       if (res.ok) {
         setIsModalOpen(false)
         setFormData(initialForm)
-        setUploadedFile(null)
+        setUploadedFiles([])
         setEditId(null)
         fetchReports(currentPosyanduId, selectedTahun)
       } else {
@@ -476,7 +439,7 @@ export default function PekerjaanUmumPage() {
   const handleAdd = () => {
     const defaultPName = isPosyandu ? (selectedPosyandu || 'Segar') : (posyandus[0]?.nama || 'Segar')
     setFormData({ ...initialForm, posyandu: defaultPName })
-    setUploadedFile(null)
+    setUploadedFiles([])
     setEditId(null)
     setIsModalOpen(true)
   }
@@ -1189,61 +1152,7 @@ export default function PekerjaanUmumPage() {
                 </div>
 
                 <div className="md:col-span-2 border-t border-slate-200/70 dark:border-white/10 pt-4">
-                  <label className="text-sm font-medium text-[var(--dash-text)] dark:text-slate-200 block mb-1.5">Data Dukung (PDF / Gambar)</label>
-                  
-                  {uploadedFile ? (
-                    <div className="flex items-center justify-between bg-slate-50 dark:bg-[#202020]/50 border border-slate-200/70 dark:border-white/10 rounded-lg px-4 py-3">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <FileText className="w-8 h-8 text-purple-600 dark:text-purple-500 shrink-0" />
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-[var(--dash-text)] truncate">{uploadedFile.fileName}</p>
-                          <a 
-                            href={uploadedFile.filePath} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-xs text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1 mt-0.5"
-                          >
-                            Lihat Berkas
-                          </a>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setUploadedFile(null)}
-                        className="p-1.5 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-850 transition-all"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="relative border-2 border-dashed border-slate-200 dark:border-white/10 hover:border-purple-500 dark:hover:border-purple-500 rounded-lg p-4 transition-colors">
-                      <input
-                        type="file"
-                        accept=".pdf,image/*"
-                        onChange={handleFileUpload}
-                        disabled={uploading}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                      />
-                      <div className="flex flex-col items-center justify-center text-center">
-                        {uploading ? (
-                          <div className="flex flex-col items-center gap-2">
-                            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-                            <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">Mengunggah...</p>
-                          </div>
-                        ) : (
-                          <>
-                            <FileText className="w-8 h-8 text-[var(--dash-text-muted)] mb-2" />
-                            <p className="text-sm font-medium text-slate-600 dark:text-zinc-400">
-                              Klik atau seret berkas ke sini untuk upload PDF/Gambar
-                            </p>
-                            <p className="text-xs text-[var(--dash-text-muted)] mt-1">
-                              Maksimal ukuran berkas 5MB
-                            </p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <DataDukungUpload files={uploadedFiles} setFiles={setUploadedFiles} bidang="PU" posyanduId={selectedPosyanduId} />
                 </div>
 
                 <div className="flex items-center justify-end gap-3 mt-6 md:col-span-2 border-t border-slate-200/70 dark:border-white/10 pt-5">

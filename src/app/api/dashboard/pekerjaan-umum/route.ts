@@ -55,7 +55,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { id, posyanduId, tanggal, nik, nama, alamat, keluhan, lokasi, noSuratRT, keterangan, status, dataDukungId } = body
+    const { id, posyanduId, tanggal, nik, nama, alamat, keluhan, lokasi, noSuratRT, keterangan, status, dataDukungIds } = body
 
     if (!posyanduId || !tanggal || !nama) {
       return NextResponse.json({ error: "posyanduId, tanggal, and nama are required" }, { status: 400 })
@@ -82,8 +82,8 @@ export async function POST(request: Request) {
         data: {
           ...data,
           updatedBy: createdBy,
-          dataDukungs: dataDukungId !== undefined ? {
-            set: dataDukungId ? [{ id: dataDukungId }] : []
+          dataDukungs: Array.isArray(dataDukungIds) ? {
+            set: dataDukungIds.map((did: string) => ({ id: did }))
           } : undefined,
         },
         include: {
@@ -96,8 +96,8 @@ export async function POST(request: Request) {
         data: {
           ...data,
           createdBy,
-          dataDukungs: dataDukungId ? {
-            connect: { id: dataDukungId }
+          dataDukungs: Array.isArray(dataDukungIds) && dataDukungIds.length ? {
+            connect: dataDukungIds.map((did: string) => ({ id: did }))
           } : undefined,
         },
         include: {

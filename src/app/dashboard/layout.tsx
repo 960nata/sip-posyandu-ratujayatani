@@ -47,7 +47,7 @@ const menuGroups = [
       { name: 'Push Notifikasi', icon: Bell, href: '/dashboard/push-notification', roles: ['SUPERADMIN'] },
       { name: 'Galeri Media', icon: HardDrive, href: '/dashboard/data-dukung', roles: ['SUPERADMIN'] },
       { name: 'Kelola Panduan', icon: GraduationCap, href: '/dashboard/kelola-panduan', roles: ['SUPERADMIN'] },
-      { name: 'Panduan Pengguna', icon: PlayCircle, href: '/dashboard/panduan' },
+      { name: 'Panduan Pengguna', icon: PlayCircle, href: '/dashboard/panduan', roles: ['ADMIN_KABUPATEN', 'ADMIN_KECAMATAN', 'OPERATOR_DESA', 'OPERATOR_POSYANDU', 'VIEWER'] },
     ]
   },
   {

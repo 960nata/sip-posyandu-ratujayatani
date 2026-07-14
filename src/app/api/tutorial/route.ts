@@ -31,9 +31,14 @@ export async function GET(request: Request) {
     return NextResponse.json(rows)
   }
 
-  // Tampilan pengguna: yang ber-target SEMUA atau sesuai role-nya
+  // Tampilan pengguna: jika SUPERADMIN, kembalikan semua tutorial (agar bisa melihat/pratinjau tutorial role lain)
+  // Jika role lain, hanya kembalikan yang ditargetkan untuk "SEMUA" atau sesuai role-nya secara aman.
+  const whereClause = user.role === "SUPERADMIN"
+    ? {}
+    : { target: { in: (TARGETS.includes(user.role as any) ? ["SEMUA", user.role] : ["SEMUA"]) as Target[] } }
+
   const rows = await prisma.tutorial.findMany({
-    where: { target: { in: ["SEMUA", user.role] as Target[] } },
+    where: whereClause,
     orderBy: [{ urutan: "asc" }, { createdAt: "desc" }],
   })
   return NextResponse.json(rows)

@@ -5,6 +5,7 @@ import Link from 'next/link'
 // Image import removed - using native img tags
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
+import InactivityGuard from '@/components/dashboard/InactivityGuard'
 import {
   Menu, X, Bell, User, LogOut, BookOpen, Building,
   Home, Shield, Users, Sun, Moon, ChevronDown,
@@ -400,6 +401,9 @@ export default function DashboardLayout({
       {sideOpen && (
         <div onClick={() => setSideOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 290, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(2px)" }} />
       )}
+
+      {/* Auto-logout bila idle 30 menit (dengan peringatan hitung mundur) */}
+      {session && <InactivityGuard />}
 
       {/* Responsive Styles (similar to globals.css but scoped if needed, we rely on globals.css for dash-sidebar etc) */}
       <style jsx global>{`

@@ -235,7 +235,7 @@ export default function DashboardLayout({
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "4px 6px 18px" }}>
           <div style={{ width: "42px", height: "42px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-             <img src="/images/LOGO%20DASHBOARD%20.png" alt="Logo Posyandu" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+             <img src="/images/logo-dashboard.png" alt="Logo Posyandu" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
           <div style={{ lineHeight: 1.15 }}>
             <div style={{ fontSize: "0.92rem", fontWeight: 800, color: "var(--dash-text)", letterSpacing: "-0.01em" }}>SIPANDU</div>
